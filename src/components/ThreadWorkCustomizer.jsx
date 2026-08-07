@@ -1107,17 +1107,27 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
 
         .tw-hero-description {
           font-family: var(--font-sans);
-          font-size: 21px;
-          line-height: 1.7;
+          font-size: 20px;
+          line-height: 1.8;
+          letter-spacing: 0.2px;
           color: #5A4A42;
-          max-width: 740px;
+          max-width: 750px;
           margin: 0 auto 1.5rem auto;
+          text-align: center;
           opacity: 0;
           animation: heroFadeUp 0.7s cubic-bezier(0.25, 1, 0.5, 1) 0.3s forwards;
         }
 
+        @media (max-width: 991px) {
+          .tw-hero-description {
+            font-size: 18px;
+          }
+        }
+
         @media (max-width: 576px) {
-          .tw-hero-description { font-size: 17px; }
+          .tw-hero-description {
+            font-size: 16px;
+          }
         }
 
         .tw-brand-tagline {
