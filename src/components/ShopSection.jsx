@@ -160,7 +160,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
 
         .shop-toolbar {
           padding: 0.5rem 1rem;
-          margin-bottom: 2rem;
+          margin-bottom: 1rem;
           display: flex;
           justify-content: center;
           border: 1px solid var(--gold-border);
@@ -216,12 +216,13 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
-          gap: 1.15rem;
+          column-gap: 24px;
+          row-gap: 20px;
         }
 
         .gallery-card {
-          flex: 0 0 calc(25% - 0.87rem);
-          max-width: calc(25% - 0.87rem);
+          flex: 0 0 calc(25% - 18px);
+          max-width: calc(25% - 18px);
           width: 100%;
           background: #FFFFFF;
           border-radius: 15px;
@@ -240,17 +241,19 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
 
         @media (max-width: 992px) {
           .gallery-grid {
-            gap: 1rem;
+            column-gap: 16px;
+            row-gap: 16px;
           }
           .gallery-card {
-            flex: 0 0 calc(50% - 0.5rem);
-            max-width: calc(50% - 0.5rem);
+            flex: 0 0 calc(50% - 8px);
+            max-width: calc(50% - 8px);
           }
         }
 
         @media (max-width: 576px) {
           .gallery-grid {
-            gap: 1rem;
+            column-gap: 12px;
+            row-gap: 16px;
           }
           .gallery-card {
             flex: 0 0 100%;
@@ -325,7 +328,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
         }
 
         .gallery-card-info {
-          padding: 15px 18px;
+          padding: 18px 18px 18px 18px;
           display: flex;
           align-items: center;
           justify-content: center;
