@@ -267,14 +267,14 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
                       className={`flavor-card ${isSelected ? 'selected' : ''} ${isExpanded ? 'card-is-expanded' : ''}`}
                       onClick={() => selectDesign(tw.name)}
                     >
-                      {/* Top-Right Circular Radio Button */}
+                      {/* Top-Right Circular Radio Checkmark Badge */}
                       <div className={`tw-radio-circle ${isSelected ? 'selected' : ''}`}>
                         {isSelected && <FaCheck className="tw-radio-check" />}
                       </div>
 
                       <div 
                         className="flavor-img-wrap" 
-                        onClick={(e) => openLightbox(e, idx)} 
+                        onClick={(e) => { e.stopPropagation(); openLightbox(e, idx); }} 
                         title="Click to view full-screen photo"
                       >
                         <img 
@@ -282,6 +282,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
                           alt={tw.name} 
                           className="flavor-thumb-img"
                           loading="lazy"
+                          decoding="async"
                         />
                       </div>
 
@@ -292,11 +293,10 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
                         </div>
 
                         <div 
-                          className="card-toggle-details-btn"
+                          className="card-view-details-link"
                           onClick={(e) => toggleCardExpansion(tw.id, e)}
                         >
-                          <span className="toggle-text">{isExpanded ? 'Hide Details' : 'Click to View Details'}</span>
-                          <FaChevronDown className={`toggle-chevron ${isExpanded ? 'rotated' : ''}`} />
+                          <span>{isExpanded ? 'Hide Details' : 'View Details'} →</span>
                         </div>
 
                         {/* Smooth Accordion Expanded Drawer */}
@@ -1036,28 +1036,28 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         /* Responsive Grid: 4 columns (≥1200px), 3 columns (992-1199px), 2 columns (768-991px), 1 column (<768px) */
         .tw-5col-grid {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 20px;
+          grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+          gap: 24px 20px;
           max-width: 1450px;
           margin: 0 auto;
-          align-items: start;
+          align-items: stretch;
         }
 
         @media (max-width: 1199px) {
           .tw-5col-grid {
             grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
+            gap: 20px 16px;
           }
         }
 
         @media (max-width: 991px) {
           .tw-5col-grid {
             grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
+            gap: 16px 14px;
           }
         }
 
-        @media (max-width: 767px) {
+        @media (max-width: 576px) {
           .tw-5col-grid {
             grid-template-columns: repeat(1, 1fr);
             gap: 16px;
@@ -1066,49 +1066,79 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
 
         .flavor-card {
           background: #FFFFFF;
-          border: 1.5px solid rgba(212, 175, 55, 0.3);
-          border-radius: 20px;
-          padding: 16px;
+          border: 1.5px solid rgba(212, 175, 55, 0.25);
+          border-radius: 15px;
+          padding: 0;
           cursor: pointer;
           transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
-          align-self: start;
-          height: auto;
+          align-self: stretch;
+          height: 100%;
           position: relative;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 5px 20px rgba(61, 43, 31, 0.08);
+          overflow: hidden;
+          box-sizing: border-box;
         }
 
-        .flavor-card:hover {
-          transform: translateY(-4px);
-          border-color: var(--gold-primary);
-          box-shadow: 0 10px 24px rgba(212, 175, 55, 0.2);
+        @media (hover: hover) and (pointer: fine) {
+          .flavor-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(212, 175, 55, 0.45);
+            box-shadow: 0 14px 34px rgba(61, 43, 31, 0.10), 0 4px 16px rgba(212, 175, 55, 0.16);
+          }
+
+          .flavor-card:hover .flavor-thumb-img {
+            transform: scale(1.03);
+          }
         }
 
         .flavor-card.selected {
-          border-color: var(--rose-primary);
+          border: 2px solid #D4AF37;
           background: #FFFDF9;
-          box-shadow: 0 8px 24px rgba(156, 82, 99, 0.2);
+          box-shadow: 0 8px 25px rgba(212, 175, 55, 0.25), 0 0 15px rgba(246, 211, 101, 0.3);
         }
 
-        /* Perfect Square (1:1) Image Container (300px-320px) with 16px Rounded Corners */
+        .tw-radio-circle {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          width: 26px;
+          height: 26px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.9);
+          border: 1.5px solid rgba(212, 175, 55, 0.4);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 10;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+          transition: all 0.25s ease;
+        }
+
+        .tw-radio-circle.selected {
+          background: linear-gradient(135deg, #F6D365 0%, #D4AF37 50%, #C79A2B 100%);
+          border-color: transparent;
+          color: #FFFFFF;
+        }
+
+        .tw-radio-check {
+          font-size: 13px;
+          color: #FFFFFF;
+        }
+
         .flavor-img-wrap {
           position: relative;
           width: 100%;
-          max-width: 320px;
-        .flavor-img-wrap {
-          width: 100%;
+          height: 270px;
           aspect-ratio: 1 / 1.14;
           border-radius: 15px 15px 0 0;
           overflow: hidden;
           background: #FFFDF9;
           padding: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin: 0 auto 0.75rem auto;
-          border: 1px solid rgba(212, 175, 55, 0.2);
+          margin: 0;
+          border-bottom: 1px solid rgba(212, 175, 55, 0.15);
           box-sizing: border-box;
           cursor: pointer;
         }
@@ -1119,34 +1149,28 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           object-fit: cover;
           object-position: center;
           display: block;
-        }
-
-        .selected-tag {
-          margin-left: auto;
-          background: var(--gold-primary);
-          color: #FFFFFF;
-          font-size: 0.68rem;
-          font-weight: 700;
-          padding: 2px 8px;
-          border-radius: 12px;
-          display: inline-flex;
-          align-items: center;
-          gap: 3px;
+          filter: brightness(1.03) contrast(1.05) saturate(1.02);
+          transition: transform 0.3s ease, filter 0.3s ease;
         }
 
         .flavor-content {
+          padding: 18px;
           display: flex;
           flex-direction: column;
-          justify-content: flex-start;
-          flex-grow: 0;
-          height: auto;
+          align-items: center;
+          justify-content: space-between;
+          text-align: center;
+          background: #FFFFFF;
+          flex-grow: 1;
         }
 
         .flavor-title-row {
           display: flex;
-          align-items: flex-start;
+          align-items: center;
+          justify-content: center;
           gap: 0.4rem;
           margin-bottom: 0.4rem;
+          width: 100%;
         }
 
         .flavor-icon {
@@ -1156,28 +1180,38 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
 
         .flavor-title-row h4 {
           font-family: var(--font-serif);
-          font-size: 0.95rem;
-          font-weight: 700;
+          font-size: 19px;
+          font-weight: 600;
           color: var(--text-dark);
+          line-height: 1.45;
+          letter-spacing: 0.25px;
+          height: 2.9em;
           margin: 0;
-          line-height: 1.3;
+          text-align: center;
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
+          text-overflow: ellipsis;
         }
 
-        .card-toggle-details-btn {
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          margin-top: 8px;
-          padding: 8px 0;
-          font-size: 14px;
+        .card-view-details-link {
+          font-family: var(--font-sans);
+          font-size: 0.82rem;
           font-weight: 600;
-          color: #B14F68;
-          transition: color 0.3s ease;
+          color: #D4AF37;
+          margin-top: 8px;
+          cursor: pointer;
+          transition: color 0.25s ease, transform 0.25s ease;
+          text-align: center;
+          display: inline-block;
           user-select: none;
+        }
+
+        .card-view-details-link:hover {
+          color: #B8860B;
+          transform: translateX(2px);
+        }
           cursor: pointer;
         }
 
