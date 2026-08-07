@@ -84,6 +84,109 @@ export const RESINART_HIGHLIGHTS = [
   'Custom Gift Keepsakes'
 ];
 
+const ResinArtCard = ({ ra, idx, isSelected, isExpanded, onSelect, onToggleExpand, onOpenLightbox }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const cardRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const staggerDelay = (idx % 4) * 80;
+
+  if (!ra) return null;
+
+  return (
+    <div
+      ref={cardRef}
+      tabIndex={0}
+      role="button"
+      aria-pressed={isSelected}
+      aria-label={`Select ${ra.name || 'Resin Art'}`}
+      className={`flavor-card ${isSelected ? 'selected' : ''} ${isExpanded ? 'card-is-expanded' : ''} ${isVisible ? 'fade-in-visible' : ''}`}
+      onClick={() => onSelect(ra.name)}
+      style={{
+        animationDelay: `${staggerDelay}ms`,
+        cursor: 'pointer'
+      }}
+    >
+      {/* Top-Right Circular Radio Button */}
+      <div className={`resin-radio-circle ${isSelected ? 'selected' : ''}`}>
+        {isSelected && <FaCheck className="resin-radio-check" />}
+      </div>
+
+      <div 
+        className="flavor-img-wrap"
+        onClick={(e) => onOpenLightbox(e, idx)}
+        title="Click to view full-screen photo preview"
+      >
+        {!imgLoaded && <div className="skeleton-img-placeholder skeleton-shimmer" />}
+        <img 
+          src={ra.image || '/placeholder.jpg'} 
+          alt={ra.name || 'Resin Art'} 
+          className={`flavor-thumb-img ${imgLoaded ? 'loaded' : 'loading'}`}
+          loading="lazy"
+          decoding="async"
+          onLoad={() => setImgLoaded(true)}
+          onError={() => setImgLoaded(true)}
+        />
+      </div>
+
+      <div className="flavor-content">
+        <div className="flavor-title-row">
+          <FaGem className="flavor-card-svg-icon" />
+          <h4 className="flavor-serif-title">{ra.name || 'Custom Resin Creation'}</h4>
+        </div>
+        <div 
+          className="click-view-details-cta card-view-details-link"
+          onClick={(e) => onToggleExpand(ra.id, e)}
+        >
+          <span>{isExpanded ? 'Hide Details' : 'Quick View'}</span>
+          <FaArrowRight className={`view-details-arrow ${isExpanded ? 'rotated' : ''}`} />
+        </div>
+
+        {/* Smooth Accordion Expanded Drawer */}
+        {isExpanded && (
+          <div className="card-expanded-drawer open">
+            <div className="drawer-inner-content">
+              <p className="drawer-desc">{ra.desc || 'Handcrafted luxury resin art creation.'}</p>
+
+              <div className="drawer-info-block">
+                <h5>✨ Specifications & Materials:</h5>
+                <ul>
+                  <li>✨ 100% Handcrafted Premium Resin & Gold Foil</li>
+                  <li>🌸 Preserved Real Botanicals & Custom Typography</li>
+                  <li>💎 Glossy UV-Resistant High-Durability Finish</li>
+                </ul>
+              </div>
+
+              <div className="drawer-info-block">
+                <h5>🌿 Care Instructions:</h5>
+                <p>Wipe gently with a soft micro-fiber cloth. Avoid direct flame or harsh chemical sprays.</p>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const ResinArtCustomizer = ({ onSelectProduct }) => {
   // Customization Choice State (Single radio selection by default)
   const [selectedDesign, setSelectedDesign] = useState('');
@@ -258,72 +361,18 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
               </div>
 
               <div className="products-3col-grid">
-                {RESINART_DESIGNS.map((ra, idx) => {
-                  const isSelected = selectedDesign === ra.name;
-                  const isExpanded = expandedCardId === ra.id;
-                  return (
-                    <div
-                      key={ra.id}
-                      className={`flavor-card ${isSelected ? 'selected' : ''} ${isExpanded ? 'card-is-expanded' : ''}`}
-                      onClick={() => selectDesign(ra.name)}
-                    >
-                      {/* Top-Right Circular Radio Button */}
-                      <div className={`resin-radio-circle ${isSelected ? 'selected' : ''}`}>
-                        {isSelected && <FaCheck className="resin-radio-check" />}
-                      </div>
-
-                      <div 
-                        className="flavor-img-wrap"
-                        onClick={(e) => openLightbox(e, idx)}
-                        title="Click to view full-screen photo preview"
-                      >
-                        <img 
-                          src={ra.image} 
-                          alt={ra.name} 
-                          className="flavor-thumb-img"
-                          loading="lazy"
-                        />
-                      </div>
-
-                      <div className="flavor-content">
-                        <div className="flavor-title-row">
-                          <FaGem className="flavor-card-svg-icon" />
-                          <h4 className="flavor-serif-title">{ra.name}</h4>
-                        </div>
-                        <div 
-                          className="click-view-details-cta card-view-details-link"
-                          onClick={(e) => toggleCardExpansion(ra.id, e)}
-                        >
-                          <span>{isExpanded ? 'Hide Details' : 'Quick View'}</span>
-                          <FaArrowRight className={`view-details-arrow ${isExpanded ? 'rotated' : ''}`} />
-                        </div>
-
-                        {/* Smooth Accordion Expanded Drawer */}
-                        {isExpanded && (
-                          <div className="card-expanded-drawer open">
-                            <div className="drawer-inner-content">
-                              <p className="drawer-desc">{ra.desc}</p>
-
-                              <div className="drawer-info-block">
-                                <h5>✨ Specifications & Materials:</h5>
-                                <ul>
-                                  <li>✨ 100% Handcrafted Premium Resin & Gold Foil</li>
-                                  <li>🌸 Preserved Real Botanicals & Custom Typography</li>
-                                  <li>💎 Glossy UV-Resistant High-Durability Finish</li>
-                                </ul>
-                              </div>
-
-                              <div className="drawer-info-block">
-                                <h5>🌿 Care Instructions:</h5>
-                                <p>Wipe gently with a soft micro-fiber cloth. Avoid direct flame or harsh chemical sprays.</p>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
+                {RESINART_DESIGNS.map((ra, idx) => (
+                  <ResinArtCard
+                    key={ra.id}
+                    ra={ra}
+                    idx={idx}
+                    isSelected={selectedDesign === ra.name}
+                    isExpanded={expandedCardId === ra.id}
+                    onSelect={selectDesign}
+                    onToggleExpand={toggleCardExpansion}
+                    onOpenLightbox={openLightbox}
+                  />
+                ))}
               </div>
             </div>
 
@@ -677,7 +726,7 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
         messageText={waOrderText}
       />
 
-      {lightboxIndex !== null && (
+      {lightboxIndex !== null && RESINART_DESIGNS[lightboxIndex] && (
         <div className="tw-lightbox-backdrop" onClick={closeLightbox}>
           <div className="tw-lightbox-modal" onClick={(e) => e.stopPropagation()}>
             <button className="lightbox-close-btn" onClick={closeLightbox} title="Close Preview (ESC)">
@@ -691,15 +740,15 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
             <div className="lightbox-content-box">
               <div className="lightbox-img-holder">
                 <img 
-                  src={RESINART_DESIGNS[lightboxIndex].image} 
-                  alt={RESINART_DESIGNS[lightboxIndex].name} 
+                  src={RESINART_DESIGNS[lightboxIndex]?.image || ''} 
+                  alt={RESINART_DESIGNS[lightboxIndex]?.name || 'Resin Art'} 
                   className="lightbox-full-img"
                 />
               </div>
               <div className="lightbox-info-bar">
                 <span className="lightbox-counter">{lightboxIndex + 1} / {RESINART_DESIGNS.length}</span>
-                <h3 className="lightbox-title">{RESINART_DESIGNS[lightboxIndex].icon} {RESINART_DESIGNS[lightboxIndex].name}</h3>
-                <p className="lightbox-desc-text">{RESINART_DESIGNS[lightboxIndex].desc}</p>
+                <h3 className="lightbox-title">{RESINART_DESIGNS[lightboxIndex]?.name || ''}</h3>
+                <p className="lightbox-desc-text">{RESINART_DESIGNS[lightboxIndex]?.desc || ''}</p>
               </div>
             </div>
 
