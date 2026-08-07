@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaWhatsapp, FaCheck, FaHeart, FaStar, FaMagic, FaGift, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCalendarAlt, FaClock, FaGem, FaTimes, FaChevronLeft, FaChevronRight, FaPalette } from 'react-icons/fa';
+import { FaWhatsapp, FaCheck, FaHeart, FaStar, FaMagic, FaGift, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCalendarAlt, FaClock, FaGem, FaTimes, FaChevronLeft, FaChevronRight, FaPalette, FaArrowRight } from 'react-icons/fa';
 import WhatsAppModal from './WhatsAppModal';
 
 export const RESINART_DESIGNS = [
@@ -287,15 +287,15 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
 
                       <div className="flavor-content">
                         <div className="flavor-title-row">
-                          <span className="flavor-icon">{ra.icon}</span>
+                          <FaGem className="flavor-card-svg-icon" />
                           <h4 className="flavor-serif-title">{ra.name}</h4>
                         </div>
                         <div 
-                          className="click-view-details-cta"
+                          className="click-view-details-cta card-view-details-link"
                           onClick={(e) => toggleCardExpansion(ra.id, e)}
                         >
-                          <span>{isExpanded ? 'Hide Details' : 'Click to View Details'}</span>
-                          <span className={`chevron-rotate-icon ${isExpanded ? 'rotated' : ''}`}>⌄</span>
+                          <span>{isExpanded ? 'Hide Details' : 'Quick View'}</span>
+                          <FaArrowRight className={`view-details-arrow ${isExpanded ? 'rotated' : ''}`} />
                         </div>
 
                         {/* Smooth Accordion Expanded Drawer */}
@@ -1117,137 +1117,141 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
           position: absolute;
           top: 14px;
           right: 14px;
-          width: 24px;
-          height: 24px;
+          width: 28px;
+          height: 28px;
           border-radius: 50%;
           background: #FFFFFF;
-          border: 2px solid #D1D5DB;
+          border: 1.5px solid rgba(200, 155, 60, 0.4);
           display: flex;
           align-items: center;
           justify-content: center;
-          z-index: 5;
-          transition: all 0.25s ease;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+          z-index: 10;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          transition: all 250ms ease;
         }
 
         .resin-radio-circle.selected {
-          background: #E8C86A;
-          border-color: #E8C86A;
-          box-shadow: 0 0 10px rgba(232, 200, 106, 0.6);
+          background: linear-gradient(135deg, #F6D365 0%, #C89B3C 50%, #B3832A 100%);
+          border-color: transparent;
+          color: #FFFFFF;
+          box-shadow: 0 4px 12px rgba(200, 155, 60, 0.35);
         }
 
         .resin-radio-check {
           color: #FFFFFF;
-          font-size: 11px;
+          font-size: 13px;
         }
 
-        .special-features-bar {
-          padding: 1rem 1.5rem;
-          margin-bottom: 2.5rem;
-          border: 1px solid var(--gold-border);
-          border-radius: var(--radius-md);
-          background: #FFFFFF;
-        }
-
-        .features-flex {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 1.25rem;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .feature-pill {
-          font-weight: 600;
-          font-size: 0.85rem;
-          color: var(--text-main);
-          display: flex;
-          align-items: center;
-          gap: 0.35rem;
-        }
-
-        .brand-tagline {
-          font-family: var(--font-serif);
-          font-style: italic;
-          color: var(--gold-dark);
-          font-size: 1.05rem;
-          margin-top: 0.5rem;
-          font-weight: 600;
-        }
-
-        /* Responsive Grid: 4 columns (≥1200px), 3 columns (992-1199px), 2 columns (768-991px), 1 column (<768px) */
         .products-3col-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 20px;
-          max-width: 1450px;
+          column-gap: 24px;
+          row-gap: 24px;
+          max-width: 1400px;
           margin: 0 auto;
-          align-items: start;
+          align-items: stretch;
         }
 
         @media (max-width: 1199px) {
           .products-3col-grid {
             grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
+            column-gap: 20px;
+            row-gap: 20px;
           }
         }
 
         @media (max-width: 991px) {
           .products-3col-grid {
             grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
+            column-gap: 16px;
+            row-gap: 20px;
           }
         }
 
-        @media (max-width: 767px) {
+        @media (max-width: 576px) {
           .products-3col-grid {
             grid-template-columns: repeat(1, 1fr);
-            gap: 16px;
+            column-gap: 16px;
+            row-gap: 16px;
           }
         }
 
         .flavor-card {
-          background: #FFFFFF;
+          background: #FFFDF8;
+          border: 1px solid rgba(212, 175, 55, 0.18);
           border-radius: 20px;
-          padding: 16px;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-          border: 1px solid rgba(165, 78, 98, 0.12);
+          padding: 0;
           cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+          transition: transform 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
           display: flex;
           flex-direction: column;
-          justify-content: flex-start;
-          align-self: start;
-          height: auto;
+          justify-content: space-between;
+          align-self: stretch;
+          height: 100%;
           position: relative;
+          box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
+          overflow: hidden;
+          box-sizing: border-box;
+          opacity: 0;
+          transform: translateY(20px) scale(0.97);
+          will-change: opacity, transform;
         }
 
-        .flavor-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 14px 32px rgba(165, 78, 98, 0.12);
-          border-color: rgba(165, 78, 98, 0.3);
+        .flavor-card.fade-in-visible {
+          animation: twCardFadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes twCardFadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.97);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+          .flavor-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: rgba(212, 175, 55, 0.45);
+            box-shadow: 0 16px 40px rgba(61, 43, 31, 0.08), 0 6px 20px rgba(200, 155, 60, 0.18);
+          }
+
+          .flavor-card:hover .flavor-thumb-img {
+            transform: scale(1.03);
+            filter: brightness(1.04) contrast(1.05) saturate(1.04) sepia(0.03);
+          }
+
+          .flavor-card:hover .card-view-details-link {
+            color: #B3832A;
+          }
+
+          .flavor-card:hover .view-details-arrow {
+            transform: translateX(4px);
+          }
         }
 
         .flavor-card.selected {
-          background: #FFFDF9;
-          border-color: var(--gold-primary, #D4AF37);
-          box-shadow: 0 10px 28px rgba(212, 175, 55, 0.2);
+          border: 2px solid #C89B3C !important;
+          background: #FFFDF8 !important;
+          box-shadow: 0 8px 30px rgba(200, 155, 60, 0.28), 0 0 18px rgba(246, 211, 101, 0.35) !important;
+          transform: translateY(-4px) scale(1.02) !important;
         }
 
         .flavor-img-wrap {
           position: relative;
           width: 100%;
-          aspect-ratio: 1 / 1.14;
-          border-radius: 15px 15px 0 0;
+          aspect-ratio: 4 / 5;
+          border-radius: 20px 20px 0 0;
           overflow: hidden;
           background: #FFFDF9;
           padding: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin: 0 auto 0.75rem auto;
-          border: 1px solid rgba(212, 175, 55, 0.2);
+          margin: 0;
+          border-bottom: 1px solid rgba(212, 175, 55, 0.15);
           box-sizing: border-box;
+          cursor: pointer;
         }
 
         .flavor-thumb-img {
@@ -1256,55 +1260,78 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
           object-fit: cover;
           object-position: center;
           display: block;
+          filter: brightness(1.025) contrast(1.045) saturate(1.035) sepia(0.03);
+          will-change: transform;
+          backface-visibility: hidden;
+          transition: opacity 350ms ease-out, transform 300ms ease, filter 300ms ease;
         }
 
         .flavor-content {
+          padding: 20px 20px 22px 20px;
           display: flex;
           flex-direction: column;
-          justify-content: flex-start;
-          flex-grow: 0;
-          height: auto;
+          align-items: center;
+          justify-content: space-between;
+          text-align: center;
+          background: #FFFDF8;
+          flex-grow: 1;
+          box-sizing: border-box;
         }
 
         .flavor-title-row {
           display: flex;
-          align-items: flex-start;
-          gap: 0.5rem;
-          margin-bottom: 0.5rem;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          margin-bottom: 0;
+          width: 100%;
+          min-height: 48px;
+          max-height: 48px;
         }
 
-        .flavor-icon {
-          font-size: 20px;
-          line-height: 1.2;
+        .flavor-card-svg-icon {
+          color: #C89B3C;
+          font-size: 18px;
           flex-shrink: 0;
         }
 
         .flavor-serif-title {
-          font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-          font-size: 24px;
-          font-weight: 700;
-          color: #2C2224;
-          line-height: 1.25;
+          font-family: var(--font-serif);
+          font-size: 18px;
+          font-weight: 600;
+          color: #2D2523;
+          line-height: 1.35;
+          letter-spacing: 0.2px;
           margin: 0;
+          text-align: center;
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
+          text-overflow: ellipsis;
         }
 
-        .click-view-details-cta {
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          margin-top: 8px;
-          padding: 8px 0;
-          color: #B14F68;
-          font-size: 14px;
+        .card-view-details-link {
+          font-family: var(--font-sans);
+          font-size: 15px;
           font-weight: 600;
-          line-height: 1.2;
+          color: #C89B3C;
+          margin-top: 16px;
           cursor: pointer;
-          transition: color 0.25s ease;
+          transition: color 250ms ease, transform 250ms ease;
+          text-align: center;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
           user-select: none;
+          text-decoration: none;
+          line-height: 1.3;
+        }
+
+        .view-details-arrow {
+          font-size: 12px;
+          transition: transform 250ms ease;
         }
 
         .chevron-rotate-icon {
