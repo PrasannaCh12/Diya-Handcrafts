@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaWhatsapp, FaCheck, FaHeart, FaStar, FaMagic, FaGift, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCalendarAlt, FaClock, FaGem, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaWhatsapp, FaCheck, FaHeart, FaStar, FaMagic, FaGift, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCalendarAlt, FaClock, FaGem, FaTimes, FaChevronLeft, FaChevronRight, FaPalette } from 'react-icons/fa';
 import WhatsAppModal from './WhatsAppModal';
 
 export const RESINART_DESIGNS = [
@@ -217,7 +217,11 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
       <div className="container">
         {/* Section Header */}
         <div className="section-header text-center" style={{ marginBottom: '3.5rem' }}>
-          <div className="section-subtitle">🎨 HANDMADE RESIN ART STUDIO</div>
+          <div className="section-subtitle">
+            <span className="sub-line left-sub-line"></span>
+            <FaPalette className="sub-icon" /> HANDMADE RESIN ART STUDIO
+            <span className="sub-line right-sub-line"></span>
+          </div>
           <h2 className="section-title">Customize Your Resin Art</h2>
           <p className="section-description">
             Transform your <span className="gold-highlight">precious memories</span> into <span className="gold-highlight">timeless resin art</span> creations. Customize preserved <span className="gold-highlight">wedding flowers</span>, name plaques, <span className="gold-highlight">wall clocks</span>, trays, keychains, photo frames, coasters, and keepsakes with premium <span className="gold-highlight">crystal-clear resin</span>, elegant floral arrangements, and <span className="gold-highlight">personalized designs</span>. Every piece is <span className="gold-highlight">handcrafted with love</span> to preserve your special moments forever.
@@ -744,6 +748,29 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
           color: #C89B3C;
           text-transform: uppercase;
           margin-bottom: 28px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+        }
+
+        .sub-line {
+          height: 1px;
+          width: 32px;
+          display: inline-block;
+        }
+
+        .sub-line.left-sub-line {
+          background: linear-gradient(90deg, rgba(200, 155, 60, 0) 0%, rgba(200, 155, 60, 0.7) 100%);
+        }
+
+        .sub-line.right-sub-line {
+          background: linear-gradient(90deg, rgba(200, 155, 60, 0.7) 0%, rgba(200, 155, 60, 0) 100%);
+        }
+
+        .sub-icon {
+          color: #C89B3C;
+          font-size: 15px;
         }
 
         .section-title {
@@ -779,7 +806,7 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
           align-items: center;
           justify-content: center;
           gap: 16px;
-          margin: 50px auto 40px auto;
+          margin: 45px auto 40px auto;
         }
 
         .divider-line {
@@ -813,8 +840,8 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
           font-weight: 500;
           line-height: 1.7;
           letter-spacing: 0.3px;
-          color: rgba(45, 37, 35, 0.94);
-          opacity: 0.92;
+          color: rgba(45, 37, 35, 0.85);
+          opacity: 0.85;
           text-align: center;
           margin-top: 0;
           margin-bottom: 50px;
@@ -827,6 +854,44 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
           font-weight: 700;
           font-style: normal;
           margin: 0 4px;
+        }
+
+        .section-subtitle,
+        .section-title,
+        .section-description,
+        .ra-hero-divider,
+        .brand-tagline {
+          opacity: 0;
+          animation: raHeroFadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .section-subtitle { animation-delay: 0.1s; }
+        .section-title { animation-delay: 0.2s; }
+        .section-description { animation-delay: 0.3s; }
+        .ra-hero-divider { animation-delay: 0.35s; }
+        .brand-tagline { animation-delay: 0.4s; }
+
+        @keyframes raHeroFadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .section-subtitle,
+          .section-title,
+          .section-description,
+          .ra-hero-divider,
+          .brand-tagline {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+          }
         }
 
         @media (max-width: 991px) {
