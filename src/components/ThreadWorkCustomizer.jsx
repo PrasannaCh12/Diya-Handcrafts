@@ -318,21 +318,21 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
     <section id="threadwork-customizer" className="customizer-section section-padding">
       <div className="container">
         {/* Section Header */}
-        <div className="section-header text-center" style={{ marginBottom: '3rem' }}>
-          <div className="section-subtitle">🧵 HANDMADE THREAD WORK STUDIO</div>
-          <h2 className="section-title">Customize Your Thread Work</h2>
-          <p className="section-description">
+        <div className="hero-header-wrap">
+          <div className="tw-hero-subtitle">🧵 HANDMADE THREAD WORK STUDIO</div>
+          <h1 className="tw-hero-title">Customize Your Thread Work</h1>
+          <p className="tw-hero-description">
             Create your dream handcrafted thread work with premium silk threads, elegant kundan stones, pearls, zardosi work, and personalized color combinations. Every piece is handmade with love and customized for weddings, festivals, and special occasions.
           </p>
-          <div className="brand-tagline">"Made With Love, Made For You."</div>
+          <div className="tw-brand-tagline">"Made With Love, Made For You."</div>
         </div>
 
         {/* Highlights Bar */}
-        <div className="special-features-bar glass-card mb-4">
+        <div className="special-features-bar">
           <div className="features-flex">
             {THREADWORK_HIGHLIGHTS.map((feat, idx) => (
               <span key={idx} className="feature-pill">
-                <FaGem className="text-gold mr-1" /> {feat}
+                <FaGem style={{ color: '#D4AF37' }} /> {feat}
               </span>
             ))}
           </div>
@@ -766,37 +766,132 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
       )}
 
       <style>{`
-        .flavor-card {
+        .customizer-section {
+          padding: 90px 0 80px 0;
+          background: radial-gradient(ellipse at top center, #FFFDFB 0%, #FCFAF7 100%);
           position: relative;
         }
 
-        .tw-radio-circle {
-          position: absolute;
-          top: 14px;
-          right: 14px;
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
+        .hero-header-wrap {
+          max-width: 960px;
+          margin: 0 auto 3rem auto;
+          text-align: center;
+        }
+
+        .tw-hero-subtitle {
+          font-family: var(--font-sans);
+          font-size: 0.85rem;
+          font-weight: 700;
+          letter-spacing: 0.18em;
+          color: var(--gold-dark);
+          text-transform: uppercase;
+          margin-bottom: 1.25rem;
+          opacity: 0;
+          animation: heroFadeUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) 0.1s forwards;
+        }
+
+        .tw-hero-title {
+          font-family: var(--font-serif);
+          font-size: 58px;
+          font-weight: 700;
+          color: #2C2224;
+          line-height: 1.2;
+          margin: 0 0 1.5rem 0;
+          opacity: 0;
+          animation: heroFadeUp 0.65s cubic-bezier(0.25, 1, 0.5, 1) 0.2s forwards;
+        }
+
+        @media (max-width: 991px) {
+          .tw-hero-title { font-size: 42px; }
+        }
+
+        @media (max-width: 576px) {
+          .tw-hero-title { font-size: 32px; }
+        }
+
+        .tw-hero-description {
+          font-family: var(--font-sans);
+          font-size: 21px;
+          line-height: 1.7;
+          color: #5A4A42;
+          max-width: 740px;
+          margin: 0 auto 1.5rem auto;
+          opacity: 0;
+          animation: heroFadeUp 0.7s cubic-bezier(0.25, 1, 0.5, 1) 0.3s forwards;
+        }
+
+        @media (max-width: 576px) {
+          .tw-hero-description { font-size: 17px; }
+        }
+
+        .tw-brand-tagline {
+          font-family: var(--font-serif);
+          font-style: italic;
+          font-size: 1.2rem;
+          color: var(--gold-dark);
+          margin-bottom: 2rem;
+          opacity: 0;
+          animation: heroFadeUp 0.75s cubic-bezier(0.25, 1, 0.5, 1) 0.4s forwards;
+        }
+
+        .special-features-bar {
+          max-width: 960px;
+          margin: 0 auto 3.5rem auto;
+          padding: 24px 32px;
+          border: 1px solid rgba(212, 175, 55, 0.25);
+          border-radius: 16px;
           background: #FFFFFF;
-          border: 2px solid #D1D5DB;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+          opacity: 0;
+          animation: heroFadeUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.5s forwards;
+        }
+
+        @media (max-width: 576px) {
+          .special-features-bar { padding: 18px; }
+        }
+
+        .features-flex {
           display: flex;
-          align-items: center;
+          flex-wrap: wrap;
+          gap: 12px;
           justify-content: center;
-          z-index: 5;
-          transition: all 0.25s ease;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+          align-items: center;
         }
 
-        .tw-radio-circle.selected {
-          background: #E8C86A;
-          border-color: #E8C86A;
-          box-shadow: 0 0 10px rgba(232, 200, 106, 0.6);
+        .feature-pill {
+          font-family: var(--font-sans);
+          font-weight: 500;
+          font-size: 15px;
+          color: #2C2224;
+          background: #FFFDF9;
+          border: 1px solid rgba(212, 175, 55, 0.2);
+          border-radius: 50px;
+          padding: 10px 20px;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          transition: all 0.3s ease;
+          user-select: none;
         }
 
-        .tw-radio-check {
-          color: #FFFFFF;
-          font-size: 11px;
+        .feature-pill:hover {
+          background: #FFF9EE;
+          border-color: #D4AF37;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
         }
+
+        @keyframes heroFadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(24px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
         .customizer-grid {
           display: grid;
           grid-template-columns: 70% 30%;
