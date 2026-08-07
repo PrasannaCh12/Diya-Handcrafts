@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaEye, FaArrowRight } from 'react-icons/fa';
 import { PRODUCTS, CATEGORIES } from '../data/products';
 
@@ -68,6 +69,7 @@ const AnimatedProductCard = ({ product, index, onClick, fallbackImg }) => {
 };
 
 const ShopSection = ({ onSelectProduct, activeCategory, onResetCategory }) => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState(activeCategory || 'All');
   const [toastMsg, setToastMsg] = useState('');
 
@@ -87,15 +89,13 @@ const ShopSection = ({ onSelectProduct, activeCategory, onResetCategory }) => {
   const handleProductClick = (product, e) => {
     if (e) e.preventDefault();
 
-    if (!product) return;
+    if (!product || !product.id) return;
 
-    // Check if product modal handler exists and product has details
-    if (onSelectProduct && product.id && product.name) {
+    // Navigate dynamically to the dedicated Product Details Page
+    navigate(`/product/${product.id}`);
+
+    if (onSelectProduct) {
       onSelectProduct(product);
-    } else {
-      // Safe fallback toast instead of navigating to blank page or 404
-      setToastMsg(`✨ Product details coming soon for "${product.name || 'this item'}".`);
-      setTimeout(() => setToastMsg(''), 3000);
     }
   };
 

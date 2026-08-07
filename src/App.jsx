@@ -11,6 +11,7 @@ import WhatsAppButton from './components/WhatsAppButton';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ShopPage from './pages/ShopPage';
+import ProductDetailPage from './pages/ProductDetailPage';
 import ThreadWorkPage from './pages/ThreadWorkPage';
 import ResinArtPage from './pages/ResinArtPage';
 import ChocolatePage from './pages/ChocolatePage';
@@ -87,6 +88,10 @@ function App() {
                 onAddToCart={handleAddToCart} 
               />
             } 
+          />
+          <Route 
+            path="/product/:id" 
+            element={<ProductDetailPage onAddToCart={handleAddToCart} />} 
           />
           <Route 
             path="/threadwork" 
