@@ -216,13 +216,22 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
     <section id="resinart-customizer" className="customizer-section section-padding">
       <div className="container">
         {/* Section Header */}
-        <div className="section-header text-center" style={{ marginBottom: '3rem' }}>
+        <div className="section-header text-center" style={{ marginBottom: '3.5rem' }}>
           <div className="section-subtitle">🎨 HANDMADE RESIN ART STUDIO</div>
           <h2 className="section-title">Customize Your Resin Art</h2>
           <p className="section-description">
-            Transform your precious memories into timeless resin art creations. Customize preserved wedding flowers, name plaques, wall clocks, trays, keychains, photo frames, coasters, and keepsakes with premium crystal-clear resin, elegant floral arrangements, and personalized designs. Every piece is handcrafted with love to preserve your special moments forever.
+            Transform your <span className="gold-highlight">precious memories</span> into <span className="gold-highlight">timeless resin art</span> creations. Customize preserved <span className="gold-highlight">wedding flowers</span>, name plaques, <span className="gold-highlight">wall clocks</span>, trays, keychains, photo frames, coasters, and keepsakes with premium <span className="gold-highlight">crystal-clear resin</span>, elegant floral arrangements, and <span className="gold-highlight">personalized designs</span>. Every piece is <span className="gold-highlight">handcrafted with love</span> to preserve your special moments forever.
           </p>
-          <div className="brand-tagline">✨ "Preserving Your Precious Memories Forever."</div>
+
+          <div className="ra-hero-divider">
+            <span className="divider-line left-line"></span>
+            <span className="divider-motif">🪷</span>
+            <span className="divider-line right-line"></span>
+          </div>
+
+          <div className="brand-tagline">
+            <span className="quote-mark">“</span>Preserving Your Precious Memories Forever.<span className="quote-mark">”</span>
+          </div>
         </div>
 
         {/* Highlights Bar */}
@@ -702,6 +711,167 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
       )}
 
       <style>{`
+        .customizer-section {
+          padding: 110px 0 110px 0;
+          background: radial-gradient(ellipse at top center, #FFFDF8 0%, #FCFAF7 50%, #F8F3EA 100%);
+          position: relative;
+          box-shadow: inset 0 1px 0 rgba(200, 155, 60, 0.15), 0 20px 60px rgba(45, 37, 35, 0.03);
+        }
+
+        .customizer-section::before {
+          content: '';
+          position: absolute;
+          top: 40px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 600px;
+          height: 350px;
+          background: radial-gradient(circle, rgba(200, 155, 60, 0.018) 0%, rgba(200, 155, 60, 0) 70%);
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        .section-header {
+          position: relative;
+          z-index: 1;
+        }
+
+        .section-subtitle {
+          font-family: var(--font-sans);
+          font-size: 0.85rem;
+          font-weight: 700;
+          letter-spacing: 0.18em;
+          color: #C89B3C;
+          text-transform: uppercase;
+          margin-bottom: 28px;
+        }
+
+        .section-title {
+          font-family: var(--font-serif);
+          font-size: 52px;
+          font-weight: 700;
+          color: #2D2523;
+          line-height: 1.2;
+          letter-spacing: 0.02em;
+          margin: 0 0 35px 0;
+        }
+
+        .section-description {
+          font-family: var(--font-sans);
+          font-size: 20px;
+          line-height: 1.8;
+          letter-spacing: 0.25px;
+          color: rgba(45, 37, 35, 0.88);
+          max-width: 760px;
+          width: 100%;
+          margin: 0 auto 50px auto;
+          text-align: center;
+        }
+
+        .gold-highlight {
+          color: #C89B3C;
+          font-weight: 600;
+          text-decoration: none;
+        }
+
+        .ra-hero-divider {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+          margin: 50px auto 40px auto;
+        }
+
+        .divider-line {
+          height: 1.5px;
+          width: 100px;
+          display: block;
+        }
+
+        .divider-line.left-line {
+          background: linear-gradient(90deg, rgba(200, 155, 60, 0) 0%, rgba(200, 155, 60, 0.75) 100%);
+        }
+
+        .divider-line.right-line {
+          background: linear-gradient(90deg, rgba(200, 155, 60, 0.75) 0%, rgba(200, 155, 60, 0) 100%);
+        }
+
+        .divider-motif {
+          font-size: 26px;
+          color: #C89B3C;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          filter: drop-shadow(0 0 6px rgba(200, 155, 60, 0.3));
+          line-height: 1;
+        }
+
+        .brand-tagline {
+          font-family: var(--font-serif);
+          font-style: italic;
+          font-size: 22px;
+          font-weight: 500;
+          line-height: 1.7;
+          letter-spacing: 0.3px;
+          color: rgba(45, 37, 35, 0.94);
+          opacity: 0.92;
+          text-align: center;
+          margin-top: 0;
+          margin-bottom: 50px;
+        }
+
+        .brand-tagline .quote-mark {
+          color: #C89B3C;
+          font-family: var(--font-serif);
+          font-size: 26px;
+          font-weight: 700;
+          font-style: normal;
+          margin: 0 4px;
+        }
+
+        @media (max-width: 991px) {
+          .section-title { font-size: 44px; }
+          .section-description {
+            font-size: 18px;
+            max-width: 650px;
+            margin-bottom: 40px;
+          }
+
+          .brand-tagline {
+            font-size: 20px;
+            margin-bottom: 40px;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .customizer-section { padding: 75px 0 75px 0; }
+          .section-subtitle { margin-bottom: 20px; }
+          .section-title { font-size: 34px; margin-bottom: 24px; }
+          .section-description {
+            font-size: 16px;
+            max-width: 90%;
+            margin-bottom: 30px;
+          }
+
+          .ra-hero-divider {
+            margin: 35px auto 30px auto;
+            gap: 12px;
+          }
+
+          .divider-line {
+            width: 60px;
+          }
+
+          .divider-motif {
+            font-size: 22px;
+          }
+
+          .brand-tagline {
+            font-size: 18px;
+            margin-bottom: 35px;
+          }
+        }
+
         .customizer-grid {
           display: grid;
           grid-template-columns: 70% 30%;
