@@ -1073,7 +1073,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
 
       <style>{`
         .customizer-section {
-          padding: 90px 0 80px 0;
+          padding: 115px 0 115px 0;
           background: radial-gradient(ellipse at top center, #FFFDFB 0%, #FCFAF7 100%);
           position: relative;
         }
@@ -1091,7 +1091,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           letter-spacing: 0.18em;
           color: var(--gold-dark);
           text-transform: uppercase;
-          margin-bottom: 1.25rem;
+          margin-bottom: 28px;
           opacity: 0;
           animation: heroFadeUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) 0.1s forwards;
         }
@@ -1102,7 +1102,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           font-weight: 700;
           color: #2C2224;
           line-height: 1.2;
-          margin: 0 0 1.5rem 0;
+          margin: 0 0 35px 0;
           opacity: 0;
           animation: heroFadeUp 0.65s cubic-bezier(0.25, 1, 0.5, 1) 0.2s forwards;
         }
@@ -1112,7 +1112,9 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         }
 
         @media (max-width: 576px) {
-          .tw-hero-title { font-size: 34px; }
+          .customizer-section { padding: 75px 0 75px 0; }
+          .tw-hero-subtitle { margin-bottom: 20px; }
+          .tw-hero-title { font-size: 34px; margin-bottom: 24px; }
         }
 
         .tw-hero-description {
@@ -1123,7 +1125,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           color: #5A4A42;
           max-width: 750px;
           width: 100%;
-          margin: 0 auto 1.5rem auto;
+          margin: 0 auto 50px auto;
           text-align: center;
           opacity: 0;
           animation: heroFadeUp 0.7s cubic-bezier(0.25, 1, 0.5, 1) 0.3s forwards;
@@ -1140,7 +1142,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           align-items: center;
           justify-content: center;
           gap: 16px;
-          margin: 45px auto 55px auto;
+          margin: 50px auto 50px auto;
           opacity: 0;
           animation: heroFadeUp 0.75s cubic-bezier(0.25, 1, 0.5, 1) 0.35s forwards;
         }
@@ -1169,33 +1171,6 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           line-height: 1;
         }
 
-        @media (max-width: 991px) {
-          .tw-hero-description {
-            font-size: 18px;
-            max-width: 650px;
-          }
-        }
-
-        @media (max-width: 576px) {
-          .tw-hero-description {
-            font-size: 16px;
-            max-width: 90%;
-          }
-
-          .tw-hero-divider {
-            margin: 35px auto 40px auto;
-            gap: 12px;
-          }
-
-          .divider-line {
-            width: 60px;
-          }
-
-          .divider-motif {
-            font-size: 22px;
-          }
-        }
-
         .tw-brand-tagline {
           font-family: var(--font-serif);
           font-style: italic;
@@ -1206,8 +1181,8 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           color: #5A4A42;
           opacity: 0.85;
           text-align: center;
-          margin-top: 45px;
-          margin-bottom: 25px;
+          margin-top: 50px;
+          margin-bottom: 55px;
           animation: heroFadeUp 0.75s cubic-bezier(0.25, 1, 0.5, 1) 0.4s forwards;
         }
 
@@ -1224,10 +1199,13 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           .tw-hero-description {
             font-size: 18px;
             max-width: 650px;
+            margin-bottom: 40px;
           }
 
           .tw-brand-tagline {
             font-size: 20px;
+            margin-top: 40px;
+            margin-bottom: 45px;
           }
         }
 
@@ -1235,10 +1213,11 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           .tw-hero-description {
             font-size: 16px;
             max-width: 90%;
+            margin-bottom: 30px;
           }
 
           .tw-hero-divider {
-            margin: 35px auto 40px auto;
+            margin: 35px auto 35px auto;
             gap: 12px;
           }
 
@@ -1253,7 +1232,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           .tw-brand-tagline {
             font-size: 18px;
             margin-top: 35px;
-            margin-bottom: 20px;
+            margin-bottom: 35px;
           }
         }
 
@@ -1276,7 +1255,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         .features-flex {
           display: flex;
           flex-wrap: wrap;
-          gap: 12px;
+          gap: 18px;
           justify-content: center;
           align-items: center;
         }
@@ -1290,11 +1269,14 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           border: 1px solid rgba(212, 175, 55, 0.2);
           border-radius: 50px;
           padding: 10px 20px;
+          min-height: 44px;
           display: inline-flex;
           align-items: center;
+          justify-content: center;
           gap: 8px;
           transition: all 0.3s ease;
           user-select: none;
+          box-sizing: border-box;
         }
 
         .feature-pill:hover {
