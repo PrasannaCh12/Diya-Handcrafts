@@ -1088,7 +1088,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
 
         .tw-hero-title {
           font-family: var(--font-serif);
-          font-size: 58px;
+          font-size: 52px;
           font-weight: 700;
           color: #2C2224;
           line-height: 1.2;
@@ -1098,11 +1098,11 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         }
 
         @media (max-width: 991px) {
-          .tw-hero-title { font-size: 42px; }
+          .tw-hero-title { font-size: 44px; }
         }
 
         @media (max-width: 576px) {
-          .tw-hero-title { font-size: 32px; }
+          .tw-hero-title { font-size: 34px; }
         }
 
         .tw-hero-description {
