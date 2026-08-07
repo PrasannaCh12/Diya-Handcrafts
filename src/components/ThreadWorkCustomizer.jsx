@@ -85,6 +85,12 @@ export const THREADWORK_HIGHLIGHTS = [
 ];
 
 const ProductDetailsModal = ({ product, isOpen, onClose, onSelectDesign }) => {
+  const [activeImgIndex, setActiveImgIndex] = useState(0);
+
+  useEffect(() => {
+    setActiveImgIndex(0);
+  }, [product]);
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -103,6 +109,42 @@ const ProductDetailsModal = ({ product, isOpen, onClose, onSelectDesign }) => {
 
   if (!isOpen || !product) return null;
 
+  // Extract all available fields safely with friendly fallbacks
+  const title = product.name || 'Handcrafted Design';
+  const icon = product.icon || '🧵';
+  const mainDesc = product.description || product.desc || product.shortDesc || 'Exquisite handcrafted silk thread design customized with premium kundan stones, zardosi embroidery, and pearls.';
+  const category = product.category || 'Thread Work Bangle Collection';
+  
+  // Image gallery support (array or single image string)
+  const imageList = Array.isArray(product.images) && product.images.length > 0 
+    ? product.images 
+    : (product.image ? [product.image] : ['/bridal_bangle_set.jpg']);
+  
+  const currentImage = imageList[activeImgIndex] || imageList[0] || '/bridal_bangle_set.jpg';
+
+  // Materials & Specs
+  const materialsText = typeof product.materials === 'string' 
+    ? product.materials 
+    : '100% Handcrafted Zardosi, Silk Threads & Gold Resham with Authentic Kundan Stones';
+  
+  const specsList = Array.isArray(product.specs) && product.specs.length > 0
+    ? product.specs
+    : [
+        '100% Hand-embroidered Zardosi & Silk Threadwork',
+        'Authentic Kundan stones, pearls & glass beads',
+        'Velvet finish over durable inner bangle frame'
+      ];
+
+  // Customization sizes & colors
+  const sizeList = product.customizations?.sizes || ['2.2', '2.4', '2.6', '2.8', 'Custom Wrist Measure'];
+  const colorList = product.customizations?.colors || ['Signature Mix', 'Royal Blue & Gold', 'Emerald Green', 'Deep Red & Maroon'];
+
+  // Care instructions
+  const careText = product.careInstructions || product.care || 'Avoid direct contact with water, perfume, or spray. Store in an airtight velvet pouch to preserve silk and metal luster.';
+
+  // Processing time / delivery note
+  const processingText = product.processingTime || '2 – 4 Business Days (Handcrafted to Order)';
+
   return (
     <div className="modal-backdrop-overlay" onClick={onClose}>
       <div className="product-details-modal-box" onClick={(e) => e.stopPropagation()}>
@@ -111,55 +153,74 @@ const ProductDetailsModal = ({ product, isOpen, onClose, onSelectDesign }) => {
         </button>
 
         <div className="modal-two-col-grid">
-          {/* Left Column: Large Product Image */}
+          {/* Left Column: Large Product Image Gallery */}
           <div className="modal-image-col">
             <div className="modal-img-wrap">
-              <img src={product.image} alt={product.name} className="modal-main-img" />
+              <img src={currentImage} alt={title} className="modal-main-img" />
               <div className="modal-img-badge">✨ Handmade Studio Piece</div>
             </div>
+
+            {/* Thumbnail Row if multiple images */}
+            {imageList.length > 1 && (
+              <div className="modal-thumbs-row">
+                {imageList.map((img, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    className={`modal-thumb-btn ${idx === activeImgIndex ? 'active' : ''}`}
+                    onClick={() => setActiveImgIndex(idx)}
+                  >
+                    <img src={img} alt={`Thumb ${idx + 1}`} />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Right Column: Detailed Product Specs */}
           <div className="modal-details-col">
             <div className="modal-header-block">
-              <span className="modal-category-tag">🧵 Thread Work Bangle Collection</span>
-              <h2 className="modal-product-title">{product.icon} {product.name}</h2>
+              <span className="modal-category-tag">🧵 {category}</span>
+              <h2 className="modal-product-title">{icon} {title}</h2>
+              {product.price && <div className="modal-price-tag">₹{product.price}</div>}
             </div>
 
             <div className="modal-body-scroll">
               <div className="modal-section-block">
-                <h4>📜 Detailed Overview</h4>
-                <p className="modal-desc-text">{product.desc}</p>
+                <h4>📜 Product Overview</h4>
+                <p className="modal-desc-text">{mainDesc}</p>
               </div>
 
               <div className="modal-section-block">
-                <h4>✨ Craftsmanship & Materials</h4>
+                <h4>✨ Materials & Craftsmanship</h4>
+                <p className="modal-info-p" style={{ marginBottom: '6px' }}>
+                  <strong>Materials:</strong> {materialsText}
+                </p>
                 <ul className="modal-specs-list">
-                  <li>✨ <strong>Embroidery:</strong> 100% Handcrafted Zardosi, Silk Threads & Gold Resham</li>
-                  <li>💎 <strong>Stone Details:</strong> Authentic Kundan stones, pearls & glass beads</li>
-                  <li>🧵 <strong>Core Base:</strong> Soft velvet finish over durable inner bangle frame</li>
+                  {specsList.map((spec, i) => (
+                    <li key={i}>✨ {spec}</li>
+                  ))}
                 </ul>
               </div>
 
               <div className="modal-section-block">
-                <h4>📏 Sizes & Customizations</h4>
+                <h4>📏 Sizes & Colors</h4>
                 <p className="modal-info-p">
-                  Standard sizes available: 2.2, 2.4, 2.6, 2.8. Custom wrist sizing and personalized color palette matching are available upon request.
+                  <strong>Available Sizes:</strong> {Array.isArray(sizeList) ? sizeList.join(', ') : sizeList}
+                </p>
+                <p className="modal-info-p" style={{ marginTop: '4px' }}>
+                  <strong>Color Options:</strong> {Array.isArray(colorList) ? colorList.join(', ') : colorList}
                 </p>
               </div>
 
               <div className="modal-section-block">
-                <h4>🌿 Care Instructions</h4>
-                <p className="modal-info-p">
-                  Avoid direct moisture, water, or perfumes. Store in a padded velvet pouch to preserve metallic thread shine.
-                </p>
+                <h4>🌿 Care & Storage</h4>
+                <p className="modal-info-p">{careText}</p>
               </div>
 
               <div className="modal-section-block">
-                <h4>🎉 Recommended Occasions</h4>
-                <span className="modal-tag-pill">Bridal Weddings</span>
-                <span className="modal-tag-pill">Festival Special</span>
-                <span className="modal-tag-pill">Mehndi & Reception</span>
+                <h4>⏳ Crafting & Delivery</h4>
+                <p className="modal-info-p">{processingText}</p>
               </div>
             </div>
 
@@ -168,7 +229,7 @@ const ProductDetailsModal = ({ product, isOpen, onClose, onSelectDesign }) => {
                 type="button" 
                 className="btn btn-select-design"
                 onClick={() => {
-                  onSelectDesign(product.name);
+                  onSelectDesign(title);
                   onClose();
                 }}
               >

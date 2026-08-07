@@ -8,7 +8,7 @@ const CATEGORY_FALLBACK_IMAGES = {
   'Homemade Biscuits': '/ragi_biscuits.jpg'
 };
 
-const AnimatedProductCard = ({ product, index, fallbackImg }) => {
+const AnimatedProductCard = ({ product, index, fallbackImg, onOpenDetails }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
   const cardRef = React.useRef(null);
@@ -38,8 +38,10 @@ const AnimatedProductCard = ({ product, index, fallbackImg }) => {
       ref={cardRef}
       className={`gallery-card glass-card ${isVisible ? 'fade-in-visible' : ''}`}
       title={product.name}
+      onClick={() => onOpenDetails && onOpenDetails(product)}
       style={{
-        animationDelay: `${staggerDelay}ms`
+        animationDelay: `${staggerDelay}ms`,
+        cursor: 'pointer'
       }}
     >
       <div className="gallery-img-wrap">
