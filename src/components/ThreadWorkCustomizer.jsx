@@ -378,6 +378,7 @@ export const ProductDetailsModal = ({ product, isOpen, onClose }) => {
 
 const ThreadWorkCard = ({ tw, idx, isSelected, onSelect, onOpenDetailsModal }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
   const cardRef = React.useRef(null);
 
   React.useEffect(() => {
@@ -432,12 +433,15 @@ const ThreadWorkCard = ({ tw, idx, isSelected, onSelect, onOpenDetailsModal }) =
       </div>
 
       <div className="flavor-img-wrap">
+        {!imgLoaded && <div className="skeleton-img-placeholder skeleton-shimmer" />}
         <img 
           src={tw.image} 
           alt={tw.name} 
-          className="flavor-thumb-img"
+          className={`flavor-thumb-img ${imgLoaded ? 'loaded' : 'loading'}`}
           loading="lazy"
           decoding="async"
+          onLoad={() => setImgLoaded(true)}
+          onError={() => setImgLoaded(true)}
         />
       </div>
 
@@ -1504,17 +1508,17 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         .flavor-card {
           background: #FFFFFF;
           border: 1.5px solid rgba(212, 175, 55, 0.25);
-          border-radius: 15px;
+          border-radius: 18px;
           padding: 0;
           cursor: pointer;
-          transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+          transition: transform 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
           align-self: stretch;
           height: 100%;
           position: relative;
-          box-shadow: 0 5px 20px rgba(61, 43, 31, 0.08);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
           overflow: hidden;
           box-sizing: border-box;
           opacity: 0;
@@ -1539,9 +1543,9 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
 
         @media (hover: hover) and (pointer: fine) {
           .flavor-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-5px);
             border-color: rgba(212, 175, 55, 0.45);
-            box-shadow: 0 14px 34px rgba(61, 43, 31, 0.10), 0 4px 16px rgba(212, 175, 55, 0.16);
+            box-shadow: 0 14px 34px rgba(61, 43, 31, 0.10), 0 6px 20px rgba(212, 175, 55, 0.16);
           }
 
           .flavor-card:hover .flavor-thumb-img {
@@ -1587,9 +1591,8 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         .flavor-img-wrap {
           position: relative;
           width: 100%;
-          height: 270px;
-          aspect-ratio: 1 / 1.14;
-          border-radius: 15px 15px 0 0;
+          aspect-ratio: 4 / 5;
+          border-radius: 18px 18px 0 0;
           overflow: hidden;
           background: #FFFDF9;
           padding: 0;
@@ -1605,8 +1608,10 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           object-fit: cover;
           object-position: center;
           display: block;
-          filter: brightness(1.03) contrast(1.05) saturate(1.02);
-          transition: transform 0.3s ease, filter 0.3s ease;
+          filter: brightness(1.025) contrast(1.045) saturate(1.035) sepia(0.03);
+          will-change: transform;
+          backface-visibility: hidden;
+          transition: opacity 350ms ease-out, transform 300ms ease, filter 300ms ease;
         }
 
         .flavor-content {

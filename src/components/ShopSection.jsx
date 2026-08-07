@@ -272,17 +272,17 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           width: 100%;
           max-width: 100%;
           background: #FFFFFF;
-          border-radius: 15px;
+          border-radius: 18px;
           overflow: hidden;
           cursor: default;
           border: 1px solid rgba(212, 175, 55, 0.2);
-          box-shadow: 0 6px 22px rgba(61, 43, 31, 0.06);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
           display: flex;
           flex-direction: column;
           opacity: 0;
           transform: translateY(24px) scale(0.96);
           will-change: opacity, transform;
-          transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+          transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
           box-sizing: border-box;
         }
 
@@ -320,8 +320,8 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
         /* Desktop Only Hover Animation */
         @media (hover: hover) and (pointer: fine) {
           .gallery-card.fade-in-visible:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 14px 34px rgba(61, 43, 31, 0.10), 0 4px 16px rgba(212, 175, 55, 0.16);
+            transform: translateY(-5px);
+            box-shadow: 0 14px 34px rgba(61, 43, 31, 0.10), 0 6px 20px rgba(212, 175, 55, 0.16);
             border-color: rgba(212, 175, 55, 0.45);
           }
 
@@ -341,11 +341,11 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
         .gallery-img-wrap {
           position: relative;
           width: 100%;
-          aspect-ratio: 1 / 1.14;
+          aspect-ratio: 4 / 5;
           overflow: hidden;
           background: #FFFDF9;
-          border-radius: 15px 15px 0 0;
-          box-shadow: inset 0 0 20px rgba(61, 43, 31, 0.08), 0 4px 16px rgba(0, 0, 0, 0.06);
+          border-radius: 18px 18px 0 0;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
         }
 
         .gallery-img-wrap::after {
@@ -355,7 +355,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           background: radial-gradient(circle at center, rgba(255, 245, 230, 0.03) 0%, rgba(212, 175, 55, 0.03) 100%);
           pointer-events: none;
           z-index: 2;
-          transition: opacity 0.3s ease;
+          transition: opacity 300ms ease;
         }
 
         .gallery-img {
@@ -363,9 +363,11 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           height: 100%;
           object-fit: cover;
           object-position: center;
-          border-radius: 15px 15px 0 0;
-          filter: brightness(1.03) contrast(1.05) saturate(1.02);
-          transition: opacity 0.35s ease-out, transform 0.3s ease, filter 0.3s ease;
+          border-radius: 18px 18px 0 0;
+          filter: brightness(1.025) contrast(1.045) saturate(1.035) sepia(0.03);
+          will-change: transform;
+          backface-visibility: hidden;
+          transition: opacity 350ms ease-out, transform 300ms ease, filter 300ms ease;
         }
 
         .gallery-img.loading {
