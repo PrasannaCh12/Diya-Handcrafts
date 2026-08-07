@@ -1600,55 +1600,90 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           width: 36px;
           height: 36px;
           border-radius: 50%;
-          background: rgba(0, 0, 0, 0.05);
-          border: none;
+          background: rgba(255, 255, 255, 0.95);
+          border: 1px solid rgba(212, 175, 55, 0.3);
           color: #2C2224;
           font-size: 16px;
           display: flex;
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          z-index: 20;
+          z-index: 30;
           transition: all 0.25s ease;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .modal-close-icon:hover {
           background: #D4AF37;
           color: #FFFFFF;
+          transform: scale(1.08);
         }
 
         .modal-two-col-grid {
           display: grid;
-          grid-template-columns: 45% 55%;
+          grid-template-columns: 55% 45%;
           height: 100%;
           max-height: 88vh;
+          overflow: hidden;
         }
 
         @media (max-width: 768px) {
+          .product-details-modal-box {
+            width: 95%;
+            max-height: 92vh;
+          }
+
           .modal-two-col-grid {
             grid-template-columns: 1fr;
             overflow-y: auto;
+            max-height: 92vh;
+          }
+
+          .modal-image-col {
+            padding: 16px !important;
+            border-right: none !important;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+          }
+
+          .modal-img-wrap {
+            min-height: 240px !important;
+            max-height: 300px !important;
+          }
+
+          .modal-details-col {
+            padding: 20px 18px !important;
+            overflow-y: visible !important;
+            max-height: none !important;
           }
         }
 
         .modal-image-col {
           padding: 24px;
           background: #FCFAF7;
+          border-right: 1px solid rgba(212, 175, 55, 0.2);
           display: flex;
+          flex-direction: column;
           align-items: center;
           justify-content: center;
+          height: 100%;
+          box-sizing: border-box;
+          overflow: hidden;
         }
 
         .modal-img-wrap {
           width: 100%;
           height: 100%;
-          min-height: 340px;
-          max-height: 440px;
+          min-height: 360px;
+          max-height: 520px;
           position: relative;
           border-radius: 14px;
           overflow: hidden;
-          box-shadow: 0 8px 24px rgba(61, 43, 31, 0.1);
+          background: #FFFFFF;
+          box-shadow: 0 8px 24px rgba(61, 43, 31, 0.08);
           border: 1px solid rgba(212, 175, 55, 0.2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .modal-main-img {
@@ -1656,6 +1691,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           height: 100%;
           object-fit: cover;
           object-position: center;
+          display: block;
           transition: transform 0.4s ease;
         }
 
@@ -1678,11 +1714,13 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         }
 
         .modal-details-col {
-          padding: 28px 32px;
+          padding: 28px 28px;
+          background: #FFFFFF;
           display: flex;
           flex-direction: column;
           height: 100%;
-          overflow: hidden;
+          max-height: 88vh;
+          overflow-y: auto;
           box-sizing: border-box;
         }
 
@@ -1704,20 +1742,25 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
 
         .modal-product-title {
           font-family: var(--font-serif);
-          font-size: 26px;
+          font-size: 24px;
           font-weight: 700;
           color: #2C2224;
-          margin: 0;
+          margin: 0 0 6px 0;
           line-height: 1.25;
         }
 
+        .modal-short-desc-highlight {
+          font-size: 13.5px;
+          color: #8C7032;
+          font-weight: 500;
+          line-height: 1.5;
+          margin: 4px 0 0 0;
+        }
+
         .modal-body-scroll {
-          overflow-y: auto;
-          flex: 1;
-          padding-right: 8px;
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 18px;
         }
 
         .modal-section-block h4 {
