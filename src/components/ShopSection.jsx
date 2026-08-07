@@ -224,7 +224,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           max-width: calc(25% - 0.87rem);
           width: 100%;
           background: #FFFFFF;
-          border-radius: 20px;
+          border-radius: 15px;
           overflow: hidden;
           cursor: default;
           border: 1.5px solid rgba(212, 175, 55, 0.25);
@@ -293,7 +293,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           aspect-ratio: 1 / 1.07;
           overflow: hidden;
           background: #FFFDF9;
-          border-radius: 20px 20px 0 0;
+          border-radius: 15px 15px 0 0;
           box-shadow: inset 0 0 20px rgba(61, 43, 31, 0.08), 0 4px 16px rgba(0, 0, 0, 0.06);
         }
 
@@ -312,7 +312,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           height: 100%;
           object-fit: cover;
           object-position: center;
-          border-radius: 20px 20px 0 0;
+          border-radius: 15px 15px 0 0;
           filter: brightness(1.03) contrast(1.05);
           transition: transform 0.35s ease-out, filter 0.35s ease-out;
         }
