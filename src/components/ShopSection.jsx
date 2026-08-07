@@ -70,26 +70,22 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
     }
   }, [activeCategory]);
 
+  const allProducts = Array.isArray(PRODUCTS) ? PRODUCTS : [];
+  const allCategories = Array.isArray(CATEGORIES) ? CATEGORIES : ['All'];
+
   const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter((product) => {
+    return allProducts.filter((product) => {
       return selectedCategory === 'All' || product.category === selectedCategory;
     });
-  }, [selectedCategory]);
+  }, [selectedCategory, allProducts]);
 
   return (
     <section id="shop" className="shop-section">
       <div className="container">
-        {/* Toast Notification Banner for Coming Soon Items */}
-        {toastMsg && (
-          <div className="coming-soon-toast">
-            {toastMsg}
-          </div>
-        )}
-
         {/* Product Categories Pills */}
         <div className="shop-toolbar glass-card">
           <div className="category-pills">
-            {CATEGORIES.map((cat) => (
+            {allCategories.map((cat) => (
               <button
                 key={cat}
                 className={`category-pill ${selectedCategory === cat ? 'active' : ''}`}
@@ -107,7 +103,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
         {/* Compact Responsive Gallery Grid */}
         {filteredProducts.length === 0 ? (
           <div className="no-products-state">
-            <h3>No products found in this category.</h3>
+            <h3>No Products Available in this category.</h3>
             <button 
               className="btn btn-outline-gold"
               onClick={() => { setSelectedCategory('All'); }}
