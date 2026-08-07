@@ -62,12 +62,6 @@ const AnimatedProductCard = ({ product, index, fallbackImg, onOpenDetails }) => 
       </div>
       <div className="gallery-card-info">
         <h4 className="card-item-title">{product.name}</h4>
-        <div 
-          className="card-view-details-link"
-          onClick={(e) => { e.stopPropagation(); onOpenDetails && onOpenDetails(product); }}
-        >
-          <span>View Details →</span>
-        </div>
       </div>
     </div>
   );
@@ -409,11 +403,10 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
         }
 
         .gallery-card-info {
-          padding: 18px 18px 20px 18px;
+          padding: 18px;
           display: flex;
-          flex-direction: column;
           align-items: center;
-          justify-content: space-between;
+          justify-content: center;
           text-align: center;
           background: #FFFFFF;
           flex-grow: 1;
@@ -436,29 +429,6 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           -webkit-box-orient: vertical;
           overflow: hidden;
           text-overflow: ellipsis;
-        }
-
-        .card-view-details-link {
-          font-family: var(--font-sans);
-          font-size: 16px;
-          font-weight: 500;
-          color: #D4AF37;
-          margin-top: 16px;
-          cursor: pointer;
-          transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
-          text-align: center;
-          display: inline-block;
-          user-select: none;
-          text-decoration: none;
-          border-bottom: 1px solid transparent;
-          line-height: 1.3;
-        }
-
-        .card-view-details-link:hover {
-          color: #B8860B;
-          border-bottom-color: #B8860B;
-          text-decoration: underline;
-          transform: translateY(-1px);
         }
 
         .no-products-state {
