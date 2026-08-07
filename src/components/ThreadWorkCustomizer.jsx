@@ -84,6 +84,98 @@ export const THREADWORK_HIGHLIGHTS = [
   '💝 Personalized Gift Packaging'
 ];
 
+const ThreadWorkCard = ({ tw, idx, isSelected, isExpanded, onSelect, onToggleExpand, onOpenLightbox }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.12 }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const staggerDelay = (idx % 4) * 80;
+
+  return (
+    <div
+      ref={cardRef}
+      className={`flavor-card ${isSelected ? 'selected' : ''} ${isExpanded ? 'card-is-expanded' : ''} ${isVisible ? 'fade-in-visible' : ''}`}
+      onClick={() => onSelect(tw.name)}
+      style={{
+        animationDelay: `${staggerDelay}ms`
+      }}
+    >
+      {/* Top-Right Circular Radio Checkmark Badge */}
+      <div className={`tw-radio-circle ${isSelected ? 'selected' : ''}`}>
+        {isSelected && <FaCheck className="tw-radio-check" />}
+      </div>
+
+      <div 
+        className="flavor-img-wrap" 
+        onClick={(e) => { e.stopPropagation(); onOpenLightbox(e, idx); }} 
+        title="Click to view full-screen photo"
+      >
+        <img 
+          src={tw.image} 
+          alt={tw.name} 
+          className="flavor-thumb-img"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      <div className="flavor-content">
+        <div className="flavor-title-row">
+          <span className="flavor-icon">{tw.icon}</span>
+          <h4>{tw.name}</h4>
+        </div>
+
+        <div 
+          className="card-view-details-link"
+          onClick={(e) => onToggleExpand(tw.id, e)}
+        >
+          <span>{isExpanded ? 'Hide Details' : 'View Details'} →</span>
+        </div>
+
+        {/* Smooth Accordion Expanded Drawer */}
+        {isExpanded && (
+          <div className="card-expanded-drawer open">
+            <div className="drawer-inner-content">
+              <p className="drawer-desc">{tw.desc}</p>
+
+              <div className="drawer-info-block">
+                <h5>✨ Bangle Specs & Materials:</h5>
+                <ul>
+                  <li>✨ 100% Hand-embroidered Zardosi & Threadwork</li>
+                  <li>💎 Premium Velvet & Silk Base with Kundan Beads</li>
+                  <li>📏 Sizes Available: 2.2, 2.4, 2.6, 2.8 & Custom</li>
+                </ul>
+              </div>
+
+              <div className="drawer-info-block">
+                <h5>🌿 Care Instructions:</h5>
+                <p>Keep away from direct water or perfume. Store in a soft pouch to preserve metallic thread shine.</p>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const ThreadWorkCustomizer = ({ onSelectProduct }) => {
   // Customization Choice State (Single radio selection by default)
   const [selectedDesign, setSelectedDesign] = useState('');
@@ -262,67 +354,16 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
                   const isSelected = selectedDesign === tw.name;
                   const isExpanded = expandedDesignId === tw.id;
                   return (
-                    <div
+                    <ThreadWorkCard
                       key={tw.id}
-                      className={`flavor-card ${isSelected ? 'selected' : ''} ${isExpanded ? 'card-is-expanded' : ''}`}
-                      onClick={() => selectDesign(tw.name)}
-                    >
-                      {/* Top-Right Circular Radio Checkmark Badge */}
-                      <div className={`tw-radio-circle ${isSelected ? 'selected' : ''}`}>
-                        {isSelected && <FaCheck className="tw-radio-check" />}
-                      </div>
-
-                      <div 
-                        className="flavor-img-wrap" 
-                        onClick={(e) => { e.stopPropagation(); openLightbox(e, idx); }} 
-                        title="Click to view full-screen photo"
-                      >
-                        <img 
-                          src={tw.image} 
-                          alt={tw.name} 
-                          className="flavor-thumb-img"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </div>
-
-                      <div className="flavor-content">
-                        <div className="flavor-title-row">
-                          <span className="flavor-icon">{tw.icon}</span>
-                          <h4>{tw.name}</h4>
-                        </div>
-
-                        <div 
-                          className="card-view-details-link"
-                          onClick={(e) => toggleCardExpansion(tw.id, e)}
-                        >
-                          <span>{isExpanded ? 'Hide Details' : 'View Details'} →</span>
-                        </div>
-
-                        {/* Smooth Accordion Expanded Drawer */}
-                        {isExpanded && (
-                          <div className="card-expanded-drawer open">
-                            <div className="drawer-inner-content">
-                              <p className="drawer-desc">{tw.desc}</p>
-
-                              <div className="drawer-info-block">
-                                <h5>✨ Bangle Specs & Materials:</h5>
-                                <ul>
-                                  <li>✨ 100% Hand-embroidered Zardosi & Threadwork</li>
-                                  <li>💎 Premium Velvet & Silk Base with Kundan Beads</li>
-                                  <li>📏 Sizes Available: 2.2, 2.4, 2.6, 2.8 & Custom</li>
-                                </ul>
-                              </div>
-
-                              <div className="drawer-info-block">
-                                <h5>🌿 Care Instructions:</h5>
-                                <p>Keep away from direct water or perfume. Store in a soft pouch to preserve metallic thread shine.</p>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
+                      tw={tw}
+                      idx={idx}
+                      isSelected={isSelected}
+                      isExpanded={isExpanded}
+                      onSelect={(name) => selectDesign(name)}
+                      onToggleExpand={(id, e) => toggleCardExpansion(id, e)}
+                      onOpenLightbox={(e, index) => openLightbox(e, index)}
+                    />
                   );
                 })}
               </div>
@@ -1033,12 +1074,13 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           font-weight: 600;
         }
 
-        /* Responsive Grid: 4 columns (≥1200px), 3 columns (992-1199px), 2 columns (768-991px), 1 column (<768px) */
+        /* Responsive Grid: 4 columns Desktop (≥1200px), 3 columns (992-1199px), 2 columns (576-991px), 1 column (<576px) */
         .tw-5col-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-          gap: 24px 20px;
-          max-width: 1450px;
+          grid-template-columns: repeat(4, 1fr);
+          column-gap: 24px;
+          row-gap: 24px;
+          max-width: 1380px;
           margin: 0 auto;
           align-items: stretch;
         }
@@ -1046,21 +1088,24 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         @media (max-width: 1199px) {
           .tw-5col-grid {
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px 16px;
+            column-gap: 20px;
+            row-gap: 20px;
           }
         }
 
         @media (max-width: 991px) {
           .tw-5col-grid {
             grid-template-columns: repeat(2, 1fr);
-            gap: 16px 14px;
+            column-gap: 16px;
+            row-gap: 20px;
           }
         }
 
         @media (max-width: 576px) {
           .tw-5col-grid {
             grid-template-columns: repeat(1, 1fr);
-            gap: 16px;
+            column-gap: 16px;
+            row-gap: 16px;
           }
         }
 
@@ -1080,6 +1125,24 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           box-shadow: 0 5px 20px rgba(61, 43, 31, 0.08);
           overflow: hidden;
           box-sizing: border-box;
+          opacity: 0;
+          transform: translateY(20px) scale(0.97);
+          will-change: opacity, transform;
+        }
+
+        .flavor-card.fade-in-visible {
+          animation: twCardFadeUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        @keyframes twCardFadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.97);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
         }
 
         @media (hover: hover) and (pointer: fine) {
