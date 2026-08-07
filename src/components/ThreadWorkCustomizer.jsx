@@ -610,6 +610,14 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           <p className="tw-hero-description">
             Create your dream handcrafted thread work with <span className="gold-highlight">premium silk threads</span>, elegant <span className="gold-highlight">kundan stones</span>, pearls, zardosi work, and <span className="gold-highlight">personalized color combinations</span>. Every piece is <span className="gold-highlight">handmade with love</span> and <span className="gold-highlight">customized for weddings, festivals, and special occasions</span>.
           </p>
+
+          {/* Premium Decorative Divider */}
+          <div className="tw-hero-divider">
+            <span className="divider-line left-line"></span>
+            <span className="divider-motif">🪷</span>
+            <span className="divider-line right-line"></span>
+          </div>
+
           <div className="tw-brand-tagline">"Made With Love, Made For You."</div>
         </div>
 
@@ -1125,6 +1133,40 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           text-decoration: none;
         }
 
+        .tw-hero-divider {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+          margin: 45px auto 55px auto;
+          opacity: 0;
+          animation: heroFadeUp 0.75s cubic-bezier(0.25, 1, 0.5, 1) 0.35s forwards;
+        }
+
+        .divider-line {
+          height: 1.5px;
+          width: 100px;
+          display: block;
+        }
+
+        .divider-line.left-line {
+          background: linear-gradient(90deg, rgba(212, 175, 55, 0) 0%, rgba(212, 175, 55, 0.8) 100%);
+        }
+
+        .divider-line.right-line {
+          background: linear-gradient(90deg, rgba(212, 175, 55, 0.8) 0%, rgba(212, 175, 55, 0) 100%);
+        }
+
+        .divider-motif {
+          font-size: 26px;
+          color: #D4AF37;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.35));
+          line-height: 1;
+        }
+
         @media (max-width: 991px) {
           .tw-hero-description {
             font-size: 18px;
@@ -1136,6 +1178,19 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           .tw-hero-description {
             font-size: 16px;
             max-width: 90%;
+          }
+
+          .tw-hero-divider {
+            margin: 35px auto 40px auto;
+            gap: 12px;
+          }
+
+          .divider-line {
+            width: 60px;
+          }
+
+          .divider-motif {
+            font-size: 22px;
           }
         }
 
