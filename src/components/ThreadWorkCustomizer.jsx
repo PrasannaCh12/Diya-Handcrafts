@@ -618,7 +618,9 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
             <span className="divider-line right-line"></span>
           </div>
 
-          <div className="tw-brand-tagline">"Made With Love, Made For You."</div>
+          <div className="tw-brand-tagline">
+            <span className="quote-mark">“</span>Made With Love, Made For You.<span className="quote-mark">”</span>
+          </div>
         </div>
 
         {/* Highlights Bar */}
@@ -1197,11 +1199,62 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         .tw-brand-tagline {
           font-family: var(--font-serif);
           font-style: italic;
-          font-size: 1.2rem;
-          color: var(--gold-dark);
-          margin-bottom: 2rem;
-          opacity: 0;
+          font-size: 22px;
+          font-weight: 500;
+          line-height: 1.7;
+          letter-spacing: 0.3px;
+          color: #5A4A42;
+          opacity: 0.85;
+          text-align: center;
+          margin-top: 45px;
+          margin-bottom: 25px;
           animation: heroFadeUp 0.75s cubic-bezier(0.25, 1, 0.5, 1) 0.4s forwards;
+        }
+
+        .tw-brand-tagline .quote-mark {
+          color: #D4AF37;
+          font-family: var(--font-serif);
+          font-size: 26px;
+          font-weight: 700;
+          font-style: normal;
+          margin: 0 4px;
+        }
+
+        @media (max-width: 991px) {
+          .tw-hero-description {
+            font-size: 18px;
+            max-width: 650px;
+          }
+
+          .tw-brand-tagline {
+            font-size: 20px;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .tw-hero-description {
+            font-size: 16px;
+            max-width: 90%;
+          }
+
+          .tw-hero-divider {
+            margin: 35px auto 40px auto;
+            gap: 12px;
+          }
+
+          .divider-line {
+            width: 60px;
+          }
+
+          .divider-motif {
+            font-size: 22px;
+          }
+
+          .tw-brand-tagline {
+            font-size: 18px;
+            margin-top: 35px;
+            margin-bottom: 20px;
+          }
         }
 
         .special-features-bar {
