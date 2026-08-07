@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaWhatsapp, FaCheck, FaHeart, FaStar, FaMagic, FaGift, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCalendarAlt, FaClock, FaGem, FaChevronDown, FaChevronUp, FaTimes, FaChevronLeft, FaChevronRight, FaSearchPlus } from 'react-icons/fa';
+import { FaWhatsapp, FaCheck, FaHeart, FaStar, FaMagic, FaGift, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCalendarAlt, FaClock, FaGem, FaChevronDown, FaChevronUp, FaTimes, FaChevronLeft, FaChevronRight, FaSearchPlus, FaArrowRight } from 'react-icons/fa';
 import WhatsAppModal from './WhatsAppModal';
 
 export const THREADWORK_DESIGNS = [
@@ -447,7 +447,7 @@ const ThreadWorkCard = ({ tw, idx, isSelected, onSelect, onOpenDetailsModal }) =
 
       <div className="flavor-content">
         <div className="flavor-title-row">
-          <span className="flavor-icon">{tw.icon}</span>
+          <FaGem className="flavor-card-svg-icon" />
           <h4>{tw.name}</h4>
         </div>
 
@@ -464,7 +464,8 @@ const ThreadWorkCard = ({ tw, idx, isSelected, onSelect, onOpenDetailsModal }) =
             }
           }}
         >
-          <span>View Details →</span>
+          <span>View Details</span>
+          <FaArrowRight className="view-details-arrow" />
         </div>
       </div>
     </div>
@@ -1506,19 +1507,19 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         }
 
         .flavor-card {
-          background: #FFFFFF;
-          border: 1.5px solid rgba(212, 175, 55, 0.25);
-          border-radius: 18px;
+          background: #FFFDF8;
+          border: 1px solid rgba(212, 175, 55, 0.18);
+          border-radius: 20px;
           padding: 0;
           cursor: pointer;
           transition: transform 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
           display: flex;
           flex-direction: column;
-          justify-content: flex-start;
+          justify-content: space-between;
           align-self: stretch;
           height: 100%;
           position: relative;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+          box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
           overflow: hidden;
           box-sizing: border-box;
           opacity: 0;
@@ -1543,44 +1544,54 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
 
         @media (hover: hover) and (pointer: fine) {
           .flavor-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px) scale(1.02);
             border-color: rgba(212, 175, 55, 0.45);
-            box-shadow: 0 14px 34px rgba(61, 43, 31, 0.10), 0 6px 20px rgba(212, 175, 55, 0.16);
+            box-shadow: 0 16px 40px rgba(61, 43, 31, 0.08), 0 6px 20px rgba(200, 155, 60, 0.18);
           }
 
           .flavor-card:hover .flavor-thumb-img {
             transform: scale(1.03);
+            filter: brightness(1.04) contrast(1.05) saturate(1.04) sepia(0.03);
+          }
+
+          .flavor-card:hover .card-view-details-link {
+            color: #B3832A;
+          }
+
+          .flavor-card:hover .view-details-arrow {
+            transform: translateX(4px);
           }
         }
 
         .flavor-card.selected {
-          border: 2px solid #D4AF37 !important;
-          background: #FFFDF9 !important;
-          box-shadow: 0 8px 25px rgba(212, 175, 55, 0.25), 0 0 15px rgba(246, 211, 101, 0.3) !important;
-          transform: scale(1.02) !important;
+          border: 2px solid #C89B3C !important;
+          background: #FFFDF8 !important;
+          box-shadow: 0 8px 30px rgba(200, 155, 60, 0.28), 0 0 18px rgba(246, 211, 101, 0.35) !important;
+          transform: translateY(-4px) scale(1.02) !important;
         }
 
         .tw-radio-circle {
           position: absolute;
-          top: 12px;
-          right: 12px;
-          width: 26px;
-          height: 26px;
+          top: 14px;
+          right: 14px;
+          width: 28px;
+          height: 28px;
           border-radius: 50%;
-          background: rgba(255, 255, 255, 0.9);
-          border: 1.5px solid rgba(212, 175, 55, 0.4);
+          background: #FFFFFF;
+          border: 1.5px solid rgba(200, 155, 60, 0.4);
           display: flex;
           align-items: center;
           justify-content: center;
           z-index: 10;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-          transition: all 0.25s ease;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          transition: all 250ms ease;
         }
 
         .tw-radio-circle.selected {
-          background: linear-gradient(135deg, #F6D365 0%, #D4AF37 50%, #C79A2B 100%);
+          background: linear-gradient(135deg, #F6D365 0%, #C89B3C 50%, #B3832A 100%);
           border-color: transparent;
           color: #FFFFFF;
+          box-shadow: 0 4px 12px rgba(200, 155, 60, 0.35);
         }
 
         .tw-radio-check {
@@ -1592,7 +1603,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           position: relative;
           width: 100%;
           aspect-ratio: 4 / 5;
-          border-radius: 18px 18px 0 0;
+          border-radius: 20px 20px 0 0;
           overflow: hidden;
           background: #FFFDF9;
           padding: 0;
@@ -1615,13 +1626,13 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         }
 
         .flavor-content {
-          padding: 18px 18px 20px 18px;
+          padding: 20px 20px 22px 20px;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: space-between;
           text-align: center;
-          background: #FFFFFF;
+          background: #FFFDF8;
           flex-grow: 1;
           box-sizing: border-box;
         }
@@ -1630,25 +1641,26 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 0.4rem;
+          gap: 6px;
           margin-bottom: 0;
           width: 100%;
+          min-height: 48px;
+          max-height: 48px;
         }
 
-        .flavor-icon {
-          font-size: 1.1rem;
+        .flavor-card-svg-icon {
+          color: #C89B3C;
+          font-size: 18px;
           flex-shrink: 0;
         }
 
         .flavor-title-row h4 {
           font-family: var(--font-serif);
-          font-size: 19.5px;
+          font-size: 18px;
           font-weight: 600;
-          color: var(--text-dark);
-          line-height: 1.45;
-          letter-spacing: 0.25px;
-          height: 2.9em;
-          max-height: 2.9em;
+          color: #2D2523;
+          line-height: 1.35;
+          letter-spacing: 0.2px;
           margin: 0;
           text-align: center;
           display: -webkit-box;
@@ -1660,27 +1672,25 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
 
         .card-view-details-link {
           font-family: var(--font-sans);
-          font-size: 16px;
-          font-weight: 500;
-          color: #D4AF37;
+          font-size: 15px;
+          font-weight: 600;
+          color: #C89B3C;
           margin-top: 16px;
           cursor: pointer;
-          transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+          transition: color 250ms ease, transform 250ms ease;
           text-align: center;
-          display: inline-block;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
           user-select: none;
           text-decoration: none;
-          border-bottom: 1px solid transparent;
           line-height: 1.3;
         }
 
-        .card-view-details-link:hover {
-          color: #B8860B;
-          border-bottom-color: #B8860B;
-          text-decoration: underline;
-          transform: translateY(-1px);
-        }
-          cursor: pointer;
+        .view-details-arrow {
+          font-size: 12px;
+          transition: transform 250ms ease;
         }
 
         .flavor-card:hover .card-toggle-details-btn {
