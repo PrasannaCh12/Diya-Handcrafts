@@ -1254,7 +1254,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
 
         .special-features-bar {
           max-width: 900px;
-          margin: 0 auto 3.5rem auto;
+          margin: 0 auto 4.5rem auto;
           padding: 24px 32px;
           border: 1px solid rgba(200, 155, 60, 0.22);
           border-radius: 20px;
@@ -1267,7 +1267,10 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         }
 
         @media (max-width: 576px) {
-          .special-features-bar { padding: 18px 14px; }
+          .special-features-bar {
+            padding: 18px 14px;
+            margin-bottom: 3.5rem;
+          }
         }
 
         .features-flex {
@@ -1312,12 +1315,14 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           .tw-hero-description,
           .tw-hero-divider,
           .tw-brand-tagline,
-          .special-features-bar {
+          .special-features-bar,
+          .flavor-card {
             animation: none !important;
             opacity: 1 !important;
             transform: none !important;
           }
-          .feature-pill:hover {
+          .feature-pill:hover,
+          .flavor-card:hover {
             transform: none !important;
           }
         }
@@ -1325,7 +1330,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         @keyframes heroFadeUp {
           from {
             opacity: 0;
-            transform: translateY(24px);
+            transform: translateY(20px);
           }
           to {
             opacity: 1;
@@ -1528,7 +1533,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         }
 
         .flavor-card.fade-in-visible {
-          animation: twCardFadeUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+          animation: twCardFadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
         @keyframes twCardFadeUp {
