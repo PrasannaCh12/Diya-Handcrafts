@@ -149,10 +149,19 @@ const ThreadWorkCard = ({ tw, idx, isSelected, isExpanded, onSelect, onToggleExp
           <span>{isExpanded ? 'Hide Details' : 'View Details'} →</span>
         </div>
 
-        {/* Smooth Accordion Expanded Drawer */}
+        {/* Smooth Overlay Panel for Product Details (0 Grid Row Height Shift) */}
         {isExpanded && (
-          <div className="card-expanded-drawer open">
-            <div className="drawer-inner-content">
+          <div className="card-details-overlay" onClick={(e) => e.stopPropagation()}>
+            <button 
+              type="button"
+              className="overlay-close-btn" 
+              onClick={(e) => onToggleExpand(tw.id, e)}
+              title="Close details"
+            >
+              <FaTimes />
+            </button>
+            <div className="overlay-inner-scroll">
+              <h4 className="overlay-title">{tw.icon} {tw.name}</h4>
               <p className="drawer-desc">{tw.desc}</p>
 
               <div className="drawer-info-block">
@@ -1247,29 +1256,76 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           transform: rotate(180deg);
         }
 
-        .card-expanded-drawer {
-          max-height: 0;
-          overflow: hidden;
-          opacity: 0;
-          transition: max-height 300ms ease, opacity 300ms ease, margin-top 300ms ease;
-          margin-top: 0;
+        .card-details-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(255, 255, 255, 0.97);
+          backdrop-filter: blur(8px);
+          z-index: 30;
+          padding: 16px;
+          display: flex;
+          flex-direction: column;
+          border-radius: 15px;
+          animation: overlayFadeIn 0.25s ease forwards;
+          box-sizing: border-box;
+          text-align: left;
         }
 
-        .card-expanded-drawer.open {
-          max-height: 600px;
-          opacity: 1;
-          margin-top: 0.85rem;
-          padding-top: 0.85rem;
-          border-top: 1px dashed rgba(165, 78, 98, 0.2);
+        @keyframes overlayFadeIn {
+          from {
+            opacity: 0;
+            transform: scale(0.97);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
         }
 
-        .drawer-inner-content {
-          font-size: 0.85rem;
-          color: #4A3E40;
+        .overlay-close-btn {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          background: rgba(212, 175, 55, 0.15);
+          color: #5C3D2E;
+          border: 1px solid rgba(212, 175, 55, 0.3);
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 12px;
+          cursor: pointer;
+          z-index: 35;
+          transition: all 0.2s ease;
+        }
+
+        .overlay-close-btn:hover {
+          background: #D4AF37;
+          color: #FFFFFF;
+        }
+
+        .overlay-inner-scroll {
+          overflow-y: auto;
+          max-height: 100%;
+          padding-right: 4px;
           display: flex;
           flex-direction: column;
           gap: 0.65rem;
-          text-align: left;
+        }
+
+        .overlay-title {
+          font-family: var(--font-serif);
+          font-size: 1.05rem;
+          font-weight: 700;
+          color: #2C2224;
+          margin: 0;
+          padding-right: 24px;
+          line-height: 1.3;
         }
 
         .drawer-desc {
