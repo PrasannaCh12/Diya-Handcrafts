@@ -1316,7 +1316,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         }
 
         .flavor-content {
-          padding: 18px;
+          padding: 18px 18px 20px 18px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -1324,6 +1324,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           text-align: center;
           background: #FFFFFF;
           flex-grow: 1;
+          box-sizing: border-box;
         }
 
         .flavor-title-row {
@@ -1331,7 +1332,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           align-items: center;
           justify-content: center;
           gap: 0.4rem;
-          margin-bottom: 0.4rem;
+          margin-bottom: 0;
           width: 100%;
         }
 
@@ -1342,12 +1343,13 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
 
         .flavor-title-row h4 {
           font-family: var(--font-serif);
-          font-size: 19px;
+          font-size: 19.5px;
           font-weight: 600;
           color: var(--text-dark);
           line-height: 1.45;
           letter-spacing: 0.25px;
           height: 2.9em;
+          max-height: 2.9em;
           margin: 0;
           text-align: center;
           display: -webkit-box;
@@ -1359,20 +1361,25 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
 
         .card-view-details-link {
           font-family: var(--font-sans);
-          font-size: 0.82rem;
-          font-weight: 600;
+          font-size: 16px;
+          font-weight: 500;
           color: #D4AF37;
-          margin-top: 8px;
+          margin-top: 16px;
           cursor: pointer;
-          transition: color 0.25s ease, transform 0.25s ease;
+          transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
           text-align: center;
           display: inline-block;
           user-select: none;
+          text-decoration: none;
+          border-bottom: 1px solid transparent;
+          line-height: 1.3;
         }
 
         .card-view-details-link:hover {
           color: #B8860B;
-          transform: translateX(2px);
+          border-bottom-color: #B8860B;
+          text-decoration: underline;
+          transform: translateY(-1px);
         }
           cursor: pointer;
         }
