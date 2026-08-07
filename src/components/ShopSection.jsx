@@ -290,7 +290,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
         .gallery-img-wrap {
           position: relative;
           width: 100%;
-          aspect-ratio: 1 / 1.07;
+          aspect-ratio: 1 / 1.14;
           overflow: hidden;
           background: #FFFDF9;
           border-radius: 15px 15px 0 0;
