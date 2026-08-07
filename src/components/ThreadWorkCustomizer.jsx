@@ -370,7 +370,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
             </div>
 
             {/* Step 2: Customization Options */}
-            <div className="cust-delivery-details-card" style={{ marginTop: '2.25rem' }}>
+            <div className="cust-delivery-details-card glass-card">
               <div className="card-section-header">
                 <h3>🎁 Customization Options</h3>
                 <p className="step-hint">Specify your preferences for size, theme, ribbon, and occasion.</p>
@@ -379,98 +379,119 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
               <div className="details-form-grid">
                 <div className="form-field-item">
                   <label className="field-label">📐 Wrist / Bangle Size</label>
-                  <select 
-                    value={wristSize} 
-                    onChange={(e) => setWristSize(e.target.value)}
-                    className="lux-select-field"
-                  >
-                    <option value="None">None (Default)</option>
-                    <option value="2.2 (Small)">2.2 (Small)</option>
-                    <option value="2.4 (Standard Medium)">2.4 (Standard Medium)</option>
-                    <option value="2.6 (Large)">2.6 (Large)</option>
-                    <option value="2.8 (Extra Large)">2.8 (Extra Large)</option>
-                    <option value="Custom Wrist Measure">Custom Wrist Measure</option>
-                  </select>
+                  <div className="select-wrapper">
+                    <select 
+                      value={wristSize} 
+                      onChange={(e) => setWristSize(e.target.value)}
+                      className="lux-select-field"
+                    >
+                      <option value="None">None (Default Standard)</option>
+                      <option value="2.2 (Small)">2.2 (Small - 2.125")</option>
+                      <option value="2.4 (Standard Medium)">2.4 (Standard Medium - 2.25")</option>
+                      <option value="2.6 (Large)">2.6 (Large - 2.375")</option>
+                      <option value="2.8 (Extra Large)">2.8 (Extra Large - 2.5")</option>
+                      <option value="Custom Wrist Measure">Custom Wrist Measure</option>
+                    </select>
+                    <FaChevronDown className="select-arrow" />
+                  </div>
+                  <span className="field-helper">Choose standard Indian bangle size or custom measure.</span>
                 </div>
 
                 <div className="form-field-item">
                   <label className="field-label">🎨 Color Theme & Palette</label>
-                  <select 
-                    value={colorTheme} 
-                    onChange={(e) => setColorTheme(e.target.value)}
-                    className="lux-select-field"
-                  >
-                    <option value="None">None (Default)</option>
-                    <option value="Crimson Red & Gold">Crimson Red & Gold</option>
-                    <option value="Royal Purple & Gold">Royal Purple & Gold</option>
-                    <option value="Emerald Green & Kundan">Emerald Green & Kundan</option>
-                    <option value="Blush Rose & Pearls">Blush Rose & Pearls</option>
-                    <option value="Multicolor Festive Mix">Multicolor Festive Mix</option>
-                  </select>
+                  <div className="select-wrapper">
+                    <select 
+                      value={colorTheme} 
+                      onChange={(e) => setColorTheme(e.target.value)}
+                      className="lux-select-field"
+                    >
+                      <option value="None">None (Default Signature)</option>
+                      <option value="Crimson Red & Gold">Crimson Red & Gold</option>
+                      <option value="Royal Purple & Gold">Royal Purple & Gold</option>
+                      <option value="Emerald Green & Kundan">Emerald Green & Kundan</option>
+                      <option value="Blush Rose & Pearls">Blush Rose & Pearls</option>
+                      <option value="Multicolor Festive Mix">Multicolor Festive Mix</option>
+                    </select>
+                    <FaChevronDown className="select-arrow" />
+                  </div>
+                  <span className="field-helper">Select silk thread & embroidery color shade.</span>
                 </div>
 
                 <div className="form-field-item">
                   <label className="field-label">🎁 Packaging Style</label>
-                  <select 
-                    value={packagingStyle} 
-                    onChange={(e) => setPackagingStyle(e.target.value)}
-                    className="lux-select-field"
-                  >
-                    <option value="None">None (Default)</option>
-                    <option value="Boutique Premium">Boutique Premium</option>
-                    <option value="Bridal Velvet Box">Bridal Velvet Box</option>
-                    <option value="Wedding Favor Hamper">Wedding Favor Hamper</option>
-                  </select>
+                  <div className="select-wrapper">
+                    <select 
+                      value={packagingStyle} 
+                      onChange={(e) => setPackagingStyle(e.target.value)}
+                      className="lux-select-field"
+                    >
+                      <option value="None">None (Standard Packaging)</option>
+                      <option value="Boutique Premium">Boutique Premium Box</option>
+                      <option value="Bridal Velvet Box">Bridal Velvet Box</option>
+                      <option value="Wedding Favor Hamper">Wedding Favor Hamper</option>
+                    </select>
+                    <FaChevronDown className="select-arrow" />
+                  </div>
+                  <span className="field-helper">Signature handcrafted gift box options.</span>
                 </div>
 
                 <div className="form-field-item">
                   <label className="field-label">🎀 Ribbon Color</label>
-                  <select 
-                    value={ribbonColor} 
-                    onChange={(e) => setRibbonColor(e.target.value)}
-                    className="lux-select-field"
-                  >
-                    <option value="None">None (Default)</option>
-                    <option value="Gold">Gold</option>
-                    <option value="Rose Gold">Rose Gold</option>
-                    <option value="Silver">Silver</option>
-                    <option value="Red">Red</option>
-                    <option value="Pink">Pink</option>
-                    <option value="White">White</option>
-                  </select>
+                  <div className="select-wrapper">
+                    <select 
+                      value={ribbonColor} 
+                      onChange={(e) => setRibbonColor(e.target.value)}
+                      className="lux-select-field"
+                    >
+                      <option value="None">None (Default Satin)</option>
+                      <option value="Gold">Luxury Gold Ribbon</option>
+                      <option value="Rose Gold">Rose Gold Satin</option>
+                      <option value="Silver">Shimmering Silver</option>
+                      <option value="Red">Crimson Red Satin</option>
+                      <option value="Pink">Blush Pink Satin</option>
+                      <option value="White">Pure Ivory Ribbon</option>
+                    </select>
+                    <FaChevronDown className="select-arrow" />
+                  </div>
+                  <span className="field-helper">Decorative ribbon tie for gift boxes.</span>
                 </div>
 
                 <div className="form-field-item full-width">
-                  <label className="field-label">🎉 Occasion</label>
-                  <select 
-                    value={occasion} 
-                    onChange={(e) => setOccasion(e.target.value)}
-                    className="lux-select-field"
-                  >
-                    <option value="None">None (Default)</option>
-                    <option value="Wedding / Reception">Wedding / Reception</option>
-                    <option value="Mehendi / Sangeet">Mehendi / Sangeet</option>
-                    <option value="Anniversary">Anniversary</option>
-                    <option value="Festival / Puja">Festival / Puja</option>
-                    <option value="Bridal Gift">Bridal Gift</option>
-                  </select>
+                  <label className="field-label">🎉 Occasion & Event</label>
+                  <div className="select-wrapper">
+                    <select 
+                      value={occasion} 
+                      onChange={(e) => setOccasion(e.target.value)}
+                      className="lux-select-field"
+                    >
+                      <option value="None">None (General Purchase)</option>
+                      <option value="Wedding / Reception">Wedding / Bridal Reception</option>
+                      <option value="Mehendi / Sangeet">Mehendi / Sangeet Ceremony</option>
+                      <option value="Anniversary">Anniversary Celebration</option>
+                      <option value="Festival / Puja">Festival / Puja Special</option>
+                      <option value="Bridal Gift">Bridal Gift Hamper</option>
+                    </select>
+                    <FaChevronDown className="select-arrow" />
+                  </div>
+                  <span className="field-helper">Optional event tag for custom card messaging.</span>
                 </div>
               </div>
             </div>
 
-            {/* Customer & Delivery Details Section */}
-            <div className="cust-delivery-details-card glass-card" style={{ marginTop: '2.25rem' }}>
+            {/* Step 3: Customer & Delivery Details Section */}
+            <div className="cust-delivery-details-card glass-card">
               <div className="card-section-header">
                 <h3>👤 Customer & Delivery Details</h3>
-                <p className="step-hint">Please provide your contact details so we can confirm your order via WhatsApp.</p>
+                <p className="step-hint">Please provide your contact information to confirm your order directly on WhatsApp.</p>
               </div>
 
-              {/* Section 1: Customer Information */}
-              <div className="details-sub-section">
-                <h4 className="sub-section-title">👤 Customer Information</h4>
-                <div className="details-form-grid">
+              <div className="details-form-grid">
+                {/* Left Column: Customer Information */}
+                <div className="form-column-block">
+                  <h4 className="sub-section-title">👤 Customer Details</h4>
+
                   <div className="form-field-item">
-                    <label className="field-label">Full Name *</label>
+                    <label className="field-label">Full Name <span className="req-star">*</span></label>
                     <input
                       type="text"
                       placeholder="Enter your full name"
@@ -482,10 +503,10 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
                   </div>
 
                   <div className="form-field-item">
-                    <label className="field-label">Phone Number *</label>
+                    <label className="field-label">Phone Number <span className="req-star">*</span></label>
                     <input
                       type="tel"
-                      placeholder="Enter 10-digit phone number"
+                      placeholder="10-digit mobile number"
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value.replace(/\D/g, ''))}
                       className="lux-input-field"
@@ -494,10 +515,10 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
                   </div>
 
                   <div className="form-field-item">
-                    <label className="field-label">WhatsApp Number *</label>
+                    <label className="field-label">WhatsApp Number <span className="req-star">*</span></label>
                     <input
                       type="tel"
-                      placeholder="Enter WhatsApp number"
+                      placeholder="WhatsApp number for order confirmation"
                       value={customerWhatsApp}
                       onChange={(e) => setCustomerWhatsApp(e.target.value.replace(/\D/g, ''))}
                       className="lux-input-field"
@@ -506,7 +527,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
                   </div>
 
                   <div className="form-field-item">
-                    <label className="field-label">Email Address (Optional)</label>
+                    <label className="field-label">Email Address <span className="opt-tag">(Optional)</span></label>
                     <input
                       type="email"
                       placeholder="name@example.com"
@@ -514,19 +535,19 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
                       onChange={(e) => setCustomerEmail(e.target.value)}
                       className="lux-input-field"
                     />
+                    <span className="field-helper">For order updates & digital invoices.</span>
                   </div>
                 </div>
-              </div>
 
-              {/* Section 2: Recipient Information (Optional Gift Delivery) */}
-              <div className="details-sub-section">
-                <h4 className="sub-section-title">🎁 Recipient Information (Optional Gift Delivery)</h4>
-                <div className="details-form-grid">
+                {/* Right Column: Recipient & Delivery Schedule */}
+                <div className="form-column-block">
+                  <h4 className="sub-section-title">🎁 Recipient & Schedule <span className="opt-tag">(Optional)</span></h4>
+
                   <div className="form-field-item">
-                    <label className="field-label">Recipient Name</label>
+                    <label className="field-label">Recipient Name <span className="opt-tag">(Optional)</span></label>
                     <input
                       type="text"
-                      placeholder="Enter recipient's name"
+                      placeholder="Recipient's full name if gifting"
                       value={recipientName}
                       onChange={(e) => setRecipientName(e.target.value)}
                       className="lux-input-field"
@@ -534,74 +555,68 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
                   </div>
 
                   <div className="form-field-item">
-                    <label className="field-label">Recipient Phone Number</label>
+                    <label className="field-label">Recipient Phone <span className="opt-tag">(Optional)</span></label>
                     <input
                       type="tel"
-                      placeholder="Enter recipient's phone"
+                      placeholder="Recipient's contact phone number"
                       value={recipientPhone}
                       onChange={(e) => setRecipientPhone(e.target.value.replace(/\D/g, ''))}
                       className="lux-input-field"
                     />
                   </div>
-                </div>
-              </div>
 
-              {/* Section 3: Delivery Details (Optional) */}
-              <div className="details-sub-section">
-                <h4 className="sub-section-title">📍 Delivery Details (Optional)</h4>
-                <div className="details-form-grid">
                   <div className="form-field-item">
-                    <label className="field-label">Preferred Delivery Date</label>
+                    <label className="field-label">Preferred Delivery Date <span className="opt-tag">(Optional)</span></label>
                     <input
                       type="date"
                       min={new Date().toISOString().split('T')[0]}
                       value={deliveryDate}
                       onChange={(e) => setDeliveryDate(e.target.value)}
-                      className="lux-input-field"
+                      className="lux-input-field date-picker"
                     />
                   </div>
 
                   <div className="form-field-item">
-                    <label className="field-label">Preferred Delivery Time</label>
-                    <select
-                      value={deliveryTime}
-                      onChange={(e) => setDeliveryTime(e.target.value)}
-                      className="lux-select-field"
-                    >
-                      <option value="">Select Delivery Slot</option>
-                      <option value="Morning">Morning (9 AM - 12 PM)</option>
-                      <option value="Afternoon">Afternoon (12 PM - 4 PM)</option>
-                      <option value="Evening">Evening (4 PM - 8 PM)</option>
-                      <option value="Anytime">Anytime Slot</option>
-                    </select>
-                  </div>
-
-                  <div className="form-field-item full-width">
-                    <label className="field-label">Delivery Address</label>
-                    <textarea
-                      rows={3}
-                      placeholder="Enter full street address, apartment/suite, landmark, city, and pincode..."
-                      value={deliveryAddress}
-                      onChange={(e) => setDeliveryAddress(e.target.value)}
-                      className="lux-textarea-field"
-                    />
+                    <label className="field-label">Delivery Time Slot <span className="opt-tag">(Optional)</span></label>
+                    <div className="select-wrapper">
+                      <select
+                        value={deliveryTime}
+                        onChange={(e) => setDeliveryTime(e.target.value)}
+                        className="lux-select-field"
+                      >
+                        <option value="">Select Preferred Time Slot</option>
+                        <option value="Morning">Morning (9:00 AM - 12:00 PM)</option>
+                        <option value="Afternoon">Afternoon (12:00 PM - 4:00 PM)</option>
+                        <option value="Evening">Evening (4:00 PM - 8:00 PM)</option>
+                        <option value="Anytime">Anytime Slot</option>
+                      </select>
+                      <FaChevronDown className="select-arrow" />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Section 4: Order Notes */}
-              <div className="details-sub-section">
-                <h4 className="sub-section-title">📝 Order Notes</h4>
-                <div className="details-form-grid">
-                  <div className="form-field-item full-width">
-                    <textarea
-                      rows={3}
-                      placeholder="Any special instructions for your order? (Optional)"
-                      value={orderNotes}
-                      onChange={(e) => setOrderNotes(e.target.value)}
-                      className="lux-textarea-field"
-                    />
-                  </div>
+                {/* Full Width Bottom: Delivery Address & Order Notes */}
+                <div className="form-field-item full-width" style={{ marginTop: '0.5rem' }}>
+                  <label className="field-label">Delivery Address <span className="opt-tag">(Optional)</span></label>
+                  <textarea
+                    rows={3}
+                    placeholder="Enter street address, flat/suite, landmark, city, state, and pincode..."
+                    value={deliveryAddress}
+                    onChange={(e) => setDeliveryAddress(e.target.value)}
+                    className="lux-textarea-field"
+                  />
+                  <span className="field-helper">Providing your address speeds up instant WhatsApp dispatch.</span>
+                </div>
+
+                <div className="form-field-item full-width">
+                  <label className="field-label">Order Notes & Special Instructions <span className="opt-tag">(Optional)</span></label>
+                  <textarea
+                    rows={3}
+                    placeholder="Add custom size requests, gift message notes, or color customization details..."
+                    value={orderNotes}
+                    onChange={(e) => setOrderNotes(e.target.value)}
+                    className="lux-textarea-field"
+                  />
                 </div>
               </div>
             </div>
@@ -1541,43 +1556,46 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           margin: 0;
         }
 
-        /* Customer & Delivery Details Card */
+        /* Customer & Delivery Details & Customization Options Cards */
         .cust-delivery-details-card {
-          margin-top: 2.25rem;
+          margin-top: 2.5rem;
           background: #FFFFFF;
-          border: 1px solid #E8C86A;
-          border-radius: 20px;
+          border: 1px solid rgba(212, 175, 55, 0.25);
+          border-radius: 16px;
           padding: 32px;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+          box-sizing: border-box;
         }
 
         .card-section-header h3 {
-          font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-          font-size: 1.5rem;
+          font-family: var(--font-serif);
+          font-size: 1.55rem;
           font-weight: 700;
-          color: #3D2B1F;
-          margin: 0 0 0.25rem 0;
+          color: #2C2224;
+          margin: 0 0 0.35rem 0;
         }
 
         .card-section-header .step-hint {
-          margin-bottom: 1.75rem;
-          color: #776669;
-          font-size: 0.9rem;
+          margin-bottom: 2rem;
+          color: #7A6B63;
+          font-size: 0.92rem;
+          line-height: 1.45;
         }
 
-        .details-sub-section {
-          margin-bottom: 1.75rem;
-        }
-
-        .details-sub-section:last-child {
-          margin-bottom: 0;
+        .form-column-block {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
         }
 
         .sub-section-title {
-          font-size: 1.05rem;
-          font-weight: 700;
-          color: #5C3D2E;
-          margin: 0 0 1.25rem 0;
+          font-family: var(--font-serif);
+          font-size: 1.15rem;
+          font-weight: 600;
+          color: var(--gold-dark);
+          margin: 0 0 0.5rem 0;
+          padding-bottom: 8px;
+          border-bottom: 1.5px dashed rgba(212, 175, 55, 0.3);
           display: flex;
           align-items: center;
           gap: 0.5rem;
@@ -1589,14 +1607,14 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           gap: 24px;
         }
 
-        @media (max-width: 767px) {
+        @media (max-width: 991px) {
           .details-form-grid {
             grid-template-columns: 1fr;
-            gap: 18px;
+            gap: 20px;
           }
 
           .cust-delivery-details-card {
-            padding: 1.5rem 1.25rem;
+            padding: 24px 18px;
           }
         }
 
@@ -1611,54 +1629,107 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         }
 
         .field-label {
-          font-size: 0.9rem;
-          font-weight: 700;
-          color: #3D2B1F;
+          font-size: 16.5px;
+          font-weight: 600;
+          color: #2C2224;
           letter-spacing: 0.01em;
+          margin-bottom: 2px;
+          display: flex;
+          align-items: center;
+        }
+
+        .req-star {
+          color: #D4AF37;
+          font-weight: 700;
+          margin-left: 4px;
+        }
+
+        .opt-tag {
+          color: #8A7A70;
+          font-size: 13.5px;
+          font-weight: 500;
+          margin-left: 6px;
+        }
+
+        .field-helper {
+          font-size: 13.5px;
+          color: #7A6B63;
+          margin-top: 4px;
+          line-height: 1.35;
+        }
+
+        .select-wrapper {
+          position: relative;
+          width: 100%;
+          display: flex;
+          align-items: center;
+        }
+
+        .select-arrow {
+          position: absolute;
+          right: 18px;
+          color: #D4AF37;
+          font-size: 13px;
+          pointer-events: none;
+          transition: transform 0.25s ease;
         }
 
         .lux-input-field,
         .lux-select-field {
-          height: 56px;
+          height: 52px;
           width: 100%;
-          background: #FFFFFF;
-          border: 1px solid #E5E7EB;
-          border-radius: 14px;
+          background: #FFFDF9;
+          border: 1px solid rgba(212, 175, 55, 0.3);
+          border-radius: 12px;
           padding: 0 18px;
           font-size: 16px;
-          color: #1F2937;
-          font-family: inherit;
+          color: #2C2224;
+          font-family: var(--font-sans);
           box-sizing: border-box;
           outline: none;
-          transition: border-color 0.25s ease, box-shadow 0.25s ease;
+          transition: all 0.25s ease;
+        }
+
+        .lux-select-field {
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          padding-right: 44px;
+          cursor: pointer;
         }
 
         .lux-textarea-field {
           width: 100%;
-          background: #FFFFFF;
-          border: 1px solid #E5E7EB;
+          background: #FFFDF9;
+          border: 1px solid rgba(212, 175, 55, 0.3);
           border-radius: 12px;
-          padding: 16px;
+          padding: 14px 18px;
           font-size: 16px;
-          color: #1F2937;
-          font-family: inherit;
+          color: #2C2224;
+          font-family: var(--font-sans);
           box-sizing: border-box;
           outline: none;
           resize: vertical;
-          min-height: 100px;
-          transition: border-color 0.25s ease, box-shadow 0.25s ease;
+          min-height: 105px;
+          transition: all 0.25s ease;
         }
 
         .lux-input-field::placeholder,
         .lux-textarea-field::placeholder {
-          color: #9CA3AF;
+          color: #A09088;
         }
 
         .lux-input-field:focus,
         .lux-select-field:focus,
         .lux-textarea-field:focus {
-          border-color: #E8C86A;
-          box-shadow: 0 0 0 3px rgba(232, 200, 106, 0.25);
+          border-color: #D4AF37;
+          box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
+          background: #FFFFFF;
+        }
+
+        .date-picker::-webkit-calendar-picker-indicator {
+          cursor: pointer;
+          filter: invert(48%) sepia(79%) saturate(457%) hue-rotate(6deg) brightness(92%) contrast(89%);
         }
       `}</style>
     </section>
