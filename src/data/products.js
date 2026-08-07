@@ -6,11 +6,7 @@ export const PRODUCTS = [
     category: 'Thread Work',
     price: 1899,
     image: '/bridal_bangle_set.jpg',
-    images: [
-      '/bridal_bangle_set.jpg',
-      '/purple_velvet_bangles.jpg',
-      '/kundan_stone_bangles.jpg'
-    ],
+    images: ['/bridal_bangle_set.jpg'],
     shortDesc: 'Bespoke royal red velvet bangles handcrafted with intricate zardosi, pearl cluster latkans, and 24k gold leaf foil accents.',
     description: 'Designed exclusively for the modern bride, this full bridal set features 44 meticulously handcrafted silk velvet bangles, antique gold beaded Kada bangles, and pearl drop tassels. Customized to match your wedding lehenga or saree colors.',
     materials: 'Silk Thread & Velvet Base, 24k Gold Polish Beads, Glass Kundan Stones, Pearl Cluster Tassels',
@@ -28,10 +24,7 @@ export const PRODUCTS = [
     category: 'Thread Work',
     price: 1499,
     image: '/purple_velvet_bangles.jpg',
-    images: [
-      '/purple_velvet_bangles.jpg',
-      '/bridal_bangle_set.jpg'
-    ],
+    images: ['/purple_velvet_bangles.jpg'],
     shortDesc: 'Royal purple silk thread bangles encrusted with antique gold lotus Kundan stone borders.',
     description: 'A breathtaking bridal bangle ensemble made with premium royal purple silk wrapping and floral antique gold Kada bangles.',
     materials: 'Royal Purple Silk Thread, Hand-set Glass Kundan Stones, Brass Alloy Casing',
@@ -49,10 +42,7 @@ export const PRODUCTS = [
     category: 'Thread Work',
     price: 1299,
     image: '/kundan_stone_bangles.jpg',
-    images: [
-      '/kundan_stone_bangles.jpg',
-      '/bridal_bangle_set.jpg'
-    ],
+    images: ['/kundan_stone_bangles.jpg'],
     shortDesc: 'Artisanal stone-work statement bangles studded with ruby, emerald, sapphire and pearl Kundan stones.',
     description: 'Intricately handcrafted statement Kada bangles featuring multi-colored regal gemstones, perfect for sangeet, reception, or grand occasions.',
     materials: 'Antique Gold Polish Casing, Glass Kundan Crystals, Multi-color Faux Gemstones',
@@ -70,11 +60,7 @@ export const PRODUCTS = [
     category: 'Thread Work',
     price: 999,
     image: '/silk_thread_kundan_bangles.jpg',
-    images: [
-      '/silk_thread_kundan_bangles.jpg',
-      '/purple_velvet_bangles.jpg',
-      '/bridal_bangle_set.jpg'
-    ],
+    images: ['/silk_thread_kundan_bangles.jpg'],
     shortDesc: 'Vibrant silk thread bangles studded with floral stone Kundan motifs for sangeet & wedding favors.',
     description: 'Beautiful set of handcrafted colorful silk thread bangles wrapped with gold leaf wire and studded with Kundan glass stones.',
     materials: 'Multicolor Silk Threads, Gold Leaf Wire Wrap, Kundan Stone Flower Motifs',
@@ -94,11 +80,7 @@ export const PRODUCTS = [
     category: 'Resin Art',
     price: 599,
     image: '/resin_photo_frame.jpg',
-    images: [
-      '/resin_photo_frame.jpg',
-      '/resin_floral_coasters.jpg',
-      '/floral_resin_keychains.jpg'
-    ],
+    images: ['/resin_photo_frame.jpg'],
     shortDesc: 'Square polaroid resin photo frame magnets encased with preserved flowers and metallic gold foil.',
     description: 'Keep your memories alive with custom photo resin frame magnets handcrafted with real pressed botanicals, gold leaf accents, and high-clarity UV-resistant resin.',
     materials: 'UV Resistant Non-Yellowing Epoxy Resin, Dried Pressed Flowers, Gold Leaf Foil, Heavy Neodymium Magnet',
@@ -116,11 +98,7 @@ export const PRODUCTS = [
     category: 'Resin Art',
     price: 899,
     image: '/resin_floral_coasters.jpg',
-    images: [
-      '/resin_floral_coasters.jpg',
-      '/resin_photo_frame.jpg',
-      '/floral_resin_keychains.jpg'
-    ],
+    images: ['/resin_floral_coasters.jpg'],
     shortDesc: 'Luxury clear resin coasters handcrafted with real pressed daisies, wild botanicals, and gold leaf gilded borders.',
     description: 'Elevate your coffee table with these artisanal pressed flower resin coasters. Each coaster features real dried botanicals embedded in food-safe, crystal-clear resin.',
     materials: 'Food Grade Non-Toxic Resin, Real Pressed Botanicals, Metallic Gold Edge Gilding',
@@ -138,11 +116,7 @@ export const PRODUCTS = [
     category: 'Resin Art',
     price: 349,
     image: '/floral_resin_keychains.jpg',
-    images: [
-      '/floral_resin_keychains.jpg',
-      '/custom_resin_rakhi.jpg',
-      '/resin_floral_coasters.jpg'
-    ],
+    images: ['/floral_resin_keychains.jpg'],
     shortDesc: 'Handmade alphabet initial keychains filled with pressed dried flowers and gold leaf flakes.',
     description: 'Charming personalized letter keychains featuring custom initials, real dried flower petals, and durable gold hardware.',
     materials: 'High-Clarity Epoxy Resin, Real Dried Hydrangea & Rose Petals, Brass Gold Keyring',
@@ -160,11 +134,7 @@ export const PRODUCTS = [
     category: 'Resin Art',
     price: 499,
     image: '/custom_resin_rakhi.jpg',
-    images: [
-      '/custom_resin_rakhi.jpg',
-      '/floral_resin_keychains.jpg',
-      '/resin_photo_frame.jpg'
-    ],
+    images: ['/custom_resin_rakhi.jpg'],
     shortDesc: 'Handmade black & red resin personalized Rakhi bracelets with pearl beads and gold calligraphy names.',
     description: 'Unique custom resin Rakhi bracelets crafted with personalized gold lettering, real pearls, and gold-encrusted beads for your loved ones.',
     materials: 'Polished Resin Cabochon, Gold Foil Name Inlay, Real Fresh Water Pearls, Soft Silk Thread',
