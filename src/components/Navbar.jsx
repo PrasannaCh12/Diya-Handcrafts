@@ -5,9 +5,10 @@ import WhatsAppModal from './WhatsAppModal';
 
 const Navbar = ({ cartCount = 0, onOpenCart }) => {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [waModalOpen, setWaModalOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const mobileNavRef = React.useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +21,16 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Smoothly center the active page link in the mobile scrollable navigation bar
+  useEffect(() => {
+    if (mobileNavRef.current) {
+      const activeEl = mobileNavRef.current.querySelector('.mobile-scroll-link.active');
+      if (activeEl) {
+        activeEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    }
+  }, [location.pathname]);
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -54,10 +65,10 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
         <FaMagic style={{ fontSize: '0.8rem' }} />
       </div>
 
-      {/* Main Sticky Premium Header (Slimmer 78px height, 1400px max width) */}
+      {/* Main Sticky Header */}
       <header className={`navbar-header ${scrolled ? 'scrolled' : ''}`}>
         <div className="nav-container">
-          {/* Left: Logo, Brand Name & Tagline */}
+          {/* Left: Logo */}
           <Link to="/" className="nav-logo">
             <img src="/divya-logo.jpg" alt="Divya Handcrafts Logo" className="navbar-logo-img" />
             <div className="logo-text-wrap">
@@ -79,7 +90,7 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
             ))}
           </nav>
 
-          {/* Right: Actions (Search, Wishlist, Cart, Custom Order, WhatsApp) */}
+          {/* Right: Actions */}
           <div className="nav-actions">
             <button 
               className="icon-action-btn" 
@@ -110,7 +121,7 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
             </button>
 
             <button 
-              className="custom-order-btn"
+              className="custom-order-btn desktop-only-btn"
               onClick={() => navigate('/custom-order')}
               title="Design Custom Order"
             >
@@ -126,66 +137,21 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
             >
               <FaWhatsapp />
             </button>
-
-            <button 
-              className="mobile-hamburger" 
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle Navigation Menu"
-            >
-              {mobileMenuOpen ? <FaTimes /> : <FaBars />}
-            </button>
           </div>
         </div>
 
-        {/* Mobile Menu Dropdown Drawer */}
-        {mobileMenuOpen && (
-          <div className="mobile-menu-overlay">
-            <div className="mobile-menu-inner">
-              <div className="mobile-menu-header">
-                <span className="mobile-menu-title">Menu</span>
-                <button onClick={() => setMobileMenuOpen(false)} aria-label="Close menu">
-                  <FaTimes />
-                </button>
-              </div>
-              <ul className="mobile-nav-links">
-                {navLinks.map((link) => (
-                  <li key={link.name}>
-                    <NavLink 
-                      to={link.path} 
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={({ isActive }) => `mobile-link ${isActive ? 'active' : ''}`}
-                    >
-                      {link.name}
-                    </NavLink>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mobile-actions">
-                <button
-                  className="custom-order-btn-full"
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    navigate('/custom-order');
-                  }}
-                >
-                  <FaMagic /> Design Custom Order
-                </button>
-                
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    setWaModalOpen(true);
-                  }}
-                  className="btn-whatsapp-full"
-                  type="button"
-                >
-                  <FaWhatsapp /> WhatsApp Inquiry
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Mobile Horizontal Scrollable Navigation Bar (Always Visible Below Header) */}
+        <nav className="mobile-horizontal-subnav" ref={mobileNavRef}>
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.name}
+              to={link.path}
+              className={({ isActive }) => `mobile-scroll-link ${isActive ? 'active' : ''}`}
+            >
+              {link.name}
+            </NavLink>
+          ))}
+        </nav>
       </header>
 
       <WhatsAppModal
@@ -426,135 +392,52 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
           box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
         }
 
-        .mobile-hamburger {
+        /* Mobile Horizontal Scrollable Navigation Bar */
+        .mobile-horizontal-subnav {
           display: none;
-          background: transparent;
-          border: none;
-          font-size: 1.35rem;
-          color: #3E2C1C;
-          cursor: pointer;
-          padding: 0.4rem;
-        }
-
-        .mobile-menu-overlay {
-          position: fixed;
-          inset: 0;
-          background: rgba(30, 20, 15, 0.5);
-          backdrop-filter: blur(6px);
-          z-index: 1001;
-          display: flex;
-          justify-content: flex-end;
-        }
-
-        .mobile-menu-inner {
-          width: 82%;
-          max-width: 320px;
-          height: 100vh;
-          background: #FFFDF8;
-          padding: 1.75rem 1.5rem;
-          display: flex;
-          flex-direction: column;
-          box-shadow: -8px 0 30px rgba(0, 0, 0, 0.15);
-          animation: slideLeft 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        @keyframes slideLeft {
-          from { transform: translateX(100%); }
-          to { transform: translateX(0); }
-        }
-
-        .mobile-menu-header {
-          display: flex;
+          background: #FFFFFF;
+          border-top: 1px solid rgba(212, 175, 55, 0.18);
+          border-bottom: 1px solid rgba(212, 175, 55, 0.28);
+          overflow-x: auto;
+          white-space: nowrap;
+          padding: 0 1.25rem;
+          gap: 1.25rem;
           align-items: center;
-          justify-content: space-between;
-          padding-bottom: 1.25rem;
-          border-bottom: 1px solid #E8D8B5;
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
         }
 
-        .mobile-menu-title {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: 1.4rem;
-          font-weight: 700;
-          color: #3E2C1C;
+        .mobile-horizontal-subnav::-webkit-scrollbar {
+          display: none;
         }
 
-        .mobile-menu-header button {
-          background: none;
-          border: none;
-          font-size: 1.3rem;
-          color: #3E2C1C;
-          cursor: pointer;
-        }
-
-        .mobile-nav-links {
-          list-style: none;
-          display: flex;
-          flex-direction: column;
-          gap: 1.15rem;
-          margin-top: 1.5rem;
-          flex-grow: 1;
-          overflow-y: auto;
-        }
-
-        .mobile-link {
+        .mobile-scroll-link {
           text-decoration: none;
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: 1.25rem;
+          font-family: var(--font-sans, 'Montserrat', sans-serif);
+          font-size: 16px;
+          font-weight: 500;
           color: #3E2C1C;
+          padding: 0.7rem 0.2rem;
+          display: inline-block;
+          white-space: nowrap;
+          letter-spacing: 0.03em;
+          transition: color 0.25s ease, border-color 0.25s ease;
+          position: relative;
+          border-bottom: 2.5px solid transparent;
+          flex-shrink: 0;
+        }
+
+        .mobile-scroll-link:hover {
+          color: #D4AF37;
+        }
+
+        .mobile-scroll-link.active {
+          color: #D4AF37;
           font-weight: 600;
-          transition: color 0.2s;
-          display: block;
-        }
-
-        .mobile-link:hover,
-        .mobile-link.active {
-          color: #C79A2B;
-        }
-
-        .mobile-actions {
-          margin-top: 1.5rem;
-          display: flex;
-          flex-direction: column;
-          gap: 0.75rem;
-        }
-
-        .custom-order-btn-full {
-          width: 100%;
-          height: 44px;
-          border-radius: 50px;
-          border: 1.5px solid #C79A2B;
-          background: transparent;
-          color: #3E2C1C;
-          font-weight: 700;
-          font-size: 0.9rem;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
-          transition: all 0.3s ease;
-        }
-
-        .custom-order-btn-full:hover {
-          background: #C79A2B;
-          color: #FFFFFF;
-        }
-
-        .btn-whatsapp-full {
-          width: 100%;
-          height: 44px;
-          border-radius: 50px;
-          border: none;
-          background: #25D366;
-          color: #FFFFFF;
-          font-weight: 700;
-          font-size: 0.9rem;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
-          transition: all 0.3s ease;
+          border-bottom-color: #D4AF37;
         }
 
         @media (max-width: 1250px) {
@@ -568,13 +451,30 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
 
         @media (max-width: 1100px) {
           .desktop-nav {
-            display: none;
+            display: none !important;
           }
-          .custom-order-btn {
-            display: none;
+          .desktop-only-btn {
+            display: none !important;
           }
           .mobile-hamburger {
-            display: block;
+            display: none !important;
+          }
+          .mobile-horizontal-subnav {
+            display: flex !important;
+          }
+          .nav-container {
+            height: 64px !important;
+            padding: 0 1rem !important;
+          }
+          .navbar-logo-img {
+            width: 40px;
+            height: 40px;
+          }
+          .logo-brand {
+            font-size: 1.15rem;
+          }
+          .logo-tagline {
+            font-size: 0.48rem;
           }
         }
       `}</style>
