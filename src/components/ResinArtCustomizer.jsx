@@ -76,12 +76,12 @@ export const RESINART_DESIGNS = [
 ];
 
 export const RESINART_HIGHLIGHTS = [
-  '🌸 Preserved Wedding Flowers',
-  '🕒 Resin Wall Clocks',
-  '🖼️ Photo Frames & Name Plaques',
-  '🗝️ Personalized Keychains',
-  '🍽️ Decorative Trays & Coasters',
-  '🎁 Custom Gift Keepsakes'
+  'Preserved Wedding Flowers',
+  'Resin Wall Clocks',
+  'Photo Frames & Name Plaques',
+  'Personalized Keychains',
+  'Decorative Trays & Coasters',
+  'Custom Gift Keepsakes'
 ];
 
 const ResinArtCustomizer = ({ onSelectProduct }) => {
@@ -216,34 +216,30 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
     <section id="resinart-customizer" className="customizer-section section-padding">
       <div className="container">
         {/* Section Header */}
-        <div className="section-header text-center" style={{ marginBottom: '3.5rem' }}>
-          <div className="section-subtitle">
-            <span className="sub-line left-sub-line"></span>
-            <FaPalette className="sub-icon" /> HANDMADE RESIN ART STUDIO
-            <span className="sub-line right-sub-line"></span>
-          </div>
-          <h2 className="section-title">Customize Your Resin Art</h2>
-          <p className="section-description">
+        <div className="hero-header-wrap">
+          <div className="tw-hero-subtitle">HANDMADE RESIN ART STUDIO</div>
+          <h2 className="tw-hero-title">Customize Your Resin Art</h2>
+          <p className="tw-hero-description">
             Transform your <span className="gold-highlight">precious memories</span> into <span className="gold-highlight">timeless resin art</span> creations. Customize preserved <span className="gold-highlight">wedding flowers</span>, name plaques, <span className="gold-highlight">wall clocks</span>, trays, keychains, photo frames, coasters, and keepsakes with premium <span className="gold-highlight">crystal-clear resin</span>, elegant floral arrangements, and <span className="gold-highlight">personalized designs</span>. Every piece is <span className="gold-highlight">handcrafted with love</span> to preserve your special moments forever.
           </p>
 
-          <div className="ra-hero-divider">
+          <div className="tw-hero-divider">
             <span className="divider-line left-line"></span>
             <span className="divider-motif">🪷</span>
             <span className="divider-line right-line"></span>
           </div>
 
-          <div className="brand-tagline">
+          <div className="tw-brand-tagline">
             <span className="quote-mark">“</span>Preserving Your Precious Memories Forever.<span className="quote-mark">”</span>
           </div>
         </div>
 
         {/* Highlights Bar */}
-        <div className="special-features-bar glass-card mb-4">
+        <div className="special-features-bar">
           <div className="features-flex">
             {RESINART_HIGHLIGHTS.map((feat, idx) => (
               <span key={idx} className="feature-pill">
-                <FaGem className="text-gold mr-1" /> {feat}
+                <FaGem style={{ color: '#C89B3C', fontSize: '18px' }} /> {feat}
               </span>
             ))}
           </div>
@@ -735,12 +731,15 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
           z-index: 0;
         }
 
-        .section-header {
+        .hero-header-wrap {
+          max-width: 960px;
+          margin: 0 auto 3rem auto;
+          text-align: center;
           position: relative;
           z-index: 1;
         }
 
-        .section-subtitle {
+        .tw-hero-subtitle {
           font-family: var(--font-sans);
           font-size: 0.85rem;
           font-weight: 700;
@@ -748,32 +747,11 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
           color: #C89B3C;
           text-transform: uppercase;
           margin-bottom: 28px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 12px;
+          opacity: 0;
+          animation: heroFadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
         }
 
-        .sub-line {
-          height: 1px;
-          width: 32px;
-          display: inline-block;
-        }
-
-        .sub-line.left-sub-line {
-          background: linear-gradient(90deg, rgba(200, 155, 60, 0) 0%, rgba(200, 155, 60, 0.7) 100%);
-        }
-
-        .sub-line.right-sub-line {
-          background: linear-gradient(90deg, rgba(200, 155, 60, 0.7) 0%, rgba(200, 155, 60, 0) 100%);
-        }
-
-        .sub-icon {
-          color: #C89B3C;
-          font-size: 15px;
-        }
-
-        .section-title {
+        .tw-hero-title {
           font-family: var(--font-serif);
           font-size: 52px;
           font-weight: 700;
@@ -781,18 +759,22 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
           line-height: 1.2;
           letter-spacing: 0.02em;
           margin: 0 0 35px 0;
+          opacity: 0;
+          animation: heroFadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
         }
 
-        .section-description {
+        .tw-hero-description {
           font-family: var(--font-sans);
           font-size: 20px;
           line-height: 1.8;
-          letter-spacing: 0.25px;
+          letter-spacing: 0.2px;
           color: rgba(45, 37, 35, 0.88);
-          max-width: 760px;
+          max-width: 750px;
           width: 100%;
           margin: 0 auto 50px auto;
           text-align: center;
+          opacity: 0;
+          animation: heroFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
         }
 
         .gold-highlight {
@@ -801,12 +783,14 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
           text-decoration: none;
         }
 
-        .ra-hero-divider {
+        .tw-hero-divider {
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 16px;
-          margin: 45px auto 40px auto;
+          margin: 50px auto 50px auto;
+          opacity: 0;
+          animation: heroFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
         }
 
         .divider-line {
@@ -833,21 +817,22 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
           line-height: 1;
         }
 
-        .brand-tagline {
+        .tw-brand-tagline {
           font-family: var(--font-serif);
           font-style: italic;
           font-size: 22px;
           font-weight: 500;
           line-height: 1.7;
           letter-spacing: 0.3px;
-          color: rgba(45, 37, 35, 0.85);
-          opacity: 0.85;
+          color: rgba(45, 37, 35, 0.94);
+          opacity: 0.92;
           text-align: center;
-          margin-top: 0;
-          margin-bottom: 50px;
+          margin-top: 50px;
+          margin-bottom: 55px;
+          animation: heroFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
         }
 
-        .brand-tagline .quote-mark {
+        .tw-brand-tagline .quote-mark {
           color: #C89B3C;
           font-family: var(--font-serif);
           font-size: 26px;
@@ -856,70 +841,33 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
           margin: 0 4px;
         }
 
-        .section-subtitle,
-        .section-title,
-        .section-description,
-        .ra-hero-divider,
-        .brand-tagline {
-          opacity: 0;
-          animation: raHeroFadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-
-        .section-subtitle { animation-delay: 0.1s; }
-        .section-title { animation-delay: 0.2s; }
-        .section-description { animation-delay: 0.3s; }
-        .ra-hero-divider { animation-delay: 0.35s; }
-        .brand-tagline { animation-delay: 0.4s; }
-
-        @keyframes raHeroFadeUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .section-subtitle,
-          .section-title,
-          .section-description,
-          .ra-hero-divider,
-          .brand-tagline {
-            animation: none !important;
-            opacity: 1 !important;
-            transform: none !important;
-          }
-        }
-
         @media (max-width: 991px) {
-          .section-title { font-size: 44px; }
-          .section-description {
+          .tw-hero-title { font-size: 44px; }
+          .tw-hero-description {
             font-size: 18px;
             max-width: 650px;
             margin-bottom: 40px;
           }
 
-          .brand-tagline {
+          .tw-brand-tagline {
             font-size: 20px;
-            margin-bottom: 40px;
+            margin-top: 40px;
+            margin-bottom: 45px;
           }
         }
 
         @media (max-width: 576px) {
           .customizer-section { padding: 75px 0 75px 0; }
-          .section-subtitle { margin-bottom: 20px; }
-          .section-title { font-size: 34px; margin-bottom: 24px; }
-          .section-description {
+          .tw-hero-subtitle { margin-bottom: 20px; }
+          .tw-hero-title { font-size: 34px; margin-bottom: 24px; }
+          .tw-hero-description {
             font-size: 16px;
             max-width: 90%;
             margin-bottom: 30px;
           }
 
-          .ra-hero-divider {
-            margin: 35px auto 30px auto;
+          .tw-hero-divider {
+            margin: 35px auto 35px auto;
             gap: 12px;
           }
 
@@ -931,9 +879,94 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
             font-size: 22px;
           }
 
-          .brand-tagline {
+          .tw-brand-tagline {
             font-size: 18px;
+            margin-top: 35px;
             margin-bottom: 35px;
+          }
+        }
+
+        .special-features-bar {
+          max-width: 900px;
+          margin: 0 auto 4.5rem auto;
+          padding: 24px 32px;
+          border: 1px solid rgba(200, 155, 60, 0.22);
+          border-radius: 20px;
+          background: #FFFDF8;
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+          opacity: 0;
+          animation: heroFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+          position: relative;
+          z-index: 1;
+        }
+
+        @media (max-width: 576px) {
+          .special-features-bar {
+            padding: 18px 14px;
+            margin-bottom: 3.5rem;
+          }
+        }
+
+        .features-flex {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 16px 20px;
+          justify-content: center;
+          align-items: center;
+          max-width: 840px;
+          margin: 0 auto;
+        }
+
+        .feature-pill {
+          font-family: var(--font-sans);
+          font-weight: 500;
+          font-size: 15px;
+          color: #2D2523;
+          background: #FFFDF8;
+          border: 1px solid rgba(200, 155, 60, 0.2);
+          border-radius: 50px;
+          padding: 10px 22px;
+          min-height: 46px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          transition: all 300ms ease;
+          user-select: none;
+          box-sizing: border-box;
+        }
+
+        .feature-pill:hover {
+          background: #FFF9EE;
+          border-color: #C89B3C;
+          transform: translateY(-3px) scale(1.02);
+          box-shadow: 0 6px 20px rgba(200, 155, 60, 0.16);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .tw-hero-subtitle,
+          .tw-hero-title,
+          .tw-hero-description,
+          .tw-hero-divider,
+          .tw-brand-tagline,
+          .special-features-bar {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+          }
+          .feature-pill:hover {
+            transform: none !important;
+          }
+        }
+
+        @keyframes heroFadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
           }
         }
 
