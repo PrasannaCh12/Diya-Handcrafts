@@ -84,7 +84,108 @@ export const THREADWORK_HIGHLIGHTS = [
   '💝 Personalized Gift Packaging'
 ];
 
-const ThreadWorkCard = ({ tw, idx, isSelected, isExpanded, onSelect, onToggleExpand, onOpenLightbox }) => {
+const ProductDetailsModal = ({ product, isOpen, onClose, onSelectDesign }) => {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen || !product) return null;
+
+  return (
+    <div className="modal-backdrop-overlay" onClick={onClose}>
+      <div className="product-details-modal-box" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close-icon" onClick={onClose} title="Close Modal (ESC)">
+          <FaTimes />
+        </button>
+
+        <div className="modal-two-col-grid">
+          {/* Left Column: Large Product Image */}
+          <div className="modal-image-col">
+            <div className="modal-img-wrap">
+              <img src={product.image} alt={product.name} className="modal-main-img" />
+              <div className="modal-img-badge">✨ Handmade Studio Piece</div>
+            </div>
+          </div>
+
+          {/* Right Column: Detailed Product Specs */}
+          <div className="modal-details-col">
+            <div className="modal-header-block">
+              <span className="modal-category-tag">🧵 Thread Work Bangle Collection</span>
+              <h2 className="modal-product-title">{product.icon} {product.name}</h2>
+            </div>
+
+            <div className="modal-body-scroll">
+              <div className="modal-section-block">
+                <h4>📜 Detailed Overview</h4>
+                <p className="modal-desc-text">{product.desc}</p>
+              </div>
+
+              <div className="modal-section-block">
+                <h4>✨ Craftsmanship & Materials</h4>
+                <ul className="modal-specs-list">
+                  <li>✨ <strong>Embroidery:</strong> 100% Handcrafted Zardosi, Silk Threads & Gold Resham</li>
+                  <li>💎 <strong>Stone Details:</strong> Authentic Kundan stones, pearls & glass beads</li>
+                  <li>🧵 <strong>Core Base:</strong> Soft velvet finish over durable inner bangle frame</li>
+                </ul>
+              </div>
+
+              <div className="modal-section-block">
+                <h4>📏 Sizes & Customizations</h4>
+                <p className="modal-info-p">
+                  Standard sizes available: 2.2, 2.4, 2.6, 2.8. Custom wrist sizing and personalized color palette matching are available upon request.
+                </p>
+              </div>
+
+              <div className="modal-section-block">
+                <h4>🌿 Care Instructions</h4>
+                <p className="modal-info-p">
+                  Avoid direct moisture, water, or perfumes. Store in a padded velvet pouch to preserve metallic thread shine.
+                </p>
+              </div>
+
+              <div className="modal-section-block">
+                <h4>🎉 Recommended Occasions</h4>
+                <span className="modal-tag-pill">Bridal Weddings</span>
+                <span className="modal-tag-pill">Festival Special</span>
+                <span className="modal-tag-pill">Mehndi & Reception</span>
+              </div>
+            </div>
+
+            <div className="modal-actions-bar">
+              <button 
+                type="button" 
+                className="btn btn-select-design"
+                onClick={() => {
+                  onSelectDesign(product.name);
+                  onClose();
+                }}
+              >
+                <FaCheckCircle /> Select This Design
+              </button>
+              <button type="button" className="btn btn-close-modal" onClick={onClose}>
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ThreadWorkCard = ({ tw, idx, isSelected, onSelect, onOpenDetailsModal }) => {
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = React.useRef(null);
 
@@ -108,11 +209,16 @@ const ThreadWorkCard = ({ tw, idx, isSelected, isExpanded, onSelect, onToggleExp
 
   const staggerDelay = (idx % 4) * 80;
 
+  const handleCardClick = () => {
+    onSelect(tw.name);
+    onOpenDetailsModal(tw);
+  };
+
   return (
     <div
       ref={cardRef}
-      className={`flavor-card ${isSelected ? 'selected' : ''} ${isExpanded ? 'card-is-expanded' : ''} ${isVisible ? 'fade-in-visible' : ''}`}
-      onClick={() => onSelect(tw.name)}
+      className={`flavor-card ${isSelected ? 'selected' : ''} ${isVisible ? 'fade-in-visible' : ''}`}
+      onClick={handleCardClick}
       style={{
         animationDelay: `${staggerDelay}ms`
       }}
@@ -124,8 +230,8 @@ const ThreadWorkCard = ({ tw, idx, isSelected, isExpanded, onSelect, onToggleExp
 
       <div 
         className="flavor-img-wrap" 
-        onClick={(e) => { e.stopPropagation(); onOpenLightbox(e, idx); }} 
-        title="Click to view full-screen photo"
+        onClick={(e) => { e.stopPropagation(); onSelect(tw.name); onOpenDetailsModal(tw); }} 
+        title="Click to view product details"
       >
         <img 
           src={tw.image} 
@@ -144,42 +250,10 @@ const ThreadWorkCard = ({ tw, idx, isSelected, isExpanded, onSelect, onToggleExp
 
         <div 
           className="card-view-details-link"
-          onClick={(e) => onToggleExpand(tw.id, e)}
+          onClick={(e) => { e.stopPropagation(); onSelect(tw.name); onOpenDetailsModal(tw); }}
         >
-          <span>{isExpanded ? 'Hide Details' : 'View Details'} →</span>
+          <span>View Details →</span>
         </div>
-
-        {/* Smooth Overlay Panel for Product Details (0 Grid Row Height Shift) */}
-        {isExpanded && (
-          <div className="card-details-overlay" onClick={(e) => e.stopPropagation()}>
-            <button 
-              type="button"
-              className="overlay-close-btn" 
-              onClick={(e) => onToggleExpand(tw.id, e)}
-              title="Close details"
-            >
-              <FaTimes />
-            </button>
-            <div className="overlay-inner-scroll">
-              <h4 className="overlay-title">{tw.icon} {tw.name}</h4>
-              <p className="drawer-desc">{tw.desc}</p>
-
-              <div className="drawer-info-block">
-                <h5>✨ Bangle Specs & Materials:</h5>
-                <ul>
-                  <li>✨ 100% Hand-embroidered Zardosi & Threadwork</li>
-                  <li>💎 Premium Velvet & Silk Base with Kundan Beads</li>
-                  <li>📏 Sizes Available: 2.2, 2.4, 2.6, 2.8 & Custom</li>
-                </ul>
-              </div>
-
-              <div className="drawer-info-block">
-                <h5>🌿 Care Instructions:</h5>
-                <p>Keep away from direct water or perfume. Store in a soft pouch to preserve metallic thread shine.</p>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
@@ -207,15 +281,10 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
   const [deliveryTime, setDeliveryTime] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [orderNotes, setOrderNotes] = useState('');
+  const [detailsModalProduct, setDetailsModalProduct] = useState(null);
   const [waModalOpen, setWaModalOpen] = useState(false);
   const [waOrderText, setWaOrderText] = useState('');
-  const [expandedDesignId, setExpandedDesignId] = useState(null);
   const [lightboxIndex, setLightboxIndex] = useState(null);
-
-  const toggleCardExpansion = (id, e) => {
-    if (e) e.stopPropagation();
-    setExpandedDesignId((prev) => (prev === id ? null : id));
-  };
 
   const handleDirectCardWhatsAppOrder = (item) => {
     let text = `✨ *Direct Bangle Order - Divya Handcrafts* ✨\n`;
@@ -260,7 +329,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
   }, [lightboxIndex]);
 
   const selectDesign = (designName) => {
-    setSelectedDesign((prev) => (prev === designName ? '' : designName));
+    setSelectedDesign(designName);
   };
 
   const handleCardClick = (tw) => {
@@ -361,17 +430,14 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
               <div className="tw-5col-grid">
                 {THREADWORK_DESIGNS.map((tw, idx) => {
                   const isSelected = selectedDesign === tw.name;
-                  const isExpanded = expandedDesignId === tw.id;
                   return (
                     <ThreadWorkCard
                       key={tw.id}
                       tw={tw}
                       idx={idx}
                       isSelected={isSelected}
-                      isExpanded={isExpanded}
                       onSelect={(name) => selectDesign(name)}
-                      onToggleExpand={(id, e) => toggleCardExpansion(id, e)}
-                      onOpenLightbox={(e, index) => openLightbox(e, index)}
+                      onOpenDetailsModal={(item) => setDetailsModalProduct(item)}
                     />
                   );
                 })}
@@ -734,6 +800,13 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           </div>
         </div>
       </div>
+
+      <ProductDetailsModal
+        product={detailsModalProduct}
+        isOpen={detailsModalProduct !== null}
+        onClose={() => setDetailsModalProduct(null)}
+        onSelectDesign={(name) => setSelectedDesign(name)}
+      />
 
       <WhatsAppModal
         isOpen={waModalOpen}
@@ -1256,154 +1329,266 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           transform: rotate(180deg);
         }
 
-        .card-details-overlay {
-          position: absolute;
+        .modal-backdrop-overlay {
+          position: fixed;
           top: 0;
           left: 0;
           right: 0;
           bottom: 0;
-          background: rgba(255, 255, 255, 0.97);
-          backdrop-filter: blur(8px);
-          z-index: 30;
-          padding: 16px;
-          display: flex;
-          flex-direction: column;
-          border-radius: 15px;
-          animation: overlayFadeIn 0.25s ease forwards;
-          box-sizing: border-box;
-          text-align: left;
-        }
-
-        @keyframes overlayFadeIn {
-          from {
-            opacity: 0;
-            transform: scale(0.97);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-
-        .overlay-close-btn {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          background: rgba(212, 175, 55, 0.15);
-          color: #5C3D2E;
-          border: 1px solid rgba(212, 175, 55, 0.3);
-          width: 28px;
-          height: 28px;
-          border-radius: 50%;
+          background: rgba(0, 0, 0, 0.65);
+          backdrop-filter: blur(6px);
+          z-index: 1000;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 12px;
-          cursor: pointer;
-          z-index: 35;
-          transition: all 0.2s ease;
+          padding: 24px;
+          box-sizing: border-box;
         }
 
-        .overlay-close-btn:hover {
+        .product-details-modal-box {
+          background: #FFFFFF;
+          border-radius: 18px;
+          border: 1px solid rgba(212, 175, 55, 0.25);
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+          width: 100%;
+          max-width: 920px;
+          max-height: 88vh;
+          position: relative;
+          overflow: hidden;
+          animation: modalFadeScale 0.28s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+          display: flex;
+          flex-direction: column;
+        }
+
+        @keyframes modalFadeScale {
+          from {
+            opacity: 0;
+            transform: scale(0.94) translateY(12px);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+
+        .modal-close-icon {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: rgba(0, 0, 0, 0.05);
+          border: none;
+          color: #2C2224;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 20;
+          transition: all 0.25s ease;
+        }
+
+        .modal-close-icon:hover {
           background: #D4AF37;
           color: #FFFFFF;
         }
 
-        .overlay-inner-scroll {
-          overflow-y: auto;
-          max-height: 100%;
-          padding-right: 4px;
-          display: flex;
-          flex-direction: column;
-          gap: 0.65rem;
+        .modal-two-col-grid {
+          display: grid;
+          grid-template-columns: 45% 55%;
+          height: 100%;
+          max-height: 88vh;
         }
 
-        .overlay-title {
-          font-family: var(--font-serif);
-          font-size: 1.05rem;
-          font-weight: 700;
-          color: #2C2224;
-          margin: 0;
-          padding-right: 24px;
-          line-height: 1.3;
+        @media (max-width: 768px) {
+          .modal-two-col-grid {
+            grid-template-columns: 1fr;
+            overflow-y: auto;
+          }
         }
 
-        .drawer-desc {
-          font-size: 0.85rem;
-          line-height: 1.45;
-          color: #3C2E31;
-          margin: 0;
-        }
-
-        .drawer-info-block h5 {
-          font-size: 0.82rem;
-          font-weight: 700;
-          color: #A54E62;
-          margin: 0 0 0.25rem 0;
-        }
-
-        .drawer-info-block ul {
-          margin: 0;
-          padding-left: 1rem;
-          line-height: 1.4;
-          font-size: 0.8rem;
-        }
-
-        .drawer-info-block p {
-          margin: 0;
-          font-size: 0.8rem;
-          color: #665558;
-        }
-
-        .btn-whatsapp-card-order {
-          background: #25D366;
-          color: #FFFFFF;
-          border: none;
-          padding: 0.55rem 1rem;
-          border-radius: 12px;
-          font-weight: 700;
-          font-size: 0.85rem;
+        .modal-image-col {
+          padding: 24px;
+          background: #FCFAF7;
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 0.4rem;
-          margin-top: 0.4rem;
-          transition: background 0.2s ease, transform 0.2s ease;
-          cursor: pointer;
+        }
+
+        .modal-img-wrap {
           width: 100%;
-        }
-
-        .btn-whatsapp-card-order:hover {
-          background: #1DA851;
-          transform: translateY(-2px);
-        }
-
-        .flavor-desc-expandable {
+          height: 100%;
+          min-height: 340px;
+          max-height: 440px;
+          position: relative;
+          border-radius: 14px;
           overflow: hidden;
-          max-height: 0;
-          opacity: 0;
-          transform: translateY(-6px);
-          transition: max-height 0.35s cubic-bezier(0.165, 0.84, 0.44, 1),
-                      opacity 0.35s ease,
-                      transform 0.35s ease,
-                      margin-top 0.35s ease;
-          margin-top: 0;
+          box-shadow: 0 8px 24px rgba(61, 43, 31, 0.1);
+          border: 1px solid rgba(212, 175, 55, 0.2);
         }
 
-        .flavor-desc-expandable.expanded {
-          max-height: 280px;
-          opacity: 1;
-          transform: translateY(0);
-          margin-top: 0.45rem;
-          padding-top: 0.35rem;
-          border-top: 1px dashed rgba(212, 175, 55, 0.3);
+        .modal-main-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          transition: transform 0.4s ease;
         }
 
-        .flavor-desc {
-          font-size: 0.78rem;
-          color: var(--text-muted);
-          line-height: 1.4;
+        .modal-main-img:hover {
+          transform: scale(1.03);
+        }
+
+        .modal-img-badge {
+          position: absolute;
+          bottom: 14px;
+          left: 14px;
+          background: rgba(255, 255, 255, 0.92);
+          backdrop-filter: blur(4px);
+          color: #2C2224;
+          font-size: 12px;
+          font-weight: 600;
+          padding: 6px 14px;
+          border-radius: 50px;
+          border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .modal-details-col {
+          padding: 28px 32px;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          overflow: hidden;
+          box-sizing: border-box;
+        }
+
+        .modal-header-block {
+          margin-bottom: 16px;
+          padding-bottom: 14px;
+          border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .modal-category-tag {
+          font-size: 11.5px;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          color: #D4AF37;
+          font-weight: 700;
+          display: block;
+          margin-bottom: 4px;
+        }
+
+        .modal-product-title {
+          font-family: var(--font-serif);
+          font-size: 26px;
+          font-weight: 700;
+          color: #2C2224;
           margin: 0;
+          line-height: 1.25;
+        }
+
+        .modal-body-scroll {
+          overflow-y: auto;
+          flex: 1;
+          padding-right: 8px;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .modal-section-block h4 {
+          font-family: var(--font-serif);
+          font-size: 15.5px;
+          font-weight: 600;
+          color: #2C2224;
+          margin: 0 0 6px 0;
+        }
+
+        .modal-desc-text {
+          font-size: 14.5px;
+          line-height: 1.6;
+          color: #5A4A42;
+          margin: 0;
+        }
+
+        .modal-specs-list {
+          margin: 0;
+          padding-left: 18px;
+          font-size: 13.5px;
+          color: #4A3A32;
+          line-height: 1.65;
+        }
+
+        .modal-info-p {
+          font-size: 13.5px;
+          color: #5A4A42;
+          line-height: 1.55;
+          margin: 0;
+        }
+
+        .modal-tag-pill {
+          display: inline-block;
+          font-size: 12px;
+          font-weight: 500;
+          color: #2C2224;
+          background: #FFFDF9;
+          border: 1px solid rgba(212, 175, 55, 0.3);
+          padding: 4px 12px;
+          border-radius: 50px;
+          margin-right: 6px;
+          margin-top: 4px;
+        }
+
+        .modal-actions-bar {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-top: 20px;
+          padding-top: 16px;
+          border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-select-design {
+          flex: 1;
+          height: 48px;
+          background: linear-gradient(135deg, #F6D365 0%, #D4AF37 50%, #C79A2B 100%);
+          color: #FFFFFF;
+          border: none;
+          border-radius: 12px;
+          font-weight: 700;
+          font-size: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          cursor: pointer;
+          transition: all 0.25s ease;
+          box-shadow: 0 4px 14px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-select-design:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 18px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-close-modal {
+          height: 48px;
+          padding: 0 22px;
+          background: #F3F4F6;
+          color: #4B5563;
+          border: 1px solid #E5E7EB;
+          border-radius: 12px;
+          font-weight: 600;
+          font-size: 14px;
+          cursor: pointer;
+          transition: all 0.22s ease;
+        }
+
+        .btn-close-modal:hover {
+          background: #E5E7EB;
+          color: #1F2937;
         }
 
         /* Premium Lightbox Modal Styles */
