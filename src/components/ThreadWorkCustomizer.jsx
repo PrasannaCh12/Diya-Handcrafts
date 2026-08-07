@@ -8,70 +8,210 @@ export const THREADWORK_DESIGNS = [
     name: 'Royal Peacock Silk Thread Bridal Bangle Set',
     icon: '🧵',
     desc: 'Luxurious handcrafted royal blue silk thread bridal bangles featuring antique peacock motifs, premium kundan stones, sparkling crystals, and traditional temple-inspired detailing. Perfect for weddings, receptions, and festive occasions.',
-    image: '/blue_peacock_bangles.jpg'
+    image: '/blue_peacock_bangles.jpg',
+    images: ['/blue_peacock_bangles.jpg', '/emerald_coin_bangles.jpg', '/royal_emerald_peacock_set.jpg'],
+    materials: 'Royal Blue Silk Thread, Antique Gold Peacock Motifs, Hand-set Kundan Stones & Crystals',
+    processingTime: '3 – 5 Business Days (Handcrafted to Order)',
+    careInstructions: 'Keep in an airtight box or velvet pouch. Avoid moisture, hairsprays, and harsh perfumes.',
+    customizations: {
+      sizes: ['2.2', '2.4', '2.6', '2.8', 'Custom Wrist Measure'],
+      colors: ['Royal Peacock Blue', 'Emerald Green', 'Ruby Red', 'Gold & Pearl']
+    },
+    specs: [
+      '100% Hand-embroidered Peacock Motifs & Silk Threadwork',
+      'Hand-set Kundan Stones & Sparkling Crystals',
+      'Custom Bridal Set of 24 to 44 Bangles'
+    ],
+    occasions: ['Bridal Weddings', 'Grand Receptions', 'Festive Celebrations']
   },
   {
     id: 'tw-purple-velvet',
     name: 'Royal Emerald Coin Silk Thread Bridal Bangle Set',
     icon: '💚',
     desc: 'Handcrafted emerald green silk thread bridal bangles featuring antique gold coin motifs, ruby-red stones, crystal embellishments, and traditional South Indian temple-inspired detailing. Perfect for weddings, bridal ceremonies, and festive occasions.',
-    image: '/emerald_coin_bangles.jpg'
+    image: '/emerald_coin_bangles.jpg',
+    images: ['/emerald_coin_bangles.jpg', '/blue_peacock_bangles.jpg'],
+    materials: 'Emerald Green Silk Thread, Antique Temple Coins, Ruby Kundan Crystals & Brass Base',
+    processingTime: '3 – 4 Business Days',
+    careInstructions: 'Wipe gently with a soft dry cloth after use. Store away from direct sunlight and humidity.',
+    customizations: {
+      sizes: ['2.2', '2.4', '2.6', '2.8'],
+      colors: ['Emerald & Gold', 'Ruby & Emerald Mix', 'Classic Gold']
+    },
+    specs: [
+      'Authentic Temple Coin Motifs & Kundan Details',
+      'Premium Emerald Green Resham Thread Wrapping',
+      'Comfortable & Durable Inner Frame'
+    ],
+    occasions: ['Weddings', 'Bridal Ceremonies', 'Traditional Festive Wear']
   },
   {
     id: 'tw-kundan-cuffs',
     name: 'Emerald Peacock Silk Thread Bangles',
     icon: '🦚',
     desc: 'Elegant handcrafted emerald green silk thread bangles featuring antique peacock motifs, premium kundan stones, sparkling crystals, and traditional gold embellishments. Perfect for weddings, festivals, return gifts, and special occasions.',
-    image: '/emerald_peacock_bangles.png'
+    image: '/emerald_peacock_bangles.png',
+    images: ['/emerald_peacock_bangles.png', '/royal_emerald_peacock_set.jpg'],
+    materials: 'Emerald Green Resham Thread, Antique Gold Peacock Cuffs, Glass Kundan Crystals',
+    processingTime: '2 – 4 Business Days',
+    careInstructions: 'Store in dry cotton wrap. Keep away from water, soap, and chemicals.',
+    customizations: {
+      sizes: ['2.2', '2.4', '2.6', '2.8'],
+      colors: ['Emerald Green', 'Peacock Blue', 'Crimson Red']
+    },
+    specs: [
+      'Intricate Peacock Kundan Centerpieces',
+      'Hand-wrapped Silk Thread Finish',
+      'Set of Heavy Statement Bangle Cuffs'
+    ],
+    occasions: ['Wedding Favors', 'Sangeet & Mehndi', 'Festive Celebrations']
   },
   {
     id: 'tw-multicolor-set',
     name: 'Royal Emerald Peacock Bridal Bangle Set',
     icon: '✨',
     desc: 'Premium handcrafted emerald green silk thread bridal bangles featuring antique gold peacock motifs, sparkling mirror kundan stones, crystal embellishments, and intricate traditional detailing. A luxurious choice for weddings, bridal ceremonies, festivals, and special occasions.',
-    image: '/royal_emerald_peacock_set.jpg'
+    image: '/royal_emerald_peacock_set.jpg',
+    images: ['/royal_emerald_peacock_set.jpg', '/emerald_peacock_bangles.png'],
+    materials: 'Emerald Silk Threads, Mirror Kundan Stones, Antique Gold Kada Castings',
+    processingTime: '3 – 5 Business Days',
+    careInstructions: 'Store flat in velvet box. Clean with microfiber cloth.',
+    customizations: {
+      sizes: ['2.2', '2.4', '2.6', '2.8', 'Custom Sizing'],
+      colors: ['Royal Emerald & Gold', 'Ruby Red & Gold', 'Multicolor Velvet']
+    },
+    specs: [
+      'Handcrafted Mirror Kundan & Gold Detailing',
+      'Heavy Bridal Stack of 36 Bangles',
+      'Includes Premium Kada Borders'
+    ],
+    occasions: ['Bridal Ceremonies', 'Grand Weddings', 'Reception & Party Wear']
   },
   {
     id: 'tw-floral-thread',
     name: 'Multicolor Designer Silk Thread Bangle Collection',
     icon: '🌈',
     desc: 'Vibrant handcrafted silk thread bangles in royal blue, mustard yellow, pink, emerald green, and crimson red, beautifully embellished with floral kundan stones, gold accents, and elegant traditional detailing. Perfect for festivals, bridal favors, return gifts, and everyday ethnic wear.',
-    image: '/multicolor_bangles_collection.jpg'
+    image: '/multicolor_bangles_collection.jpg',
+    images: ['/multicolor_bangles_collection.jpg', '/blue_peacock_bangles.jpg'],
+    materials: 'Vibrant Silk Thread Palette, Gold Leaf Wire, Floral Kundan Flower Studs',
+    processingTime: '2 – 3 Business Days',
+    careInstructions: 'Avoid direct contact with liquids or perfumes. Store in airtight box.',
+    customizations: {
+      sizes: ['2.2', '2.4', '2.6', '2.8'],
+      colors: ['Multicolor Rainbow Mix', 'Festive Pink & Yellow', 'Green & Red']
+    },
+    specs: [
+      'Vibrant Multi-hue Silk Thread Collection',
+      'Floral Kundan Accent Motifs',
+      'Ideal for Return Gifts & Bulk Favors'
+    ],
+    occasions: ['Return Gifts', 'Mehndi Functions', 'Everyday Festive Styling']
   },
   {
     id: 'tw-bridal-chooda',
     name: 'Lotus Kundan Designer Bangles',
     icon: '🪷',
     desc: 'Elegant handcrafted silk thread bangles featuring lotus-shaped ruby pink kundan stones, emerald green accents, antique gold detailing, and sparkling crystal embellishments. A graceful design perfect for weddings, festive occasions, traditional ceremonies, and premium gifting.',
-    image: '/lotus_kundan_bangles.png'
+    image: '/lotus_kundan_bangles.png',
+    images: ['/lotus_kundan_bangles.png', '/emerald_coin_bangles.jpg'],
+    materials: 'Ruby Pink Kundan Crystals, Emerald Glass Accents, Gold Thread Finish',
+    processingTime: '2 – 4 Business Days',
+    careInstructions: 'Keep in soft pouch. Wipe gently after wearing.',
+    customizations: {
+      sizes: ['2.2', '2.4', '2.6', '2.8'],
+      colors: ['Lotus Ruby Pink', 'Emerald Green', 'Royal Maroon']
+    },
+    specs: [
+      'Graceful Lotus Motif Kundan Inlays',
+      'Delicate Silk Thread Ribbon Wrap',
+      'Set of Elegant Traditional Kada Bangles'
+    ],
+    occasions: ['Pooja & Festivals', 'Traditional Ceremonies', 'Premium Gifting']
   },
   {
     id: 'tw-pearl-bead',
     name: 'Designer Silk Thread Latkans',
     icon: '✨',
     desc: 'Elegant handcrafted silk thread latkans decorated with premium kundan stones, pearl detailing, and vibrant silk colors. Perfect for bridal blouses, sarees, lehengas, return gifts, potli bags, and festive decorations. Each piece is handmade with fine craftsmanship and premium materials.',
-    image: '/designer_silk_latkans.png'
+    image: '/designer_silk_latkans.png',
+    images: ['/designer_silk_latkans.png'],
+    materials: 'Vibrant Resham Silk Tassels, Faux Pearls, Kundan Beads & Gold Cord',
+    processingTime: '2 – 3 Business Days',
+    careInstructions: 'Store flat to keep tassel threads neat. Avoid moisture.',
+    customizations: {
+      sizes: ['Standard Blouse/Lehenga Size'],
+      colors: ['Deep Red', 'Emerald Green', 'Royal Blue', 'Golden Yellow']
+    },
+    specs: [
+      '100% Hand-tied Silk Latkans',
+      'Embedded Kundan & Pearl Clusters',
+      'Ideal for Blouses, Lehengas & Potli Accessories'
+    ],
+    occasions: ['Bridal Lehengas', 'Blouse Accessories', 'Potli Bags & Favors']
   },
   {
     id: 'tw-customized-name',
     name: 'Designer Silk Thread Finger Rings',
     icon: '💍',
     desc: 'Beautiful handcrafted silk thread finger rings featuring premium kundan stone work, vibrant silk thread colors, pearl embellishments, and elegant handcrafted detailing. Lightweight, stylish, and perfect for weddings, festive celebrations, return gifts, mehendi ceremonies, and everyday traditional wear.',
-    image: '/designer_silk_finger_rings.png'
+    image: '/designer_silk_finger_rings.png',
+    images: ['/designer_silk_finger_rings.png'],
+    materials: 'Adjustable Metal Band, Silk Thread Wrap, Kundan Stone Flower Motif',
+    processingTime: '1 – 2 Business Days',
+    careInstructions: 'Remove before washing hands or applying lotions.',
+    customizations: {
+      sizes: ['Adjustable Universal Ring Size'],
+      colors: ['Pink & Gold', 'Green & Pearl', 'Red & Kundan']
+    },
+    specs: [
+      'Adjustable Free-size Ring Base',
+      'Hand-wrapped Silk Thread Flower Accent',
+      'Lightweight & Skin-friendly'
+    ],
+    occasions: ['Mehendi Ceremony', 'Festival Favors', 'Ethnic Party Wear']
   },
   {
     id: 'tw-pearl-bridal',
     name: 'Handcrafted Silk Thread Hair Band',
     icon: '🌸',
     desc: 'Premium handmade silk thread hair band featuring an elegant floral kundan centerpiece with antique gold detailing, emerald green stones, and sparkling crystal accents. Lightweight, comfortable, and perfect for weddings, festive occasions, traditional wear, and special celebrations.',
-    image: '/silk_thread_hair_band.png'
+    image: '/silk_thread_hair_band.png',
+    images: ['/silk_thread_hair_band.png'],
+    materials: 'Satin & Silk Thread Wrapped Band, Antique Gold Kundan Brooch',
+    processingTime: '2 – 3 Business Days',
+    careInstructions: 'Store in hard box to maintain band curvature. Keep dry.',
+    customizations: {
+      sizes: ['Standard Flexible Comfort Fit'],
+      colors: ['Emerald & Gold', 'Ruby Red', 'Royal Blue']
+    },
+    specs: [
+      'Flexible Ergonomic Hairband Core',
+      'Hand-embroidered Kundan Brooch',
+      'Non-slip Soft Inner Cushion'
+    ],
+    occasions: ['Weddings', 'Haldi & Sangeet', 'Festive Celebrations']
   },
   {
     id: 'tw-temple-silk',
     name: 'Handcrafted Floral Silk Thread Hair Band',
     icon: '🌺',
     desc: 'Beautiful handmade silk thread hair band featuring a floral kundan centerpiece with antique gold detailing, pearl accents, and a ruby-pink center stone. Designed for weddings, festive occasions, traditional wear, and elegant everyday styling. Comfortable, lightweight, and crafted with premium-quality materials.',
-    image: '/floral_silk_thread_hair_band.png'
+    image: '/floral_silk_thread_hair_band.png',
+    images: ['/floral_silk_thread_hair_band.png'],
+    materials: 'Resham Silk Thread, Pearl Bead Clusters, Ruby Centerpiece Kundan',
+    processingTime: '2 – 3 Business Days',
+    careInstructions: 'Store in clean pouch. Do not crush or wash.',
+    customizations: {
+      sizes: ['Standard Flexible Comfort Fit'],
+      colors: ['Ruby Floral Pink', 'Emerald Green', 'Mustard Gold']
+    },
+    specs: [
+      'Hand-assembled Floral Kundan Motif',
+      'Soft Silk Ribbon Wrapper',
+      'Comfortable All-day Wear Design'
+    ],
+    occasions: ['Bridal Functions', 'Temple Visits', 'Family Celebrations']
   }
 ];
 
@@ -221,6 +361,15 @@ const ProductDetailsModal = ({ product, isOpen, onClose, onSelectDesign }) => {
               <div className="modal-section-block">
                 <h4>⏳ Crafting & Delivery</h4>
                 <p className="modal-info-p">{processingText}</p>
+              </div>
+
+              <div className="modal-section-block">
+                <h4>🎉 Recommended Occasions</h4>
+                <div>
+                  {(Array.isArray(product.occasions) && product.occasions.length > 0 ? product.occasions : ['Bridal Weddings', 'Festive Celebrations', 'Special Gifts']).map((occ, idx) => (
+                    <span key={idx} className="modal-tag-pill">{occ}</span>
+                  ))}
+                </div>
               </div>
             </div>
 
