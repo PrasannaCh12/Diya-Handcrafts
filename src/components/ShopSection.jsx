@@ -10,6 +10,7 @@ const CATEGORY_FALLBACK_IMAGES = {
 
 const AnimatedProductCard = ({ product, index, fallbackImg }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
   const cardRef = React.useRef(null);
 
   React.useEffect(() => {
@@ -17,7 +18,7 @@ const AnimatedProductCard = ({ product, index, fallbackImg }) => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.disconnect(); // Trigger animation once when entering viewport
+          observer.disconnect();
         }
       },
       { threshold: 0.12 }
@@ -30,7 +31,7 @@ const AnimatedProductCard = ({ product, index, fallbackImg }) => {
     return () => observer.disconnect();
   }, []);
 
-  const staggerDelay = (index % 6) * 100; // 100ms staggered delay between cards
+  const staggerDelay = (index % 6) * 80; // 80ms staggered delay between cards
 
   return (
     <div
@@ -42,14 +43,18 @@ const AnimatedProductCard = ({ product, index, fallbackImg }) => {
       }}
     >
       <div className="gallery-img-wrap">
+        {!imgLoaded && <div className="skeleton-img-placeholder skeleton-shimmer" />}
         <img 
           src={product.image || fallbackImg} 
           alt={product.name} 
-          className="gallery-img"
+          className={`gallery-img ${imgLoaded ? 'loaded' : 'loading'}`}
           loading="lazy"
+          decoding="async"
+          onLoad={() => setImgLoaded(true)}
           onError={(e) => {
             e.target.onerror = null;
             e.target.src = fallbackImg;
+            setImgLoaded(true);
           }}
         />
       </div>
@@ -60,15 +65,36 @@ const AnimatedProductCard = ({ product, index, fallbackImg }) => {
   );
 };
 
+const ProductCardSkeleton = ({ index }) => (
+  <div className="gallery-card glass-card skeleton-card">
+    <div className="gallery-img-wrap skeleton-shimmer" />
+    <div className="gallery-card-info">
+      <div className="skeleton-line skeleton-shimmer" />
+      <div className="skeleton-line short skeleton-shimmer" />
+    </div>
+  </div>
+);
+
 const ShopSection = ({ activeCategory, onResetCategory }) => {
   const [selectedCategory, setSelectedCategory] = useState(activeCategory || 'All');
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   // Synchronize when activeCategory prop changes
   React.useEffect(() => {
     if (activeCategory) {
-      setSelectedCategory(activeCategory);
+      handleCategoryChange(activeCategory);
     }
   }, [activeCategory]);
+
+  const handleCategoryChange = (cat) => {
+    if (cat === selectedCategory) return;
+    setIsTransitioning(true);
+    setSelectedCategory(cat);
+    if (onResetCategory) onResetCategory(cat);
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 220);
+  };
 
   const allProducts = Array.isArray(PRODUCTS) ? PRODUCTS : [];
   const allCategories = Array.isArray(CATEGORIES) ? CATEGORIES : ['All'];
@@ -89,10 +115,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
               <button
                 key={cat}
                 className={`category-pill ${selectedCategory === cat ? 'active' : ''}`}
-                onClick={() => {
-                  setSelectedCategory(cat);
-                  if (onResetCategory) onResetCategory(cat);
-                }}
+                onClick={() => handleCategoryChange(cat)}
               >
                 {cat}
               </button>
@@ -101,12 +124,18 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
         </div>
 
         {/* Compact Responsive Gallery Grid */}
-        {filteredProducts.length === 0 ? (
+        {isTransitioning ? (
+          <div className="gallery-grid">
+            {[1, 2, 3, 4].map((i) => (
+              <ProductCardSkeleton key={i} index={i} />
+            ))}
+          </div>
+        ) : filteredProducts.length === 0 ? (
           <div className="no-products-state">
             <h3>No Products Available in this category.</h3>
             <button 
               className="btn btn-outline-gold"
-              onClick={() => { setSelectedCategory('All'); }}
+              onClick={() => handleCategoryChange('All')}
               style={{ marginTop: '1rem' }}
             >
               Show All Creations
@@ -190,17 +219,22 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          transition: all 0.3s ease;
+          transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
           box-sizing: border-box;
           white-space: nowrap;
+          user-select: none;
         }
 
         .category-pill:hover {
           border-color: #D4AF37;
           color: #3E2C1C;
           background: linear-gradient(135deg, #FFFDF8 0%, #FFF5E6 100%);
-          transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 14px rgba(212, 175, 55, 0.2);
+        }
+
+        .category-pill:active {
+          transform: scale(0.97);
         }
 
         .category-pill.active {
@@ -218,6 +252,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           justify-content: center;
           column-gap: 24px;
           row-gap: 20px;
+          min-height: 400px;
         }
 
         .gallery-card {
@@ -324,7 +359,50 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           object-position: center;
           border-radius: 15px 15px 0 0;
           filter: brightness(1.03) contrast(1.05);
-          transition: transform 0.3s ease, filter 0.3s ease;
+          transition: opacity 0.35s ease-out, transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .gallery-img.loading {
+          opacity: 0;
+        }
+
+        .gallery-img.loaded {
+          opacity: 1;
+        }
+
+        /* Shimmer Loading Skeleton */
+        .skeleton-card {
+          opacity: 1 !important;
+          transform: none !important;
+          animation: none !important;
+        }
+
+        .skeleton-img-placeholder {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+        }
+
+        .skeleton-shimmer {
+          background: linear-gradient(90deg, #FAF4EB 25%, #FFFDF9 50%, #FAF4EB 75%);
+          background-size: 200% 100%;
+          animation: shimmerSweep 1.5s infinite ease-in-out;
+        }
+
+        @keyframes shimmerSweep {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+
+        .skeleton-line {
+          height: 16px;
+          width: 85%;
+          border-radius: 8px;
+          margin: 4px auto;
+        }
+
+        .skeleton-line.short {
+          width: 55%;
         }
 
         .gallery-card-info {
