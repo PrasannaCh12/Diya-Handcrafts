@@ -234,7 +234,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           opacity: 0;
           transform: translateY(24px) scale(0.96);
           will-change: opacity, transform;
-          transition: transform 0.35s ease-out, box-shadow 0.35s ease-out, border-color 0.35s ease-out;
+          transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
           box-sizing: border-box;
         }
 
@@ -273,10 +273,17 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           }
         }
 
-        .gallery-card.fade-in-visible:hover {
-          transform: translateY(-6px) scale(1);
-          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12), 0 4px 15px rgba(212, 175, 55, 0.18);
-          border-color: var(--gold-primary);
+        /* Desktop Only Hover Animation */
+        @media (hover: hover) and (pointer: fine) {
+          .gallery-card.fade-in-visible:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12), 0 4px 15px rgba(212, 175, 55, 0.18);
+            border-color: var(--gold-primary);
+          }
+
+          .gallery-card:hover .gallery-img {
+            transform: scale(1.03);
+          }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -304,7 +311,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           background: radial-gradient(circle at center, rgba(255, 245, 230, 0.03) 0%, rgba(212, 175, 55, 0.03) 100%);
           pointer-events: none;
           z-index: 2;
-          transition: opacity 0.35s ease;
+          transition: opacity 0.3s ease;
         }
 
         .gallery-img {
@@ -314,7 +321,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           object-position: center;
           border-radius: 15px 15px 0 0;
           filter: brightness(1.03) contrast(1.05);
-          transition: transform 0.35s ease-out, filter 0.35s ease-out;
+          transition: transform 0.3s ease, filter 0.3s ease;
         }
 
         .gallery-card-info {
