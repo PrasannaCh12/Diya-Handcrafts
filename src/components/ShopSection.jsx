@@ -247,18 +247,19 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
 
         /* Balanced Centered Gallery Grid: 4 cols Desktop, 2 cols Tablet, 1 col Mobile */
         .gallery-grid {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
           column-gap: 24px;
-          row-gap: 20px;
+          row-gap: 24px;
+          max-width: 1400px;
+          margin: 0 auto;
+          align-items: stretch;
           min-height: 400px;
         }
 
         .gallery-card {
-          flex: 0 0 calc(25% - 18px);
-          max-width: calc(25% - 18px);
           width: 100%;
+          max-width: 100%;
           background: #FFFFFF;
           border-radius: 15px;
           overflow: hidden;
@@ -276,23 +277,17 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
 
         @media (max-width: 992px) {
           .gallery-grid {
-            column-gap: 16px;
-            row-gap: 16px;
-          }
-          .gallery-card {
-            flex: 0 0 calc(50% - 8px);
-            max-width: calc(50% - 8px);
+            grid-template-columns: repeat(2, 1fr);
+            column-gap: 20px;
+            row-gap: 20px;
           }
         }
 
         @media (max-width: 576px) {
           .gallery-grid {
-            column-gap: 12px;
+            grid-template-columns: repeat(1, 1fr);
+            column-gap: 16px;
             row-gap: 16px;
-          }
-          .gallery-card {
-            flex: 0 0 100%;
-            max-width: 100%;
           }
         }
 

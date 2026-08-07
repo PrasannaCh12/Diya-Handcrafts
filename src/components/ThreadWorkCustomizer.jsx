@@ -622,28 +622,10 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
             </div>
           </div>
 
-          {/* Right Column: Premium Sticky Order Summary Panel */}
+          {/* Right Column: Clean Minimal Order Summary Panel */}
           <div className="customizer-summary-col">
             <div className="summary-sticky-card">
               <h3 className="summary-title">📋 Order Summary</h3>
-
-              {/* Selected Product Compact Preview Card */}
-              {(() => {
-                const selectedItem = THREADWORK_DESIGNS.find((d) => d.name === selectedDesign);
-                return selectedItem ? (
-                  <div className="summary-product-preview">
-                    <img src={selectedItem.image} alt={selectedItem.name} className="preview-thumb" />
-                    <div className="preview-info">
-                      <span className="preview-category">Thread Work Bangle Set</span>
-                      <h4 className="preview-name">{selectedItem.name}</h4>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="summary-product-placeholder">
-                    <span>Click any bangle design above to customize</span>
-                  </div>
-                );
-              })()}
 
               <div className="summary-details-list">
                 <div className="summary-item">
@@ -711,7 +693,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
                   className="btn btn-whatsapp-order w-full"
                   onClick={handleWhatsAppSend}
                 >
-                  <FaWhatsapp className="wa-btn-icon" /> Confirm & Order on WhatsApp
+                  <FaWhatsapp className="wa-btn-icon" /> Order on WhatsApp
                 </button>
 
                 <button
@@ -738,10 +720,6 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
                 >
                   <FaMagic /> Reset Choices
                 </button>
-
-                <div className="summary-trust-badge">
-                  ✨ Handmade with care • Secure WhatsApp Ordering • Personalized for You
-                </div>
               </div>
             </div>
           </div>
@@ -925,94 +903,34 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           .customizer-grid {
             grid-template-columns: 1fr;
           }
-                .summary-sticky-card {
-          position: sticky;
-          top: 24px;
-          background: #FFFCF8;
-          border-radius: 16px;
-          border: 1px solid rgba(212, 175, 55, 0.3);
-          box-shadow: 0 12px 30px rgba(61, 43, 31, 0.08);
-          padding: 30px;
-          z-index: 10;
+        }
+
+        .summary-sticky-card {
+          position: relative;
+          top: 0;
+          background: #FFFFFF;
+          border-radius: 15px;
+          border: 1px solid rgba(212, 175, 55, 0.25);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+          padding: 24px;
           box-sizing: border-box;
         }
 
         .summary-title {
           font-family: var(--font-serif);
-          font-size: 25px;
-          font-weight: 600;
-          color: #2C2224;
-          margin-bottom: 1.25rem;
-          border-bottom: 1.5px dashed rgba(212, 175, 55, 0.3);
-          padding-bottom: 12px;
-        }
-
-        .summary-product-preview {
-          display: flex;
-          align-items: center;
-          gap: 14px;
-          padding: 12px 14px;
-          background: #FFFFFF;
-          border-radius: 12px;
-          border: 1px solid rgba(212, 175, 55, 0.25);
-          margin-bottom: 1.25rem;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-        }
-
-        .summary-product-placeholder {
-          padding: 14px;
-          background: #FFFFFF;
-          border-radius: 12px;
-          border: 1.5px dashed rgba(212, 175, 55, 0.3);
-          text-align: center;
-          font-size: 13.5px;
-          color: #8A7A70;
-          margin-bottom: 1.25rem;
-          font-style: italic;
-        }
-
-        .preview-thumb {
-          width: 54px;
-          height: 54px;
-          border-radius: 8px;
-          object-fit: cover;
-          object-position: center;
-          flex-shrink: 0;
-          border: 1px solid rgba(212, 175, 55, 0.2);
-        }
-
-        .preview-info {
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-        }
-
-        .preview-category {
-          font-size: 11px;
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
-          color: #D4AF37;
+          font-size: 1.25rem;
           font-weight: 700;
-        }
-
-        .preview-name {
-          font-family: var(--font-serif);
-          font-size: 15.5px;
-          font-weight: 600;
           color: #2C2224;
-          margin: 0;
-          line-height: 1.3;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
+          margin-bottom: 1rem;
+          border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+          padding-bottom: 8px;
         }
 
         .summary-details-list {
           display: flex;
           flex-direction: column;
           gap: 0.75rem;
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.25rem;
         }
 
         .summary-item {
@@ -1034,7 +952,6 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           color: #2C2224;
           text-align: right;
           word-break: break-word;
-          transition: opacity 0.25s ease;
         }
 
         .summary-val.highlight-gold {
@@ -1050,14 +967,14 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
 
         .summary-divider {
           height: 1px;
-          background: rgba(212, 175, 55, 0.25);
-          margin: 0.35rem 0;
+          background: rgba(212, 175, 55, 0.2);
+          margin: 0.25rem 0;
         }
 
         .summary-actions {
           display: flex;
           flex-direction: column;
-          gap: 0.85rem;
+          gap: 0.75rem;
         }
 
         .btn-outline-gold {
@@ -1065,50 +982,45 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           color: var(--gold-dark);
           border: 1px solid rgba(212, 175, 55, 0.4);
           border-radius: 12px;
-          padding: 0.75rem 1rem;
+          padding: 0.7rem 1rem;
           font-weight: 600;
-          font-size: 0.9rem;
+          font-size: 0.88rem;
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
           cursor: pointer;
-          transition: all 0.25s ease;
+          transition: all 0.2s ease;
         }
 
         .btn-outline-gold:hover {
           background: #FFFDF9;
           border-color: #D4AF37;
-          transform: translateY(-1px);
         }
 
         .btn-whatsapp-order {
-          height: 56px;
+          height: 50px;
           width: 100%;
-          border-radius: 14px;
-          background: linear-gradient(135deg, #25D366 0%, #1DA851 100%);
+          border-radius: 12px;
+          background: #25D366;
           color: #FFFFFF;
-          font-size: 16px;
-          font-weight: 700;
+          font-size: 15px;
+          font-weight: 600;
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
           border: none;
           cursor: pointer;
-          transition: all 0.3s ease;
-          box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
-          letter-spacing: 0.02em;
+          transition: background 0.2s ease;
         }
 
         .btn-whatsapp-order:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(37, 211, 102, 0.38);
-          background: linear-gradient(135deg, #28E16D 0%, #1EAE54 100%);
+          background: #1DA851;
         }
 
         .wa-btn-icon {
-          font-size: 20px;
+          font-size: 18px;
         }
 
         .summary-trust-badge {
@@ -1117,13 +1029,14 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           text-align: center;
           margin-top: 10px;
           line-height: 1.45;
-        /* Responsive Grid: 4 columns Desktop (≥1200px), 3 columns (992-1199px), 2 columns (576-991px), 1 column (<576px) */
+        }
+
         .tw-5col-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
           column-gap: 24px;
           row-gap: 24px;
-          max-width: 1380px;
+          max-width: 1400px;
           margin: 0 auto;
           align-items: stretch;
         }
