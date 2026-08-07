@@ -556,7 +556,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
   }, [lightboxIndex]);
 
   const selectDesign = (designName) => {
-    setSelectedDesign(designName);
+    setSelectedDesign((prev) => (prev === designName ? '' : designName));
   };
 
   const handleCardClick = (tw) => {
@@ -933,7 +933,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
                 <div className="summary-item">
                   <span className="summary-label">Selected Style</span>
                   <span className="summary-val highlight-gold">
-                    {selectedDesign ? selectedDesign : <em className="none-tag">None Selected</em>}
+                    {selectedDesign ? selectedDesign : <em className="none-tag">No product selected</em>}
                   </span>
                 </div>
 
@@ -992,8 +992,14 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
               <div className="summary-actions">
                 <button
                   type="button"
-                  className="btn btn-whatsapp-order w-full"
+                  className={`btn btn-whatsapp-order w-full ${!selectedDesign ? 'disabled-wa-btn' : ''}`}
                   onClick={handleWhatsAppSend}
+                  disabled={!selectedDesign}
+                  style={{
+                    opacity: !selectedDesign ? 0.55 : 1,
+                    cursor: !selectedDesign ? 'not-allowed' : 'pointer'
+                  }}
+                  title={!selectedDesign ? 'Please select a Thread Work product card above' : 'Order on WhatsApp'}
                 >
                   <FaWhatsapp className="wa-btn-icon" /> Order on WhatsApp
                 </button>
