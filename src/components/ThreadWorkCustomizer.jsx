@@ -627,60 +627,78 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
             <div className="summary-sticky-card">
               <h3 className="summary-title">📋 Order Summary</h3>
 
+              {/* Selected Product Compact Preview Card */}
+              {(() => {
+                const selectedItem = THREADWORK_DESIGNS.find((d) => d.name === selectedDesign);
+                return selectedItem ? (
+                  <div className="summary-product-preview">
+                    <img src={selectedItem.image} alt={selectedItem.name} className="preview-thumb" />
+                    <div className="preview-info">
+                      <span className="preview-category">Thread Work Bangle Set</span>
+                      <h4 className="preview-name">{selectedItem.name}</h4>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="summary-product-placeholder">
+                    <span>Click any bangle design above to customize</span>
+                  </div>
+                );
+              })()}
+
               <div className="summary-details-list">
                 <div className="summary-item">
-                  <span className="summary-label">Selected Style:</span>
+                  <span className="summary-label">Selected Style</span>
                   <span className="summary-val highlight-gold">
                     {selectedDesign ? selectedDesign : <em className="none-tag">None Selected</em>}
                   </span>
                 </div>
 
                 <div className="summary-item">
-                  <span className="summary-label">Wrist Size:</span>
+                  <span className="summary-label">Wrist Size</span>
                   <span className="summary-val">
-                    {wristSize && wristSize !== 'None' ? wristSize : <em className="none-tag">None</em>}
+                    {wristSize && wristSize !== 'None' ? wristSize : <em className="none-tag">Standard (2.4)</em>}
                   </span>
                 </div>
 
                 <div className="summary-item">
-                  <span className="summary-label">Color Theme:</span>
+                  <span className="summary-label">Color Theme</span>
                   <span className="summary-val">
-                    {colorTheme && colorTheme !== 'None' ? colorTheme : <em className="none-tag">None</em>}
+                    {colorTheme && colorTheme !== 'None' ? colorTheme : <em className="none-tag">Signature Mix</em>}
                   </span>
                 </div>
 
                 <div className="summary-item">
-                  <span className="summary-label">Packaging Style:</span>
+                  <span className="summary-label">Packaging</span>
                   <span className="summary-val">
-                    {packagingStyle && packagingStyle !== 'None' ? packagingStyle : <em className="none-tag">None</em>}
+                    {packagingStyle && packagingStyle !== 'None' ? packagingStyle : <em className="none-tag">Boutique Box</em>}
                   </span>
                 </div>
 
                 <div className="summary-item">
-                  <span className="summary-label">Ribbon Color:</span>
+                  <span className="summary-label">Ribbon Color</span>
                   <span className="summary-val">
-                    {ribbonColor && ribbonColor !== 'None' ? ribbonColor : <em className="none-tag">None</em>}
+                    {ribbonColor && ribbonColor !== 'None' ? ribbonColor : <em className="none-tag">Gold Satin</em>}
                   </span>
                 </div>
 
                 <div className="summary-item">
-                  <span className="summary-label">Occasion:</span>
+                  <span className="summary-label">Occasion</span>
                   <span className="summary-val">
-                    {occasion && occasion !== 'None' ? occasion : <em className="none-tag">None</em>}
+                    {occasion && occasion !== 'None' ? occasion : <em className="none-tag">Personal Special</em>}
                   </span>
                 </div>
 
                 <div className="summary-divider"></div>
 
                 <div className="summary-item">
-                  <span className="summary-label">Customer Name:</span>
+                  <span className="summary-label">Customer</span>
                   <span className="summary-val">
                     {customerName.trim() ? customerName : <em className="none-tag">Not entered</em>}
                   </span>
                 </div>
 
                 <div className="summary-item">
-                  <span className="summary-label">WhatsApp Number:</span>
+                  <span className="summary-label">WhatsApp</span>
                   <span className="summary-val">
                     {customerWhatsApp.trim() ? customerWhatsApp : <em className="none-tag">Not entered</em>}
                   </span>
@@ -688,6 +706,14 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
               </div>
 
               <div className="summary-actions">
+                <button
+                  type="button"
+                  className="btn btn-whatsapp-order w-full"
+                  onClick={handleWhatsAppSend}
+                >
+                  <FaWhatsapp className="wa-btn-icon" /> Confirm & Order on WhatsApp
+                </button>
+
                 <button
                   type="button"
                   className="btn btn-outline-gold w-full"
@@ -710,16 +736,12 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
                     setOrderNotes('');
                   }}
                 >
-                  <FaMagic /> ✨ RESET CHOICES
+                  <FaMagic /> Reset Choices
                 </button>
 
-                <button
-                  type="button"
-                  className="btn btn-whatsapp-order w-full"
-                  onClick={handleWhatsAppSend}
-                >
-                  <FaWhatsapp /> 🟢 ORDER ON WHATSAPP
-                </button>
+                <div className="summary-trust-badge">
+                  ✨ Handmade with care • Secure WhatsApp Ordering • Personalized for You
+                </div>
               </div>
             </div>
           </div>
@@ -903,287 +925,198 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           .customizer-grid {
             grid-template-columns: 1fr;
           }
-        }
-
-        .customizer-form-col {
-          width: 100%;
-        }
-
-        .customizer-summary-col {
-          width: 100%;
-        }
-
-        .summary-sticky-card {
+                .summary-sticky-card {
           position: sticky;
-          top: 100px;
-          background: #FFFFFF;
-          border-radius: 20px;
-          border: 1px solid #E8C86A;
-          box-shadow: 0 10px 30px rgba(110, 58, 70, 0.08);
-          padding: 1.5rem;
+          top: 24px;
+          background: #FFFCF8;
+          border-radius: 16px;
+          border: 1px solid rgba(212, 175, 55, 0.3);
+          box-shadow: 0 12px 30px rgba(61, 43, 31, 0.08);
+          padding: 30px;
           z-index: 10;
+          box-sizing: border-box;
         }
 
         .summary-title {
-          font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: #3D2B1F;
-          margin-bottom: 1.25rem;
-          border-bottom: 1px solid rgba(232, 200, 106, 0.3);
-          padding-bottom: 0.75rem;
-        }
-
-        .summary-details-list {
-          display: flex;
-          flex-direction: column;
-          gap: 0.85rem;
-          margin-bottom: 1.5rem;
-        }
-
-        .summary-item {
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          font-size: 0.9rem;
-          gap: 0.5rem;
-        }
-
-        .summary-label {
-          font-weight: 600;
-          color: #5C3D2E;
-          flex-shrink: 0;
-        }
-
-        .summary-val {
-          font-weight: 500;
-          color: #2C2224;
-          text-align: right;
-          word-break: break-word;
-        }
-
-        .summary-val.highlight-gold {
-          color: var(--rose-primary);
-          font-weight: 600;
-        }
-
-        .none-tag {
-          color: #9CA3AF;
-          font-style: italic;
-          font-weight: 400;
-        }
-
-        .summary-divider {
-          height: 1px;
-          background: rgba(232, 200, 106, 0.3);
-          margin: 0.25rem 0;
-        }
-
-        .summary-actions {
-          display: flex;
-          flex-direction: column;
-          gap: 0.75rem;
-        }
-
-        .btn-outline-gold {
-          background: #FFFFFF;
-          color: var(--gold-dark);
-          border: 1px solid #E8C86A;
-          border-radius: 50px;
-          padding: 0.75rem 1rem;
-          font-weight: 600;
-          font-size: 0.85rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
-          cursor: pointer;
-          transition: all 0.25s ease;
-        }
-
-        .btn-outline-gold:hover {
-          background: var(--gold-soft-gradient);
-          border-color: var(--gold-primary);
-        }
-
-        .btn-whatsapp-order {
-          background: linear-gradient(135deg, #25D366, #1DA851);
-          color: #FFFFFF;
-          border: none;
-          border-radius: 50px;
-          padding: 0.85rem 1rem;
-          font-weight: 700;
-          font-size: 0.9rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
-          cursor: pointer;
-          transition: all 0.25s ease;
-          box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
-        }
-
-        .btn-whatsapp-order:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 18px rgba(37, 211, 102, 0.45);
-        }
-
-        .customizer-summary-col {
-          width: 100%;
-        }
-
-        .summary-sticky-card {
-          position: sticky;
-          top: 100px;
-          background: #FFFFFF;
-          border-radius: 20px;
-          border: 1px solid #E8C86A;
-          box-shadow: 0 10px 30px rgba(110, 58, 70, 0.08);
-          padding: 1.5rem;
-          z-index: 10;
-        }
-
-        .summary-title {
-          font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: #3D2B1F;
-          margin-bottom: 1.25rem;
-          border-bottom: 1px solid rgba(232, 200, 106, 0.3);
-          padding-bottom: 0.75rem;
-        }
-
-        .summary-details-list {
-          display: flex;
-          flex-direction: column;
-          gap: 0.85rem;
-          margin-bottom: 1.5rem;
-        }
-
-        .summary-item {
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          font-size: 0.9rem;
-          gap: 0.5rem;
-        }
-
-        .summary-label {
-          font-weight: 600;
-          color: #5C3D2E;
-          flex-shrink: 0;
-        }
-
-        .summary-val {
-          font-weight: 500;
-          color: #2C2224;
-          text-align: right;
-          word-break: break-word;
-        }
-
-        .summary-val.highlight-gold {
-          color: var(--rose-primary);
-          font-weight: 600;
-        }
-
-        .none-tag {
-          color: #9CA3AF;
-          font-style: italic;
-          font-weight: 400;
-        }
-
-        .summary-divider {
-          height: 1px;
-          background: rgba(232, 200, 106, 0.3);
-          margin: 0.25rem 0;
-        }
-
-        .summary-actions {
-          display: flex;
-          flex-direction: column;
-          gap: 0.75rem;
-        }
-
-        .btn-outline-gold {
-          background: transparent;
-          color: var(--gold-dark);
-          border: 1px solid #E8C86A;
-          border-radius: 12px;
-          padding: 0.75rem 1rem;
-          font-weight: 600;
-          font-size: 0.85rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
-          cursor: pointer;
-          transition: all 0.25s ease;
-          letter-spacing: 0.05em;
-        }
-
-        .btn-outline-gold:hover {
-          background: var(--gold-soft-gradient);
-          border-color: var(--gold-primary);
-        }
-
-        .btn-whatsapp-order {
-          background: #25D366;
-          color: #FFFFFF;
-          border: none;
-          border-radius: 12px;
-          padding: 0.75rem 1rem;
-          font-weight: 700;
-          font-size: 0.9rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
-          cursor: pointer;
-          transition: all 0.25s ease;
-          box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
-          letter-spacing: 0.05em;
-        }
-
-        .btn-whatsapp-order:hover {
-          background: #1DA851;
-          transform: translateY(-2px);
-          box-shadow: 0 6px 16px rgba(37, 211, 102, 0.35);
-        }
-
-        .special-features-bar {
-          padding: 1rem 1.5rem;
-          margin-bottom: 2.5rem;
-          border: 1px solid var(--gold-border);
-          border-radius: var(--radius-md);
-          background: #FFFFFF;
-        }
-
-        .features-flex {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 1.25rem;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .feature-pill {
-          font-weight: 600;
-          font-size: 0.85rem;
-          color: var(--text-main);
-          display: flex;
-          align-items: center;
-          gap: 0.35rem;
-        }
-
-        .brand-tagline {
           font-family: var(--font-serif);
-          font-style: italic;
-          color: var(--gold-dark);
-          font-size: 1.05rem;
-          margin-top: 0.5rem;
+          font-size: 25px;
           font-weight: 600;
+          color: #2C2224;
+          margin-bottom: 1.25rem;
+          border-bottom: 1.5px dashed rgba(212, 175, 55, 0.3);
+          padding-bottom: 12px;
         }
 
+        .summary-product-preview {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          padding: 12px 14px;
+          background: #FFFFFF;
+          border-radius: 12px;
+          border: 1px solid rgba(212, 175, 55, 0.25);
+          margin-bottom: 1.25rem;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .summary-product-placeholder {
+          padding: 14px;
+          background: #FFFFFF;
+          border-radius: 12px;
+          border: 1.5px dashed rgba(212, 175, 55, 0.3);
+          text-align: center;
+          font-size: 13.5px;
+          color: #8A7A70;
+          margin-bottom: 1.25rem;
+          font-style: italic;
+        }
+
+        .preview-thumb {
+          width: 54px;
+          height: 54px;
+          border-radius: 8px;
+          object-fit: cover;
+          object-position: center;
+          flex-shrink: 0;
+          border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .preview-info {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+        }
+
+        .preview-category {
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          color: #D4AF37;
+          font-weight: 700;
+        }
+
+        .preview-name {
+          font-family: var(--font-serif);
+          font-size: 15.5px;
+          font-weight: 600;
+          color: #2C2224;
+          margin: 0;
+          line-height: 1.3;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .summary-details-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .summary-item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 14.5px;
+          gap: 0.5rem;
+        }
+
+        .summary-label {
+          font-weight: 500;
+          color: #7A6B63;
+          flex-shrink: 0;
+        }
+
+        .summary-val {
+          font-weight: 600;
+          color: #2C2224;
+          text-align: right;
+          word-break: break-word;
+          transition: opacity 0.25s ease;
+        }
+
+        .summary-val.highlight-gold {
+          color: #D4AF37;
+          font-weight: 700;
+        }
+
+        .none-tag {
+          color: #A09088;
+          font-style: italic;
+          font-weight: 400;
+        }
+
+        .summary-divider {
+          height: 1px;
+          background: rgba(212, 175, 55, 0.25);
+          margin: 0.35rem 0;
+        }
+
+        .summary-actions {
+          display: flex;
+          flex-direction: column;
+          gap: 0.85rem;
+        }
+
+        .btn-outline-gold {
+          background: #FFFFFF;
+          color: var(--gold-dark);
+          border: 1px solid rgba(212, 175, 55, 0.4);
+          border-radius: 12px;
+          padding: 0.75rem 1rem;
+          font-weight: 600;
+          font-size: 0.9rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          cursor: pointer;
+          transition: all 0.25s ease;
+        }
+
+        .btn-outline-gold:hover {
+          background: #FFFDF9;
+          border-color: #D4AF37;
+          transform: translateY(-1px);
+        }
+
+        .btn-whatsapp-order {
+          height: 56px;
+          width: 100%;
+          border-radius: 14px;
+          background: linear-gradient(135deg, #25D366 0%, #1DA851 100%);
+          color: #FFFFFF;
+          font-size: 16px;
+          font-weight: 700;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          border: none;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
+          letter-spacing: 0.02em;
+        }
+
+        .btn-whatsapp-order:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(37, 211, 102, 0.38);
+          background: linear-gradient(135deg, #28E16D 0%, #1EAE54 100%);
+        }
+
+        .wa-btn-icon {
+          font-size: 20px;
+        }
+
+        .summary-trust-badge {
+          font-size: 12.5px;
+          color: #7A6B63;
+          text-align: center;
+          margin-top: 10px;
+          line-height: 1.45;
         /* Responsive Grid: 4 columns Desktop (≥1200px), 3 columns (992-1199px), 2 columns (576-991px), 1 column (<576px) */
         .tw-5col-grid {
           display: grid;
