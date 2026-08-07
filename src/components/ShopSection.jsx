@@ -329,11 +329,11 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
 
         .card-item-title {
           font-family: var(--font-serif);
-          font-size: 18px;
+          font-size: 19.5px;
           font-weight: 600;
           color: var(--text-dark);
-          line-height: 1.5;
-          height: 3em;
+          line-height: 1.45;
+          height: 2.9em;
           margin: 0;
           text-align: center;
           display: -webkit-box;
