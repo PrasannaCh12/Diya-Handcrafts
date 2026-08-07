@@ -224,7 +224,7 @@ export const THREADWORK_HIGHLIGHTS = [
   '💝 Personalized Gift Packaging'
 ];
 
-const ProductDetailsModal = ({ product, isOpen, onClose, onSelectDesign }) => {
+export const ProductDetailsModal = ({ product, isOpen, onClose }) => {
   const [activeImgIndex, setActiveImgIndex] = useState(0);
 
   useEffect(() => {
@@ -250,24 +250,25 @@ const ProductDetailsModal = ({ product, isOpen, onClose, onSelectDesign }) => {
   if (!isOpen || !product) return null;
 
   // Extract all available fields safely with friendly fallbacks
-  const title = product.name || 'Handcrafted Design';
+  const title = product.name || 'Handcrafted Boutique Piece';
   const icon = product.icon || '🧵';
-  const mainDesc = product.description || product.desc || product.shortDesc || 'Exquisite handcrafted silk thread design customized with premium kundan stones, zardosi embroidery, and pearls.';
   const category = product.category || 'Thread Work Bangle Collection';
+  const shortDesc = product.shortDesc || 'Exquisite artisanal creation handcrafted with premium silk threads, kundan stones, and traditional detailing.';
+  const fullDesc = product.description || product.desc || 'Designed exclusively for festive celebrations and bridal wear, featuring meticulously handcrafted silk thread wrapping, authentic Kundan stone borders, and rich gold accents.';
   
   // Image gallery support (array or single image string)
   const imageList = Array.isArray(product.images) && product.images.length > 0 
     ? product.images 
-    : (product.image ? [product.image] : ['/bridal_bangle_set.jpg']);
+    : (product.image ? [product.image] : ['/blue_peacock_bangles.jpg']);
   
-  const currentImage = imageList[activeImgIndex] || imageList[0] || '/bridal_bangle_set.jpg';
+  const currentImage = imageList[activeImgIndex] || imageList[0] || '/blue_peacock_bangles.jpg';
 
-  // Materials & Specs
+  // Materials & Specs (Craftsmanship Details)
   const materialsText = typeof product.materials === 'string' 
     ? product.materials 
     : '100% Handcrafted Zardosi, Silk Threads & Gold Resham with Authentic Kundan Stones';
   
-  const specsList = Array.isArray(product.specs) && product.specs.length > 0
+  const craftsmanshipSpecs = Array.isArray(product.specs) && product.specs.length > 0
     ? product.specs
     : [
         '100% Hand-embroidered Zardosi & Silk Threadwork',
@@ -275,19 +276,17 @@ const ProductDetailsModal = ({ product, isOpen, onClose, onSelectDesign }) => {
         'Velvet finish over durable inner bangle frame'
       ];
 
-  // Customization sizes & colors
-  const sizeList = product.customizations?.sizes || ['2.2', '2.4', '2.6', '2.8', 'Custom Wrist Measure'];
-  const colorList = product.customizations?.colors || ['Signature Mix', 'Royal Blue & Gold', 'Emerald Green', 'Deep Red & Maroon'];
+  // Colors & Sizes
+  const colorOptions = product.customizations?.colors || ['Signature Mix', 'Royal Blue & Gold', 'Emerald Green', 'Deep Red & Maroon'];
+  const sizeOptions = product.customizations?.sizes || ['2.2', '2.4', '2.6', '2.8', 'Custom Wrist Measure'];
 
   // Care instructions
   const careText = product.careInstructions || product.care || 'Avoid direct contact with water, perfume, or spray. Store in an airtight velvet pouch to preserve silk and metal luster.';
 
-  // Processing time / delivery note
-  const processingText = product.processingTime || '2 – 4 Business Days (Handcrafted to Order)';
-
   return (
     <div className="modal-backdrop-overlay" onClick={onClose}>
       <div className="product-details-modal-box" onClick={(e) => e.stopPropagation()}>
+        {/* Close (X) Icon Button */}
         <button className="modal-close-icon" onClick={onClose} title="Close Modal (ESC)">
           <FaTimes />
         </button>
@@ -317,76 +316,58 @@ const ProductDetailsModal = ({ product, isOpen, onClose, onSelectDesign }) => {
             )}
           </div>
 
-          {/* Right Column: Detailed Product Specs */}
+          {/* Right Column: Information Only (No price, delivery time, or WhatsApp order button) */}
           <div className="modal-details-col">
             <div className="modal-header-block">
               <span className="modal-category-tag">🧵 {category}</span>
               <h2 className="modal-product-title">{icon} {title}</h2>
-              {product.price && <div className="modal-price-tag">₹{product.price}</div>}
+              <p className="modal-short-desc-highlight">{shortDesc}</p>
             </div>
 
             <div className="modal-body-scroll">
+              {/* Detailed Description */}
               <div className="modal-section-block">
-                <h4>📜 Product Overview</h4>
-                <p className="modal-desc-text">{mainDesc}</p>
+                <h4>📜 Detailed Description</h4>
+                <p className="modal-desc-text">{fullDesc}</p>
               </div>
 
+              {/* Available Colors */}
               <div className="modal-section-block">
-                <h4>✨ Materials & Craftsmanship</h4>
-                <p className="modal-info-p" style={{ marginBottom: '6px' }}>
-                  <strong>Materials:</strong> {materialsText}
+                <h4>🎨 Available Colors</h4>
+                <p className="modal-info-p">
+                  {Array.isArray(colorOptions) ? colorOptions.join(', ') : colorOptions}
                 </p>
+              </div>
+
+              {/* Available Sizes */}
+              <div className="modal-section-block">
+                <h4>📏 Available Sizes</h4>
+                <p className="modal-info-p">
+                  {Array.isArray(sizeOptions) ? sizeOptions.join(', ') : sizeOptions}
+                </p>
+              </div>
+
+              {/* Materials Used */}
+              <div className="modal-section-block">
+                <h4>💎 Materials Used</h4>
+                <p className="modal-info-p">{materialsText}</p>
+              </div>
+
+              {/* Craftsmanship Details */}
+              <div className="modal-section-block">
+                <h4>✨ Craftsmanship Details</h4>
                 <ul className="modal-specs-list">
-                  {specsList.map((spec, i) => (
+                  {craftsmanshipSpecs.map((spec, i) => (
                     <li key={i}>✨ {spec}</li>
                   ))}
                 </ul>
               </div>
 
+              {/* Care Instructions */}
               <div className="modal-section-block">
-                <h4>📏 Sizes & Colors</h4>
-                <p className="modal-info-p">
-                  <strong>Available Sizes:</strong> {Array.isArray(sizeList) ? sizeList.join(', ') : sizeList}
-                </p>
-                <p className="modal-info-p" style={{ marginTop: '4px' }}>
-                  <strong>Color Options:</strong> {Array.isArray(colorList) ? colorList.join(', ') : colorList}
-                </p>
-              </div>
-
-              <div className="modal-section-block">
-                <h4>🌿 Care & Storage</h4>
+                <h4>🌿 Care Instructions</h4>
                 <p className="modal-info-p">{careText}</p>
               </div>
-
-              <div className="modal-section-block">
-                <h4>⏳ Crafting & Delivery</h4>
-                <p className="modal-info-p">{processingText}</p>
-              </div>
-
-              <div className="modal-section-block">
-                <h4>🎉 Recommended Occasions</h4>
-                <div>
-                  {(Array.isArray(product.occasions) && product.occasions.length > 0 ? product.occasions : ['Bridal Weddings', 'Festive Celebrations', 'Special Gifts']).map((occ, idx) => (
-                    <span key={idx} className="modal-tag-pill">{occ}</span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="modal-actions-bar">
-              <button 
-                type="button" 
-                className="btn btn-select-design"
-                onClick={() => {
-                  onSelectDesign(title);
-                  onClose();
-                }}
-              >
-                <FaCheckCircle /> Select This Design
-              </button>
-              <button type="button" className="btn btn-close-modal" onClick={onClose}>
-                Close
-              </button>
             </div>
           </div>
         </div>

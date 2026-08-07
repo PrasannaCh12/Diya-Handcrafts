@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { PRODUCTS, CATEGORIES } from '../data/products';
+import { ProductDetailsModal } from './ThreadWorkCustomizer';
 
 const CATEGORY_FALLBACK_IMAGES = {
   'Thread Work': '/bridal_bangle_set.jpg',
@@ -80,6 +81,7 @@ const ProductCardSkeleton = ({ index }) => (
 const ShopSection = ({ activeCategory, onResetCategory }) => {
   const [selectedCategory, setSelectedCategory] = useState(activeCategory || 'All');
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [detailsModalProduct, setDetailsModalProduct] = useState(null);
 
   // Synchronize when activeCategory prop changes
   React.useEffect(() => {
@@ -154,12 +156,19 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
                   product={product}
                   index={index}
                   fallbackImg={fallbackImg}
+                  onOpenDetails={(item) => setDetailsModalProduct(item)}
                 />
               );
             })}
           </div>
         )}
       </div>
+
+      <ProductDetailsModal
+        product={detailsModalProduct}
+        isOpen={detailsModalProduct !== null}
+        onClose={() => setDetailsModalProduct(null)}
+      />
 
       <style>{`
         .shop-section {
