@@ -1073,15 +1073,30 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
 
       <style>{`
         .customizer-section {
-          padding: 115px 0 115px 0;
-          background: radial-gradient(ellipse at top center, #FFFDFB 0%, #FCFAF7 100%);
+          padding: 110px 0 110px 0;
+          background: radial-gradient(ellipse at top center, #FFFDF8 0%, #FCFAF7 50%, #F8F3EA 100%);
           position: relative;
+        }
+
+        .customizer-section::before {
+          content: '';
+          position: absolute;
+          top: 40px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 600px;
+          height: 350px;
+          background: radial-gradient(circle, rgba(212, 175, 55, 0.03) 0%, rgba(212, 175, 55, 0) 70%);
+          pointer-events: none;
+          z-index: 0;
         }
 
         .hero-header-wrap {
           max-width: 960px;
           margin: 0 auto 3rem auto;
           text-align: center;
+          position: relative;
+          z-index: 1;
         }
 
         .tw-hero-subtitle {
@@ -1100,21 +1115,12 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           font-family: var(--font-serif);
           font-size: 52px;
           font-weight: 700;
-          color: #2C2224;
+          color: #2D2523;
           line-height: 1.2;
+          letter-spacing: 0.02em;
           margin: 0 0 35px 0;
           opacity: 0;
           animation: heroFadeUp 0.65s cubic-bezier(0.25, 1, 0.5, 1) 0.2s forwards;
-        }
-
-        @media (max-width: 991px) {
-          .tw-hero-title { font-size: 44px; }
-        }
-
-        @media (max-width: 576px) {
-          .customizer-section { padding: 75px 0 75px 0; }
-          .tw-hero-subtitle { margin-bottom: 20px; }
-          .tw-hero-title { font-size: 34px; margin-bottom: 24px; }
         }
 
         .tw-hero-description {
@@ -1122,7 +1128,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           font-size: 20px;
           line-height: 1.8;
           letter-spacing: 0.2px;
-          color: #5A4A42;
+          color: rgba(45, 37, 35, 0.88);
           max-width: 750px;
           width: 100%;
           margin: 0 auto 50px auto;
@@ -1178,7 +1184,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           font-weight: 500;
           line-height: 1.7;
           letter-spacing: 0.3px;
-          color: #5A4A42;
+          color: rgba(45, 37, 35, 0.85);
           opacity: 0.85;
           text-align: center;
           margin-top: 50px;
@@ -1196,6 +1202,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         }
 
         @media (max-width: 991px) {
+          .tw-hero-title { font-size: 44px; }
           .tw-hero-description {
             font-size: 18px;
             max-width: 650px;
@@ -1210,6 +1217,9 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         }
 
         @media (max-width: 576px) {
+          .customizer-section { padding: 75px 0 75px 0; }
+          .tw-hero-subtitle { margin-bottom: 20px; }
+          .tw-hero-title { font-size: 34px; margin-bottom: 24px; }
           .tw-hero-description {
             font-size: 16px;
             max-width: 90%;
@@ -1240,12 +1250,14 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           max-width: 960px;
           margin: 0 auto 3.5rem auto;
           padding: 24px 32px;
-          border: 1px solid rgba(212, 175, 55, 0.25);
-          border-radius: 16px;
-          background: #FFFFFF;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+          border: 1px solid rgba(212, 175, 55, 0.22);
+          border-radius: 20px;
+          background: #FFFDF8;
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
           opacity: 0;
           animation: heroFadeUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.5s forwards;
+          position: relative;
+          z-index: 1;
         }
 
         @media (max-width: 576px) {
@@ -1264,17 +1276,17 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           font-family: var(--font-sans);
           font-weight: 500;
           font-size: 15px;
-          color: #2C2224;
-          background: #FFFDF9;
+          color: #2D2523;
+          background: #FFFDF8;
           border: 1px solid rgba(212, 175, 55, 0.2);
           border-radius: 50px;
-          padding: 10px 20px;
+          padding: 10px 22px;
           min-height: 44px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
           gap: 8px;
-          transition: all 0.3s ease;
+          transition: all 300ms ease;
           user-select: none;
           box-sizing: border-box;
         }
@@ -1282,8 +1294,24 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         .feature-pill:hover {
           background: #FFF9EE;
           border-color: #D4AF37;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+          transform: translateY(-3px) scale(1.02);
+          box-shadow: 0 6px 20px rgba(212, 175, 55, 0.18);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .tw-hero-subtitle,
+          .tw-hero-title,
+          .tw-hero-description,
+          .tw-hero-divider,
+          .tw-brand-tagline,
+          .special-features-bar {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+          }
+          .feature-pill:hover {
+            transform: none !important;
+          }
         }
 
         @keyframes heroFadeUp {
