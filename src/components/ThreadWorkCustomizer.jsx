@@ -628,7 +628,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           <div className="features-flex">
             {THREADWORK_HIGHLIGHTS.map((feat, idx) => (
               <span key={idx} className="feature-pill">
-                <FaGem style={{ color: '#D4AF37' }} /> {feat}
+                <FaGem style={{ color: '#C89B3C', fontSize: '18px' }} /> {feat}
               </span>
             ))}
           </div>
@@ -1076,6 +1076,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           padding: 110px 0 110px 0;
           background: radial-gradient(ellipse at top center, #FFFDF8 0%, #FCFAF7 50%, #F8F3EA 100%);
           position: relative;
+          box-shadow: inset 0 1px 0 rgba(200, 155, 60, 0.15), 0 20px 60px rgba(45, 37, 35, 0.03);
         }
 
         .customizer-section::before {
@@ -1086,7 +1087,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           transform: translateX(-50%);
           width: 600px;
           height: 350px;
-          background: radial-gradient(circle, rgba(212, 175, 55, 0.03) 0%, rgba(212, 175, 55, 0) 70%);
+          background: radial-gradient(circle, rgba(200, 155, 60, 0.018) 0%, rgba(200, 155, 60, 0) 70%);
           pointer-events: none;
           z-index: 0;
         }
@@ -1104,11 +1105,11 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           font-size: 0.85rem;
           font-weight: 700;
           letter-spacing: 0.18em;
-          color: var(--gold-dark);
+          color: #C89B3C;
           text-transform: uppercase;
           margin-bottom: 28px;
           opacity: 0;
-          animation: heroFadeUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) 0.1s forwards;
+          animation: heroFadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
         }
 
         .tw-hero-title {
@@ -1120,7 +1121,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           letter-spacing: 0.02em;
           margin: 0 0 35px 0;
           opacity: 0;
-          animation: heroFadeUp 0.65s cubic-bezier(0.25, 1, 0.5, 1) 0.2s forwards;
+          animation: heroFadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
         }
 
         .tw-hero-description {
@@ -1134,11 +1135,11 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           margin: 0 auto 50px auto;
           text-align: center;
           opacity: 0;
-          animation: heroFadeUp 0.7s cubic-bezier(0.25, 1, 0.5, 1) 0.3s forwards;
+          animation: heroFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
         }
 
         .gold-highlight {
-          color: #B8860B;
+          color: #C89B3C;
           font-weight: 600;
           text-decoration: none;
         }
@@ -1150,7 +1151,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           gap: 16px;
           margin: 50px auto 50px auto;
           opacity: 0;
-          animation: heroFadeUp 0.75s cubic-bezier(0.25, 1, 0.5, 1) 0.35s forwards;
+          animation: heroFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
         }
 
         .divider-line {
@@ -1160,20 +1161,20 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         }
 
         .divider-line.left-line {
-          background: linear-gradient(90deg, rgba(212, 175, 55, 0) 0%, rgba(212, 175, 55, 0.8) 100%);
+          background: linear-gradient(90deg, rgba(200, 155, 60, 0) 0%, rgba(200, 155, 60, 0.75) 100%);
         }
 
         .divider-line.right-line {
-          background: linear-gradient(90deg, rgba(212, 175, 55, 0.8) 0%, rgba(212, 175, 55, 0) 100%);
+          background: linear-gradient(90deg, rgba(200, 155, 60, 0.75) 0%, rgba(200, 155, 60, 0) 100%);
         }
 
         .divider-motif {
           font-size: 26px;
-          color: #D4AF37;
+          color: #C89B3C;
           display: flex;
           align-items: center;
           justify-content: center;
-          filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.35));
+          filter: drop-shadow(0 0 6px rgba(200, 155, 60, 0.3));
           line-height: 1;
         }
 
@@ -1184,16 +1185,16 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           font-weight: 500;
           line-height: 1.7;
           letter-spacing: 0.3px;
-          color: rgba(45, 37, 35, 0.85);
-          opacity: 0.85;
+          color: rgba(45, 37, 35, 0.94);
+          opacity: 0.92;
           text-align: center;
           margin-top: 50px;
           margin-bottom: 55px;
-          animation: heroFadeUp 0.75s cubic-bezier(0.25, 1, 0.5, 1) 0.4s forwards;
+          animation: heroFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
         }
 
         .tw-brand-tagline .quote-mark {
-          color: #D4AF37;
+          color: #C89B3C;
           font-family: var(--font-serif);
           font-size: 26px;
           font-weight: 700;
@@ -1247,29 +1248,31 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         }
 
         .special-features-bar {
-          max-width: 960px;
+          max-width: 900px;
           margin: 0 auto 3.5rem auto;
           padding: 24px 32px;
-          border: 1px solid rgba(212, 175, 55, 0.22);
+          border: 1px solid rgba(200, 155, 60, 0.22);
           border-radius: 20px;
           background: #FFFDF8;
-          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
           opacity: 0;
-          animation: heroFadeUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.5s forwards;
+          animation: heroFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
           position: relative;
           z-index: 1;
         }
 
         @media (max-width: 576px) {
-          .special-features-bar { padding: 18px; }
+          .special-features-bar { padding: 18px 14px; }
         }
 
         .features-flex {
           display: flex;
           flex-wrap: wrap;
-          gap: 18px;
+          gap: 16px 20px;
           justify-content: center;
           align-items: center;
+          max-width: 840px;
+          margin: 0 auto;
         }
 
         .feature-pill {
@@ -1278,10 +1281,10 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           font-size: 15px;
           color: #2D2523;
           background: #FFFDF8;
-          border: 1px solid rgba(212, 175, 55, 0.2);
+          border: 1px solid rgba(200, 155, 60, 0.2);
           border-radius: 50px;
           padding: 10px 22px;
-          min-height: 44px;
+          min-height: 46px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
@@ -1293,9 +1296,9 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
 
         .feature-pill:hover {
           background: #FFF9EE;
-          border-color: #D4AF37;
+          border-color: #C89B3C;
           transform: translateY(-3px) scale(1.02);
-          box-shadow: 0 6px 20px rgba(212, 175, 55, 0.18);
+          box-shadow: 0 6px 20px rgba(200, 155, 60, 0.16);
         }
 
         @media (prefers-reduced-motion: reduce) {
