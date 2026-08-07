@@ -160,7 +160,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
 
         .shop-toolbar {
           padding: 0.5rem 1rem;
-          margin-bottom: 1.15rem;
+          margin-bottom: 2rem;
           display: flex;
           justify-content: center;
           border: 1px solid var(--gold-border);
