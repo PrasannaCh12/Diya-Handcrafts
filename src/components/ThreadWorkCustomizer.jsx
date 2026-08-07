@@ -1097,11 +1097,13 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           position: relative;
           width: 100%;
           max-width: 320px;
-          aspect-ratio: 1 / 1;
-          border-radius: 16px;
+        .flavor-img-wrap {
+          width: 100%;
+          aspect-ratio: 1 / 1.14;
+          border-radius: 15px 15px 0 0;
           overflow: hidden;
-          background: #FFFFFF;
-          padding: 16px;
+          background: #FFFDF9;
+          padding: 0;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -1114,7 +1116,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         .flavor-thumb-img {
           width: 100%;
           height: 100%;
-          object-fit: contain;
+          object-fit: cover;
           object-position: center;
           display: block;
         }

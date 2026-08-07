@@ -966,16 +966,14 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
           box-shadow: 0 10px 28px rgba(212, 175, 55, 0.2);
         }
 
-        /* Perfect Square (1:1) Image Container (300px-320px) with 16px Rounded Corners */
         .flavor-img-wrap {
           position: relative;
           width: 100%;
-          max-width: 320px;
-          aspect-ratio: 1 / 1;
-          border-radius: 16px;
+          aspect-ratio: 1 / 1.14;
+          border-radius: 15px 15px 0 0;
           overflow: hidden;
-          background: #FFFFFF;
-          padding: 16px;
+          background: #FFFDF9;
+          padding: 0;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -987,7 +985,7 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
         .flavor-thumb-img {
           width: 100%;
           height: 100%;
-          object-fit: contain;
+          object-fit: cover;
           object-position: center;
           display: block;
         }

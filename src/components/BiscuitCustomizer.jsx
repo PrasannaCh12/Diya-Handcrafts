@@ -1099,12 +1099,11 @@ const BiscuitCustomizer = ({ onSelectProduct }) => {
           font-size: 11px;
         }
 
-        /* 1:1 Square Image Container with 18px Rounded Corners */
         .flavor-img-wrap {
           position: relative;
           width: 100%;
-          aspect-ratio: 1 / 1;
-          border-radius: 18px;
+          aspect-ratio: 1 / 1.14;
+          border-radius: 15px 15px 0 0;
           overflow: hidden;
           background: #FFFDF9;
           border: 1px solid rgba(232, 211, 163, 0.4);
@@ -1118,7 +1117,7 @@ const BiscuitCustomizer = ({ onSelectProduct }) => {
           height: 100%;
           object-fit: cover;
           object-position: center center;
-          border-radius: 18px;
+          border-radius: 15px 15px 0 0;
           display: block;
           transition: transform 0.5s ease;
         }

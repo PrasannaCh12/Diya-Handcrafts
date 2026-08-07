@@ -787,15 +787,14 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           color: #FFFFFF;
         }
 
-        /* 1:1 Square Image Container with Pure White Background & 16px Padding */
         .flavor-img-wrap {
           position: relative;
           width: 100%;
-          aspect-ratio: 1 / 1;
-          border-radius: 16px;
+          aspect-ratio: 1 / 1.14;
+          border-radius: 15px 15px 0 0;
           overflow: hidden;
-          background: #FFFFFF;
-          padding: 16px;
+          background: #FFFDF9;
+          padding: 0;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -807,7 +806,7 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
         .flavor-thumb-img {
           width: 100%;
           height: 100%;
-          object-fit: contain;
+          object-fit: cover;
           object-position: center;
           display: block;
         }
