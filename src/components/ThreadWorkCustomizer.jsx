@@ -1112,6 +1112,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           letter-spacing: 0.2px;
           color: #5A4A42;
           max-width: 750px;
+          width: 100%;
           margin: 0 auto 1.5rem auto;
           text-align: center;
           opacity: 0;
@@ -1121,12 +1122,14 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         @media (max-width: 991px) {
           .tw-hero-description {
             font-size: 18px;
+            max-width: 650px;
           }
         }
 
         @media (max-width: 576px) {
           .tw-hero-description {
             font-size: 16px;
+            max-width: 90%;
           }
         }
 
