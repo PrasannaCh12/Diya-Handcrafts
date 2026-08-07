@@ -162,7 +162,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
       <style>{`
         .shop-section {
           padding: 2.5rem 0 5rem 0;
-          background: var(--bg-secondary);
+          background: #FCFAF7;
           position: relative;
         }
 
@@ -263,8 +263,8 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           border-radius: 15px;
           overflow: hidden;
           cursor: default;
-          border: 1.5px solid rgba(212, 175, 55, 0.25);
-          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+          border: 1px solid rgba(212, 175, 55, 0.2);
+          box-shadow: 0 6px 22px rgba(61, 43, 31, 0.06);
           display: flex;
           flex-direction: column;
           opacity: 0;
@@ -315,8 +315,8 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
         @media (hover: hover) and (pointer: fine) {
           .gallery-card.fade-in-visible:hover {
             transform: translateY(-6px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12), 0 4px 15px rgba(212, 175, 55, 0.18);
-            border-color: var(--gold-primary);
+            box-shadow: 0 14px 34px rgba(61, 43, 31, 0.10), 0 4px 16px rgba(212, 175, 55, 0.16);
+            border-color: rgba(212, 175, 55, 0.45);
           }
 
           .gallery-card:hover .gallery-img {
@@ -358,7 +358,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           object-fit: cover;
           object-position: center;
           border-radius: 15px 15px 0 0;
-          filter: brightness(1.03) contrast(1.05);
+          filter: brightness(1.03) contrast(1.05) saturate(1.02);
           transition: opacity 0.35s ease-out, transform 0.3s ease, filter 0.3s ease;
         }
 
