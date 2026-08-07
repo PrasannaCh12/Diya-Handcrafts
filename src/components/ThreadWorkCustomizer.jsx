@@ -421,16 +421,28 @@ const ThreadWorkCard = ({ tw, idx, isSelected, onSelect, onOpenDetailsModal }) =
 
   const handleCardClick = () => {
     onSelect(tw.name);
-    onOpenDetailsModal(tw);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onSelect(tw.name);
+    }
   };
 
   return (
     <div
       ref={cardRef}
+      tabIndex={0}
+      role="button"
+      aria-pressed={isSelected}
+      aria-label={`Select ${tw.name}`}
       className={`flavor-card ${isSelected ? 'selected' : ''} ${isVisible ? 'fade-in-visible' : ''}`}
       onClick={handleCardClick}
+      onKeyDown={handleKeyDown}
       style={{
-        animationDelay: `${staggerDelay}ms`
+        animationDelay: `${staggerDelay}ms`,
+        cursor: 'pointer'
       }}
     >
       {/* Top-Right Circular Radio Checkmark Badge */}
@@ -438,11 +450,7 @@ const ThreadWorkCard = ({ tw, idx, isSelected, onSelect, onOpenDetailsModal }) =
         {isSelected && <FaCheck className="tw-radio-check" />}
       </div>
 
-      <div 
-        className="flavor-img-wrap" 
-        onClick={(e) => { e.stopPropagation(); onSelect(tw.name); onOpenDetailsModal(tw); }} 
-        title="Click to view product details"
-      >
+      <div className="flavor-img-wrap">
         <img 
           src={tw.image} 
           alt={tw.name} 
@@ -460,7 +468,16 @@ const ThreadWorkCard = ({ tw, idx, isSelected, onSelect, onOpenDetailsModal }) =
 
         <div 
           className="card-view-details-link"
-          onClick={(e) => { e.stopPropagation(); onSelect(tw.name); onOpenDetailsModal(tw); }}
+          onClick={(e) => { 
+            e.stopPropagation(); 
+            onOpenDetailsModal(tw); 
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.stopPropagation();
+              onOpenDetailsModal(tw);
+            }
+          }}
         >
           <span>View Details →</span>
         </div>
@@ -1406,9 +1423,10 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
         }
 
         .flavor-card.selected {
-          border: 2px solid #D4AF37;
-          background: #FFFDF9;
-          box-shadow: 0 8px 25px rgba(212, 175, 55, 0.25), 0 0 15px rgba(246, 211, 101, 0.3);
+          border: 2px solid #D4AF37 !important;
+          background: #FFFDF9 !important;
+          box-shadow: 0 8px 25px rgba(212, 175, 55, 0.25), 0 0 15px rgba(246, 211, 101, 0.3) !important;
+          transform: scale(1.02) !important;
         }
 
         .tw-radio-circle {
