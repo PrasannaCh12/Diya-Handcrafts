@@ -343,6 +343,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           font-weight: 600;
           color: var(--text-dark);
           line-height: 1.45;
+          letter-spacing: 0.25px;
           height: 2.9em;
           margin: 0;
           text-align: center;
