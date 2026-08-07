@@ -4,14 +4,12 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import CartDrawer from './components/CartDrawer';
-import ProductModal from './components/ProductModal';
 import WhatsAppButton from './components/WhatsAppButton';
 
 // Pages
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ShopPage from './pages/ShopPage';
-import ProductDetailPage from './pages/ProductDetailPage';
 import ThreadWorkPage from './pages/ThreadWorkPage';
 import ResinArtPage from './pages/ResinArtPage';
 import ChocolatePage from './pages/ChocolatePage';
@@ -20,7 +18,6 @@ import CustomOrderPage from './pages/CustomOrderPage';
 import ContactPage from './pages/ContactPage';
 
 function App() {
-  const [selectedProduct, setSelectedProduct] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
 
@@ -74,7 +71,6 @@ function App() {
             path="/" 
             element={
               <HomePage 
-                onSelectProduct={(p) => setSelectedProduct(p)} 
                 onAddToCart={handleAddToCart} 
               />
             } 
@@ -84,30 +80,25 @@ function App() {
             path="/shop" 
             element={
               <ShopPage 
-                onSelectProduct={(p) => setSelectedProduct(p)} 
                 onAddToCart={handleAddToCart} 
               />
             } 
           />
           <Route 
-            path="/product/:id" 
-            element={<ProductDetailPage onAddToCart={handleAddToCart} />} 
-          />
-          <Route 
             path="/threadwork" 
-            element={<ThreadWorkPage onSelectProduct={(p) => setSelectedProduct(p)} />} 
+            element={<ThreadWorkPage />} 
           />
           <Route 
             path="/resinart" 
-            element={<ResinArtPage onSelectProduct={(p) => setSelectedProduct(p)} />} 
+            element={<ResinArtPage />} 
           />
           <Route 
             path="/chocolates" 
-            element={<ChocolatePage onSelectProduct={(p) => setSelectedProduct(p)} />} 
+            element={<ChocolatePage />} 
           />
           <Route 
             path="/biscuits" 
-            element={<BiscuitPage onSelectProduct={(p) => setSelectedProduct(p)} />} 
+            element={<BiscuitPage />} 
           />
           <Route path="/custom-order" element={<CustomOrderPage />} />
           <Route path="/contact" element={<ContactPage />} />
@@ -121,12 +112,6 @@ function App() {
       <WhatsAppButton />
 
       {/* Modals & Drawers */}
-      <ProductModal
-        product={selectedProduct}
-        onClose={() => setSelectedProduct(null)}
-        onAddToCart={handleAddToCart}
-      />
-
       <CartDrawer
         isOpen={cartDrawerOpen}
         onClose={() => setCartDrawerOpen(false)}

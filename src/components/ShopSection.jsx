@@ -1,6 +1,4 @@
 import React, { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FaEye, FaArrowRight } from 'react-icons/fa';
 import { PRODUCTS, CATEGORIES } from '../data/products';
 
 const CATEGORY_FALLBACK_IMAGES = {
@@ -10,7 +8,7 @@ const CATEGORY_FALLBACK_IMAGES = {
   'Homemade Biscuits': '/ragi_biscuits.jpg'
 };
 
-const AnimatedProductCard = ({ product, index, onClick, fallbackImg }) => {
+const AnimatedProductCard = ({ product, index, fallbackImg }) => {
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = React.useRef(null);
 
@@ -38,8 +36,7 @@ const AnimatedProductCard = ({ product, index, onClick, fallbackImg }) => {
     <div
       ref={cardRef}
       className={`gallery-card glass-card ${isVisible ? 'fade-in-visible' : ''}`}
-      onClick={(e) => onClick(product, e)}
-      title={`Click to view ${product.name}`}
+      title={product.name}
       style={{
         animationDelay: `${staggerDelay}ms`
       }}
@@ -58,20 +55,13 @@ const AnimatedProductCard = ({ product, index, onClick, fallbackImg }) => {
       </div>
       <div className="gallery-card-info">
         <h4 className="card-item-title">{product.name}</h4>
-        <div className="card-cta-btn-wrap">
-          <span className="card-cta-btn">
-            View Details <FaArrowRight className="card-cta-arrow" />
-          </span>
-        </div>
       </div>
     </div>
   );
 };
 
-const ShopSection = ({ onSelectProduct, activeCategory, onResetCategory }) => {
-  const navigate = useNavigate();
+const ShopSection = ({ activeCategory, onResetCategory }) => {
   const [selectedCategory, setSelectedCategory] = useState(activeCategory || 'All');
-  const [toastMsg, setToastMsg] = useState('');
 
   // Synchronize when activeCategory prop changes
   React.useEffect(() => {
@@ -85,19 +75,6 @@ const ShopSection = ({ onSelectProduct, activeCategory, onResetCategory }) => {
       return selectedCategory === 'All' || product.category === selectedCategory;
     });
   }, [selectedCategory]);
-
-  const handleProductClick = (product, e) => {
-    if (e) e.preventDefault();
-
-    if (!product || !product.id) return;
-
-    // Navigate dynamically to the dedicated Product Details Page
-    navigate(`/product/${product.id}`);
-
-    if (onSelectProduct) {
-      onSelectProduct(product);
-    }
-  };
 
   return (
     <section id="shop" className="shop-section">
@@ -149,7 +126,6 @@ const ShopSection = ({ onSelectProduct, activeCategory, onResetCategory }) => {
                   key={product.id}
                   product={product}
                   index={index}
-                  onClick={handleProductClick}
                   fallbackImg={fallbackImg}
                 />
               );
@@ -254,7 +230,7 @@ const ShopSection = ({ onSelectProduct, activeCategory, onResetCategory }) => {
           background: #FFFFFF;
           border-radius: 20px;
           overflow: hidden;
-          cursor: pointer;
+          cursor: default;
           border: 1.5px solid rgba(212, 175, 55, 0.25);
           box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
           display: flex;
@@ -346,15 +322,13 @@ const ShopSection = ({ onSelectProduct, activeCategory, onResetCategory }) => {
         }
 
         .gallery-card-info {
-          padding: 15px 18px 18px 18px;
+          padding: 15px 18px;
           display: flex;
-          flex-direction: column;
           align-items: center;
-          justify-content: space-between;
+          justify-content: center;
           text-align: center;
           background: #FFFFFF;
           flex-grow: 1;
-          gap: 0.75rem;
         }
 
         .card-item-title {
@@ -371,47 +345,6 @@ const ShopSection = ({ onSelectProduct, activeCategory, onResetCategory }) => {
           -webkit-box-orient: vertical;
           overflow: hidden;
           text-overflow: ellipsis;
-        }
-
-        .card-cta-btn-wrap {
-          width: 100%;
-          margin-top: 0.25rem;
-        }
-
-        .card-cta-btn {
-          width: 100%;
-          height: 40px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.45rem;
-          background: transparent;
-          color: #3E2C1C;
-          border: 1.5px solid #D4AF37;
-          border-radius: 11px;
-          font-family: var(--font-sans);
-          font-size: 0.82rem;
-          font-weight: 600;
-          letter-spacing: 0.03em;
-          transition: all 0.35s ease-out;
-          box-sizing: border-box;
-        }
-
-        .gallery-card:hover .card-cta-btn {
-          background: linear-gradient(135deg, #F6D365 0%, #D4AF37 50%, #C79A2B 100%);
-          color: #FFFFFF;
-          border-color: transparent;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);
-        }
-
-        .card-cta-arrow {
-          font-size: 0.75rem;
-          transition: transform 0.35s ease-out;
-        }
-
-        .gallery-card:hover .card-cta-arrow {
-          transform: translateX(4px);
         }
 
         .no-products-state {
