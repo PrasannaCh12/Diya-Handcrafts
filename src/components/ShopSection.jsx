@@ -228,7 +228,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           overflow: hidden;
           cursor: default;
           border: 1.5px solid rgba(212, 175, 55, 0.25);
-          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
           display: flex;
           flex-direction: column;
           opacity: 0;
@@ -275,7 +275,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
 
         .gallery-card.fade-in-visible:hover {
           transform: translateY(-6px) scale(1);
-          box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15), 0 6px 20px rgba(212, 175, 55, 0.20);
+          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12), 0 4px 15px rgba(212, 175, 55, 0.18);
           border-color: var(--gold-primary);
         }
 
