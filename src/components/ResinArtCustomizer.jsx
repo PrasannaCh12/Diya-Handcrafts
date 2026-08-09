@@ -1340,21 +1340,21 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
         .summary-sticky-card {
           position: sticky;
           top: 100px;
-          background: #FFFFFF;
+          background: #FFFDF8;
           border-radius: 20px;
-          border: 1px solid #E8C86A;
-          box-shadow: 0 10px 30px rgba(110, 58, 70, 0.08);
-          padding: 1.5rem;
+          border: 1px solid rgba(200, 155, 60, 0.25);
+          box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
+          padding: 1.75rem 1.5rem;
           z-index: 10;
         }
 
         .summary-title {
-          font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-          font-size: 1.5rem;
+          font-family: var(--font-serif);
+          font-size: 1.45rem;
           font-weight: 700;
-          color: #3D2B1F;
+          color: #2D2523;
           margin-bottom: 1.25rem;
-          border-bottom: 1px solid rgba(232, 200, 106, 0.3);
+          border-bottom: 1px solid rgba(200, 155, 60, 0.25);
           padding-bottom: 0.75rem;
         }
 
@@ -1375,19 +1375,19 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
 
         .summary-label {
           font-weight: 600;
-          color: #5C3D2E;
+          color: #2D2523;
           flex-shrink: 0;
         }
 
         .summary-val {
           font-weight: 500;
-          color: #2C2224;
+          color: #5A4A42;
           text-align: right;
           word-break: break-word;
         }
 
         .summary-val.highlight-gold {
-          color: var(--rose-primary);
+          color: #C89B3C;
           font-weight: 600;
         }
 
