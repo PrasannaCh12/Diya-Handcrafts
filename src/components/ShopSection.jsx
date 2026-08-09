@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { PRODUCTS, CATEGORIES } from '../data/products';
 import { ProductDetailsModal } from './ThreadWorkCustomizer';
+import { ResinArtDetailsModal } from './ResinArtCustomizer';
 
 const CATEGORY_FALLBACK_IMAGES = {
   'Thread Work': '/bridal_bangle_set.jpg',
@@ -164,11 +165,19 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
         )}
       </div>
 
-      <ProductDetailsModal
-        product={detailsModalProduct}
-        isOpen={detailsModalProduct !== null}
-        onClose={() => setDetailsModalProduct(null)}
-      />
+      {detailsModalProduct?.category === 'Resin Art' || detailsModalProduct?.id?.startsWith('ra-') ? (
+        <ResinArtDetailsModal
+          product={detailsModalProduct}
+          isOpen={detailsModalProduct !== null}
+          onClose={() => setDetailsModalProduct(null)}
+        />
+      ) : (
+        <ProductDetailsModal
+          product={detailsModalProduct}
+          isOpen={detailsModalProduct !== null}
+          onClose={() => setDetailsModalProduct(null)}
+        />
+      )}
 
       <style>{`
         .shop-section {

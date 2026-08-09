@@ -7,71 +7,211 @@ export const RESINART_DESIGNS = [
     id: 'ra-coasters',
     name: 'Personalized Resin Wedding Photo Frame',
     icon: '🖼️',
-    desc: 'Luxury handcrafted resin photo frame with personalized names, wedding date, preserved botanicals, gold foil accents, and your favorite photo. A perfect wedding keepsake and heartfelt gift.',
-    image: '/resin_coasters_set.jpg'
+    category: '🎨 PERSONALIZED RESIN ART COLLECTION',
+    shortDesc: 'A timeless handcrafted wedding keepsake capturing your most cherished bridal photo in crystal-clear resin.',
+    detailedDesc: 'This luxury handcrafted resin frame features your favorite wedding photograph set amidst hand-arranged preserved bridal flowers, gold leaf accents, and custom calligraphy. Crafted with UV-resistant high-clarity resin, it serves as an enduring symbol of love and commitment for your home decor.',
+    image: '/resin_coasters_set.jpg',
+    images: ['/resin_coasters_set.jpg'],
+    availableColors: ['Royal Blue', 'Blush Pink', 'Ruby Red', 'Pearl White', 'Luxury Gold', 'Custom Color'],
+    availableSizes: ['Small (6" x 8")', 'Medium (8" x 10")', 'Large (10" x 12")', 'Custom Size'],
+    materials: 'Premium epoxy resin, preserved wedding flowers, gold leaf flakes, high-resolution photo print, acrylic base frame',
+    customizationOptions: ['Couple Names', 'Wedding Date & Venue', 'Custom Photo', 'Romantic Quote', 'Color Theme'],
+    craftsmanshipSpecs: [
+      'Handmade resin artwork',
+      'Carefully arranged decorative elements',
+      'High-quality resin finish',
+      'Personalized according to customer requirements'
+    ],
+    careInstructions: 'Keep away from direct sunlight, excessive heat, moisture, and harsh chemicals. Clean gently with a soft dry cloth.'
   },
   {
     id: 'ra-photo-frame',
     name: 'Personalized Resin Calendar Keepsake',
     icon: '📅',
-    desc: 'Luxury handcrafted resin calendar with a personalized photo, special date, floral decorations, gold foil accents, and custom design. A perfect gift for birthdays, anniversaries, and special memories.',
-    image: '/resin_photo_plaque.jpg'
+    category: '🎨 PERSONALIZED RESIN ART COLLECTION',
+    shortDesc: 'Highlight your special date forever on an elegant resin calendar plaque featuring custom photo and floral detailing.',
+    detailedDesc: 'Celebrate birthdays, anniversaries, or wedding dates with this bespoke resin calendar stand. It combines a high-definition photograph, custom calendar grid highlighting your special date, preserved dried flowers, and shimmering gold foil embedded in durable resin.',
+    image: '/resin_photo_plaque.jpg',
+    images: ['/resin_photo_plaque.jpg'],
+    availableColors: ['Rose Gold', 'Emerald Green', 'Pearl White', 'Classic Gold', 'Sky Blue', 'Custom Color'],
+    availableSizes: ['Small (6" x 6")', 'Medium (8" x 8")', 'Large (10" x 10")', 'Custom Size'],
+    materials: 'Crystal-clear epoxy resin, preserved dried botanicals, metallic calendar grid, gold foil flakes, photo print, wooden display stand',
+    customizationOptions: ['Special Month & Date Circle', 'Customer / Couple Names', 'Personal Photo Upload', 'Custom Short Message', 'Floral Color Palette'],
+    craftsmanshipSpecs: [
+      'Handmade resin artwork',
+      'Carefully arranged decorative elements',
+      'High-quality resin finish',
+      'Personalized according to customer requirements'
+    ],
+    careInstructions: 'Keep away from direct sunlight, excessive heat, moisture, and harsh chemicals. Clean gently with a soft dry cloth.'
   },
   {
     id: 'ra-keychains',
     name: 'Personalized Resin Anniversary Plaque',
     icon: '💍',
-    desc: 'Luxury handcrafted resin plaque with personalized photo, names, special date, preserved flowers, crystal accents, and gold foil. A perfect anniversary keepsake and heartfelt gift.',
-    image: '/resin_keychains.jpg'
+    category: '🎨 PERSONALIZED RESIN ART COLLECTION',
+    shortDesc: 'A sophisticated handcrafted anniversary plaque blending couple portrait, custom vows, and gold leaf elements.',
+    detailedDesc: 'Crafted to honor milestone wedding anniversaries, this handcrafted resin plaque incorporates high-grade crystal-clear resin poured over real preserved florals, personalized names, anniversary year, and romantic lettering. Designed to stand beautifully on mantlepieces or side tables.',
+    image: '/resin_keychains.jpg',
+    images: ['/resin_keychains.jpg'],
+    availableColors: ['Ruby Red', 'Royal Gold', 'Blush Pink', 'Champagne White', 'Deep Navy', 'Custom Color'],
+    availableSizes: ['Medium (8" x 10")', 'Large (10" x 12")', 'Extra Large (12" x 14")', 'Custom Size'],
+    materials: 'Optical grade epoxy resin, preserved real flowers, gold foil gilding, high-res photograph, premium wooden/acrylic stand',
+    customizationOptions: ['Anniversary Year & Date', 'Husband & Wife Names', 'Wedding / Couple Photo', 'Personal Vows / Quote', 'Gold/Silver Leaf Accents'],
+    craftsmanshipSpecs: [
+      'Handmade resin artwork',
+      'Carefully arranged decorative elements',
+      'High-quality resin finish',
+      'Personalized according to customer requirements'
+    ],
+    careInstructions: 'Keep away from direct sunlight, excessive heat, moisture, and harsh chemicals. Clean gently with a soft dry cloth.'
   },
   {
     id: 'ra-bracelets',
     name: 'Personalized Resin Valentine Plaque',
     icon: '❤️',
-    desc: 'Cute handcrafted resin plaque with a personalized couple illustration, custom message, premium glossy finish, and vibrant design. A perfect Valentine\'s Day and anniversary gift.',
-    image: '/resin_bracelets_rakhi.jpg'
+    category: '🎨 PERSONALIZED RESIN ART COLLECTION',
+    shortDesc: 'A charming Valentine artwork featuring a custom couple illustration, romantic text, and glossy resin dome.',
+    detailedDesc: 'Express your love with this handcrafted Valentine resin plaque. Designed with vibrant custom couple artwork, personalized names, romantic messages, and glittering accents, it makes a heartfelt gift for Valentine\'s Day, proposals, and sweet romantic surprises.',
+    image: '/resin_bracelets_rakhi.jpg',
+    images: ['/resin_bracelets_rakhi.jpg'],
+    availableColors: ['Crimson Red', 'Pastel Pink', 'Pure White', 'Rose Gold', 'Lavender', 'Custom Color'],
+    availableSizes: ['Small (5" x 7")', 'Medium (7" x 9")', 'Large (9" x 11")', 'Custom Size'],
+    materials: 'Non-yellowing resin, custom couple illustration print, decorative glitter, preserved rose petals, gold foil flakes',
+    customizationOptions: ['Couple Names', 'Love Quote / Vow', 'Illustration Style', 'Heart & Flower Embellishments', 'Background Color Theme'],
+    craftsmanshipSpecs: [
+      'Handmade resin artwork',
+      'Carefully arranged decorative elements',
+      'High-quality resin finish',
+      'Personalized according to customer requirements'
+    ],
+    careInstructions: 'Keep away from direct sunlight, excessive heat, moisture, and harsh chemicals. Clean gently with a soft dry cloth.'
   },
   {
     id: 'ra-clock',
     name: 'Personalized Resin Couple Plaque',
     icon: '💖',
-    desc: 'Cute handcrafted resin plaque with a personalized couple illustration, custom message, and glossy finish. A perfect keepsake for Valentine\'s Day, anniversaries, and romantic gifts.',
-    image: '/resin_clock.jpg'
+    category: '🎨 PERSONALIZED RESIN ART COLLECTION',
+    shortDesc: 'A stunning romantic plaque showcasing couple memories, personalized names, and shimmering gold foil.',
+    detailedDesc: 'Celebrate your togetherness with this bespoke couple plaque. Formulated with premium clear resin, real dried flowers, personalized couple name art, and delicate gold foil flakes, it creates an elegant table centerpiece that captures romantic moments forever.',
+    image: '/resin_clock.jpg',
+    images: ['/resin_clock.jpg'],
+    availableColors: ['Emerald Green', 'Royal Blue', 'Champagne Gold', 'Blush Pink', 'Ivory White', 'Custom Color'],
+    availableSizes: ['Medium (8" x 8")', 'Large (10" x 10")', 'Grand (12" x 12")', 'Custom Size'],
+    materials: 'High-gloss epoxy resin, real dried botanicals, gold leafing, custom couple photo print, acrylic easel',
+    customizationOptions: ['Couple Names & Date', 'Photo Upload', 'Background Color Tint', 'Gold / Silver Flakes', 'Personalized Love Message'],
+    craftsmanshipSpecs: [
+      'Handmade resin artwork',
+      'Carefully arranged decorative elements',
+      'High-quality resin finish',
+      'Personalized according to customer requirements'
+    ],
+    careInstructions: 'Keep away from direct sunlight, excessive heat, moisture, and harsh chemicals. Clean gently with a soft dry cloth.'
   },
   {
     id: 'ra-frame-keepsake',
     name: 'Personalized Resin Love Memory Plaque',
     icon: '❤️',
-    desc: 'Luxury handcrafted resin plaque with a personalized photo, names, special date, preserved flowers, and gold accents. A perfect keepsake for weddings, anniversaries, and special moments.',
-    image: '/personalized_resin_photo_frame.jpg'
+    category: '🎨 PERSONALIZED RESIN ART COLLECTION',
+    shortDesc: 'Preserve your favorite memory in a luxury resin plaque embedded with real flowers and gold leaf.',
+    detailedDesc: 'Turn your favorite photograph into a forever memory with this handcrafted resin love plaque. Each piece is individually poured using crystal-clear resin to preserve real dried flowers, custom typography, and gold leaf accents surrounding your picture.',
+    image: '/personalized_resin_photo_frame.jpg',
+    images: ['/personalized_resin_photo_frame.jpg'],
+    availableColors: ['Blush Pink', 'Sapphire Blue', 'Burgundy Red', 'Pearl Gold', 'White & Rose', 'Custom Color'],
+    availableSizes: ['Small (6" x 8")', 'Medium (8" x 10")', 'Large (10" x 12")', 'Custom Size'],
+    materials: 'Crystal-clear resin, real preserved garden flowers, gold foil flakes, high-resolution photo print, sturdy stand',
+    customizationOptions: ['Custom Photo', 'Names & Anniversary / Event Date', 'Personalized Memory Quote', 'Floral Theme & Color Palette'],
+    craftsmanshipSpecs: [
+      'Handmade resin artwork',
+      'Carefully arranged decorative elements',
+      'High-quality resin finish',
+      'Personalized according to customer requirements'
+    ],
+    careInstructions: 'Keep away from direct sunlight, excessive heat, moisture, and harsh chemicals. Clean gently with a soft dry cloth.'
   },
   {
     id: 'ra-serving-tray',
     name: 'Personalized Resin Initial Keychain',
     icon: '🗝️',
-    desc: 'Luxury handcrafted resin initial keychain with glitter, gold foil accents, and a stylish tassel. A personalized accessory perfect for gifting and everyday use.',
-    image: '/resin_serving_tray.jpg'
+    category: '🎨 PERSONALIZED RESIN ART COLLECTION',
+    shortDesc: 'A chic personalized initial keychain with embedded glitter, real flowers, and gold keyring.',
+    detailedDesc: 'Carry a piece of personalized luxury everywhere with this initial resin keychain. Handcrafted with non-toxic crystal resin, dried flowers, gold leaf flakes, and a sturdy gold key ring with matching tassel, it is ideal for personal use and return gifts.',
+    image: '/resin_serving_tray.jpg',
+    images: ['/resin_serving_tray.jpg'],
+    availableColors: ['Pink & Gold', 'Blue & Silver', 'Purple & Pearl', 'Black & Gold', 'Red & Rose Gold', 'Custom Color'],
+    availableSizes: ['Small (Standard 1.5")', 'Medium', 'Large', 'Custom Size'],
+    materials: 'UV-resistant epoxy resin, initial mold, glitter, gold foil, dried flowers, metal keyring & suede tassel',
+    customizationOptions: ['Alphabet / Letter Choice (A-Z)', 'Customer name', 'Date', 'Initials', 'Color theme', 'Design theme'],
+    craftsmanshipSpecs: [
+      'Handmade resin artwork',
+      'Carefully arranged decorative elements',
+      'High-quality resin finish',
+      'Personalized according to customer requirements'
+    ],
+    careInstructions: 'Keep away from direct sunlight, excessive heat, moisture, and harsh chemicals. Clean gently with a soft dry cloth.'
   },
   {
     id: 'ra-name-plate',
     name: 'Personalized Resin VOD Photo Stand',
     icon: '✨',
-    desc: 'Luxury handcrafted resin VOD photo stand with a personalized couple photo, gold foil accents, and glossy finish. A unique keepsake for weddings, anniversaries, and special moments.',
-    image: '/resin_name_plate.jpg'
+    category: '🎨 PERSONALIZED RESIN ART COLLECTION',
+    shortDesc: 'An exclusive VOD style photo stand combining personalized couple photo and resin art.',
+    detailedDesc: 'This luxury VOD (Vision of Desire) photo stand features a crystal-clear resin block showcasing a couple portrait, customized names, special date, and gold foil accents. Designed to create a captivating visual centerpiece for bedrooms and living spaces.',
+    image: '/resin_name_plate.jpg',
+    images: ['/resin_name_plate.jpg'],
+    availableColors: ['Crystal Clear & Gold', 'Ocean Blue', 'Blush Rose', 'Emerald Gold', 'Obsidian Black', 'Custom Color'],
+    availableSizes: ['Medium (7" x 9")', 'Large (9" x 11")', 'Grand (11" x 13")', 'Custom Size'],
+    materials: 'Heavyweight optical resin, high-res photo print, gold leafing, dried florals, acrylic base stand',
+    customizationOptions: ['Couple Photo Upload', 'Customer name', 'Date', 'Quote/message', 'Color theme', 'Design theme'],
+    craftsmanshipSpecs: [
+      'Handmade resin artwork',
+      'Carefully arranged decorative elements',
+      'High-quality resin finish',
+      'Personalized according to customer requirements'
+    ],
+    careInstructions: 'Keep away from direct sunlight, excessive heat, moisture, and harsh chemicals. Clean gently with a soft dry cloth.'
   },
   {
     id: 'ra-jewelry-tray',
     name: 'Personalized Resin Heart Keepsake',
     icon: '💖',
-    desc: 'Luxury handcrafted heart-shaped resin keepsake with personalized names, preserved flowers, gold foil accents, and a glossy finish. A perfect gift for weddings, anniversaries, and cherished memories.',
-    image: '/resin_jewelry_tray.jpg'
+    category: '🎨 PERSONALIZED RESIN ART COLLECTION',
+    shortDesc: 'A romantic heart-shaped resin block encasing personalized names, preserved roses, and gold foil.',
+    detailedDesc: 'Express romantic devotion with this heart-shaped resin keepsake. Handcrafted using high-purity clear resin poured over real preserved red and pink roses, gold leafing, and custom calligraphy names. A romantic treasure for engagements, weddings, and anniversaries.',
+    image: '/resin_jewelry_tray.jpg',
+    images: ['/resin_jewelry_tray.jpg'],
+    availableColors: ['Ruby & Gold', 'Rose Pink & Pearl', 'Crystal Clear & Gold', 'Deep Purple & Silver', 'Custom Color'],
+    availableSizes: ['Small (4" x 4")', 'Medium (6" x 6")', 'Large (8" x 8")', 'Custom Size'],
+    materials: 'Optical grade epoxy resin, preserved red/pink rose petals, gold foil leafing, custom calligraphy print',
+    customizationOptions: ['Customer name', 'Date', 'Photo', 'Quote/message', 'Initials', 'Color theme', 'Design theme'],
+    craftsmanshipSpecs: [
+      'Handmade resin artwork',
+      'Carefully arranged decorative elements',
+      'High-quality resin finish',
+      'Personalized according to customer requirements'
+    ],
+    careInstructions: 'Keep away from direct sunlight, excessive heat, moisture, and harsh chemicals. Clean gently with a soft dry cloth.'
   },
   {
     id: 'ra-candle-holder',
     name: 'Personalized Resin Rakhi Collection',
     icon: '✨',
-    desc: 'Luxury handcrafted resin Rakhi with personalized names, elegant pearl beads, premium resin finish, and vibrant colors. A thoughtful keepsake for celebrating Raksha Bandhan.',
-    image: '/resin_candle_holder.jpg'
+    category: '🎨 PERSONALIZED RESIN ART COLLECTION',
+    shortDesc: 'Elegant handcrafted resin Rakhis featuring personalized names, pearl beads, and gold thread cords.',
+    detailedDesc: 'Celebrate Raksha Bandhan with personalized resin Rakhis crafted with clear resin dials encasing your brother\'s or family names, dried petals, and sparkling glitter. Paired with soft silk cords and pearl accents, it becomes a memorable keepsake to treasure long after the festival.',
+    image: '/resin_candle_holder.jpg',
+    images: ['/resin_candle_holder.jpg'],
+    availableColors: ['Royal Blue', 'Emerald Green', 'Maroon Red', 'Sunshine Yellow', 'Pastel Pink', 'Custom Color'],
+    availableSizes: ['Small (Standard Wrist)', 'Medium', 'Large', 'Custom Size'],
+    materials: 'Non-toxic resin, personalized name prints, dried petals, pearl beads, silk thread cords, metallic charm rings',
+    customizationOptions: ['Customer name', 'Date', 'Initials', 'Color theme', 'Design theme'],
+    craftsmanshipSpecs: [
+      'Handmade resin artwork',
+      'Carefully arranged decorative elements',
+      'High-quality resin finish',
+      'Personalized according to customer requirements'
+    ],
+    careInstructions: 'Keep away from direct sunlight, excessive heat, moisture, and harsh chemicals. Clean gently with a soft dry cloth.'
   }
 ];
 
@@ -84,7 +224,149 @@ export const RESINART_HIGHLIGHTS = [
   'Custom Gift Keepsakes'
 ];
 
-const ResinArtCard = ({ ra, idx, isSelected, isExpanded, onSelect, onToggleExpand, onOpenLightbox }) => {
+export const ResinArtDetailsModal = ({ product, isOpen, onClose }) => {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen || !product) return null;
+
+  const category = product.category || '🎨 PERSONALIZED RESIN ART COLLECTION';
+  const name = product.name || 'Personalized Resin Artwork';
+  const shortDesc = product.shortDesc || 'Luxury handcrafted resin creation tailored to preserve your special memories.';
+  const detailedDesc = product.detailedDesc || product.desc || 'Crafted using premium crystal-clear epoxy resin, preserved botanicals, custom photography, and gold foil accents. Every piece is carefully poured and hand-finished for high durability and timeless beauty.';
+  
+  const colors = Array.isArray(product.availableColors) 
+    ? product.availableColors 
+    : ['Royal Blue', 'Blush Pink', 'Ruby Red', 'Pearl White', 'Luxury Gold', 'Custom Color'];
+  
+  const sizes = Array.isArray(product.availableSizes) 
+    ? product.availableSizes 
+    : ['Small', 'Medium', 'Large', 'Custom Size'];
+
+  const materials = typeof product.materials === 'string'
+    ? product.materials
+    : 'Premium epoxy resin, dried flowers, decorative stones, glitter, gold flakes, printed photographs, decorative elements';
+
+  const customizationOptions = Array.isArray(product.customizationOptions)
+    ? product.customizationOptions
+    : ['Customer name', 'Date', 'Photo', 'Quote/message', 'Initials', 'Color theme', 'Design theme'];
+
+  const craftsmanshipSpecs = Array.isArray(product.craftsmanshipSpecs)
+    ? product.craftsmanshipSpecs
+    : [
+        '✨ Handmade resin artwork',
+        '✨ Carefully arranged decorative elements',
+        '✨ High-quality resin finish',
+        '✨ Personalized according to customer requirements'
+      ];
+
+  const careText = product.careInstructions || 'Keep away from direct sunlight, excessive heat, moisture, and harsh chemicals. Clean gently with a soft dry cloth.';
+
+  return (
+    <div className="modal-backdrop-overlay" onClick={onClose}>
+      <div className="product-details-modal-box resin-modal-box" onClick={(e) => e.stopPropagation()}>
+        {/* Close (X) Icon Button */}
+        <button className="modal-close-icon" onClick={onClose} title="Close Modal (ESC)">
+          <FaTimes />
+        </button>
+
+        <div className="modal-two-col-grid">
+          {/* Left Column: Large Product Image */}
+          <div className="modal-image-col">
+            <div className="modal-img-wrap">
+              <img src={product.image} alt={name} className="modal-main-img" />
+              <div className="modal-img-badge">✨ Handcrafted Resin Studio</div>
+            </div>
+          </div>
+
+          {/* Right Column: Detailed Product Information */}
+          <div className="modal-details-col">
+            <div className="modal-header-block">
+              <span className="modal-category-tag">{category}</span>
+              <h2 className="modal-product-title">{name}</h2>
+              <p className="modal-short-desc-highlight">{shortDesc}</p>
+            </div>
+
+            <div className="modal-body-scroll">
+              {/* Detailed Description */}
+              <div className="modal-section-block">
+                <h4>📜 Detailed Description</h4>
+                <p className="modal-desc-text">{detailedDesc}</p>
+              </div>
+
+              {/* Available Colors / Designs */}
+              <div className="modal-section-block">
+                <h4>🎨 Available Colors / Designs</h4>
+                <div className="modal-chips-flex">
+                  {colors.map((c, i) => (
+                    <span key={i} className="modal-chip-item">{c}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Available Sizes */}
+              <div className="modal-section-block">
+                <h4>📏 Available Sizes</h4>
+                <div className="modal-chips-flex">
+                  {sizes.map((s, i) => (
+                    <span key={i} className="modal-chip-item">{s}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Materials Used */}
+              <div className="modal-section-block">
+                <h4>💎 Materials Used</h4>
+                <p className="modal-info-p">{materials}</p>
+              </div>
+
+              {/* Customization Options */}
+              <div className="modal-section-block">
+                <h4>✨ Customization Options</h4>
+                <ul className="modal-specs-list">
+                  {customizationOptions.map((opt, i) => (
+                    <li key={i}>✨ {opt}</li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Craftsmanship Details */}
+              <div className="modal-section-block">
+                <h4>🪄 Craftsmanship Details</h4>
+                <ul className="modal-specs-list">
+                  {craftsmanshipSpecs.map((spec, i) => (
+                    <li key={i}>{spec.startsWith('✨') ? spec : `✨ ${spec}`}</li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Care Instructions */}
+              <div className="modal-section-block">
+                <h4>🌿 Care Instructions</h4>
+                <p className="modal-info-p">{careText}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ResinArtCard = ({ ra, idx, isSelected, isExpanded, onSelect, onToggleExpand, onOpenLightbox, onOpenDetailsModal }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
   const cardRef = React.useRef(null);
@@ -154,10 +436,17 @@ const ResinArtCard = ({ ra, idx, isSelected, isExpanded, onSelect, onToggleExpan
         </div>
         <div 
           className="click-view-details-cta card-view-details-link"
-          onClick={(e) => onToggleExpand(ra.id, e)}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (onOpenDetailsModal) {
+              onOpenDetailsModal(ra);
+            } else if (onToggleExpand) {
+              onToggleExpand(ra.id, e);
+            }
+          }}
         >
-          <span>{isExpanded ? 'Hide Details' : 'View Details'}</span>
-          <FaArrowRight className={`view-details-arrow ${isExpanded ? 'rotated' : ''}`} />
+          <span>View Details</span>
+          <FaArrowRight className="view-details-arrow" />
         </div>
 
         {/* Smooth Accordion Expanded Drawer */}
@@ -213,6 +502,7 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
 
   const [expandedCardId, setExpandedCardId] = useState(null);
   const [lightboxIndex, setLightboxIndex] = useState(null);
+  const [detailsModalProduct, setDetailsModalProduct] = useState(null);
 
   const openLightbox = (e, idx) => {
     if (e) e.stopPropagation();
@@ -371,6 +661,7 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
                     onSelect={selectDesign}
                     onToggleExpand={toggleCardExpansion}
                     onOpenLightbox={openLightbox}
+                    onOpenDetailsModal={(item) => setDetailsModalProduct(item)}
                   />
                 ))}
               </div>
@@ -719,6 +1010,12 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
           </div>
         </div>
       </div>
+
+      <ResinArtDetailsModal
+        product={detailsModalProduct}
+        isOpen={detailsModalProduct !== null}
+        onClose={() => setDetailsModalProduct(null)}
+      />
 
       <WhatsAppModal
         isOpen={waModalOpen}
@@ -1592,6 +1889,270 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
         .lux-textarea-field:focus {
           border-color: #E8C86A;
           box-shadow: 0 0 0 3px rgba(232, 200, 106, 0.25);
+        }
+
+        /* Resin Product Details Modal Styling */
+        .modal-backdrop-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.68);
+          backdrop-filter: blur(6px);
+          z-index: 1000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 24px;
+          box-sizing: border-box;
+        }
+
+        .product-details-modal-box {
+          background: #FFFFFF;
+          border-radius: 24px;
+          border: 1px solid rgba(212, 175, 55, 0.25);
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+          width: 100%;
+          max-width: 940px;
+          max-height: 90vh;
+          position: relative;
+          overflow: hidden;
+          animation: modalFadeScale 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          display: flex;
+          flex-direction: column;
+        }
+
+        @keyframes modalFadeScale {
+          from {
+            opacity: 0;
+            transform: scale(0.94) translateY(14px);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+
+        .modal-close-icon {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.95);
+          border: 1px solid rgba(212, 175, 55, 0.3);
+          color: #2D2523;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 30;
+          transition: all 0.25s ease;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-close-icon:hover {
+          background: #C89B3C;
+          color: #FFFFFF;
+          transform: scale(1.08);
+        }
+
+        .modal-two-col-grid {
+          display: grid;
+          grid-template-columns: 50% 50%;
+          height: 100%;
+          max-height: 90vh;
+          overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+          .product-details-modal-box {
+            width: 95%;
+            max-height: 92vh;
+            border-radius: 20px;
+          }
+
+          .modal-two-col-grid {
+            grid-template-columns: 1fr;
+            overflow-y: auto;
+            max-height: 92vh;
+          }
+
+          .modal-image-col {
+            padding: 16px !important;
+            border-right: none !important;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+          }
+
+          .modal-img-wrap {
+            min-height: 240px !important;
+            max-height: 320px !important;
+          }
+
+          .modal-details-col {
+            padding: 20px 18px !important;
+            overflow-y: visible !important;
+            max-height: none !important;
+          }
+        }
+
+        .modal-image-col {
+          padding: 28px;
+          background: #FCFAF7;
+          border-right: 1px solid rgba(212, 175, 55, 0.2);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          box-sizing: border-box;
+          overflow: hidden;
+        }
+
+        .modal-img-wrap {
+          width: 100%;
+          height: 100%;
+          min-height: 380px;
+          max-height: 540px;
+          position: relative;
+          border-radius: 16px;
+          overflow: hidden;
+          background: #FFFFFF;
+          box-shadow: 0 8px 24px rgba(61, 43, 31, 0.08);
+          border: 1px solid rgba(212, 175, 55, 0.2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .modal-main-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          display: block;
+          transition: transform 0.4s ease;
+        }
+
+        .modal-main-img:hover {
+          transform: scale(1.03);
+        }
+
+        .modal-img-badge {
+          position: absolute;
+          bottom: 14px;
+          left: 14px;
+          background: rgba(255, 255, 255, 0.92);
+          backdrop-filter: blur(4px);
+          color: #2D2523;
+          font-size: 12px;
+          font-weight: 600;
+          padding: 6px 14px;
+          border-radius: 50px;
+          border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .modal-details-col {
+          padding: 28px 28px;
+          background: #FFFFFF;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          max-height: 90vh;
+          overflow-y: auto;
+          box-sizing: border-box;
+        }
+
+        .modal-header-block {
+          margin-bottom: 16px;
+          padding-bottom: 14px;
+          border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .modal-category-tag {
+          font-size: 11.5px;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          color: #C89B3C;
+          font-weight: 700;
+          display: block;
+          margin-bottom: 4px;
+        }
+
+        .modal-product-title {
+          font-family: var(--font-serif);
+          font-size: 24px;
+          font-weight: 700;
+          color: #2D2523;
+          margin: 0 0 6px 0;
+          line-height: 1.25;
+        }
+
+        .modal-short-desc-highlight {
+          font-size: 13.5px;
+          color: #8C7032;
+          font-weight: 500;
+          line-height: 1.5;
+          margin: 4px 0 0 0;
+        }
+
+        .modal-body-scroll {
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+        }
+
+        .modal-section-block h4 {
+          font-family: var(--font-serif);
+          font-size: 15.5px;
+          font-weight: 600;
+          color: #2D2523;
+          margin: 0 0 6px 0;
+        }
+
+        .modal-desc-text {
+          font-size: 14.5px;
+          line-height: 1.6;
+          color: #5A4A42;
+          margin: 0;
+        }
+
+        .modal-chips-flex {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-top: 4px;
+        }
+
+        .modal-chip-item {
+          font-family: var(--font-sans);
+          font-size: 13px;
+          font-weight: 500;
+          color: #2D2523;
+          background: #FFFDF8;
+          border: 1px solid rgba(200, 155, 60, 0.25);
+          border-radius: 50px;
+          padding: 4px 14px;
+          display: inline-flex;
+          align-items: center;
+        }
+
+        .modal-specs-list {
+          margin: 0;
+          padding-left: 18px;
+          font-size: 13.5px;
+          color: #4A3A32;
+          line-height: 1.65;
+        }
+
+        .modal-info-p {
+          font-size: 13.5px;
+          color: #5A4A42;
+          line-height: 1.55;
+          margin: 0;
         }
       `}</style>
     </section>
