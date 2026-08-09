@@ -156,7 +156,7 @@ const ResinArtCard = ({ ra, idx, isSelected, isExpanded, onSelect, onToggleExpan
           className="click-view-details-cta card-view-details-link"
           onClick={(e) => onToggleExpand(ra.id, e)}
         >
-          <span>{isExpanded ? 'Hide Details' : 'Quick View'}</span>
+          <span>{isExpanded ? 'Hide Details' : 'View Details'}</span>
           <FaArrowRight className={`view-details-arrow ${isExpanded ? 'rotated' : ''}`} />
         </div>
 
