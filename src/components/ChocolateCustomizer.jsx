@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { FaWhatsapp, FaCheck, FaHeart, FaStar, FaMagic, FaGift, FaEdit, FaRibbon, FaCalendarAlt, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaFileAlt } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaWhatsapp, FaCheck, FaHeart, FaStar, FaMagic, FaGift, FaEdit, FaRibbon, FaCalendarAlt, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaFileAlt, FaTimes } from 'react-icons/fa';
 import WhatsAppModal from './WhatsAppModal';
 
 export const CHOCOLATE_FLAVORS = [
@@ -7,57 +7,241 @@ export const CHOCOLATE_FLAVORS = [
     id: 'flv-milk',
     name: 'Milk Chocolate',
     icon: '🍫',
+    category: '🍫 HANDMADE CONFECTIONERY COLLECTION',
+    shortDesc: 'Smooth and creamy premium milk chocolate crafted with rich cocoa and fresh milk.',
+    detailedDesc: 'Indulge in our signature handcrafted milk chocolate bars, made with single-origin cocoa beans, real cocoa butter, and fresh wholesome milk solids. Perfectly tempered to deliver a silky melt-in-mouth texture and balanced sweetness.',
+    ingredients: 'Rich cocoa solids (34%), pure cocoa butter, milk powder, organic cane sugar, natural Madagascar vanilla extract.',
+    allergens: 'Contains Dairy & Soy. May contain traces of tree nuts.',
+    boxSizes: ['Small', 'Medium', 'Large', 'Custom'],
+    packagingOptions: ['Luxury Box', 'Gift Box', 'Custom Packaging'],
+    ribbonColors: ['Gold', 'Pink', 'Red', 'Blue', 'Custom Color'],
+    customizationOptions: ['Chocolate Shape', 'Personalized Message', 'Flavor Selection', 'Gift Theme'],
+    storageInstructions: 'Store in a cool, dry place (18°C–22°C) away from direct sunlight, heat, and moisture.',
     desc: 'Smooth and creamy premium milk chocolate crafted with rich cocoa and fresh milk for a classic sweet flavor.',
-    ingredients: 'Rich cocoa solids, cocoa butter, milk powder, sugar, natural vanilla.',
-    allergens: 'Contains Dairy & Soy.',
     image: '/milk_chocolate.png'
   },
   {
     id: 'flv-dark',
     name: 'Dark Chocolate',
     icon: '🍫',
+    category: '🍫 HANDMADE CONFECTIONERY COLLECTION',
+    shortDesc: 'Rich, intense dark chocolate with high cocoa content for a bold taste and smooth finish.',
+    detailedDesc: 'Crafted for dark chocolate connoisseurs, this 70% single-origin artisanal dark chocolate delivers deep fruity undertones, subtle earthy bitterness, and a velvety clean finish without artificial additives.',
+    ingredients: '70% Single-origin cocoa mass, pure cocoa butter, unrefined organic cane sugar, natural vanilla bean.',
+    allergens: 'Vegan & Dairy-Free options available. Manufactured in a facility handling dairy and nuts.',
+    boxSizes: ['Small', 'Medium', 'Large', 'Custom'],
+    packagingOptions: ['Luxury Box', 'Gift Box', 'Custom Packaging'],
+    ribbonColors: ['Gold', 'Pink', 'Red', 'Blue', 'Custom Color'],
+    customizationOptions: ['Chocolate Shape', 'Personalized Message', 'Flavor Selection', 'Gift Theme'],
+    storageInstructions: 'Store in a cool, dry place (18°C–22°C) away from direct sunlight and humidity.',
     desc: 'Rich, intense dark chocolate with a high cocoa content, offering a bold taste and smooth finish.',
-    ingredients: '70% Single-origin cocoa mass, cocoa butter, organic cane sugar.',
-    allergens: 'Vegan & Dairy-Free options available.',
     image: '/dark_chocolate.png'
   },
   {
     id: 'flv-white',
     name: 'White Chocolate',
     icon: '🤍',
+    category: '🍫 HANDMADE CONFECTIONERY COLLECTION',
+    shortDesc: 'Velvety white chocolate made with premium cocoa butter, delivering rich creamy sweetness.',
+    detailedDesc: 'Our luxury white chocolate is slow-crafted using 100% natural cocoa butter, fresh dairy milk solids, and fragrant vanilla beans, offering a heavenly creamy profile that melts smoothly on the palate.',
+    ingredients: 'Pure cocoa butter (30%), milk solids, raw cane sugar, natural Madagascar vanilla extract.',
+    allergens: 'Contains Dairy. May contain traces of soy and nuts.',
+    boxSizes: ['Small', 'Medium', 'Large', 'Custom'],
+    packagingOptions: ['Luxury Box', 'Gift Box', 'Custom Packaging'],
+    ribbonColors: ['Gold', 'Pink', 'Red', 'Blue', 'Custom Color'],
+    customizationOptions: ['Chocolate Shape', 'Personalized Message', 'Flavor Selection', 'Gift Theme'],
+    storageInstructions: 'Keep in a cool, dry place away from heat and moisture. Refrigeration optional in summer.',
     desc: 'Velvety white chocolate made with premium cocoa butter, delivering a rich, creamy sweetness.',
-    ingredients: 'Pure cocoa butter, milk solids, natural Madagascar vanilla, sugar.',
-    allergens: 'Contains Dairy.',
     image: '/white_chocolate.png'
   },
   {
     id: 'flv-strawberry',
     name: 'Strawberry Chocolate',
     icon: '🍓',
+    category: '🍫 HANDMADE CONFECTIONERY COLLECTION',
+    shortDesc: 'Creamy white chocolate infused with natural freeze-dried strawberry for a refreshing fruity taste.',
+    detailedDesc: 'Experience a delightful fusion of rich creamy cocoa butter and real pulverized freeze-dried strawberries. Balanced with a delicate tanginess and natural rosy blush color for festive celebrations.',
+    ingredients: 'White cocoa butter base, freeze-dried strawberry powder, milk solids, natural vanilla, sugar.',
+    allergens: 'Contains Dairy. Free from artificial colors and synthetic flavors.',
+    boxSizes: ['Small', 'Medium', 'Large', 'Custom'],
+    packagingOptions: ['Luxury Box', 'Gift Box', 'Custom Packaging'],
+    ribbonColors: ['Gold', 'Pink', 'Red', 'Blue', 'Custom Color'],
+    customizationOptions: ['Chocolate Shape', 'Personalized Message', 'Flavor Selection', 'Gift Theme'],
+    storageInstructions: 'Store in a cool, dry place (18°C–22°C) away from direct sunlight.',
     desc: 'Creamy chocolate infused with natural strawberry flavor for a fruity and refreshing taste.',
-    ingredients: 'White cocoa butter base, freeze-dried strawberry extract, milk solids.',
-    allergens: 'Contains Dairy.',
     image: '/strawberry_chocolate.png'
   },
   {
     id: 'flv-pista',
     name: 'Pista (Pistachio) Chocolate',
     icon: '💚',
-    desc: 'Premium milk chocolate blended with roasted pistachios for a crunchy, nutty experience.',
-    ingredients: 'Milk chocolate cocoa mass, slow-roasted Iranian pistachios, cocoa butter.',
+    category: '🍫 HANDMADE CONFECTIONERY COLLECTION',
+    shortDesc: 'Premium chocolate blended with slow-roasted pistachios for a crunchy, nutty gourmet experience.',
+    detailedDesc: 'Hand-selected roasted Iranian pistachios crushed and embedded into smooth Belgian milk chocolate, providing a savory nuttiness with every crispy bite.',
+    ingredients: 'Milk chocolate cocoa mass, slow-roasted pistachios (25%), cocoa butter, raw sugar, green cardamom.',
     allergens: 'Contains Tree Nuts & Dairy.',
+    boxSizes: ['Small', 'Medium', 'Large', 'Custom'],
+    packagingOptions: ['Luxury Box', 'Gift Box', 'Custom Packaging'],
+    ribbonColors: ['Gold', 'Pink', 'Red', 'Blue', 'Custom Color'],
+    customizationOptions: ['Chocolate Shape', 'Personalized Message', 'Flavor Selection', 'Gift Theme'],
+    storageInstructions: 'Store in an airtight container in a cool, dry environment.',
+    desc: 'Premium milk chocolate blended with roasted pistachios for a crunchy, nutty experience.',
     image: '/pista_chocolate.png'
   },
   {
     id: 'flv-kunafa',
     name: 'Kunafa Chocolate',
     icon: '🥮',
+    category: '🍫 HANDMADE CONFECTIONERY COLLECTION',
+    shortDesc: 'Crispy Middle Eastern kunafa pastry & rich pistachio cream encased in a smooth chocolate shell.',
+    detailedDesc: 'Inspired by Dubai\'s viral Kunafa dessert, this luxury bar features butter-roasted kataifi pastry threads folded into velvety pistachio tahini cream, wrapped inside a thick snap-cracking Belgian chocolate casing.',
+    ingredients: 'Roasted crispy kataifi pastry threads, pistachio tahini cream, Belgian chocolate shell, butter.',
+    allergens: 'Contains Gluten, Tree Nuts (Pistachio, Sesame) & Dairy.',
+    boxSizes: ['Small', 'Medium', 'Large', 'Custom'],
+    packagingOptions: ['Luxury Box', 'Gift Box', 'Custom Packaging'],
+    ribbonColors: ['Gold', 'Pink', 'Red', 'Blue', 'Custom Color'],
+    customizationOptions: ['Chocolate Shape', 'Personalized Message', 'Flavor Selection', 'Gift Theme'],
+    storageInstructions: 'Keep in a cool, dry place. Best consumed fresh within 30 days of crafting.',
     desc: 'Delicious chocolate filled with crispy kunafa and rich pistachio cream, inspired by Middle Eastern desserts.',
-    ingredients: 'Roasted crispy kataifi pastry threads, pistachio tahini cream, Belgian chocolate shell.',
-    allergens: 'Contains Gluten, Tree Nuts & Dairy.',
     image: '/kunafa_chocolate.png'
   }
 ];
+
+export const ChocolateDetailsModal = ({ product, isOpen, onClose }) => {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen || !product) return null;
+
+  const category = product.category || '🍫 HANDMADE CONFECTIONERY COLLECTION';
+  const name = product.name || 'Handmade Gourmet Chocolate';
+  const shortDesc = product.shortDesc || product.desc || 'Luxury handcrafted chocolate made with premium cocoa butter and natural ingredients.';
+  const detailedDesc = product.detailedDesc || 'Artisanal handmade chocolate crafted with single-origin cocoa, pure cocoa butter, and rich gourmet ingredients. Tempered to perfection for a clean snap and silky melt-in-mouth finish.';
+  const ingredients = product.ingredients || 'Rich cocoa mass, pure cocoa butter, natural Madagascar vanilla extract, organic cane sugar, milk solids.';
+  
+  const boxSizes = Array.isArray(product.boxSizes) 
+    ? product.boxSizes 
+    : ['Small', 'Medium', 'Large', 'Custom'];
+
+  const packagingOptions = Array.isArray(product.packagingOptions)
+    ? product.packagingOptions
+    : ['Luxury Box', 'Gift Box', 'Custom Packaging'];
+
+  const ribbonColors = Array.isArray(product.ribbonColors)
+    ? product.ribbonColors
+    : ['Gold', 'Pink', 'Red', 'Blue', 'Custom Color'];
+
+  const customizationOptions = Array.isArray(product.customizationOptions)
+    ? product.customizationOptions
+    : ['Chocolate Shape', 'Personalized Message', 'Flavor Selection', 'Gift Theme'];
+
+  const storageInstructions = product.storageInstructions || 'Store in a cool, dry place (18°C–22°C) away from direct sunlight, heat, and moisture.';
+  const allergens = product.allergens || 'Contains Dairy & Soy. May contain traces of tree nuts and gluten.';
+
+  return (
+    <div className="modal-backdrop-overlay" onClick={onClose}>
+      <div className="product-details-modal-box resin-modal-box chocolate-modal-box" onClick={(e) => e.stopPropagation()}>
+        {/* Circular Close (X) Icon Button */}
+        <button className="modal-close-icon" onClick={onClose} title="Close Modal (ESC)">
+          <FaTimes />
+        </button>
+
+        <div className="modal-two-col-grid">
+          {/* Left Column: Large Product Image */}
+          <div className="modal-image-col">
+            <div className="modal-img-wrap">
+              <img src={product.image} alt={name} className="modal-main-img" />
+              <div className="modal-img-badge">✨ Handmade Confectionery</div>
+            </div>
+          </div>
+
+          {/* Right Column: Detailed Product Information */}
+          <div className="modal-details-col">
+            <div className="modal-header-block">
+              <span className="modal-category-tag">{category}</span>
+              <h2 className="modal-product-title">{name}</h2>
+              <p className="modal-short-desc-highlight">{shortDesc}</p>
+            </div>
+
+            <div className="modal-body-scroll">
+              {/* 📜 Detailed Description */}
+              <div className="modal-section-block">
+                <h4>📜 Detailed Description</h4>
+                <p className="modal-desc-text">{detailedDesc}</p>
+              </div>
+
+              {/* 🍫 Ingredients & Flavor Notes */}
+              <div className="modal-section-block">
+                <h4>🍫 Ingredients & Flavor Notes</h4>
+                <p className="modal-info-p">{ingredients}</p>
+              </div>
+
+              {/* 📦 Available Box Sizes */}
+              <div className="modal-section-block">
+                <h4>📦 Available Box Sizes</h4>
+                <div className="modal-chips-flex">
+                  {boxSizes.map((sz, i) => (
+                    <span key={i} className="modal-chip-item">{sz}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* 🎁 Packaging Options */}
+              <div className="modal-section-block">
+                <h4>🎁 Packaging Options</h4>
+                <div className="modal-chips-flex">
+                  {packagingOptions.map((pkg, i) => (
+                    <span key={i} className="modal-chip-item">{pkg}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* 🎀 Ribbon Colors */}
+              <div className="modal-section-block">
+                <h4>🎀 Ribbon Colors</h4>
+                <div className="modal-chips-flex">
+                  {ribbonColors.map((rc, i) => (
+                    <span key={i} className="modal-chip-item">{rc}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* ✨ Customization Options */}
+              <div className="modal-section-block">
+                <h4>✨ Customization Options</h4>
+                <ul className="modal-specs-list">
+                  {customizationOptions.map((opt, i) => (
+                    <li key={i}>✨ {opt}</li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* ❄️ Storage & Allergens */}
+              <div className="modal-section-block">
+                <h4>❄️ Storage & Allergens</h4>
+                <p className="modal-info-p"><strong>Storage:</strong> {storageInstructions}</p>
+                <p className="modal-info-p" style={{ marginTop: '4px' }}><strong>Allergens:</strong> {allergens}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export const CHOCOLATE_ADDONS = [
   { id: 'add-dryfruits', name: 'Mixed Dry Fruits', icon: '🌰', desc: 'California almonds, cashews, pistachios & golden raisins', image: '/mixed_dry_fruits.png' },
@@ -97,10 +281,12 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
   const [deliveryTime, setDeliveryTime] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
 
-  // Order Notes (Optional)
   const [orderNotes, setOrderNotes] = useState('');
   const [waModalOpen, setWaModalOpen] = useState(false);
   const [waOrderText, setWaOrderText] = useState('');
+
+  // Details Modal State
+  const [detailsModalProduct, setDetailsModalProduct] = useState(null);
 
   const toggleFlavor = (flavorName) => {
     if (selectedFlavors.includes(flavorName)) {
@@ -275,31 +461,14 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
                     <h4 className="flavor-title">{flv.name}</h4>
 
                     <div 
-                      className="click-view-details-cta"
-                      onClick={(e) => toggleCardExpansion(flv.id, e)}
+                      className="card-view-details-link"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setDetailsModalProduct(flv);
+                      }}
                     >
-                      <span>{isExpanded ? 'Hide Details' : 'Click to View Details'}</span>
-                      <span className={`chevron-rotate-icon ${isExpanded ? 'rotated' : ''}`}>⌄</span>
+                      <span>View Details →</span>
                     </div>
-
-                    {/* Smooth Accordion Expanded Drawer */}
-                    {isExpanded && (
-                      <div className="card-expanded-drawer open">
-                        <div className="drawer-inner-content">
-                          <p className="drawer-desc">{flv.desc}</p>
-
-                          <div className="drawer-info-block">
-                            <h5>✨ Ingredients & Flavor Notes:</h5>
-                            <p>{flv.ingredients}</p>
-                          </div>
-
-                          <div className="drawer-info-block">
-                            <h5>❄️ Storage & Allergens:</h5>
-                            <p>Store in a cool dry place (15-18°C). {flv.allergens}</p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 );
               })}
@@ -699,6 +868,12 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
         isOpen={waModalOpen}
         onClose={() => setWaModalOpen(false)}
         messageText={waOrderText}
+      />
+
+      <ChocolateDetailsModal
+        product={detailsModalProduct}
+        isOpen={detailsModalProduct !== null}
+        onClose={() => setDetailsModalProduct(null)}
       />
 
       <style>{`
@@ -1364,6 +1539,270 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           .options-grid-form,
           .addons-selection-grid {
             grid-template-columns: 1fr;
+          }
+        }
+
+        /* 🍫 Premium Chocolate Details Modal Styles (Resin Art Parity) */
+        .modal-backdrop-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.68);
+          backdrop-filter: blur(6px);
+          z-index: 1000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 24px;
+          box-sizing: border-box;
+        }
+
+        .product-details-modal-box {
+          background: #FFFFFF;
+          border-radius: 24px;
+          border: 1px solid rgba(212, 175, 55, 0.25);
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+          width: 100%;
+          max-width: 940px;
+          max-height: 90vh;
+          position: relative;
+          overflow: hidden;
+          animation: modalFadeScale 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          display: flex;
+          flex-direction: column;
+        }
+
+        @keyframes modalFadeScale {
+          from {
+            opacity: 0;
+            transform: scale(0.94) translateY(14px);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+
+        .modal-close-icon {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.95);
+          border: 1px solid rgba(212, 175, 55, 0.3);
+          color: #2D2523;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 30;
+          transition: all 0.25s ease;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-close-icon:hover {
+          background: #C89B3C;
+          color: #FFFFFF;
+          transform: scale(1.08);
+        }
+
+        .modal-two-col-grid {
+          display: grid;
+          grid-template-columns: 50% 50%;
+          height: 100%;
+          max-height: 90vh;
+          overflow: hidden;
+        }
+
+        .modal-image-col {
+          padding: 28px;
+          background: #FCFAF7;
+          border-right: 1px solid rgba(212, 175, 55, 0.2);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          box-sizing: border-box;
+          overflow: hidden;
+        }
+
+        .modal-img-wrap {
+          width: 100%;
+          height: 100%;
+          min-height: 380px;
+          max-height: 540px;
+          position: relative;
+          border-radius: 16px;
+          overflow: hidden;
+          background: #FFFFFF;
+          box-shadow: 0 8px 24px rgba(61, 43, 31, 0.08);
+          border: 1px solid rgba(212, 175, 55, 0.2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .modal-main-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          display: block;
+          transition: transform 0.4s ease;
+        }
+
+        .modal-main-img:hover {
+          transform: scale(1.03);
+        }
+
+        .modal-img-badge {
+          position: absolute;
+          bottom: 14px;
+          left: 14px;
+          background: rgba(255, 255, 255, 0.92);
+          backdrop-filter: blur(4px);
+          color: #2D2523;
+          font-size: 12px;
+          font-weight: 600;
+          padding: 6px 14px;
+          border-radius: 50px;
+          border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .modal-details-col {
+          padding: 28px 28px;
+          background: #FFFFFF;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          max-height: 90vh;
+          overflow-y: auto;
+          box-sizing: border-box;
+        }
+
+        .modal-header-block {
+          margin-bottom: 16px;
+          padding-bottom: 14px;
+          border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .modal-category-tag {
+          font-size: 11.5px;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          color: #C89B3C;
+          font-weight: 700;
+          display: block;
+          margin-bottom: 4px;
+        }
+
+        .modal-product-title {
+          font-family: var(--font-serif);
+          font-size: 24px;
+          font-weight: 700;
+          color: #2D2523;
+          margin: 0 0 6px 0;
+          line-height: 1.25;
+        }
+
+        .modal-short-desc-highlight {
+          font-size: 13.5px;
+          color: #8C7032;
+          font-weight: 500;
+          line-height: 1.5;
+          margin: 4px 0 0 0;
+        }
+
+        .modal-body-scroll {
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+        }
+
+        .modal-section-block h4 {
+          font-family: var(--font-serif);
+          font-size: 15.5px;
+          font-weight: 600;
+          color: #2D2523;
+          margin: 0 0 6px 0;
+        }
+
+        .modal-desc-text {
+          font-size: 14.5px;
+          line-height: 1.6;
+          color: #5A4A42;
+          margin: 0;
+        }
+
+        .modal-chips-flex {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-top: 4px;
+        }
+
+        .modal-chip-item {
+          font-family: var(--font-sans);
+          font-size: 13px;
+          font-weight: 500;
+          color: #2D2523;
+          background: #FFFDF8;
+          border: 1px solid rgba(200, 155, 60, 0.25);
+          border-radius: 50px;
+          padding: 4px 14px;
+          display: inline-flex;
+          align-items: center;
+        }
+
+        .modal-specs-list {
+          margin: 0;
+          padding-left: 18px;
+          font-size: 13.5px;
+          color: #4A3A32;
+          line-height: 1.65;
+        }
+
+        .modal-info-p {
+          font-size: 13.5px;
+          color: #5A4A42;
+          line-height: 1.55;
+          margin: 0;
+        }
+
+        @media (max-width: 768px) {
+          .product-details-modal-box {
+            width: 95%;
+            max-height: 92vh;
+            border-radius: 20px;
+          }
+
+          .modal-two-col-grid {
+            grid-template-columns: 1fr;
+            overflow-y: auto;
+            max-height: 92vh;
+          }
+
+          .modal-image-col {
+            padding: 16px !important;
+            border-right: none !important;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+          }
+
+          .modal-img-wrap {
+            min-height: 240px !important;
+            max-height: 320px !important;
+          }
+
+          .modal-details-col {
+            padding: 20px 18px !important;
+            overflow-y: visible !important;
+            max-height: none !important;
           }
         }
       `}</style>
