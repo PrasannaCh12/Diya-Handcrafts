@@ -251,7 +251,7 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
             </div>
 
             <div className="flavors-grid">
-              {CHOCOLATE_FLAVORS.map((flv) => {
+              {CHOCOLATE_FLAVORS.map((flv, idx) => {
                 const isSelected = selectedFlavors.includes(flv.name);
                 const isExpanded = expandedCardId === flv.id;
                 return (
@@ -259,6 +259,7 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
                     key={flv.id}
                     className={`flavor-card ${isSelected ? 'selected' : ''} ${isExpanded ? 'card-is-expanded' : ''}`}
                     onClick={() => toggleFlavor(flv.name)}
+                    style={{ animationDelay: `${(idx % 3) * 90 + 250}ms` }}
                   >
                     <div className="flavor-card-header">
                       <span className="flavor-icon">{flv.icon}</span>
@@ -701,6 +702,28 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
       />
 
       <style>{`
+        @keyframes heroFadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(24px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes twCardFadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.97);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
         .hero-header-wrap {
           max-width: 960px;
           margin: 0 auto 3rem auto;
@@ -717,6 +740,8 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           color: #C89B3C;
           text-transform: uppercase;
           margin-bottom: 28px;
+          opacity: 0;
+          animation: heroFadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
         }
 
         .tw-hero-title {
@@ -727,6 +752,8 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           line-height: 1.2;
           letter-spacing: 0.02em;
           margin: 0 0 35px 0;
+          opacity: 0;
+          animation: heroFadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
         }
 
         @media (max-width: 768px) {
@@ -745,6 +772,8 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           width: 100%;
           margin: 0 auto 50px auto;
           text-align: center;
+          opacity: 0;
+          animation: heroFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
         }
 
         .gold-highlight {
@@ -759,6 +788,8 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           justify-content: center;
           gap: 16px;
           margin: 50px auto 50px auto;
+          opacity: 0;
+          animation: heroFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
         }
 
         .divider-line {
@@ -797,6 +828,7 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           text-align: center;
           margin-top: 50px;
           margin-bottom: 55px;
+          animation: heroFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
         }
 
         .tw-brand-tagline .quote-mark {
@@ -859,6 +891,8 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           display: flex;
           flex-direction: column;
           position: relative;
+          opacity: 0;
+          animation: twCardFadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
         .flavor-card:hover {
