@@ -220,14 +220,23 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
     <section id="chocolate-customizer" className="chocolate-customizer-section">
       <div className="container">
         {/* Section Header */}
-        <div className="section-header">
-          <div className="section-subtitle">
-            <span style={{ fontSize: '1.1rem' }}>🍫</span> Handmade Confectionery Studio
-          </div>
-          <h2 className="section-title">Customize Your Handmade Chocolates</h2>
-          <p className="section-description">
+        <div className="hero-header-wrap">
+          <div className="tw-hero-subtitle">🍫 HANDMADE CONFECTIONERY STUDIO</div>
+          <h2 className="tw-hero-title">Customize Your Handmade Chocolates</h2>
+          <p className="tw-hero-description">
             Create your perfect <span className="gold-highlight">handmade chocolates</span> with <span className="gold-highlight">premium flavors</span>, <span className="gold-highlight">crunchy add-ons</span>, elegant shapes, and <span className="gold-highlight">luxury packaging</span>. Customize every detail with <span className="gold-highlight">personalized ribbons and notes</span> for a truly <span className="gold-highlight">special gift</span>.
           </p>
+
+          {/* Premium Decorative Divider */}
+          <div className="tw-hero-divider">
+            <span className="divider-line left-line"></span>
+            <span className="divider-motif">🪷</span>
+            <span className="divider-line right-line"></span>
+          </div>
+
+          <div className="tw-brand-tagline">
+            <span className="quote-mark">“</span>Creating Sweet Memories, One Chocolate at a Time.<span className="quote-mark">”</span>
+          </div>
         </div>
 
         <div className="customizer-main-grid">
@@ -692,10 +701,111 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
       />
 
       <style>{`
+        .hero-header-wrap {
+          max-width: 960px;
+          margin: 0 auto 3rem auto;
+          text-align: center;
+          position: relative;
+          z-index: 1;
+        }
+
+        .tw-hero-subtitle {
+          font-family: var(--font-sans);
+          font-size: 0.85rem;
+          font-weight: 700;
+          letter-spacing: 0.18em;
+          color: #C89B3C;
+          text-transform: uppercase;
+          margin-bottom: 28px;
+        }
+
+        .tw-hero-title {
+          font-family: var(--font-serif);
+          font-size: 52px;
+          font-weight: 700;
+          color: #2D2523;
+          line-height: 1.2;
+          letter-spacing: 0.02em;
+          margin: 0 0 35px 0;
+        }
+
+        @media (max-width: 768px) {
+          .tw-hero-title {
+            font-size: 34px;
+          }
+        }
+
+        .tw-hero-description {
+          font-family: var(--font-sans);
+          font-size: 20px;
+          line-height: 1.8;
+          letter-spacing: 0.2px;
+          color: rgba(45, 37, 35, 0.88);
+          max-width: 750px;
+          width: 100%;
+          margin: 0 auto 50px auto;
+          text-align: center;
+        }
+
         .gold-highlight {
           color: #C89B3C;
           font-weight: 600;
           text-decoration: none;
+        }
+
+        .tw-hero-divider {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+          margin: 50px auto 50px auto;
+        }
+
+        .divider-line {
+          height: 1.5px;
+          width: 100px;
+          display: block;
+        }
+
+        .divider-line.left-line {
+          background: linear-gradient(90deg, rgba(200, 155, 60, 0) 0%, rgba(200, 155, 60, 0.75) 100%);
+        }
+
+        .divider-line.right-line {
+          background: linear-gradient(90deg, rgba(200, 155, 60, 0.75) 0%, rgba(200, 155, 60, 0) 100%);
+        }
+
+        .divider-motif {
+          font-size: 26px;
+          color: #C89B3C;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          filter: drop-shadow(0 0 6px rgba(200, 155, 60, 0.3));
+          line-height: 1;
+        }
+
+        .tw-brand-tagline {
+          font-family: var(--font-serif);
+          font-style: italic;
+          font-size: 22px;
+          font-weight: 500;
+          line-height: 1.7;
+          letter-spacing: 0.3px;
+          color: rgba(45, 37, 35, 0.94);
+          opacity: 0.92;
+          text-align: center;
+          margin-top: 50px;
+          margin-bottom: 55px;
+        }
+
+        .tw-brand-tagline .quote-mark {
+          color: #C89B3C;
+          font-family: var(--font-serif);
+          font-size: 26px;
+          font-weight: 700;
+          font-style: normal;
+          margin: 0 4px;
         }
 
         .chocolate-customizer-section {
