@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { FaWhatsapp, FaCheck, FaHeart, FaStar, FaMagic, FaGift, FaEdit, FaRibbon, FaCalendarAlt, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaFileAlt, FaLeaf } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaWhatsapp, FaCheck, FaHeart, FaStar, FaMagic, FaGift, FaEdit, FaRibbon, FaCalendarAlt, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaFileAlt, FaLeaf, FaTimes } from 'react-icons/fa';
 import WhatsAppModal from './WhatsAppModal';
 
 export const BISCUIT_VARIETIES = [
@@ -7,84 +7,292 @@ export const BISCUIT_VARIETIES = [
     id: 'bsc-ragi',
     name: 'Ragi Biscuits',
     icon: '🍫',
+    category: '🍪 GOURMET BAKERY COLLECTION',
+    shortDesc: 'Nutritious finger millet biscuits made with pure jaggery, whole grains, and 100% maida-free ingredients.',
+    detailedDesc: 'Crafted with organic finger millet (Ragi), whole wheat flour, and pure cow ghee, sweetened naturally with organic jaggery. Rich in calcium and iron, these tea-time biscuits offer a wholesome crunchy bite.',
+    ingredients: 'Organic Ragi (Finger Millet), Whole Wheat Flour, Organic Jaggery, Pure Cow Ghee, Green Cardamom, Milk Powder.',
+    allergens: '100% Maida-Free & Eggless. Contains Dairy & Gluten.',
+    packSizes: ['Small', 'Medium', 'Large', 'Custom'],
+    packagingOptions: ['Regular Box', 'Gift Box', 'Premium Box', 'Custom'],
+    ribbonColors: ['Gold', 'Pink', 'Red', 'Blue', 'Custom'],
+    customizationOptions: ['Personalized message', 'Gift theme', 'Custom packaging', 'Quantity'],
+    storageInstructions: 'Store in an airtight container in a cool, dry place. Best enjoyed fresh within 45 days.',
     desc: 'Nutritious finger millet biscuits made with pure jaggery, whole grains, and 100% maida-free ingredients. Freshly baked for a healthy snack.',
-    ingredients: 'Organic Ragi (Finger Millet), Whole Wheat, Organic Jaggery, Pure Cow Ghee, Cardamom.',
-    allergens: 'Maida-Free, Eggless.',
     image: '/ragi_biscuits.jpg'
   },
   {
     id: 'bsc-wheat',
     name: 'Wheat Biscuits',
     icon: '🌾',
+    category: '🍪 GOURMET BAKERY COLLECTION',
+    shortDesc: 'Stone-ground whole wheat baked fresh with pure cow ghee and raw brown sugar for a rich crunchy bite.',
+    detailedDesc: 'Traditional stone-ground whole wheat cookies slow-baked in small batches using pure churned cow ghee and raw unrefined brown sugar. Delivers a heartwarming nutty aroma and delicate crispness.',
+    ingredients: 'Stone-ground Whole Wheat Flour, Pure Cow Ghee, Raw Brown Sugar, Milk Powder, Cardamom.',
+    allergens: 'Eggless. Contains Gluten & Dairy.',
+    packSizes: ['Small', 'Medium', 'Large', 'Custom'],
+    packagingOptions: ['Regular Box', 'Gift Box', 'Premium Box', 'Custom'],
+    ribbonColors: ['Gold', 'Pink', 'Red', 'Blue', 'Custom'],
+    customizationOptions: ['Personalized message', 'Gift theme', 'Custom packaging', 'Quantity'],
+    storageInstructions: 'Keep sealed in a cool dry pantry away from moisture.',
     desc: 'Stone-ground whole wheat baked fresh with pure cow ghee and raw brown sugar for a rich crunchy bite.',
-    ingredients: 'Stone-ground Whole Wheat Flour, Pure Cow Ghee, Brown Sugar, Milk Powder.',
-    allergens: 'Contains Gluten & Dairy. Eggless.',
     image: '/wheat_biscuits.jpg'
   },
   {
     id: 'bsc-oats',
     name: 'Oats Biscuits',
     icon: '🥣',
+    category: '🍪 GOURMET BAKERY COLLECTION',
+    shortDesc: 'Rolled oats & raw wildflower honey crunchy tea biscuits rich in dietary fiber and wholesome energy.',
+    detailedDesc: 'Healthy rolled oats blended with raw wildflower honey, whole wheat, and golden flaxseeds. Slow-roasted to create a high-fiber, low-calorie gourmet cookie for health-conscious tea lovers.',
+    ingredients: 'Rolled Oats, Whole Wheat Flour, Wildflower Honey, Pure Cow Ghee, Flaxseeds, Natural Vanilla.',
+    allergens: 'Eggless & High Fiber. Contains Gluten & Dairy.',
+    packSizes: ['Small', 'Medium', 'Large', 'Custom'],
+    packagingOptions: ['Regular Box', 'Gift Box', 'Premium Box', 'Custom'],
+    ribbonColors: ['Gold', 'Pink', 'Red', 'Blue', 'Custom'],
+    customizationOptions: ['Personalized message', 'Gift theme', 'Custom packaging', 'Quantity'],
+    storageInstructions: 'Store in an airtight jar in a cool, dry place.',
     desc: 'Rolled oats & raw wildflower honey crunchy tea biscuits rich in dietary fiber and wholesome energy.',
-    ingredients: 'Rolled Oats, Whole Wheat Flour, Wildflower Honey, Pure Ghee, Flaxseeds.',
-    allergens: 'High Fiber, Eggless.',
     image: '/oats_biscuits.jpg'
   },
   {
     id: 'bsc-millet',
     name: 'Millet Biscuits',
     icon: '🌿',
+    category: '🍪 GOURMET BAKERY COLLECTION',
+    shortDesc: 'Multi-millet roasted crunch with natural aromatic cardamom, organic jaggery, and zero refined sugar.',
+    detailedDesc: 'Power-packed blend of foxtail millet, pearl millet (bajra), and sorghum flour infused with aromatic green cardamom pods and organic brown jaggery. 100% refined sugar-free.',
+    ingredients: 'Foxtail Millet, Bajra Millet, Whole Wheat, Organic Jaggery, Cow Ghee, Green Cardamom.',
+    allergens: 'Refined Sugar Free & Eggless. Contains Dairy & Gluten.',
+    packSizes: ['Small', 'Medium', 'Large', 'Custom'],
+    packagingOptions: ['Regular Box', 'Gift Box', 'Premium Box', 'Custom'],
+    ribbonColors: ['Gold', 'Pink', 'Red', 'Blue', 'Custom'],
+    customizationOptions: ['Personalized message', 'Gift theme', 'Custom packaging', 'Quantity'],
+    storageInstructions: 'Keep in a cool dry place in an airtight container.',
     desc: 'Multi-millet roasted crunch with natural aromatic cardamom, organic jaggery, and zero refined sugar.',
-    ingredients: 'Foxtail & Bajra Millets, Organic Jaggery, Cow Ghee, Green Cardamom.',
-    allergens: 'Refined Sugar Free, Eggless.',
     image: '/millet_biscuits.jpg'
   },
   {
     id: 'bsc-butter',
     name: 'Butter Biscuits',
     icon: '🧈',
-    desc: 'Classic European melt-in-mouth pure butter shortbread cookies with a rich silky vanilla finish.',
-    ingredients: 'Unsalted Pure Butter, Whole Flour, Sugar, Natural Vanilla extract.',
+    category: '🍪 GOURMET BAKERY COLLECTION',
+    shortDesc: 'Classic European melt-in-mouth pure butter shortbread cookies with a rich silky vanilla finish.',
+    detailedDesc: 'Authentic melt-in-mouth butter cookies prepared with 100% pure unsalted creamery butter and pure vanilla bean extract. Rich, golden, and delicate with a crumbly buttery texture.',
+    ingredients: 'Unsalted Pure Butter, Whole Wheat Flour, Fine Sugar, Pure Vanilla Extract.',
     allergens: 'Contains Dairy & Gluten.',
+    packSizes: ['Small', 'Medium', 'Large', 'Custom'],
+    packagingOptions: ['Regular Box', 'Gift Box', 'Premium Box', 'Custom'],
+    ribbonColors: ['Gold', 'Pink', 'Red', 'Blue', 'Custom'],
+    customizationOptions: ['Personalized message', 'Gift theme', 'Custom packaging', 'Quantity'],
+    storageInstructions: 'Store in a cool place away from sunlight.',
+    desc: 'Classic European melt-in-mouth pure butter shortbread cookies with a rich silky vanilla finish.',
     image: '/butter_biscuits.jpg'
   },
   {
     id: 'bsc-almond',
     name: 'Almond Biscuits',
     icon: '🥜',
-    desc: 'Sliced golden roasted California almonds baked into crisp butter shortbread cookies.',
-    ingredients: 'California Almond Flakes, Pure Ghee, Wheat Flour, Sugar, Nutmeg.',
+    category: '🍪 GOURMET BAKERY COLLECTION',
+    shortDesc: 'Sliced golden roasted California almonds baked into crisp butter shortbread cookies.',
+    detailedDesc: 'Generously loaded with hand-sliced California almonds and aromatic nutmeg, these golden butter biscuits offer an exquisite nut-crusted crunch in every bite.',
+    ingredients: 'California Almond Flakes, Pure Ghee, Wheat Flour, Sugar, Nutmeg, Vanilla.',
     allergens: 'Contains Tree Nuts & Dairy.',
+    packSizes: ['Small', 'Medium', 'Large', 'Custom'],
+    packagingOptions: ['Regular Box', 'Gift Box', 'Premium Box', 'Custom'],
+    ribbonColors: ['Gold', 'Pink', 'Red', 'Blue', 'Custom'],
+    customizationOptions: ['Personalized message', 'Gift theme', 'Custom packaging', 'Quantity'],
+    storageInstructions: 'Store in an airtight container to preserve nut crispness.',
+    desc: 'Sliced golden roasted California almonds baked into crisp butter shortbread cookies.',
     image: '/almond_biscuits.jpg'
   },
   {
     id: 'bsc-cashew',
     name: 'Cashew Biscuits',
     icon: '🥜',
-    desc: 'Rich roasted cashew butter biscuits infused with fragrant green cardamom and saffron threads.',
-    ingredients: 'Goan Roasted Cashews, Wheat Flour, Pure Butter, Green Cardamom, Saffron.',
+    category: '🍪 GOURMET BAKERY COLLECTION',
+    shortDesc: 'Rich roasted cashew butter biscuits infused with fragrant green cardamom and saffron threads.',
+    detailedDesc: 'Made with rich roasted Goan cashew paste, whole cashews, green cardamom, and Kashmir saffron strands. Melt-in-mouth royal cookies ideal for celebratory gifting.',
+    ingredients: 'Goan Roasted Cashews, Wheat Flour, Pure Butter, Green Cardamom, Saffron Threads.',
     allergens: 'Contains Tree Nuts & Dairy.',
+    packSizes: ['Small', 'Medium', 'Large', 'Custom'],
+    packagingOptions: ['Regular Box', 'Gift Box', 'Premium Box', 'Custom'],
+    ribbonColors: ['Gold', 'Pink', 'Red', 'Blue', 'Custom'],
+    customizationOptions: ['Personalized message', 'Gift theme', 'Custom packaging', 'Quantity'],
+    storageInstructions: 'Keep sealed in a cool, dry place.',
+    desc: 'Rich roasted cashew butter biscuits infused with fragrant green cardamom and saffron threads.',
     image: '/cashew_biscuits.jpg'
   },
   {
     id: 'bsc-pista',
     name: 'Pistachio Biscuits',
     icon: '🟢',
-    desc: 'Handcrafted pistachios & green cardamom rich butter nankhatai cookies with royal nutty crunch.',
-    ingredients: 'Iranian Roasted Pistachios, Pure Ghee, Whole Wheat, Saffron.',
+    category: '🍪 GOURMET BAKERY COLLECTION',
+    shortDesc: 'Handcrafted pistachios & green cardamom rich butter nankhatai cookies with royal nutty crunch.',
+    detailedDesc: 'Royally crafted nankhatai-style cookies loaded with crushed Iranian green pistachios, pure ghee, and saffron, delivering a delicate festive crunch.',
+    ingredients: 'Iranian Roasted Pistachios, Pure Ghee, Whole Wheat, Saffron, Cardamom.',
     allergens: 'Contains Tree Nuts & Dairy.',
+    packSizes: ['Small', 'Medium', 'Large', 'Custom'],
+    packagingOptions: ['Regular Box', 'Gift Box', 'Premium Box', 'Custom'],
+    ribbonColors: ['Gold', 'Pink', 'Red', 'Blue', 'Custom'],
+    customizationOptions: ['Personalized message', 'Gift theme', 'Custom packaging', 'Quantity'],
+    storageInstructions: 'Store in an airtight container.',
+    desc: 'Handcrafted pistachios & green cardamom rich butter nankhatai cookies with royal nutty crunch.',
     image: '/pistachio_biscuits.jpg'
   },
   {
     id: 'bsc-dryfruit',
     name: 'Dry Fruit Biscuits',
     icon: '🍇',
-    desc: 'Royal roasted almond, cashew, pistachio & dried cranberry gourmet biscuits baked for special celebrations.',
-    ingredients: 'Assorted Roasted Tree Nuts, Dried Cranberries, Pure Butter, Spiced Sugar.',
+    category: '🍪 GOURMET BAKERY COLLECTION',
+    shortDesc: 'Royal roasted almond, cashew, pistachio & dried cranberry gourmet biscuits baked for special celebrations.',
+    detailedDesc: 'Our signature festive assortment cookie packed with roasted almonds, cashews, pistachios, and dried ruby cranberries. Baked to a golden crisp with aromatic spices.',
+    ingredients: 'Assorted Roasted Tree Nuts, Dried Cranberries, Pure Butter, Wheat Flour, Spiced Sugar.',
     allergens: 'Contains Tree Nuts & Dairy.',
+    packSizes: ['Small', 'Medium', 'Large', 'Custom'],
+    packagingOptions: ['Regular Box', 'Gift Box', 'Premium Box', 'Custom'],
+    ribbonColors: ['Gold', 'Pink', 'Red', 'Blue', 'Custom'],
+    customizationOptions: ['Personalized message', 'Gift theme', 'Custom packaging', 'Quantity'],
+    storageInstructions: 'Store sealed in a cool, dry environment.',
+    desc: 'Royal roasted almond, cashew, pistachio & dried cranberry gourmet biscuits baked for special celebrations.',
     image: '/dryfruit_biscuits.jpg'
   }
 ];
+
+export const BiscuitDetailsModal = ({ product, isOpen, onClose }) => {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen || !product) return null;
+
+  const category = product.category || '🍪 GOURMET BAKERY COLLECTION';
+  const name = product.name || 'Handcrafted Gourmet Biscuit';
+  const shortDesc = product.shortDesc || product.desc || '100% Maida-free, eggless gourmet biscuits baked fresh with pure cow ghee and whole grains.';
+  const detailedDesc = product.detailedDesc || 'Slow-baked using traditional heritage recipes, our gourmet biscuits blend wholesome whole grains, pure cow ghee, and natural unrefined sweeteners for an irresistible crunchy texture and authentic buttery taste.';
+  const ingredients = product.ingredients || 'Whole wheat flour, pure cow ghee, organic jaggery, milk powder, natural spices.';
+  
+  const packSizes = Array.isArray(product.packSizes) 
+    ? product.packSizes 
+    : ['Small', 'Medium', 'Large', 'Custom'];
+
+  const packagingOptions = Array.isArray(product.packagingOptions)
+    ? product.packagingOptions
+    : ['Regular Box', 'Gift Box', 'Premium Box', 'Custom'];
+
+  const ribbonColors = Array.isArray(product.ribbonColors)
+    ? product.ribbonColors
+    : ['Gold', 'Pink', 'Red', 'Blue', 'Custom'];
+
+  const customizationOptions = Array.isArray(product.customizationOptions)
+    ? product.customizationOptions
+    : ['Personalized message', 'Gift theme', 'Custom packaging', 'Quantity'];
+
+  const storageInstructions = product.storageInstructions || 'Store in an airtight glass container in a cool, dry place away from direct sunlight and humidity.';
+  const allergens = product.allergens || 'Eggless & 100% Maida-Free. May contain dairy and nuts depending on flavor.';
+
+  return (
+    <div className="modal-backdrop-overlay" onClick={onClose}>
+      <div className="product-details-modal-box resin-modal-box biscuit-modal-box" onClick={(e) => e.stopPropagation()}>
+        {/* Circular Close (X) Icon Button */}
+        <button className="modal-close-icon" onClick={onClose} title="Close Modal (ESC)">
+          <FaTimes />
+        </button>
+
+        <div className="modal-two-col-grid">
+          {/* Left Column: Large Product Image */}
+          <div className="modal-image-col">
+            <div className="modal-img-wrap">
+              <img src={product.image} alt={name} className="modal-main-img" />
+              <div className="modal-img-badge">✨ Freshly Baked Bakery</div>
+            </div>
+          </div>
+
+          {/* Right Column: Detailed Product Information */}
+          <div className="modal-details-col">
+            <div className="modal-header-block">
+              <span className="modal-category-tag">{category}</span>
+              <h2 className="modal-product-title">{name}</h2>
+              <p className="modal-short-desc-highlight">{shortDesc}</p>
+            </div>
+
+            <div className="modal-body-scroll">
+              {/* 📜 Detailed Description */}
+              <div className="modal-section-block">
+                <h4>📜 Detailed Description</h4>
+                <p className="modal-desc-text">{detailedDesc}</p>
+              </div>
+
+              {/* ✨ Ingredients & Flavor Notes */}
+              <div className="modal-section-block">
+                <h4>✨ Ingredients & Flavor Notes</h4>
+                <p className="modal-info-p">{ingredients}</p>
+              </div>
+
+              {/* 📦 Available Pack Sizes */}
+              <div className="modal-section-block">
+                <h4>📦 Available Pack Sizes</h4>
+                <div className="modal-chips-flex">
+                  {packSizes.map((sz, i) => (
+                    <span key={i} className="modal-chip-item">{sz}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* 🎁 Packaging Options */}
+              <div className="modal-section-block">
+                <h4>🎁 Packaging Options</h4>
+                <div className="modal-chips-flex">
+                  {packagingOptions.map((pkg, i) => (
+                    <span key={i} className="modal-chip-item">{pkg}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* 🎀 Ribbon Colors */}
+              <div className="modal-section-block">
+                <h4>🎀 Ribbon Colors</h4>
+                <div className="modal-chips-flex">
+                  {ribbonColors.map((rc, i) => (
+                    <span key={i} className="modal-chip-item">{rc}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* ✨ Customization Options */}
+              <div className="modal-section-block">
+                <h4>✨ Customization Options</h4>
+                <ul className="modal-specs-list">
+                  {customizationOptions.map((opt, i) => (
+                    <li key={i}>✨ {opt}</li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* ❄️ Storage & Allergens */}
+              <div className="modal-section-block">
+                <h4>❄️ Storage & Allergens</h4>
+                <p className="modal-info-p"><strong>Storage:</strong> {storageInstructions}</p>
+                <p className="modal-info-p" style={{ marginTop: '4px' }}><strong>Allergens:</strong> {allergens}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export const BISCUIT_QUANTITY_OPTIONS = [
   '250g',
@@ -184,6 +392,9 @@ const BiscuitCustomizer = ({ onSelectProduct }) => {
 
   // Order Notes (Optional)
   const [orderNotes, setOrderNotes] = useState('');
+
+  // Details Modal State
+  const [detailsModalProduct, setDetailsModalProduct] = useState(null);
 
   const toggleBiscuit = (biscuitName) => {
     setSelectedBiscuits((prev) =>
@@ -339,30 +550,14 @@ const BiscuitCustomizer = ({ onSelectProduct }) => {
                         <h4 className="biscuit-card-title">{bsc.name}</h4>
 
                         <div 
-                          className="click-view-details-cta"
-                          onClick={(e) => toggleCardExpansion(bsc.id, e)}
+                          className="card-view-details-link"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setDetailsModalProduct(bsc);
+                          }}
                         >
-                          <span>{isExpanded ? 'Hide Details ▴' : 'Click to View Details ▾'}</span>
+                          <span>View Details →</span>
                         </div>
-
-                        {/* Smooth Accordion Expanded Drawer */}
-                        {isExpanded && (
-                          <div className="card-expanded-drawer open">
-                            <div className="drawer-inner-content">
-                              <p className="drawer-desc">{bsc.desc}</p>
-
-                              <div className="drawer-info-block">
-                                <h5>✨ Ingredients & Recipe Notes:</h5>
-                                <p>{bsc.ingredients}</p>
-                              </div>
-
-                              <div className="drawer-info-block">
-                                <h5>🌿 Baking & Dietary Info:</h5>
-                                <p>100% Freshly Baked. {bsc.allergens}</p>
-                              </div>
-                            </div>
-                          </div>
-                        )}
                       </div>
                     </div>
                   );
@@ -751,6 +946,12 @@ const BiscuitCustomizer = ({ onSelectProduct }) => {
         isOpen={waModalOpen}
         onClose={() => setWaModalOpen(false)}
         messageText={waOrderText}
+      />
+
+      <BiscuitDetailsModal
+        product={detailsModalProduct}
+        isOpen={detailsModalProduct !== null}
+        onClose={() => setDetailsModalProduct(null)}
       />
 
       <style>{`
@@ -1649,6 +1850,270 @@ const BiscuitCustomizer = ({ onSelectProduct }) => {
         .lux-textarea-field:focus {
           border-color: #E8C86A;
           box-shadow: 0 0 0 3px rgba(232, 200, 106, 0.25);
+        }
+
+        /* 🍪 Premium Biscuit Details Modal Styles (Resin Art Parity) */
+        .modal-backdrop-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.68);
+          backdrop-filter: blur(6px);
+          z-index: 1000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 24px;
+          box-sizing: border-box;
+        }
+
+        .product-details-modal-box {
+          background: #FFFFFF;
+          border-radius: 24px;
+          border: 1px solid rgba(212, 175, 55, 0.25);
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+          width: 100%;
+          max-width: 940px;
+          max-height: 90vh;
+          position: relative;
+          overflow: hidden;
+          animation: modalFadeScale 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          display: flex;
+          flex-direction: column;
+        }
+
+        @keyframes modalFadeScale {
+          from {
+            opacity: 0;
+            transform: scale(0.94) translateY(14px);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+
+        .modal-close-icon {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.95);
+          border: 1px solid rgba(212, 175, 55, 0.3);
+          color: #2D2523;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 30;
+          transition: all 0.25s ease;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-close-icon:hover {
+          background: #C89B3C;
+          color: #FFFFFF;
+          transform: scale(1.08);
+        }
+
+        .modal-two-col-grid {
+          display: grid;
+          grid-template-columns: 50% 50%;
+          height: 100%;
+          max-height: 90vh;
+          overflow: hidden;
+        }
+
+        .modal-image-col {
+          padding: 28px;
+          background: #FCFAF7;
+          border-right: 1px solid rgba(212, 175, 55, 0.2);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          box-sizing: border-box;
+          overflow: hidden;
+        }
+
+        .modal-img-wrap {
+          width: 100%;
+          height: 100%;
+          min-height: 380px;
+          max-height: 540px;
+          position: relative;
+          border-radius: 16px;
+          overflow: hidden;
+          background: #FFFFFF;
+          box-shadow: 0 8px 24px rgba(61, 43, 31, 0.08);
+          border: 1px solid rgba(212, 175, 55, 0.2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .modal-main-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          display: block;
+          transition: transform 0.4s ease;
+        }
+
+        .modal-main-img:hover {
+          transform: scale(1.03);
+        }
+
+        .modal-img-badge {
+          position: absolute;
+          bottom: 14px;
+          left: 14px;
+          background: rgba(255, 255, 255, 0.92);
+          backdrop-filter: blur(4px);
+          color: #2D2523;
+          font-size: 12px;
+          font-weight: 600;
+          padding: 6px 14px;
+          border-radius: 50px;
+          border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .modal-details-col {
+          padding: 28px 28px;
+          background: #FFFFFF;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          max-height: 90vh;
+          overflow-y: auto;
+          box-sizing: border-box;
+        }
+
+        .modal-header-block {
+          margin-bottom: 16px;
+          padding-bottom: 14px;
+          border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .modal-category-tag {
+          font-size: 11.5px;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          color: #C89B3C;
+          font-weight: 700;
+          display: block;
+          margin-bottom: 4px;
+        }
+
+        .modal-product-title {
+          font-family: var(--font-serif);
+          font-size: 24px;
+          font-weight: 700;
+          color: #2D2523;
+          margin: 0 0 6px 0;
+          line-height: 1.25;
+        }
+
+        .modal-short-desc-highlight {
+          font-size: 13.5px;
+          color: #8C7032;
+          font-weight: 500;
+          line-height: 1.5;
+          margin: 4px 0 0 0;
+        }
+
+        .modal-body-scroll {
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+        }
+
+        .modal-section-block h4 {
+          font-family: var(--font-serif);
+          font-size: 15.5px;
+          font-weight: 600;
+          color: #2D2523;
+          margin: 0 0 6px 0;
+        }
+
+        .modal-desc-text {
+          font-size: 14.5px;
+          line-height: 1.6;
+          color: #5A4A42;
+          margin: 0;
+        }
+
+        .modal-chips-flex {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-top: 4px;
+        }
+
+        .modal-chip-item {
+          font-family: var(--font-sans);
+          font-size: 13px;
+          font-weight: 500;
+          color: #2D2523;
+          background: #FFFDF8;
+          border: 1px solid rgba(200, 155, 60, 0.25);
+          border-radius: 50px;
+          padding: 4px 14px;
+          display: inline-flex;
+          align-items: center;
+        }
+
+        .modal-specs-list {
+          margin: 0;
+          padding-left: 18px;
+          font-size: 13.5px;
+          color: #4A3A32;
+          line-height: 1.65;
+        }
+
+        .modal-info-p {
+          font-size: 13.5px;
+          color: #5A4A42;
+          line-height: 1.55;
+          margin: 0;
+        }
+
+        @media (max-width: 768px) {
+          .product-details-modal-box {
+            width: 95%;
+            max-height: 92vh;
+            border-radius: 20px;
+          }
+
+          .modal-two-col-grid {
+            grid-template-columns: 1fr;
+            overflow-y: auto;
+            max-height: 92vh;
+          }
+
+          .modal-image-col {
+            padding: 16px !important;
+            border-right: none !important;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+          }
+
+          .modal-img-wrap {
+            min-height: 240px !important;
+            max-height: 320px !important;
+          }
+
+          .modal-details-col {
+            padding: 20px 18px !important;
+            overflow-y: visible !important;
+            max-height: none !important;
+          }
         }
       `}</style>
     </section>

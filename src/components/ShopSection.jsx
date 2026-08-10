@@ -3,6 +3,7 @@ import { PRODUCTS, CATEGORIES } from '../data/products';
 import { ProductDetailsModal } from './ThreadWorkCustomizer';
 import { ResinArtDetailsModal } from './ResinArtCustomizer';
 import { ChocolateDetailsModal } from './ChocolateCustomizer';
+import { BiscuitDetailsModal } from './BiscuitCustomizer';
 
 const CATEGORY_FALLBACK_IMAGES = {
   'Thread Work': '/bridal_bangle_set.jpg',
@@ -174,6 +175,12 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
         />
       ) : detailsModalProduct?.category === 'Homemade Chocolates' || detailsModalProduct?.id?.startsWith('flv-') || detailsModalProduct?.id?.startsWith('chk-') ? (
         <ChocolateDetailsModal
+          product={detailsModalProduct}
+          isOpen={detailsModalProduct !== null}
+          onClose={() => setDetailsModalProduct(null)}
+        />
+      ) : detailsModalProduct?.category === 'Homemade Biscuits' || detailsModalProduct?.id?.startsWith('bsc-') ? (
+        <BiscuitDetailsModal
           product={detailsModalProduct}
           isOpen={detailsModalProduct !== null}
           onClose={() => setDetailsModalProduct(null)}
