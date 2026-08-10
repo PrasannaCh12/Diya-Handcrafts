@@ -273,13 +273,23 @@ const BiscuitCustomizer = ({ onSelectProduct }) => {
     <section id="biscuit-customizer" className="customizer-section section-padding">
       <div className="container">
         {/* Section Header */}
-        <div className="section-header text-center" style={{ marginBottom: '3rem' }}>
-          <div className="section-subtitle">🍪 GOURMET BAKERY STUDIO</div>
-          <h2 className="section-title">Customize Your Homemade Biscuits</h2>
-          <p className="section-description">
-            Build your bespoke box of fresh, eggless, 100% maida-free cookies baked with pure cow ghee, whole grains, and natural sweeteners. Select your favorite variety, gift box sizes, and personalized gift messages.
+        <div className="hero-header-wrap">
+          <div className="tw-hero-subtitle">🍪 GOURMET BAKERY STUDIO</div>
+          <h2 className="tw-hero-title">Customize Your Homemade Biscuits</h2>
+          <p className="tw-hero-description">
+            Build your bespoke box of fresh, eggless, <span className="gold-highlight">100% maida-free cookies</span> baked with <span className="gold-highlight">pure cow ghee</span>, whole grains, and <span className="gold-highlight">natural sweeteners</span>. Select your favorite variety, gift box sizes, and <span className="gold-highlight">personalized gift messages</span>.
           </p>
-          <div className="brand-tagline">"Made With Love, Made For You."</div>
+
+          {/* Premium Decorative Divider */}
+          <div className="tw-hero-divider">
+            <span className="divider-line left-line"></span>
+            <span className="divider-motif">🪷</span>
+            <span className="divider-line right-line"></span>
+          </div>
+
+          <div className="tw-brand-tagline">
+            <span className="quote-mark">“</span>Made With Love, Made For You.<span className="quote-mark">”</span>
+          </div>
         </div>
 
         <div className="customizer-grid">
@@ -296,7 +306,7 @@ const BiscuitCustomizer = ({ onSelectProduct }) => {
               </div>
 
               <div className="flavors-grid">
-                {BISCUIT_VARIETIES.map((bsc) => {
+                {BISCUIT_VARIETIES.map((bsc, idx) => {
                   const isSelected = selectedBiscuits.includes(bsc.name);
                   const isExpanded = expandedCardId === bsc.id;
                   return (
@@ -304,6 +314,7 @@ const BiscuitCustomizer = ({ onSelectProduct }) => {
                       key={bsc.id}
                       className={`flavor-card ${isSelected ? 'selected' : ''} ${isExpanded ? 'card-is-expanded' : ''}`}
                       onClick={() => toggleBiscuit(bsc.name)}
+                      style={{ animationDelay: `${(idx % 3) * 90 + 250}ms` }}
                     >
                       {/* Top-Left Ingredient Icon */}
                       <div className="biscuit-ingredient-icon">
@@ -743,8 +754,148 @@ const BiscuitCustomizer = ({ onSelectProduct }) => {
       />
 
       <style>{`
+        @keyframes heroFadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(24px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes twCardFadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.97);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        .hero-header-wrap {
+          max-width: 960px;
+          margin: 0 auto 3rem auto;
+          text-align: center;
+          position: relative;
+          z-index: 1;
+        }
+
+        .tw-hero-subtitle {
+          font-family: var(--font-sans);
+          font-size: 0.85rem;
+          font-weight: 700;
+          letter-spacing: 0.18em;
+          color: #C89B3C;
+          text-transform: uppercase;
+          margin-bottom: 28px;
+          opacity: 0;
+          animation: heroFadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+        }
+
+        .tw-hero-title {
+          font-family: var(--font-serif);
+          font-size: 52px;
+          font-weight: 700;
+          color: #2D2523;
+          line-height: 1.2;
+          letter-spacing: 0.02em;
+          margin: 0 0 35px 0;
+          opacity: 0;
+          animation: heroFadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+        }
+
+        @media (max-width: 768px) {
+          .tw-hero-title {
+            font-size: 34px;
+          }
+        }
+
+        .tw-hero-description {
+          font-family: var(--font-sans);
+          font-size: 20px;
+          line-height: 1.8;
+          letter-spacing: 0.2px;
+          color: rgba(45, 37, 35, 0.88);
+          max-width: 750px;
+          width: 100%;
+          margin: 0 auto 50px auto;
+          text-align: center;
+          opacity: 0;
+          animation: heroFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+        }
+
+        .gold-highlight {
+          color: #C89B3C;
+          font-weight: 600;
+          text-decoration: none;
+        }
+
+        .tw-hero-divider {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+          margin: 50px auto 50px auto;
+          opacity: 0;
+          animation: heroFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+        }
+
+        .divider-line {
+          height: 1.5px;
+          width: 100px;
+          display: block;
+        }
+
+        .divider-line.left-line {
+          background: linear-gradient(90deg, rgba(200, 155, 60, 0) 0%, rgba(200, 155, 60, 0.75) 100%);
+        }
+
+        .divider-line.right-line {
+          background: linear-gradient(90deg, rgba(200, 155, 60, 0.75) 0%, rgba(200, 155, 60, 0) 100%);
+        }
+
+        .divider-motif {
+          font-size: 26px;
+          color: #C89B3C;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          filter: drop-shadow(0 0 6px rgba(200, 155, 60, 0.3));
+          line-height: 1;
+        }
+
+        .tw-brand-tagline {
+          font-family: var(--font-serif);
+          font-style: italic;
+          font-size: 22px;
+          font-weight: 500;
+          line-height: 1.7;
+          letter-spacing: 0.3px;
+          color: rgba(45, 37, 35, 0.94);
+          opacity: 0.92;
+          text-align: center;
+          margin-top: 50px;
+          margin-bottom: 55px;
+          animation: heroFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+        }
+
+        .tw-brand-tagline .quote-mark {
+          color: #C89B3C;
+          font-family: var(--font-serif);
+          font-size: 26px;
+          font-weight: 700;
+          font-style: normal;
+          margin: 0 4px;
+        }
+
         .flavor-card {
           position: relative;
+          opacity: 0;
+          animation: twCardFadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
         .biscuit-radio-circle {
