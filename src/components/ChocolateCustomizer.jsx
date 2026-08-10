@@ -855,22 +855,22 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           border-radius: 20px;
           padding: 1.2rem;
           cursor: pointer;
-          transition: var(--transition-smooth);
+          transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
           display: flex;
           flex-direction: column;
           position: relative;
         }
 
         .flavor-card:hover {
-          border-color: var(--gold-primary);
-          transform: translateY(-4px);
-          box-shadow: var(--shadow-sm);
+          border-color: #E8C86A;
+          transform: translateY(-6px);
+          box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
         }
 
         .flavor-card.selected {
           background: #FFFDF9;
-          border-color: var(--gold-primary);
-          box-shadow: 0 6px 20px rgba(212, 175, 55, 0.22);
+          border-color: #E8C86A;
+          box-shadow: 0 8px 24px rgba(212, 175, 55, 0.25);
         }
 
         .flavor-card-header {
@@ -894,13 +894,14 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           justify-content: center;
           font-size: 0.65rem;
           color: transparent;
-          transition: all 0.2s;
+          transition: all 0.25s ease;
         }
 
         .check-badge.checked {
-          background: var(--gold-primary);
-          border-color: var(--gold-primary);
+          background: #E8C86A;
+          border-color: #E8C86A;
           color: #FFFFFF;
+          box-shadow: 0 0 10px rgba(232, 200, 106, 0.6);
         }
 
         .flavor-img-wrap {
@@ -925,6 +926,11 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           object-fit: cover;
           object-position: center;
           display: block;
+          transition: transform 0.5s ease;
+        }
+
+        .flavor-card:hover .flavor-thumb-img {
+          transform: scale(1.06);
         }
 
         .flavor-title {
