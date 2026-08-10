@@ -613,7 +613,7 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
           <div className="tw-hero-subtitle">HANDMADE RESIN ART STUDIO</div>
           <h2 className="tw-hero-title">Customize Your Resin Art</h2>
           <p className="tw-hero-description">
-            Transform your <span className="gold-highlight">precious memories</span> into <span className="gold-highlight">timeless resin art</span> creations. Customize preserved <span className="gold-highlight">wedding flowers</span>, name plaques, <span className="gold-highlight">wall clocks</span>, trays, keychains, photo frames, coasters, and keepsakes with premium <span className="gold-highlight">crystal-clear resin</span>, elegant floral arrangements, and <span className="gold-highlight">personalized designs</span>. Every piece is <span className="gold-highlight">handcrafted with love</span> to preserve your special moments forever.
+            Turn your <span className="gold-highlight">precious memories</span> into <span className="gold-highlight">timeless resin art</span>. Preserve <span className="gold-highlight">wedding flowers</span>, photos, and special keepsakes with <span className="gold-highlight">crystal-clear resin</span> and <span className="gold-highlight">personalized designs</span>. <span className="gold-highlight">Handmade with love</span> for <span className="gold-highlight">memories that last forever</span>.
           </p>
 
           <div className="tw-hero-divider">
