@@ -613,7 +613,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           <div className="tw-hero-subtitle">🧵 HANDMADE THREAD WORK STUDIO</div>
           <h1 className="tw-hero-title">Customize Your Thread Work</h1>
           <p className="tw-hero-description">
-            Create your dream handcrafted thread work with <span className="gold-highlight">premium silk threads</span>, elegant <span className="gold-highlight">kundan stones</span>, pearls, zardosi work, and <span className="gold-highlight">personalized color combinations</span>. Every piece is <span className="gold-highlight">handmade with love</span> and <span className="gold-highlight">customized for weddings, festivals, and special occasions</span>.
+            Create your dream thread work with <span className="gold-highlight">premium silk threads</span>, <span className="gold-highlight">kundan stones</span>, pearls, and <span className="gold-highlight">zardosi</span>. <span className="gold-highlight">Handmade with love</span>, <span className="gold-highlight">customized for every occasion</span>.
           </p>
 
           {/* Premium Decorative Divider */}
