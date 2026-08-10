@@ -226,7 +226,7 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           </div>
           <h2 className="section-title">Customize Your Handmade Chocolates</h2>
           <p className="section-description">
-            Create your <span className="gold-highlight">perfect handmade chocolates</span> with <span className="gold-highlight">premium flavors</span>, <span className="gold-highlight">crispy add-ons</span>, <span className="gold-highlight">elegant shapes</span>, and <span className="gold-highlight">luxury packaging</span>. Customize every detail with <span className="gold-highlight">personalized ribbons</span> and notes for a <span className="gold-highlight">truly special gift</span>.
+            Create your <span className="gold-highlight">perfect handmade chocolates</span> with <span className="gold-highlight">premium flavors</span>, <span className="gold-highlight">crunchy add-ons</span>, <span className="gold-highlight">elegant shapes</span>, and <span className="gold-highlight">luxury packaging</span>. Customize every detail with <span className="gold-highlight">personalized ribbons</span> and notes for a <span className="gold-highlight">truly special gift</span>.
           </p>
         </div>
 
