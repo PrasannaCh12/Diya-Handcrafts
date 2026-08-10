@@ -692,6 +692,12 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
       />
 
       <style>{`
+        .gold-highlight {
+          color: #C89B3C;
+          font-weight: 600;
+          text-decoration: none;
+        }
+
         .chocolate-customizer-section {
           padding: 6rem 0;
           background: var(--bg-secondary);
