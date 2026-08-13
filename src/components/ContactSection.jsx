@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaWhatsapp, FaEnvelope, FaMapMarkerAlt, FaClock, FaPaperPlane, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
+import { FaWhatsapp, FaPaperPlane, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
 
 const ContactSection = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -237,36 +237,6 @@ const ContactSection = () => {
                 </p>
               </div>
             </div>
-
-            {/* Info Cards */}
-            <div className="info-cards-stack">
-              <div className="info-item-card glass-card">
-                <div className="info-icon"><FaMapMarkerAlt /></div>
-                <div>
-                  <h4>Studio & Atelier</h4>
-                  <p>Banjara Hills, Phase 2, Hyderabad, Telangana - 500034</p>
-                  <span className="info-sub-tag">Pan-India & Worldwide Express Shipping</span>
-                </div>
-              </div>
-
-              <div className="info-item-card glass-card">
-                <div className="info-icon"><FaEnvelope /></div>
-                <div>
-                  <h4>Email Us</h4>
-                  <p><a href="mailto:orders@divyayelchuri.com" style={{ color: 'inherit', textDecoration: 'none' }}>orders@divyayelchuri.com</a></p>
-                  <span className="info-sub-tag">Replies within 24 business hours</span>
-                </div>
-              </div>
-
-              <div className="info-item-card glass-card">
-                <div className="info-icon"><FaClock /></div>
-                <div>
-                  <h4>Working Hours</h4>
-                  <p>Mon - Sat: 10:00 AM - 7:30 PM IST</p>
-                  <span className="info-sub-tag">Sunday consultations by appointment</span>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -469,7 +439,7 @@ const ContactSection = () => {
           border-radius: 20px;
           padding: 2rem;
           color: #FFFFFF;
-          margin-bottom: 1.75rem;
+          margin-bottom: 0;
           box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
         }
 
@@ -481,52 +451,6 @@ const ContactSection = () => {
 
         .wa-big-icon {
           font-size: 2.8rem;
-        }
-
-        .info-cards-stack {
-          display: flex;
-          flex-direction: column;
-          gap: 1.25rem;
-        }
-
-        .info-item-card {
-          padding: 1.25rem 1.5rem;
-          background: #FFFFFF;
-          border-radius: 16px;
-          display: flex;
-          align-items: flex-start;
-          gap: 1rem;
-          border: 1px solid rgba(200, 155, 60, 0.2);
-          box-shadow: 0 4px 14px rgba(61, 43, 31, 0.04);
-        }
-
-        .info-icon {
-          width: 42px;
-          height: 42px;
-          border-radius: 50%;
-          background: var(--gold-soft-gradient);
-          color: var(--gold-dark);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 1.1rem;
-          flex-shrink: 0;
-        }
-
-        .info-item-card h4 {
-          font-size: 1.05rem;
-          margin-bottom: 0.2rem;
-        }
-
-        .info-item-card p {
-          font-size: 0.875rem;
-          color: var(--text-main);
-          margin-bottom: 0.2rem;
-        }
-
-        .info-sub-tag {
-          font-size: 0.75rem;
-          color: var(--text-muted);
         }
 
         @media (max-width: 992px) {
