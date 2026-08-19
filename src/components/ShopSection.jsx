@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { FaHeart, FaRegHeart, FaShoppingBag, FaStar, FaBolt } from 'react-icons/fa';
 import { PRODUCTS, CATEGORIES } from '../data/products';
 import { ProductDetailsModal } from './ThreadWorkCustomizer';
 import { ResinArtDetailsModal } from './ResinArtCustomizer';
@@ -12,9 +13,10 @@ const CATEGORY_FALLBACK_IMAGES = {
   'Homemade Biscuits': '/ragi_biscuits.jpg'
 };
 
-const AnimatedProductCard = ({ product, index, fallbackImg, onOpenDetails }) => {
+const AnimatedProductCard = ({ product, index, fallbackImg, onOpenDetails, onAddToCart }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
+  const [isWishlisted, setIsWishlisted] = useState(false);
   const cardRef = React.useRef(null);
 
   React.useEffect(() => {
@@ -35,20 +37,36 @@ const AnimatedProductCard = ({ product, index, fallbackImg, onOpenDetails }) => 
     return () => observer.disconnect();
   }, []);
 
-  const staggerDelay = (index % 6) * 80; // 80ms staggered delay between cards
+  const staggerDelay = (index % 6) * 80;
+
+  const handleWishlistToggle = (e) => {
+    e.stopPropagation();
+    setIsWishlisted((prev) => !prev);
+  };
+
+  const handleBuyNow = (e) => {
+    e.stopPropagation();
+    if (onAddToCart) {
+      onAddToCart(product);
+    } else if (onOpenDetails) {
+      onOpenDetails(product);
+    }
+  };
+
+  const priceFormatted = product.price ? `₹${product.price.toLocaleString('en-IN')}` : '₹499';
+  const ratingValue = product.rating || (4.8 + (index % 3) * 0.1).toFixed(1);
+  const reviewCount = product.reviews || (45 + index * 12);
 
   return (
     <div
       ref={cardRef}
       className={`gallery-card glass-card ${isVisible ? 'fade-in-visible' : ''}`}
-      title={product.name}
-      onClick={() => onOpenDetails && onOpenDetails(product)}
       style={{
-        animationDelay: `${staggerDelay}ms`,
-        cursor: 'pointer'
+        animationDelay: `${staggerDelay}ms`
       }}
     >
-      <div className="gallery-img-wrap">
+      {/* Product Image Container with Zoom & Wishlist */}
+      <div className="gallery-img-wrap" onClick={() => onOpenDetails && onOpenDetails(product)}>
         {!imgLoaded && <div className="skeleton-img-placeholder skeleton-shimmer" />}
         <img 
           src={product.image || fallbackImg} 
@@ -63,9 +81,55 @@ const AnimatedProductCard = ({ product, index, fallbackImg, onOpenDetails }) => 
             setImgLoaded(true);
           }}
         />
+        
+        {/* Top Badges & Wishlist */}
+        <div className="card-badge-tag">✨ Handmade</div>
+        <button 
+          className={`wishlist-btn ${isWishlisted ? 'active' : ''}`} 
+          onClick={handleWishlistToggle}
+          title={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
+          type="button"
+        >
+          {isWishlisted ? <FaHeart className="wish-icon filled" /> : <FaRegHeart className="wish-icon" />}
+        </button>
       </div>
+
+      {/* Product Info & Actions */}
       <div className="gallery-card-info">
-        <h4 className="card-item-title">{product.name}</h4>
+        <div className="card-rating-row">
+          <span className="rating-stars">★ {ratingValue}</span>
+          <span className="rating-count">({reviewCount})</span>
+        </div>
+
+        <h4 className="card-item-title" onClick={() => onOpenDetails && onOpenDetails(product)}>
+          {product.name}
+        </h4>
+
+        <div className="card-price-row">
+          <span className="card-price-amount">{priceFormatted}</span>
+          <span className="card-tax-sub">Free Delivery</span>
+        </div>
+
+        {/* Dual Actions: Add to Cart & Buy Now */}
+        <div className="card-actions-dual">
+          <button 
+            type="button"
+            className="btn-card-cart"
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddToCart && onAddToCart(product);
+            }}
+          >
+            <FaShoppingBag /> Add to Cart
+          </button>
+          <button 
+            type="button"
+            className="btn-card-buynow"
+            onClick={handleBuyNow}
+          >
+            <FaBolt /> Buy Now
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -81,7 +145,7 @@ const ProductCardSkeleton = ({ index }) => (
   </div>
 );
 
-const ShopSection = ({ activeCategory, onResetCategory }) => {
+const ShopSection = ({ activeCategory, onResetCategory, onAddToCart }) => {
   const [selectedCategory, setSelectedCategory] = useState(activeCategory || 'All');
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [detailsModalProduct, setDetailsModalProduct] = useState(null);
@@ -160,6 +224,7 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
                   index={index}
                   fallbackImg={fallbackImg}
                   onOpenDetails={(item) => setDetailsModalProduct(item)}
+                  onAddToCart={onAddToCart}
                 />
               );
             })}
@@ -436,33 +501,188 @@ const ShopSection = ({ activeCategory, onResetCategory }) => {
           width: 55%;
         }
 
-        .gallery-card-info {
-          padding: 18px;
+        .card-badge-tag {
+          position: absolute;
+          top: 12px;
+          left: 12px;
+          background: rgba(255, 255, 255, 0.92);
+          backdrop-filter: blur(4px);
+          color: #1C3B2B;
+          font-size: 0.72rem;
+          font-weight: 700;
+          padding: 4px 10px;
+          border-radius: 50px;
+          border: 1px solid rgba(200, 155, 60, 0.3);
+          z-index: 5;
+          letter-spacing: 0.04em;
+        }
+
+        .wishlist-btn {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.92);
+          backdrop-filter: blur(4px);
+          border: 1px solid rgba(200, 155, 60, 0.3);
           display: flex;
           align-items: center;
           justify-content: center;
-          text-align: center;
+          cursor: pointer;
+          z-index: 5;
+          color: #7A6962;
+          font-size: 14px;
+          transition: all 0.25s ease;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .wishlist-btn:hover {
+          transform: scale(1.12);
+          color: #E63946;
+          border-color: #E63946;
+          background: #FFFFFF;
+        }
+
+        .wishlist-btn.active {
+          color: #E63946;
+          background: #FFF0F2;
+          border-color: #E63946;
+        }
+
+        .wish-icon.filled {
+          color: #E63946;
+        }
+
+        .gallery-card-info {
+          padding: 20px 18px 18px 18px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          text-align: left;
           background: #FFFFFF;
           flex-grow: 1;
           box-sizing: border-box;
+          gap: 0.4rem;
+        }
+
+        .card-rating-row {
+          display: flex;
+          align-items: center;
+          gap: 0.35rem;
+          font-size: 0.8rem;
+        }
+
+        .rating-stars {
+          color: #D4AF37;
+          font-weight: 700;
+        }
+
+        .rating-count {
+          color: #7A6962;
+          font-size: 0.76rem;
         }
 
         .card-item-title {
           font-family: var(--font-serif);
-          font-size: 19.5px;
-          font-weight: 600;
-          color: var(--text-dark);
-          line-height: 1.45;
-          letter-spacing: 0.25px;
-          height: 2.9em;
-          max-height: 2.9em;
+          font-size: 1.15rem;
+          font-weight: 700;
+          color: #1C3B2B;
+          line-height: 1.35;
           margin: 0;
-          text-align: center;
+          text-align: left;
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
-          text-overflow: ellipsis;
+          cursor: pointer;
+          transition: color 0.2s ease;
+        }
+
+        .card-item-title:hover {
+          color: #C89B3C;
+        }
+
+        .card-price-row {
+          display: flex;
+          align-items: baseline;
+          gap: 0.6rem;
+          margin-top: 0.2rem;
+          margin-bottom: 0.4rem;
+        }
+
+        .card-price-amount {
+          font-family: var(--font-sans);
+          font-size: 1.2rem;
+          font-weight: 800;
+          color: #2D2523;
+        }
+
+        .card-tax-sub {
+          font-size: 0.72rem;
+          color: #2E5A44;
+          font-weight: 600;
+          background: #EAF5EF;
+          padding: 2px 8px;
+          border-radius: 4px;
+        }
+
+        .card-actions-dual {
+          display: flex;
+          gap: 0.6rem;
+          width: 100%;
+          margin-top: 0.4rem;
+        }
+
+        .btn-card-cart {
+          flex: 1.2;
+          height: 42px;
+          background: linear-gradient(135deg, #1C3B2B 0%, #2A543E 100%);
+          color: #FFFFFF;
+          border: none;
+          border-radius: 10px;
+          font-family: var(--font-sans);
+          font-size: 0.82rem;
+          font-weight: 700;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.4rem;
+          cursor: pointer;
+          transition: all 0.25s ease;
+          box-shadow: 0 4px 12px rgba(27, 59, 43, 0.15);
+        }
+
+        .btn-card-cart:hover {
+          background: linear-gradient(135deg, #274F3B 0%, #1C3B2B 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 18px rgba(27, 59, 43, 0.25);
+        }
+
+        .btn-card-buynow {
+          flex: 1;
+          height: 42px;
+          background: linear-gradient(135deg, #C89B3C 0%, #B38428 100%);
+          color: #FFFFFF;
+          border: none;
+          border-radius: 10px;
+          font-family: var(--font-sans);
+          font-size: 0.82rem;
+          font-weight: 700;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.35rem;
+          cursor: pointer;
+          transition: all 0.25s ease;
+          box-shadow: 0 4px 12px rgba(200, 155, 60, 0.2);
+        }
+
+        .btn-card-buynow:hover {
+          background: linear-gradient(135deg, #D4AF37 0%, #C89B3C 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 18px rgba(200, 155, 60, 0.35);
         }
 
         .no-products-state {

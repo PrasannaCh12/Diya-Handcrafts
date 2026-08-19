@@ -1,10 +1,10 @@
 import React from 'react';
 import ShopSection from '../components/ShopSection';
 
-const ShopPage = () => {
+const ShopPage = ({ onAddToCart }) => {
   return (
     <div style={{ paddingTop: '2rem' }}>
-      <ShopSection />
+      <ShopSection onAddToCart={onAddToCart} />
     </div>
   );
 };
