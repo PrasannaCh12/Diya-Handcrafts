@@ -53,10 +53,6 @@ const AnimatedProductCard = ({ product, index, fallbackImg, onOpenDetails, onAdd
     }
   };
 
-  const priceFormatted = product.price ? `₹${product.price.toLocaleString('en-IN')}` : '₹499';
-  const ratingValue = product.rating || (4.8 + (index % 3) * 0.1).toFixed(1);
-  const reviewCount = product.reviews || (45 + index * 12);
-
   return (
     <div
       ref={cardRef}
@@ -94,21 +90,11 @@ const AnimatedProductCard = ({ product, index, fallbackImg, onOpenDetails, onAdd
         </button>
       </div>
 
-      {/* Product Info & Actions */}
+      {/* Product Name & Dual Action Buttons ONLY */}
       <div className="gallery-card-info">
-        <div className="card-rating-row">
-          <span className="rating-stars">★ {ratingValue}</span>
-          <span className="rating-count">({reviewCount})</span>
-        </div>
-
         <h4 className="card-item-title" onClick={() => onOpenDetails && onOpenDetails(product)}>
           {product.name}
         </h4>
-
-        <div className="card-price-row">
-          <span className="card-price-amount">{priceFormatted}</span>
-          <span className="card-tax-sub">Free Delivery</span>
-        </div>
 
         {/* Dual Actions: Add to Cart & Buy Now */}
         <div className="card-actions-dual">
@@ -556,37 +542,21 @@ const ShopSection = ({ activeCategory, onResetCategory, onAddToCart }) => {
         }
 
         .gallery-card-info {
-          padding: 20px 18px 18px 18px;
+          padding: 16px;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
+          justify-content: space-between;
           text-align: left;
           background: #FFFFFF;
           flex-grow: 1;
           box-sizing: border-box;
-          gap: 0.4rem;
-        }
-
-        .card-rating-row {
-          display: flex;
-          align-items: center;
-          gap: 0.35rem;
-          font-size: 0.8rem;
-        }
-
-        .rating-stars {
-          color: #D4AF37;
-          font-weight: 700;
-        }
-
-        .rating-count {
-          color: #7A6962;
-          font-size: 0.76rem;
+          gap: 0.85rem;
         }
 
         .card-item-title {
           font-family: var(--font-serif);
-          font-size: 1.15rem;
+          font-size: 1.12rem;
           font-weight: 700;
           color: #1C3B2B;
           line-height: 1.35;
@@ -604,35 +574,11 @@ const ShopSection = ({ activeCategory, onResetCategory, onAddToCart }) => {
           color: #C89B3C;
         }
 
-        .card-price-row {
-          display: flex;
-          align-items: baseline;
-          gap: 0.6rem;
-          margin-top: 0.2rem;
-          margin-bottom: 0.4rem;
-        }
-
-        .card-price-amount {
-          font-family: var(--font-sans);
-          font-size: 1.2rem;
-          font-weight: 800;
-          color: #2D2523;
-        }
-
-        .card-tax-sub {
-          font-size: 0.72rem;
-          color: #2E5A44;
-          font-weight: 600;
-          background: #EAF5EF;
-          padding: 2px 8px;
-          border-radius: 4px;
-        }
-
         .card-actions-dual {
           display: flex;
           gap: 0.6rem;
           width: 100%;
-          margin-top: 0.4rem;
+          margin-top: 0.2rem;
         }
 
         .btn-card-cart {
