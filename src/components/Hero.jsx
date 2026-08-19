@@ -25,7 +25,6 @@ const Hero = ({ onExploreClick, onCustomOrderClick }) => {
 
 
       <div className="container hero-container">
-
         {/* PROMINENTLY CENTERED HERO BRANDING */}
         <div className="hero-center-content">
           <div className="hero-logo-wrapper">
@@ -38,26 +37,79 @@ const Hero = ({ onExploreClick, onCustomOrderClick }) => {
           </div>
 
           <div className="hero-badge">
-            <FaHeart className="hero-badge-icon" /> MADE WITH LOVE, MADE FOR YOU
+            <FaHeart className="hero-badge-icon" /> ✨ 100% HANDMADE ARTISAN STUDIO
           </div>
 
           <h1 className="hero-title">
-            <span className="hero-title-main">Handcrafted Creations</span>
-            <span className="hero-title-sub gold-text-gradient">Made With Love</span>
+            <span className="hero-title-main">Handcrafted With Love,</span>
+            <span className="hero-title-sub gold-text-gradient">Made For You</span>
           </h1>
 
           <p className="hero-subheading">
-            Discover handcrafted bangles, handmade chocolates, delicious biscuits, resin art, and personalized gifts—beautifully made with love for every special occasion.
+            Discover exquisite silk thread bangles, bespoke resin art preservation, luxury handmade chocolates, and wholesome gourmet biscuits—each piece lovingly handcrafted to make your special moments truly unforgettable.
           </p>
 
           {/* TWO PRIMARY HERO CTA BUTTONS */}
           <div className="hero-actions-center">
             <button onClick={onExploreClick} className="btn btn-hero-gold hero-btn">
-              <FaGem /> SHOP NOW
+              <FaGem /> Shop Now
             </button>
-            <button onClick={onCustomOrderClick} className="btn btn-hero-outline hero-btn">
-              <FaMagic /> CUSTOM ORDER
+            <button 
+              onClick={() => {
+                const catElem = document.getElementById('categories');
+                if (catElem) {
+                  catElem.scrollIntoView({ behavior: 'smooth' });
+                } else if (onCustomOrderClick) {
+                  onCustomOrderClick();
+                }
+              }} 
+              className="btn btn-hero-outline hero-btn"
+            >
+              <FaMagic /> Explore Collection
             </button>
+          </div>
+
+          {/* FEATURED PRODUCT VISUAL SHOWCASE GRID */}
+          <div className="hero-product-showcase-grid">
+            <div className="hero-showcase-card showcase-float-1">
+              <div className="showcase-img-wrap">
+                <img src="/bridal_bangle_set.jpg" alt="Handmade Silk Thread Bangles" />
+              </div>
+              <div className="showcase-card-label">
+                <span>Thread Work</span>
+                <h4>Bridal Bangle Sets</h4>
+              </div>
+            </div>
+
+            <div className="hero-showcase-card showcase-float-2">
+              <div className="showcase-img-wrap">
+                <img src="/resin_art_category.jpg" alt="Custom Resin Art Preservation" />
+              </div>
+              <div className="showcase-card-label">
+                <span>Resin Art</span>
+                <h4>Floral Keepsakes</h4>
+              </div>
+            </div>
+
+            <div className="hero-showcase-card showcase-float-3">
+              <div className="showcase-img-wrap">
+                <img src="/kunafa_chocolate.png" alt="Handmade Gourmet Chocolates" />
+              </div>
+              <div className="showcase-card-label">
+                <span>Chocolates</span>
+                <h4>Kunafa Delights</h4>
+              </div>
+            </div>
+
+            <div className="hero-showcase-card showcase-float-4">
+              <div className="showcase-img-wrap">
+                <img src="/ragi_biscuits.jpg" alt="Freshly Baked Gourmet Biscuits" />
+              </div>
+              <div className="showcase-card-label">
+                <span>Biscuits</span>
+                <h4>Healthy Ragi Biscuits</h4>
+              </div>
+            </div>
           </div>
 
           {/* THREE ELEGANT BENEFIT FEATURE CARDS */}
@@ -67,8 +119,8 @@ const Hero = ({ onExploreClick, onCustomOrderClick }) => {
                 <FaHeart />
               </div>
               <div>
-                <div className="trust-title">Premium Quality</div>
-                <div className="trust-sub">Made with passion & premium details</div>
+                <div className="trust-title">100% Handcrafted</div>
+                <div className="trust-sub">Made with love & precision</div>
               </div>
             </div>
 
@@ -77,8 +129,8 @@ const Hero = ({ onExploreClick, onCustomOrderClick }) => {
                 <FaMagic />
               </div>
               <div>
-                <div className="trust-title">Custom Orders</div>
-                <div className="trust-sub">Bespoke personalized creations</div>
+                <div className="trust-title">Bespoke Customization</div>
+                <div className="trust-sub">Personalized for your events</div>
               </div>
             </div>
 
@@ -87,8 +139,8 @@ const Hero = ({ onExploreClick, onCustomOrderClick }) => {
                 <FaWhatsapp />
               </div>
               <div>
-                <div className="trust-title">Dedicated Support</div>
-                <div className="trust-sub">Direct WhatsApp artisan assistance</div>
+                <div className="trust-title">Direct WhatsApp</div>
+                <div className="trust-sub">Direct artisan consultation</div>
               </div>
             </div>
           </div>
@@ -805,6 +857,80 @@ const Hero = ({ onExploreClick, onCustomOrderClick }) => {
           }
         }
 
+        /* Hero Product Showcase Grid */
+        .hero-product-showcase-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1.25rem;
+          width: 100%;
+          margin: 2.5rem 0 2rem 0;
+        }
+
+        .hero-showcase-card {
+          background: #FFFFFF;
+          border: 1px solid rgba(200, 155, 60, 0.25);
+          border-radius: 20px;
+          padding: 0.85rem;
+          box-shadow: 0 10px 28px rgba(27, 59, 43, 0.06), 0 2px 6px rgba(200, 155, 60, 0.1);
+          transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+          text-align: left;
+        }
+
+        .showcase-float-1 { animation: floatSubtle 6s ease-in-out infinite 0s; }
+        .showcase-float-2 { animation: floatSubtle 6s ease-in-out infinite 1.5s; }
+        .showcase-float-3 { animation: floatSubtle 6s ease-in-out infinite 3s; }
+        .showcase-float-4 { animation: floatSubtle 6s ease-in-out infinite 4.5s; }
+
+        @keyframes floatSubtle {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
+        }
+
+        .hero-showcase-card:hover {
+          transform: translateY(-10px) scale(1.03) !important;
+          border-color: #C89B3C;
+          box-shadow: 0 16px 36px rgba(27, 59, 43, 0.12), 0 4px 12px rgba(200, 155, 60, 0.2);
+        }
+
+        .showcase-img-wrap {
+          width: 100%;
+          height: 140px;
+          border-radius: 14px;
+          overflow: hidden;
+          background: #FAF8F5;
+        }
+
+        .showcase-img-wrap img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.4s ease;
+        }
+
+        .hero-showcase-card:hover .showcase-img-wrap img {
+          transform: scale(1.08);
+        }
+
+        .showcase-card-label span {
+          font-size: 0.72rem;
+          font-weight: 700;
+          color: #C89B3C;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          display: block;
+        }
+
+        .showcase-card-label h4 {
+          font-family: var(--font-serif);
+          font-size: 1rem;
+          font-weight: 700;
+          color: #1C3B2B;
+          margin: 2px 0 0 0;
+        }
+
         @media (max-width: 992px) {
           .hero-title-main {
             font-size: 2.5rem;
@@ -822,6 +948,13 @@ const Hero = ({ onExploreClick, onCustomOrderClick }) => {
           .hero-trust-grid {
             grid-template-columns: 1fr;
           }
+          .hero-product-showcase-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+          }
+          .showcase-img-wrap {
+            height: 130px;
+          }
         }
 
         @media (max-width: 576px) {
@@ -830,6 +963,13 @@ const Hero = ({ onExploreClick, onCustomOrderClick }) => {
           }
           .hero-title-sub {
             font-size: 1.6rem;
+          }
+          .hero-product-showcase-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+          }
+          .showcase-img-wrap {
+            height: 110px;
           }
         }
       `}</style>
