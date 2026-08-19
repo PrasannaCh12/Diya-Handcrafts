@@ -66,7 +66,7 @@ const AnimatedProductCard = ({ product, index, fallbackImg, onOpenDetails, onAdd
         {!imgLoaded && <div className="skeleton-img-placeholder skeleton-shimmer" />}
         <img 
           src={product.image || fallbackImg} 
-          alt={product.name} 
+          alt={`Handcrafted ${product.name || 'Artisan Product'} - Diya Handcrafts`} 
           className={`gallery-img ${imgLoaded ? 'loaded' : 'loading'}`}
           loading="lazy"
           decoding="async"
@@ -415,11 +415,11 @@ const ShopSection = ({ activeCategory, onResetCategory, onAddToCart }) => {
         .gallery-img-wrap {
           position: relative;
           width: 100%;
-          aspect-ratio: 4 / 5;
+          aspect-ratio: 1 / 1;
           overflow: hidden;
-          background: #FFFDF9;
+          background: #FAF8F5;
           border-radius: 18px 18px 0 0;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+          box-shadow: 0 4px 14px rgba(27, 59, 43, 0.04);
         }
 
         .gallery-img-wrap::after {
@@ -437,11 +437,17 @@ const ShopSection = ({ activeCategory, onResetCategory, onAddToCart }) => {
           height: 100%;
           object-fit: cover;
           object-position: center;
+          display: block;
           border-radius: 18px 18px 0 0;
-          filter: brightness(1.025) contrast(1.045) saturate(1.035) sepia(0.03);
+          filter: brightness(1.025) contrast(1.045) saturate(1.035);
+          image-rendering: -webkit-optimize-contrast;
           will-change: transform;
           backface-visibility: hidden;
-          transition: opacity 350ms ease-out, transform 300ms ease, filter 300ms ease;
+          transition: opacity 350ms ease-out, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), filter 300ms ease;
+        }
+
+        .gallery-card:hover .gallery-img {
+          transform: scale(1.08);
         }
 
         .gallery-img.loading {
