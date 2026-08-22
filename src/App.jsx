@@ -15,6 +15,7 @@ import ResinArtPage from './pages/ResinArtPage';
 import ChocolatePage from './pages/ChocolatePage';
 import BiscuitPage from './pages/BiscuitPage';
 import CustomOrderPage from './pages/CustomOrderPage';
+import ContactPage from './pages/ContactPage';
 import WeddingItemsPage from './pages/WeddingItemsPage';
 import CustomizedChainsPage from './pages/CustomizedChainsPage';
 import CustomizedGiftsPage from './pages/CustomizedGiftsPage';
