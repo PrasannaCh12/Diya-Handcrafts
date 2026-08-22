@@ -164,21 +164,33 @@ const ChainsCustomizer = () => {
         .chains-grid-3col {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 1.75rem;
-          margin-top: 1.5rem;
+          column-gap: 24px;
+          row-gap: 24px;
+          max-width: 1400px;
+          margin: 0 auto;
+          align-items: stretch;
         }
 
         @media (max-width: 991px) {
           .chains-grid-3col {
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.25rem;
+            column-gap: 16px;
+            row-gap: 16px;
           }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 576px) {
+          .chains-grid-3col {
+            grid-template-columns: repeat(2, 1fr);
+            column-gap: 12px;
+            row-gap: 12px;
+          }
+        }
+
+        @media (max-width: 400px) {
           .chains-grid-3col {
             grid-template-columns: 1fr;
-            gap: 1.1rem;
+            row-gap: 16px;
           }
         }
       `}</style>
