@@ -214,7 +214,7 @@ const ShopSection = ({ activeCategory, onResetCategory, onAddToCart }) => {
             </button>
           </div>
         ) : (
-          <div className="gallery-grid">
+          <div className={selectedCategory === 'Customized Chains' ? 'gallery-grid grid-3col' : 'gallery-grid'}>
             {filteredProducts.map((product, index) => {
               const fallbackImg = CATEGORY_FALLBACK_IMAGES[product.category] || '/bridal_bangle_set.jpg';
 
@@ -373,6 +373,10 @@ const ShopSection = ({ activeCategory, onResetCategory, onAddToCart }) => {
           margin: 0 auto;
           align-items: stretch;
           min-height: 400px;
+        }
+
+        .gallery-grid.grid-3col {
+          grid-template-columns: repeat(3, 1fr) !important;
         }
 
         .gallery-card {

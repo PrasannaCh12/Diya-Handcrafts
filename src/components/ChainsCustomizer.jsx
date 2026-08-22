@@ -72,7 +72,7 @@ const ChainsCustomizer = () => {
   const [waModalOpen, setWaModalOpen] = useState(false);
   const [waText, setWaText] = useState('');
 
-  const chainProducts = PRODUCTS.filter((p) => p.category === 'Customized Chains');
+  const chainProducts = PRODUCTS.filter((p) => p.category === 'Customized Chains' && p.image.startsWith('/custom_chain_'));
 
   const toggleWishlist = (e, id) => {
     e.stopPropagation();
@@ -103,12 +103,12 @@ const ChainsCustomizer = () => {
             Customized Chains & Pendants
           </h2>
           <p style={{ color: '#5A4A42', fontSize: '1.05rem', lineHeight: 1.6 }}>
-            Personalized name engraved gold polish chains, red coral temple chains, crystal bead necklaces, couple heart pendants, and evil eye protection chains.
+            Explore our handcrafted red coral temple chains, black crystal bead neckpieces, ruby & emerald Kundan chokers, double-layer pearl drops, and gold Lakshmi coin chains.
           </p>
         </div>
 
-        {/* Product Cards Grid */}
-        <div className="gallery-grid">
+        {/* 3-Column Responsive Product Cards Grid */}
+        <div className="chains-grid-3col">
           {chainProducts.map((product, index) => {
             const isWish = wishlist[product.id];
             return (
@@ -159,6 +159,29 @@ const ChainsCustomizer = () => {
         onClose={() => setWaModalOpen(false)}
         customText={waText}
       />
+
+      <style>{`
+        .chains-grid-3col {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.75rem;
+          margin-top: 1.5rem;
+        }
+
+        @media (max-width: 991px) {
+          .chains-grid-3col {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .chains-grid-3col {
+            grid-template-columns: 1fr;
+            gap: 1.1rem;
+          }
+        }
+      `}</style>
     </section>
   );
 };
