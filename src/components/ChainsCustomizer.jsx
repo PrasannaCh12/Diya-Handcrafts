@@ -107,38 +107,43 @@ const ChainsCustomizer = () => {
           </p>
         </div>
 
-        {/* 3-Column Responsive Product Cards Grid */}
-        <div className="chains-grid-3col">
-          {chainProducts.map((product, index) => {
+        {/* Exact Flavors-Grid Structure copied from Chocolates page */}
+        <div className="flavors-grid" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          {chainProducts.map((product, idx) => {
             const isWish = wishlist[product.id];
             return (
-              <div key={product.id} className="gallery-card glass-card fade-in-visible" style={{ animationDelay: `${index * 90}ms` }}>
-                <div className="gallery-img-wrap" onClick={() => setDetailsModalProduct(product)}>
-                  <img src={product.image} alt={`Handcrafted ${product.name} - Diya Handcrafts`} className="gallery-img loaded" loading="lazy" />
-                  <div className="card-badge-tag">✨ Customized Chain</div>
+              <div
+                key={product.id}
+                className="flavor-card"
+                onClick={() => setDetailsModalProduct(product)}
+                style={{ animationDelay: `${(idx % 3) * 90 + 250}ms` }}
+              >
+                <div className="flavor-card-header">
+                  <span className="flavor-icon">📿</span>
                   <button
                     className={`wishlist-btn ${isWish ? 'active' : ''}`}
                     onClick={(e) => toggleWishlist(e, product.id)}
                     title="Add to Wishlist"
                     type="button"
+                    style={{ position: 'static' }}
                   >
                     {isWish ? <FaHeart className="wish-icon filled" /> : <FaRegHeart className="wish-icon" />}
                   </button>
                 </div>
 
-                <div className="gallery-card-info">
-                  <h4 className="card-item-title" onClick={() => setDetailsModalProduct(product)}>
-                    {product.name}
-                  </h4>
+                <div className="flavor-img-wrap">
+                  <img src={product.image} alt={`Handcrafted ${product.name} - Diya Handcrafts`} className="flavor-thumb-img" loading="lazy" />
+                </div>
 
-                  <div className="card-actions-dual" style={{ marginTop: '0.8rem' }}>
-                    <button type="button" className="btn-card-cart" onClick={() => handleCustomizeClick(product)}>
-                      <FaMagic /> Customize Now
-                    </button>
-                    <button type="button" className="btn-card-buynow" onClick={() => handleEnquireClick(product)}>
-                      <FaWhatsapp /> Enquire Now
-                    </button>
-                  </div>
+                <h4 className="flavor-title">{product.name}</h4>
+
+                <div className="card-actions-dual" style={{ marginTop: '0.8rem' }}>
+                  <button type="button" className="btn-card-cart" onClick={(e) => { e.stopPropagation(); handleCustomizeClick(product); }}>
+                    <FaMagic /> Customize Now
+                  </button>
+                  <button type="button" className="btn-card-buynow" onClick={(e) => { e.stopPropagation(); handleEnquireClick(product); }}>
+                    <FaWhatsapp /> Enquire Now
+                  </button>
                 </div>
               </div>
             );
@@ -161,37 +166,77 @@ const ChainsCustomizer = () => {
       />
 
       <style>{`
-        .chains-grid-3col {
+        .flavors-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          column-gap: 24px;
-          row-gap: 24px;
-          max-width: 1400px;
-          margin: 0 auto;
-          align-items: stretch;
+          grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+          gap: 1.25rem;
+          align-items: start;
         }
 
-        @media (max-width: 991px) {
-          .chains-grid-3col {
-            grid-template-columns: repeat(2, 1fr);
-            column-gap: 16px;
-            row-gap: 16px;
-          }
+        .flavor-card {
+          background: #FFFFFF;
+          border: 1.5px solid rgba(110, 58, 70, 0.12);
+          border-radius: 20px;
+          padding: 1.2rem;
+          cursor: pointer;
+          transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+          display: flex;
+          flex-direction: column;
+          position: relative;
         }
 
-        @media (max-width: 576px) {
-          .chains-grid-3col {
-            grid-template-columns: repeat(2, 1fr);
-            column-gap: 12px;
-            row-gap: 12px;
-          }
+        .flavor-card:hover {
+          border-color: #E8C86A;
+          transform: translateY(-6px);
+          box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
         }
 
-        @media (max-width: 400px) {
-          .chains-grid-3col {
-            grid-template-columns: 1fr;
-            row-gap: 16px;
-          }
+        .flavor-card-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 0.6rem;
+        }
+
+        .flavor-icon {
+          font-size: 1.5rem;
+        }
+
+        .flavor-img-wrap {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 1 / 1.14;
+          border-radius: 15px 15px 0 0;
+          overflow: hidden;
+          background: #FFFDF9;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 0.75rem;
+          border: 1px solid rgba(212, 175, 55, 0.2);
+          box-sizing: border-box;
+        }
+
+        .flavor-thumb-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          display: block;
+          transition: transform 0.5s ease;
+        }
+
+        .flavor-card:hover .flavor-thumb-img {
+          transform: scale(1.06);
+        }
+
+        .flavor-title {
+          font-size: 1.1rem;
+          font-family: var(--font-serif);
+          font-weight: 700;
+          color: var(--text-main);
+          margin-bottom: 0.3rem;
         }
       `}</style>
     </section>
