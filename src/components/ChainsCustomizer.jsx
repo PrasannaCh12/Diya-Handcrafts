@@ -67,10 +67,39 @@ export const ChainsDetailsModal = ({ product, isOpen, onClose }) => {
 };
 
 const ChainsCustomizer = () => {
+  // Product & Selection State
+  const [selectedChain, setSelectedChain] = useState(null);
+  const [selectedAddons, setSelectedAddons] = useState([]);
+  
+  // Customization Choices
+  const [chainLength, setChainLength] = useState('');
+  const [chainStyle, setChainStyle] = useState('');
+  const [beadPendant, setBeadPendant] = useState('');
+  const [metalFinish, setMetalFinish] = useState('');
+  const [claspType, setClaspType] = useState('');
+  const [packagingStyle, setPackagingStyle] = useState('');
+  const [personalizedName, setPersonalizedName] = useState('');
+  const [occasion, setOccasion] = useState('None');
+
+  // Customer Contact State
+  const [customerName, setCustomerName] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [customerWhatsApp, setCustomerWhatsApp] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+
+  // Recipient & Delivery State
+  const [recipientName, setRecipientName] = useState('');
+  const [recipientPhone, setRecipientPhone] = useState('');
+  const [deliveryDate, setDeliveryDate] = useState('');
+  const [deliveryTime, setDeliveryTime] = useState('');
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [orderNotes, setOrderNotes] = useState('');
+
+  // Modals
   const [detailsModalProduct, setDetailsModalProduct] = useState(null);
   const [wishlist, setWishlist] = useState({});
   const [waModalOpen, setWaModalOpen] = useState(false);
-  const [waText, setWaText] = useState('');
+  const [waOrderText, setWaOrderText] = useState('');
 
   const chainProducts = PRODUCTS.filter((p) => p.category === 'Customized Chains' && p.image.startsWith('/custom_chain_'));
 
@@ -79,15 +108,57 @@ const ChainsCustomizer = () => {
     setWishlist((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const handleCustomizeClick = (product) => {
-    const text = `Hi Divya Handcrafts! I want to customize *${product.name}* with my required design / name / specifications. Please send options and price details!`;
-    setWaText(text);
-    setWaModalOpen(true);
+  const handleSelectChain = (product) => {
+    if (selectedChain?.id === product.id) {
+      setSelectedChain(null);
+    } else {
+      setSelectedChain(product);
+    }
   };
 
-  const handleEnquireClick = (product) => {
-    const text = `Hi Divya Handcrafts! I would like to enquire about *${product.name}*. Please share availability, pricing and customization options!`;
-    setWaText(text);
+  const toggleAddon = (addonName) => {
+    if (selectedAddons.includes(addonName)) {
+      setSelectedAddons(selectedAddons.filter((a) => a !== addonName));
+    } else {
+      setSelectedAddons([...selectedAddons, addonName]);
+    }
+  };
+
+  const handleWhatsAppCheckout = (e) => {
+    if (e) e.preventDefault();
+
+    if (!selectedChain) {
+      alert('Please select a Customized Chain product card above.');
+      return;
+    }
+
+    let text = `*NEW CUSTOMIZED CHAIN ORDER - DIYA HANDCRAFTS*\n\n`;
+    text += `📿 *Chain Product:* ${selectedChain.name}\n`;
+    if (selectedAddons.length > 0) text += `✨ *Add-on(s):* ${selectedAddons.join(', ')}\n`;
+    text += `📏 *Chain Length:* ${chainLength || 'Not selected'}\n`;
+    text += `🎨 *Chain Design / Style:* ${chainStyle || 'Not selected'}\n`;
+    text += `💎 *Bead / Pendant:* ${beadPendant || 'Not selected'}\n`;
+    text += `✨ *Metal / Finish:* ${metalFinish || 'Not selected'}\n`;
+    text += `🔒 *Clasp Type:* ${claspType || 'Not selected'}\n`;
+    text += `📦 *Packaging Style:* ${packagingStyle || 'Not selected'}\n`;
+    text += `✏️ *Personalization / Name:* ${personalizedName || 'Not selected'}\n`;
+    text += `🎉 *Occasion:* ${occasion === 'None' ? 'None' : (occasion || 'None')}\n`;
+
+    if (customerName) {
+      text += `\n👤 *CUSTOMER CONTACT DETAILS:*\n`;
+      text += `• Name: ${customerName}\n`;
+      if (customerPhone) text += `• Phone: ${customerPhone}\n`;
+      if (customerWhatsApp) text += `• WhatsApp: ${customerWhatsApp}\n`;
+      if (customerEmail) text += `• Email: ${customerEmail}\n`;
+      if (recipientName) text += `• Recipient Name: ${recipientName}\n`;
+      if (recipientPhone) text += `• Recipient Phone: ${recipientPhone}\n`;
+      if (deliveryDate) text += `• Preferred Delivery Date: ${deliveryDate}\n`;
+      if (deliveryTime) text += `• Delivery Slot: ${deliveryTime}\n`;
+      if (deliveryAddress) text += `• Shipping Address: ${deliveryAddress}\n`;
+      if (orderNotes) text += `• Order Notes: ${orderNotes}\n`;
+    }
+
+    setWaOrderText(text);
     setWaModalOpen(true);
   };
 
@@ -107,47 +178,432 @@ const ChainsCustomizer = () => {
           </p>
         </div>
 
-        {/* Exact Flavors-Grid Structure copied from Chocolates page */}
-        <div className="flavors-grid" style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          {chainProducts.map((product, idx) => {
-            const isWish = wishlist[product.id];
-            return (
-              <div
-                key={product.id}
-                className="flavor-card"
-                onClick={() => setDetailsModalProduct(product)}
-                style={{ animationDelay: `${(idx % 3) * 90 + 250}ms` }}
-              >
-                <div className="flavor-card-header">
-                  <span className="flavor-icon">📿</span>
-                  <button
-                    className={`wishlist-btn ${isWish ? 'active' : ''}`}
-                    onClick={(e) => toggleWishlist(e, product.id)}
-                    title="Add to Wishlist"
-                    type="button"
-                    style={{ position: 'static' }}
+        {/* Main Grid: Left Selector & Right Live Order Summary */}
+        <div className="customizer-main-grid">
+          {/* Left Column: Product Cards & Options */}
+          <div className="customizer-left-panel">
+            {/* Step 1: Available Customized Chain Products */}
+            <div className="flavor-header-row">
+              <h3>📿 Step 1: Select Your Customized Chain</h3>
+              <span className="selected-count-badge">
+                {selectedChain ? '1 Chain Selected' : '0 Selected'}
+              </span>
+            </div>
+
+            <div className="flavors-grid">
+              {chainProducts.map((product, idx) => {
+                const isSelected = selectedChain?.id === product.id;
+                const isWish = wishlist[product.id];
+                return (
+                  <div
+                    key={product.id}
+                    className={`flavor-card ${isSelected ? 'selected' : ''}`}
+                    onClick={() => handleSelectChain(product)}
+                    style={{ animationDelay: `${(idx % 3) * 90 + 250}ms` }}
                   >
-                    {isWish ? <FaHeart className="wish-icon filled" /> : <FaRegHeart className="wish-icon" />}
-                  </button>
+                    <div className="flavor-card-header">
+                      <span className="flavor-icon">📿</span>
+                      <div className={`check-badge ${isSelected ? 'checked' : ''}`}>
+                        <FaCheck />
+                      </div>
+                    </div>
+
+                    <div className="flavor-img-wrap">
+                      <img src={product.image} alt={`Handcrafted ${product.name} - Diya Handcrafts`} className="flavor-thumb-img" loading="lazy" />
+                    </div>
+
+                    <h4 className="flavor-title">{product.name}</h4>
+
+                    <div 
+                      className="card-view-details-link"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setDetailsModalProduct(product);
+                      }}
+                    >
+                      <span>View Details →</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Step 2: Customization Options Form */}
+            <div className="options-custom-box glass-card" style={{ marginTop: '2.5rem' }}>
+              <h3>🎁 Step 2: Customization Options</h3>
+
+              <div className="options-grid-form">
+                {/* Chain Length */}
+                <div className="opt-form-group">
+                  <label className="opt-label">Chain Length:</label>
+                  <div className="opt-pill-group">
+                    {['16 inch (Choker)', '18 inch (Standard)', '20 inch (Long)', '22 inch (Extra Long)'].map((len) => (
+                      <button
+                        key={len}
+                        type="button"
+                        className={`opt-pill-btn ${chainLength === len ? 'active' : ''}`}
+                        onClick={() => setChainLength(chainLength === len ? '' : len)}
+                      >
+                        {len}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="flavor-img-wrap">
-                  <img src={product.image} alt={`Handcrafted ${product.name} - Diya Handcrafts`} className="flavor-thumb-img" loading="lazy" />
+                {/* Chain Design / Style */}
+                <div className="opt-form-group">
+                  <label className="opt-label">Chain Design / Style:</label>
+                  <select
+                    value={chainStyle}
+                    onChange={(e) => setChainStyle(e.target.value)}
+                    className="custom-select-input"
+                  >
+                    <option value="">Select Chain Design</option>
+                    <option value="Red Coral Beaded Strand">Red Coral Beaded Strand</option>
+                    <option value="Black Crystal Faceted Bead">Black Crystal Faceted Bead</option>
+                    <option value="Double Layer Pearl Strand">Double Layer Pearl Strand</option>
+                    <option value="Royal Kundan Choker Band">Royal Kundan Choker Band</option>
+                    <option value="Classic Cable Link Chain">Classic Cable Link Chain</option>
+                  </select>
                 </div>
 
-                <h4 className="flavor-title">{product.name}</h4>
+                {/* Bead / Pendant Motif */}
+                <div className="opt-form-group">
+                  <label className="opt-label">Bead / Pendant Motif:</label>
+                  <select
+                    value={beadPendant}
+                    onChange={(e) => setBeadPendant(e.target.value)}
+                    className="custom-select-input"
+                  >
+                    <option value="">Select Bead / Pendant</option>
+                    <option value="Lakshmi Coin Medallion (5 Coins)">Lakshmi Coin Medallion (5 Coins)</option>
+                    <option value="Red Enamel Kundan Barrel Bead">Red Enamel Kundan Barrel Bead</option>
+                    <option value="Ruby & Emerald Teardrop Crystals">Ruby & Emerald Teardrop Crystals</option>
+                    <option value="Pearl Drop Clusters (Latkan)">Pearl Drop Clusters (Latkan)</option>
+                    <option value="Evil Eye Protection Bead">Evil Eye Protection Bead</option>
+                  </select>
+                </div>
 
-                <div className="card-actions-dual" style={{ marginTop: '0.8rem' }}>
-                  <button type="button" className="btn-card-cart" onClick={(e) => { e.stopPropagation(); handleCustomizeClick(product); }}>
-                    <FaMagic /> Customize Now
-                  </button>
-                  <button type="button" className="btn-card-buynow" onClick={(e) => { e.stopPropagation(); handleEnquireClick(product); }}>
-                    <FaWhatsapp /> Enquire Now
-                  </button>
+                {/* Metal / Finish */}
+                <div className="opt-form-group">
+                  <label className="opt-label">Metal / Finish:</label>
+                  <div className="opt-pill-group">
+                    {['24k Gold Polish', 'Antique Temple Gold', 'Rose Gold', 'Sterling Silver'].map((fin) => (
+                      <button
+                        key={fin}
+                        type="button"
+                        className={`opt-pill-btn ${metalFinish === fin ? 'active' : ''}`}
+                        onClick={() => setMetalFinish(metalFinish === fin ? '' : fin)}
+                      >
+                        {fin}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Clasp Type */}
+                <div className="opt-form-group">
+                  <label className="opt-label">Clasp Type:</label>
+                  <select
+                    value={claspType}
+                    onChange={(e) => setClaspType(e.target.value)}
+                    className="custom-select-input"
+                  >
+                    <option value="">Select Clasp Type</option>
+                    <option value="Standard S-Hook Clasp">Standard S-Hook Clasp</option>
+                    <option value="Adjustable Zari Dori Thread">Adjustable Zari Dori Thread</option>
+                    <option value="Lobster Claw Clasp with Extender">Lobster Claw Clasp with Extender</option>
+                  </select>
+                </div>
+
+                {/* Packaging Style */}
+                <div className="opt-form-group">
+                  <label className="opt-label">Packaging Style:</label>
+                  <select
+                    value={packagingStyle}
+                    onChange={(e) => setPackagingStyle(e.target.value)}
+                    className="custom-select-input"
+                  >
+                    <option value="">Select Packaging Style</option>
+                    <option value="Velvet Jewelry Pouch">Velvet Jewelry Pouch</option>
+                    <option value="Royal Diya Gift Box">Royal Diya Gift Box</option>
+                    <option value="Bridal Trousseau Presentation Trunk">Bridal Trousseau Presentation Trunk</option>
+                  </select>
+                </div>
+
+                {/* Personalization / Name */}
+                <div className="opt-form-group full-width">
+                  <label className="opt-label">Personalization / Name (Optional Engraving):</label>
+                  <input
+                    type="text"
+                    value={personalizedName}
+                    onChange={(e) => setPersonalizedName(e.target.value)}
+                    placeholder="Enter name, initial, or custom date (e.g. Radhika / 24.11.2024)"
+                    className="custom-select-input"
+                  />
+                </div>
+
+                {/* Occasion */}
+                <div className="opt-form-group full-width">
+                  <label className="opt-label">Occasion:</label>
+                  <select
+                    value={occasion}
+                    onChange={(e) => setOccasion(e.target.value)}
+                    className="custom-select-input"
+                  >
+                    <option value="None">None</option>
+                    <option value="Wedding / Marriage Ritual">Wedding / Marriage Ritual</option>
+                    <option value="Anniversary">Anniversary</option>
+                    <option value="Birthday Gift">Birthday Gift</option>
+                    <option value="Festival / Temple Function">Festival / Temple Function</option>
+                    <option value="Daily Wear Wearable">Daily Wear Wearable</option>
+                  </select>
                 </div>
               </div>
-            );
-          })}
+            </div>
+
+            {/* Step 4: Customer Details Form */}
+            <div className="customer-details-box glass-card" style={{ marginTop: '2.5rem' }}>
+              <h3>👤 Step 4: Your Contact & Delivery Details</h3>
+
+              <div className="options-grid-form">
+                <div className="opt-form-group">
+                  <label className="opt-label">Full Name *</label>
+                  <input
+                    type="text"
+                    required
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                    placeholder="e.g. Radhika Sharma"
+                    className="custom-select-input"
+                  />
+                </div>
+
+                <div className="opt-form-group">
+                  <label className="opt-label">Phone Number *</label>
+                  <input
+                    type="tel"
+                    required
+                    value={customerPhone}
+                    onChange={(e) => setCustomerPhone(e.target.value)}
+                    placeholder="e.g. +91 98765 43210"
+                    className="custom-select-input"
+                  />
+                </div>
+
+                <div className="opt-form-group">
+                  <label className="opt-label">WhatsApp Number *</label>
+                  <input
+                    type="tel"
+                    required
+                    value={customerWhatsApp}
+                    onChange={(e) => setCustomerWhatsApp(e.target.value)}
+                    placeholder="e.g. +91 98765 43210"
+                    className="custom-select-input"
+                  />
+                </div>
+
+                <div className="opt-form-group">
+                  <label className="opt-label">Email Address (Optional)</label>
+                  <input
+                    type="email"
+                    value={customerEmail}
+                    onChange={(e) => setCustomerEmail(e.target.value)}
+                    placeholder="radhika@example.com"
+                    className="custom-select-input"
+                  />
+                </div>
+              </div>
+
+              {/* Recipient Details (Optional) */}
+              <div className="details-sub-header" style={{ marginTop: '1.5rem' }}>
+                <FaGift className="header-icon" /> Recipient Information (Optional Gift Delivery)
+              </div>
+              <div className="options-grid-form">
+                <div className="opt-form-group">
+                  <label className="opt-label">Recipient Name</label>
+                  <input
+                    type="text"
+                    value={recipientName}
+                    onChange={(e) => setRecipientName(e.target.value)}
+                    placeholder="Recipient's Name (if gifting)"
+                    className="custom-select-input"
+                  />
+                </div>
+
+                <div className="opt-form-group">
+                  <label className="opt-label">Recipient Phone Number</label>
+                  <input
+                    type="tel"
+                    value={recipientPhone}
+                    onChange={(e) => setRecipientPhone(e.target.value)}
+                    placeholder="Recipient's contact number"
+                    className="custom-select-input"
+                  />
+                </div>
+              </div>
+
+              {/* Delivery Details */}
+              <div className="details-sub-header" style={{ marginTop: '1.5rem' }}>
+                <FaMapMarkerAlt className="header-icon" /> Delivery Details (Optional)
+              </div>
+              <div className="options-grid-form">
+                <div className="opt-form-group">
+                  <label className="opt-label">Preferred Delivery Date</label>
+                  <input
+                    type="date"
+                    value={deliveryDate}
+                    onChange={(e) => setDeliveryDate(e.target.value)}
+                    className="custom-select-input"
+                  />
+                </div>
+
+                <div className="opt-form-group">
+                  <label className="opt-label">Preferred Delivery Time</label>
+                  <select
+                    value={deliveryTime}
+                    onChange={(e) => setDeliveryTime(e.target.value)}
+                    className="custom-select-input"
+                  >
+                    <option value="">Select Delivery Slot</option>
+                    <option value="Morning (10 AM - 1 PM)">Morning (10 AM - 1 PM)</option>
+                    <option value="Afternoon (1 PM - 5 PM)">Afternoon (1 PM - 5 PM)</option>
+                    <option value="Evening (5 PM - 8 PM)">Evening (5 PM - 8 PM)</option>
+                  </select>
+                </div>
+
+                <div className="opt-form-group full-width">
+                  <label className="opt-label">Delivery Address</label>
+                  <textarea
+                    rows="3"
+                    value={deliveryAddress}
+                    onChange={(e) => setDeliveryAddress(e.target.value)}
+                    placeholder="Enter complete shipping/delivery address..."
+                    className="custom-select-input"
+                  ></textarea>
+                </div>
+              </div>
+
+              {/* Order Notes */}
+              <div className="details-sub-header" style={{ marginTop: '1.5rem' }}>
+                <FaFileAlt className="header-icon" /> Order Notes
+              </div>
+              <div className="opt-form-group full-width">
+                <textarea
+                  rows="3"
+                  value={orderNotes}
+                  onChange={(e) => setOrderNotes(e.target.value)}
+                  placeholder="Any special instructions for your order? (Optional)"
+                  className="custom-select-input"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Live Order Summary Card (Exact Match to Chocolates Page) */}
+          <div className="customizer-right-panel">
+            <div className="summary-sticky-card glass-card">
+              <div className="summary-card-header">
+                <FaGift style={{ color: 'var(--gold-primary)', fontSize: '1.4rem' }} />
+                <h3>📋 Order Summary</h3>
+              </div>
+
+              <div className="summary-section-body">
+                {/* Selected Chain Type */}
+                <div className="summary-section-item">
+                  <label className="summary-item-label">Selected Chain Type:</label>
+                  <div className="flavor-chips-wrap">
+                    {selectedChain ? (
+                      <span className="flavor-chip">
+                        {selectedChain.name}
+                      </span>
+                    ) : (
+                      <span className="none-tag">No chain type selected (Click a card above)</span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Selected Add-on(s) */}
+                <div className="summary-section-item">
+                  <label className="summary-item-label">Selected Add-on(s):</label>
+                  <div className="flavor-chips-wrap">
+                    {selectedAddons.length > 0 ? (
+                      selectedAddons.map((add) => (
+                        <span key={add} className="addon-chip">
+                          {add}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="none-tag">None selected</span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="summary-row">
+                  <span>Chain Length:</span>
+                  <strong>{chainLength || <em className="none-tag">Not selected</em>}</strong>
+                </div>
+
+                <div className="summary-row">
+                  <span>Chain Design / Style:</span>
+                  <strong>{chainStyle || <em className="none-tag">Not selected</em>}</strong>
+                </div>
+
+                <div className="summary-row">
+                  <span>Bead / Pendant:</span>
+                  <strong>{beadPendant || <em className="none-tag">Not selected</em>}</strong>
+                </div>
+
+                <div className="summary-row">
+                  <span>Metal / Finish:</span>
+                  <strong>{metalFinish || <em className="none-tag">Not selected</em>}</strong>
+                </div>
+
+                <div className="summary-row">
+                  <span>Clasp Type:</span>
+                  <strong>{claspType || <em className="none-tag">Not selected</em>}</strong>
+                </div>
+
+                <div className="summary-row">
+                  <span>Packaging Style:</span>
+                  <strong>{packagingStyle || <em className="none-tag">Not selected</em>}</strong>
+                </div>
+
+                <div className="summary-row">
+                  <span>Personalization / Name:</span>
+                  <strong>{personalizedName || <em className="none-tag">Not selected</em>}</strong>
+                </div>
+
+                <div className="summary-row">
+                  <span>Occasion:</span>
+                  <strong>{occasion === 'None' ? 'None' : (occasion || 'None')}</strong>
+                </div>
+
+                {/* Customer Details Summary */}
+                <div className="summary-details-box">
+                  <span className="msg-tag"><FaUser /> Customer Contact:</span>
+                  {customerName ? (
+                    <div className="summary-user-text">
+                      <p><strong>Name:</strong> {customerName}</p>
+                      <p><strong>Phone:</strong> {customerPhone}</p>
+                      <p><strong>WhatsApp:</strong> {customerWhatsApp}</p>
+                      {recipientName && <p><strong>Recipient:</strong> {recipientName}</p>}
+                    </div>
+                  ) : (
+                    <p className="none-tag" style={{ marginTop: '0.2rem' }}>Please enter name & phone in Step 4</p>
+                  )}
+                </div>
+              </div>
+
+              <button onClick={handleWhatsAppCheckout} className="btn btn-whatsapp w-full" style={{ marginTop: '1.5rem' }}>
+                <FaWhatsapp /> CHECKOUT & ORDER ON WHATSAPP
+              </button>
+
+              <div className="tagline-footer">
+                ✨ Made With Love, Made For You
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -162,10 +618,49 @@ const ChainsCustomizer = () => {
       <WhatsAppModal
         isOpen={waModalOpen}
         onClose={() => setWaModalOpen(false)}
-        customText={waText}
+        messageText={waOrderText}
       />
 
       <style>{`
+        .customizer-main-grid {
+          display: grid;
+          grid-template-columns: 1fr 380px;
+          gap: 2rem;
+          align-items: start;
+        }
+
+        .customizer-left-panel {
+          min-width: 0;
+        }
+
+        .customizer-right-panel {
+          position: sticky;
+          top: 100px;
+        }
+
+        .flavor-header-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 1rem;
+        }
+
+        .flavor-header-row h3 {
+          font-size: 1.25rem;
+          font-family: var(--font-serif);
+          color: var(--text-main);
+          margin: 0;
+        }
+
+        .selected-count-badge {
+          background: #C89B3C;
+          color: #FFFFFF;
+          font-size: 0.75rem;
+          font-weight: 700;
+          padding: 0.2rem 0.65rem;
+          border-radius: 50px;
+        }
+
         .flavors-grid {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -191,6 +686,12 @@ const ChainsCustomizer = () => {
           box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
         }
 
+        .flavor-card.selected {
+          background: #FFFDF9;
+          border-color: #E8C86A;
+          box-shadow: 0 8px 24px rgba(212, 175, 55, 0.25);
+        }
+
         .flavor-card-header {
           display: flex;
           align-items: center;
@@ -200,6 +701,26 @@ const ChainsCustomizer = () => {
 
         .flavor-icon {
           font-size: 1.5rem;
+        }
+
+        .check-badge {
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          border: 1px solid #DDD;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.65rem;
+          color: transparent;
+          transition: all 0.25s ease;
+        }
+
+        .check-badge.checked {
+          background: #E8C86A;
+          border-color: #E8C86A;
+          color: #FFFFFF;
+          box-shadow: 0 0 10px rgba(232, 200, 106, 0.6);
         }
 
         .flavor-img-wrap {
@@ -237,6 +758,321 @@ const ChainsCustomizer = () => {
           font-weight: 700;
           color: var(--text-main);
           margin-bottom: 0.3rem;
+        }
+
+        .card-view-details-link {
+          font-size: 0.8rem;
+          color: #C89B3C;
+          font-weight: 600;
+          margin-top: 0.4rem;
+        }
+
+        .addons-section-box,
+        .options-custom-box,
+        .customer-details-box {
+          padding: 1.75rem 2rem;
+          background: #FFFFFF;
+          border: 1px solid var(--gold-border);
+          border-radius: var(--radius-md);
+        }
+
+        .addons-section-box h3,
+        .options-custom-box h3,
+        .customer-details-box h3 {
+          font-size: 1.25rem;
+          margin-bottom: 0.4rem;
+        }
+
+        .addons-sub-text {
+          font-size: 0.85rem;
+          color: var(--text-muted);
+          margin-bottom: 1.25rem;
+        }
+
+        .addons-selection-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
+        }
+
+        .addon-choice-card {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.85rem;
+          border: 1px solid var(--gold-border);
+          border-radius: var(--radius-sm);
+          background: #FFFDF9;
+          cursor: pointer;
+          transition: all 0.25s ease;
+        }
+
+        .addon-choice-card.active {
+          border-color: #C89B3C;
+          background: #FFFDF5;
+          box-shadow: 0 4px 12px rgba(200, 155, 60, 0.15);
+        }
+
+        .addon-icon-badge {
+          font-size: 1.4rem;
+        }
+
+        .addon-info h4 {
+          font-size: 0.88rem;
+          margin: 0 0 0.15rem 0;
+        }
+
+        .addon-info p {
+          font-size: 0.75rem;
+          color: var(--text-muted);
+          margin: 0;
+        }
+
+        .addon-check {
+          margin-left: auto;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          border: 1px solid #DDD;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.55rem;
+          color: transparent;
+        }
+
+        .addon-check.checked {
+          background: #C89B3C;
+          border-color: #C89B3C;
+          color: #FFF;
+        }
+
+        .options-grid-form {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.25rem;
+          margin-top: 1.25rem;
+        }
+
+        .opt-form-group.full-width {
+          grid-column: 1 / -1;
+        }
+
+        .opt-label {
+          display: block;
+          font-size: 0.82rem;
+          font-weight: 700;
+          color: var(--text-main);
+          margin-bottom: 0.4rem;
+        }
+
+        .opt-pill-group {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+
+        .opt-pill-btn {
+          padding: 0.4rem 0.85rem;
+          font-size: 0.78rem;
+          border: 1px solid var(--gold-border);
+          border-radius: 50px;
+          background: #FFFFFF;
+          cursor: pointer;
+          transition: all 0.25s ease;
+        }
+
+        .opt-pill-btn.active {
+          background: #C89B3C;
+          color: #FFFFFF;
+          border-color: #C89B3C;
+        }
+
+        .custom-select-input {
+          width: 100%;
+          padding: 0.65rem 0.85rem;
+          border: 1px solid var(--gold-border);
+          border-radius: var(--radius-sm);
+          font-size: 0.85rem;
+          background: #FFFDF9;
+          box-sizing: border-box;
+        }
+
+        .details-sub-header {
+          font-size: 0.9rem;
+          font-weight: 700;
+          color: var(--gold-dark);
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          border-bottom: 1px dashed var(--gold-border);
+          padding-bottom: 0.4rem;
+        }
+
+        /* Order Summary Sticky Card */
+        .summary-sticky-card {
+          padding: 1.75rem;
+          background: #FFFFFF;
+          border: 1.5px solid var(--gold-border);
+          box-shadow: var(--shadow-lg);
+          border-radius: var(--radius-md);
+        }
+
+        .summary-card-header {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding-bottom: 1rem;
+          border-bottom: 1px solid var(--bg-secondary);
+          margin-bottom: 1.25rem;
+        }
+
+        .summary-card-header h3 {
+          font-size: 1.3rem;
+          margin: 0;
+        }
+
+        .summary-section-body {
+          display: flex;
+          flex-direction: column;
+          gap: 0.85rem;
+          font-size: 0.88rem;
+        }
+
+        .summary-section-item {
+          display: flex;
+          flex-direction: column;
+          gap: 0.35rem;
+        }
+
+        .summary-item-label {
+          font-size: 0.8rem;
+          font-weight: 700;
+          color: var(--text-main);
+        }
+
+        .summary-row {
+          display: flex;
+          justify-content: space-between;
+          color: var(--text-muted);
+          font-size: 0.85rem;
+        }
+
+        .summary-row strong {
+          color: var(--text-main);
+          text-align: right;
+        }
+
+        .flavor-chips-wrap {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.4rem;
+        }
+
+        .flavor-chip {
+          background: #FDF3E3;
+          color: #8C6212;
+          font-size: 0.75rem;
+          font-weight: 600;
+          padding: 0.25rem 0.65rem;
+          border-radius: 50px;
+          border: 1px solid rgba(200, 155, 60, 0.3);
+        }
+
+        .addon-chip {
+          background: #F6F9F5;
+          color: #1C3B2B;
+          border: 1px solid rgba(28, 59, 43, 0.2);
+          font-size: 0.75rem;
+          font-weight: 600;
+          padding: 0.25rem 0.65rem;
+          border-radius: 50px;
+        }
+
+        .none-tag {
+          font-size: 0.78rem;
+          color: var(--text-light);
+          font-style: italic;
+        }
+
+        .summary-details-box {
+          background: #FFFDF9;
+          border: 1px solid var(--gold-border);
+          padding: 0.85rem;
+          border-radius: var(--radius-sm);
+          font-size: 0.8rem;
+          margin-top: 0.5rem;
+        }
+
+        .summary-user-text {
+          display: flex;
+          flex-direction: column;
+          gap: 0.2rem;
+          margin-top: 0.3rem;
+          color: var(--text-muted);
+        }
+
+        .summary-user-text strong {
+          color: var(--text-main);
+        }
+
+        .msg-tag {
+          font-size: 0.75rem;
+          font-weight: 700;
+          color: var(--gold-dark);
+          display: flex;
+          align-items: center;
+          gap: 0.3rem;
+          margin-bottom: 0.25rem;
+        }
+
+        .btn-whatsapp {
+          background: #25D366;
+          color: #FFFFFF;
+          font-weight: 700;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          padding: 0.85rem 1.25rem;
+          border-radius: var(--radius-sm);
+          border: none;
+          cursor: pointer;
+          transition: all 0.25s ease;
+          box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
+          width: 100%;
+          font-size: 0.88rem;
+        }
+
+        .btn-whatsapp:hover {
+          background: #1EBE5B;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
+        }
+
+        .tagline-footer {
+          text-align: center;
+          margin-top: 1.25rem;
+          font-family: var(--font-sans);
+          font-size: 0.8rem;
+          color: var(--gold-dark);
+          font-weight: 600;
+          font-style: italic;
+          letter-spacing: 0.05em;
+        }
+
+        @media (max-width: 992px) {
+          .customizer-main-grid {
+            grid-template-columns: 1fr;
+          }
+          .customizer-right-panel {
+            position: static;
+            margin-top: 2rem;
+          }
+          .options-grid-form,
+          .addons-selection-grid {
+            grid-template-columns: 1fr;
+          }
         }
       `}</style>
     </section>
