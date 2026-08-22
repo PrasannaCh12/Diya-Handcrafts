@@ -30,11 +30,6 @@ export const ChainsDetailsModal = ({ product, isOpen, onClose }) => {
   const sizes = product.customizations?.sizes || ['16 inch (Choker)', '18 inch (Standard)', '20 inch (Long)', '22 inch (Extra Long)'];
   const colors = ['Rose Gold', 'Sterling Silver'];
 
-  const handleWhatsAppEnquiry = () => {
-    const message = `Hi Divya Handcrafts! I am interested in customizing / ordering *${name}*${price ? ` (${price})` : ''}. Please share customization details!`;
-    window.open(`https://wa.me/917981664314?text=${encodeURIComponent(message)}`, '_blank');
-  };
-
   return (
     <div className="modal-backdrop-overlay" onClick={onClose}>
       <div className="product-details-modal-box chains-modal-box" onClick={(e) => e.stopPropagation()}>
@@ -50,7 +45,7 @@ export const ChainsDetailsModal = ({ product, isOpen, onClose }) => {
             </div>
           </div>
 
-          {/* Right Column: Clean Product Details & Ordering */}
+          {/* Right Column: Clean Product Details */}
           <div className="modal-details-col">
             <div className="modal-header-block">
               <span className="modal-category-tag">{category}</span>
@@ -81,12 +76,6 @@ export const ChainsDetailsModal = ({ product, isOpen, onClose }) => {
                     <span key={i} className="modal-chip-item">{c}</span>
                   ))}
                 </div>
-              </div>
-
-              <div className="modal-actions-block" style={{ marginTop: '1rem' }}>
-                <button onClick={handleWhatsAppEnquiry} className="btn btn-whatsapp" style={{ width: '100%' }}>
-                  <FaWhatsapp /> Customize & Order on WhatsApp
-                </button>
               </div>
             </div>
           </div>
