@@ -286,10 +286,10 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
           align-items: center;
           justify-content: space-between;
           height: 74px;
-          gap: 1rem;
-          max-width: 1440px;
+          gap: 0.85rem;
+          max-width: 98%;
           margin: 0 auto;
-          padding: 0 1.5rem;
+          padding: 0 1rem 0 0.75rem;
         }
 
         .nav-logo {
