@@ -550,6 +550,96 @@ export const PRODUCTS = [
     },
     specs: ['Authentic Glass Evil Eye Charm', 'Personalized Name Charm', 'Anti-Tarnish Polish']
   },
+  {
+    id: 'chain-04',
+    name: 'Red Coral & Gold Lakshmi Coin Temple Chain',
+    category: 'Customized Chains',
+    price: 1699,
+    image: '/custom_chain_01.jpg',
+    images: ['/custom_chain_01.jpg'],
+    shortDesc: 'Traditional red coral beaded neckpiece adorned with antique gold Lakshmi coin pendants.',
+    description: 'Handcrafted temple jewelry chain featuring vibrant red coral beads interspaced with gold polish spacers and 5 intricate Lakshmi coin medallions.',
+    materials: 'Red Coral Beads, 24k Gold Polish Brass Coins, Adjustable S-Hook Clasp',
+    processingTime: '2 – 3 Business Days',
+    careInstructions: 'Keep in velvet pouch. Avoid direct moisture and perfumes.',
+    customizations: {
+      sizes: ['18 inch Standard', '20 inch Long'],
+      colors: ['Red Coral & Antique Gold']
+    },
+    specs: ['Red Coral Beads', '24k Gold Polish Coins', 'Handmade Temple Jewelry']
+  },
+  {
+    id: 'chain-05',
+    name: 'Black Crystal Bead & Red Enamel Pendant Chain',
+    category: 'Customized Chains',
+    price: 1199,
+    image: '/custom_chain_02.jpg',
+    images: ['/custom_chain_02.jpg'],
+    shortDesc: 'Sleek black faceted crystal bead chain with a vibrant red enamel Kundan barrel pendant.',
+    description: 'Elegant daily and festive wear chain featuring jet-black crystal beads strung with a focal red enamel barrel bead studded with Kundan crystals.',
+    materials: 'Faceted Black Crystal Glass Beads, Hand-painted Red Enamel Bead, Kundan Stones',
+    processingTime: '2 – 3 Business Days',
+    careInstructions: 'Store flat in airtight box.',
+    customizations: {
+      sizes: ['16 inch Short', '18 inch Standard'],
+      colors: ['Black Crystal & Red Enamel']
+    },
+    specs: ['Faceted Crystal Glass', 'Hand-Painted Enamel Barrel', 'Anti-Tarnish Clasp']
+  },
+  {
+    id: 'chain-06',
+    name: 'Ruby & Emerald Floral Kundan Choker Chain',
+    category: 'Customized Chains',
+    price: 1899,
+    image: '/custom_chain_03.jpg',
+    images: ['/custom_chain_03.jpg'],
+    shortDesc: 'Regal bridal choker chain encrusted with ruby pink and emerald green teardrop stones.',
+    description: 'Artisanal Kundan stone necklace set with matching earrings. Features intricate floral pearl drop clusters and adjustable gold dori thread.',
+    materials: 'Glass Kundan Stones, Ruby Pink & Emerald Green Crystals, Pearl Clusters, Zari Dori',
+    processingTime: '3 – 4 Business Days',
+    careInstructions: 'Store in padded velvet box.',
+    customizations: {
+      sizes: ['Adjustable Neckband Choker'],
+      colors: ['Ruby & Emerald Gold']
+    },
+    specs: ['Includes Matching Earrings', 'Adjustable Zari Thread Backing', 'Royal Bridal Design']
+  },
+  {
+    id: 'chain-07',
+    name: 'Double Layer Pearl & Gemstone Drop Chain',
+    category: 'Customized Chains',
+    price: 1499,
+    image: '/custom_chain_04.jpg',
+    images: ['/custom_chain_04.jpg'],
+    shortDesc: 'Double strand freshwater pearl chain with alternating ruby and emerald stone drops.',
+    description: 'Delicate double-layered pearl strand necklace adorned with dangling ruby pink and emerald green faceted teardrop stones for festive occasions.',
+    materials: 'Faux Freshwater Pearls, Ruby & Emerald Glass Drops, Gold Polish Chain',
+    processingTime: '2 – 3 Business Days',
+    careInstructions: 'Wipe clean with dry cloth.',
+    customizations: {
+      sizes: ['18 inch Layered Chain'],
+      colors: ['Pearl & Ruby Emerald']
+    },
+    specs: ['Double Layer Pearl Strand', 'Alternating Stone Drops', 'Lightweight & Elegant']
+  },
+  {
+    id: 'chain-08',
+    name: 'Black Beaded Gold Lakshmi Coin & Pearl Drop Chain',
+    category: 'Customized Chains',
+    price: 1599,
+    image: '/custom_chain_05.jpg',
+    images: ['/custom_chain_05.jpg'],
+    shortDesc: 'Traditional black crystal bead chain with gold Lakshmi coin medallions and pearl cluster dangles.',
+    description: 'Auspicious black spinell crystal bead chain studded with gold polish Lakshmi motifs, ruby accent stones, and delicate pearl cluster drops.',
+    materials: 'Faceted Black Spinell Beads, Gold Polish Coins, Ruby Crystals, Fresh Water Pearl Clusters',
+    processingTime: '2 – 4 Business Days',
+    careInstructions: 'Keep in airtight box away from humidity.',
+    customizations: {
+      sizes: ['18 inch Standard', '22 inch Long Chain'],
+      colors: ['Black & Gold Temple Polish']
+    },
+    specs: ['Black Spinell Crystal Beads', 'Lakshmi Coin Motifs', 'Pearl Cluster Latkans']
+  },
 
   // 🎁 CUSTOMIZED GIFTS
   {

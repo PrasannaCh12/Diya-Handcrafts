@@ -80,7 +80,13 @@ const ChainsCustomizer = () => {
   };
 
   const handleCustomizeClick = (product) => {
-    const text = `Hi Divya Handcrafts! I want to customize *${product.name}* with my name/initials. Please send font preview styles and order instructions!`;
+    const text = `Hi Divya Handcrafts! I want to customize *${product.name}* with my required design / name / specifications. Please send options and price details!`;
+    setWaText(text);
+    setWaModalOpen(true);
+  };
+
+  const handleEnquireClick = (product) => {
+    const text = `Hi Divya Handcrafts! I would like to enquire about *${product.name}*. Please share availability, pricing and customization options!`;
     setWaText(text);
     setWaModalOpen(true);
   };
@@ -97,7 +103,7 @@ const ChainsCustomizer = () => {
             Customized Chains & Pendants
           </h2>
           <p style={{ color: '#5A4A42', fontSize: '1.05rem', lineHeight: 1.6 }}>
-            Personalized name engraved gold polish chains, couple heart pendants, evil eye protection chains, and photo medallion memory necklaces.
+            Personalized name engraved gold polish chains, red coral temple chains, crystal bead necklaces, couple heart pendants, and evil eye protection chains.
           </p>
         </div>
 
@@ -109,7 +115,7 @@ const ChainsCustomizer = () => {
               <div key={product.id} className="gallery-card glass-card fade-in-visible" style={{ animationDelay: `${index * 90}ms` }}>
                 <div className="gallery-img-wrap" onClick={() => setDetailsModalProduct(product)}>
                   <img src={product.image} alt={`Handcrafted ${product.name} - Diya Handcrafts`} className="gallery-img loaded" loading="lazy" />
-                  <div className="card-badge-tag">✨ Name Custom</div>
+                  <div className="card-badge-tag">✨ Customized Chain</div>
                   <button
                     className={`wishlist-btn ${isWish ? 'active' : ''}`}
                     onClick={(e) => toggleWishlist(e, product.id)}
@@ -126,11 +132,11 @@ const ChainsCustomizer = () => {
                   </h4>
 
                   <div className="card-actions-dual" style={{ marginTop: '0.8rem' }}>
-                    <button type="button" className="btn-card-cart" onClick={() => setDetailsModalProduct(product)}>
-                      View Details
-                    </button>
-                    <button type="button" className="btn-card-buynow" onClick={() => handleCustomizeClick(product)}>
+                    <button type="button" className="btn-card-cart" onClick={() => handleCustomizeClick(product)}>
                       <FaMagic /> Customize Now
+                    </button>
+                    <button type="button" className="btn-card-buynow" onClick={() => handleEnquireClick(product)}>
+                      <FaWhatsapp /> Enquire Now
                     </button>
                   </div>
                 </div>
