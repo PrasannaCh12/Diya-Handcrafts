@@ -26,7 +26,6 @@ export const ChainsDetailsModal = ({ product, isOpen, onClose }) => {
   const name = product.name || 'Customized Chain';
   const shortDesc = product.shortDesc || 'Bespoke handcrafted customized chain designed to elevate your personal style.';
   const detailedDesc = product.description || 'Artisanal customized chain crafted with high-precision laser engraving and anti-tarnish materials.';
-  const price = product.price ? `₹${product.price}` : null;
   const sizes = product.customizations?.sizes || ['16 inch (Choker)', '18 inch (Standard)', '20 inch (Long)', '22 inch (Extra Long)'];
   const colors = ['Rose Gold', 'Sterling Silver'];
 
@@ -50,7 +49,6 @@ export const ChainsDetailsModal = ({ product, isOpen, onClose }) => {
             <div className="modal-header-block">
               <span className="modal-category-tag">{category}</span>
               <h2 className="modal-product-title">{name}</h2>
-              {price && <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#C89B3C', marginTop: '0.25rem' }}>{price}</div>}
               <p className="modal-short-desc-highlight">{shortDesc}</p>
             </div>
 
