@@ -22,20 +22,16 @@ export const ChainsDetailsModal = ({ product, isOpen, onClose }) => {
 
   if (!isOpen || !product) return null;
 
-  const category = product.category || '📿 CUSTOMIZED CHAINS COLLECTION';
+  const category = '📿 CUSTOMIZED CHAINS COLLECTION';
   const name = product.name || 'Customized Chain';
   const shortDesc = product.shortDesc || 'Bespoke handcrafted customized chain designed to elevate your personal style.';
-  const detailedDesc = product.description || 'Artisanal customized chain crafted with high-precision laser engraving, anti-tarnish polish, and hypoallergenic materials.';
-  const materials = product.materials || 'Red Coral Beads / Black Crystal Beads / Pearl Strands / Coin Accents';
-  const processingTime = product.processingTime || '2 – 4 Business Days';
-  const careInstructions = product.careInstructions || 'Store flat in velvet pouch. Avoid direct contact with harsh sprays and moisture.';
-  
+  const detailedDesc = product.description || 'Artisanal customized chain crafted with high-precision laser engraving and anti-tarnish materials.';
+  const price = product.price ? `₹${product.price}` : null;
   const sizes = product.customizations?.sizes || ['16 inch (Choker)', '18 inch (Standard)', '20 inch (Long)', '22 inch (Extra Long)'];
   const colors = ['Rose Gold', 'Sterling Silver'];
-  const specs = product.specs || ['Handcrafted Custom Jewelry', 'Anti-Tarnish Water Resistant Polish', 'Gift Box & Velvet Pouch Included'];
 
   const handleWhatsAppEnquiry = () => {
-    const message = `Hi Divya Handcrafts! I am interested in customizing / ordering *${name}*. Please share font preview styles and order instructions!`;
+    const message = `Hi Divya Handcrafts! I am interested in customizing / ordering *${name}*${price ? ` (${price})` : ''}. Please share customization details!`;
     window.open(`https://wa.me/917981664314?text=${encodeURIComponent(message)}`, '_blank');
   };
 
@@ -51,27 +47,22 @@ export const ChainsDetailsModal = ({ product, isOpen, onClose }) => {
           <div className="modal-image-col">
             <div className="modal-img-wrap">
               <img src={product.image} alt={name} className="modal-main-img" />
-              <div className="modal-img-badge">✨ 100% Handcrafted Jewelry</div>
             </div>
           </div>
 
-          {/* Right Column: Detailed Product Information */}
+          {/* Right Column: Clean Product Details & Ordering */}
           <div className="modal-details-col">
             <div className="modal-header-block">
-              <span className="modal-category-tag">📿 CUSTOMIZED CHAINS COLLECTION</span>
+              <span className="modal-category-tag">{category}</span>
               <h2 className="modal-product-title">{name}</h2>
+              {price && <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#C89B3C', marginTop: '0.25rem' }}>{price}</div>}
               <p className="modal-short-desc-highlight">{shortDesc}</p>
             </div>
 
             <div className="modal-body-scroll">
               <div className="modal-section-block">
-                <h4>📜 Detailed Description</h4>
+                <h4>📜 Product Description</h4>
                 <p className="modal-desc-text">{detailedDesc}</p>
-              </div>
-
-              <div className="modal-section-block">
-                <h4>💎 Craftsmanship & Materials</h4>
-                <p className="modal-info-p">{materials}</p>
               </div>
 
               <div className="modal-section-block">
@@ -92,24 +83,9 @@ export const ChainsDetailsModal = ({ product, isOpen, onClose }) => {
                 </div>
               </div>
 
-              <div className="modal-section-block">
-                <h4>📦 Customization & Features</h4>
-                <ul className="modal-specs-list">
-                  {specs.map((sp, i) => (
-                    <li key={i}>✨ {sp}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="modal-section-block">
-                <h4>❄️ Dispatch & Care Instructions</h4>
-                <p className="modal-info-p"><strong>Processing Time:</strong> {processingTime}</p>
-                <p className="modal-info-p" style={{ marginTop: '4px' }}><strong>Care:</strong> {careInstructions}</p>
-              </div>
-
               <div className="modal-actions-block" style={{ marginTop: '1rem' }}>
                 <button onClick={handleWhatsAppEnquiry} className="btn btn-whatsapp" style={{ width: '100%' }}>
-                  <FaWhatsapp /> Customize & Enquire via WhatsApp
+                  <FaWhatsapp /> Customize & Order on WhatsApp
                 </button>
               </div>
             </div>
