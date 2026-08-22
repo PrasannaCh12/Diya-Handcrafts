@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { FaShoppingBag, FaWhatsapp, FaBars, FaTimes, FaSearch, FaHeart, FaMagic, FaChevronDown } from 'react-icons/fa';
+import { FaShoppingBag, FaWhatsapp, FaBars, FaTimes, FaSearch, FaHeart, FaMagic } from 'react-icons/fa';
 import WhatsAppModal from './WhatsAppModal';
 
 const Navbar = ({ cartCount = 0, onOpenCart }) => {
   const [scrolled, setScrolled] = useState(false);
   const [waModalOpen, setWaModalOpen] = useState(false);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
-  const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -23,34 +22,13 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close drawers and dropdowns on route change
+  // Close mobile drawer on route change
   useEffect(() => {
     setMobileDrawerOpen(false);
-    setMoreDropdownOpen(false);
   }, [location.pathname]);
 
-  // Main Single-Row Desktop Navigation Items
-  const mainNavLinks = [
-    { name: 'Home Page', path: '/' },
-    { name: 'Shop & Gallery', path: '/shop' },
-    { name: 'Thread Work', path: '/threadwork' },
-    { name: 'Resin Art', path: '/resinart' },
-    { name: 'Wedding & Marriage Items', path: '/wedding-marriage-items' },
-    { name: 'Customized Chains', path: '/customized-chains' },
-    { name: 'Chocolates', path: '/chocolates' },
-    { name: 'Biscuits', path: '/biscuits' },
-    { name: 'Customized Gifts', path: '/customized-gifts' },
-  ];
-
-  // Dropdown Items under "More ▾"
-  const moreNavLinks = [
-    { name: 'Contact & Inquiry', path: '/contact' },
-    { name: 'About Divya', path: '/about' },
-    { name: 'Custom Order Studio', path: '/custom-order' },
-  ];
-
-  // Full 10 Navigation Items for Mobile Drawer
-  const allNavLinks = [
+  // Exact 10 Navigation Links
+  const navLinks = [
     { name: 'Home Page', path: '/' },
     { name: 'Shop & Gallery', path: '/shop' },
     { name: 'Thread Work', path: '/threadwork' },
@@ -96,9 +74,9 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
             </div>
           </Link>
 
-          {/* Center: Desktop Navigation Items (Single Line) */}
+          {/* Center: Desktop Navigation Items (Exact 10 Items Single Line) */}
           <nav className="desktop-single-nav">
-            {mainNavLinks.map((link) => (
+            {navLinks.map((link) => (
               <NavLink 
                 key={link.name} 
                 to={link.path} 
@@ -107,37 +85,6 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
                 {link.name}
               </NavLink>
             ))}
-
-            {/* Professional "More ▾" Dropdown */}
-            <div 
-              className="nav-dropdown-wrapper"
-              onMouseEnter={() => setMoreDropdownOpen(true)}
-              onMouseLeave={() => setMoreDropdownOpen(false)}
-            >
-              <button 
-                className={`nav-single-link dropdown-trigger ${moreDropdownOpen || location.pathname === '/contact' ? 'active' : ''}`}
-                onClick={() => setMoreDropdownOpen((prev) => !prev)}
-                type="button"
-              >
-                <span>More</span>
-                <FaChevronDown className={`dropdown-arrow ${moreDropdownOpen ? 'open' : ''}`} />
-              </button>
-
-              {moreDropdownOpen && (
-                <div className="nav-dropdown-menu glass-card">
-                  {moreNavLinks.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.path}
-                      className={`dropdown-menu-item ${location.pathname === item.path ? 'active' : ''}`}
-                      onClick={() => setMoreDropdownOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
           </nav>
 
           {/* Right: Actions */}
@@ -217,7 +164,7 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
             </div>
 
             <nav className="drawer-nav-list">
-              {allNavLinks.map((link, idx) => (
+              {navLinks.map((link, idx) => (
                 <NavLink
                   key={link.name}
                   to={link.path}
@@ -343,7 +290,7 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
         .desktop-single-nav {
           display: flex;
           align-items: center;
-          gap: 0.75rem;
+          gap: 0.5rem;
           white-space: nowrap;
         }
 
@@ -351,10 +298,10 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
           text-decoration: none;
           color: #2D2523;
           font-family: var(--font-sans, 'Montserrat', sans-serif);
-          font-size: 0.8rem;
+          font-size: 0.77rem;
           font-weight: 600;
-          letter-spacing: 0.01em;
-          padding: 0.35rem 0.4rem;
+          letter-spacing: -0.01em;
+          padding: 0.35rem 0.25rem;
           position: relative;
           transition: color 0.25s ease;
           white-space: nowrap;
@@ -388,60 +335,6 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
         .nav-single-link:hover::after,
         .nav-single-link.active::after {
           width: 100%;
-        }
-
-        /* More Dropdown Wrapper */
-        .nav-dropdown-wrapper {
-          position: relative;
-          display: inline-block;
-        }
-
-        .dropdown-trigger {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.3rem;
-        }
-
-        .dropdown-arrow {
-          font-size: 0.65rem;
-          transition: transform 0.25s ease;
-        }
-
-        .dropdown-arrow.open {
-          transform: rotate(180deg);
-        }
-
-        .nav-dropdown-menu {
-          position: absolute;
-          top: 100%;
-          right: 0;
-          background: #FFFFFF;
-          border: 1px solid rgba(199, 154, 43, 0.3);
-          border-radius: 12px;
-          padding: 0.5rem;
-          min-width: 190px;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-          z-index: 99;
-          display: flex;
-          flex-direction: column;
-          gap: 0.2rem;
-          animation: fadeIn 0.2s ease;
-        }
-
-        .dropdown-menu-item {
-          padding: 0.65rem 1rem;
-          color: #2D2523;
-          font-size: 0.85rem;
-          font-weight: 600;
-          text-decoration: none;
-          border-radius: 8px;
-          transition: all 0.2s ease;
-        }
-
-        .dropdown-menu-item:hover,
-        .dropdown-menu-item.active {
-          background: #FBF0F3;
-          color: #1C3B2B;
         }
 
         .nav-actions {
