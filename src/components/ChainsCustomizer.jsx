@@ -1,63 +1,117 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaHeart, FaRegHeart, FaWhatsapp, FaTimes, FaGem, FaMagic, FaCheck, FaGift, FaMapMarkerAlt, FaFileAlt, FaUser } from 'react-icons/fa';
 import { PRODUCTS } from '../data/products';
 import WhatsAppModal from './WhatsAppModal';
 
 export const ChainsDetailsModal = ({ product, isOpen, onClose }) => {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen || !product) return null;
 
+  const category = product.category || '📿 CUSTOMIZED CHAINS COLLECTION';
+  const name = product.name || 'Customized Chain';
+  const shortDesc = product.shortDesc || 'Bespoke handcrafted customized chain designed to elevate your personal style.';
+  const detailedDesc = product.description || 'Artisanal customized chain crafted with high-precision laser engraving, anti-tarnish gold polish, and hypoallergenic materials.';
+  const materials = product.materials || 'Red Coral Beads / Black Crystal Beads / Pearl Strands / 24k Gold Polish Coins';
+  const processingTime = product.processingTime || '2 – 4 Business Days';
+  const careInstructions = product.careInstructions || 'Store flat in velvet pouch. Avoid direct contact with harsh sprays and moisture.';
+  
+  const sizes = product.customizations?.sizes || ['16 inch (Choker)', '18 inch (Standard)', '20 inch (Long)', '22 inch (Extra Long)'];
+  const colors = product.customizations?.colors || ['24k Yellow Gold', 'Antique Temple Gold', 'Blush Rose Gold', 'Sterling Silver'];
+  const specs = product.specs || ['Handcrafted Custom Jewelry', 'Anti-Tarnish Water Resistant Polish', 'Gift Box & Velvet Pouch Included'];
+
   const handleWhatsAppEnquiry = () => {
-    const message = `Hi Divya Handcrafts! I am interested in ordering a customized chain (*${product.name}*). Please share font options and metal finishes!`;
+    const message = `Hi Divya Handcrafts! I am interested in customizing / ordering *${name}*. Please share font preview styles and order instructions!`;
     window.open(`https://wa.me/917981664314?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   return (
-    <div className="customizer-modal-overlay" onClick={onClose}>
-      <div className="customizer-modal-content glass-card" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close-btn" onClick={onClose} aria-label="Close modal">
+    <div className="modal-backdrop-overlay" onClick={onClose}>
+      <div className="product-details-modal-box chains-modal-box" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close-icon" onClick={onClose} title="Close Modal (ESC)">
           <FaTimes />
         </button>
 
-        <div className="modal-two-col">
+        <div className="modal-two-col-grid">
           {/* Left Column: Product Image */}
-          <div className="modal-img-col">
-            <img src={product.image || '/threadwork_text_banner_1786369075234.jpg'} alt={product.name} className="modal-product-img" />
-            <div className="modal-artisan-badge">✨ Anti-Tarnish Laser Engraved</div>
+          <div className="modal-image-col">
+            <div className="modal-img-wrap">
+              <img src={product.image} alt={name} className="modal-main-img" />
+              <div className="modal-img-badge">✨ 100% Handcrafted Jewelry</div>
+            </div>
           </div>
 
-          {/* Right Column: Details & Customization Options */}
+          {/* Right Column: Detailed Product Information */}
           <div className="modal-details-col">
-            <span className="modal-category-tag">📿 Customized Chains Collection</span>
-            <h2 className="modal-product-title">{product.name}</h2>
-            <p className="modal-product-short">{product.shortDesc}</p>
-
-            <div className="modal-section-box">
-              <h4>📜 Product Description</h4>
-              <p>{product.description || 'Precision laser engraved customized chains crafted with anti-tarnish gold polish and hypoallergenic steel.'}</p>
+            <div className="modal-header-block">
+              <span className="modal-category-tag">📿 CUSTOMIZED CHAINS COLLECTION</span>
+              <h2 className="modal-product-title">{name}</h2>
+              <p className="modal-short-desc-highlight">{shortDesc}</p>
             </div>
 
-            <div className="modal-section-box">
-              <h4>✨ Available Metal Finishes</h4>
-              <ul className="modal-specs-list">
-                <li>• 24k Yellow Gold Polish</li>
-                <li>• Blush Rose Gold Finish</li>
-                <li>• Pure Sterling Silver Polish</li>
-              </ul>
-            </div>
+            <div className="modal-body-scroll">
+              <div className="modal-section-block">
+                <h4>📜 Detailed Description</h4>
+                <p className="modal-desc-text">{detailedDesc}</p>
+              </div>
 
-            <div className="modal-section-box">
-              <h4>📦 Customization Details</h4>
-              <ul className="modal-specs-list">
-                <li>• Custom Cursive / Block Font Name Engraving</li>
-                <li>• Chain Length: 16 inch / 18 inch / 20 inch</li>
-                <li>• Gift Box & Velvet Pouch Included</li>
-              </ul>
-            </div>
+              <div className="modal-section-block">
+                <h4>💎 Craftsmanship & Materials</h4>
+                <p className="modal-info-p">{materials}</p>
+              </div>
 
-            <div className="modal-actions-row" style={{ marginTop: '1.5rem' }}>
-              <button onClick={handleWhatsAppEnquiry} className="btn btn-whatsapp-cta" style={{ width: '100%' }}>
-                <FaWhatsapp /> Customize Now via WhatsApp
-              </button>
+              <div className="modal-section-block">
+                <h4>📏 Available Chain Lengths</h4>
+                <div className="modal-chips-flex">
+                  {sizes.map((sz, i) => (
+                    <span key={i} className="modal-chip-item">{sz}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="modal-section-block">
+                <h4>✨ Metal & Color Finishes</h4>
+                <div className="modal-chips-flex">
+                  {colors.map((c, i) => (
+                    <span key={i} className="modal-chip-item">{c}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="modal-section-block">
+                <h4>📦 Customization & Features</h4>
+                <ul className="modal-specs-list">
+                  {specs.map((sp, i) => (
+                    <li key={i}>✨ {sp}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="modal-section-block">
+                <h4>❄️ Dispatch & Care Instructions</h4>
+                <p className="modal-info-p"><strong>Processing Time:</strong> {processingTime}</p>
+                <p className="modal-info-p" style={{ marginTop: '4px' }}><strong>Care:</strong> {careInstructions}</p>
+              </div>
+
+              <div className="modal-actions-block" style={{ marginTop: '1rem' }}>
+                <button onClick={handleWhatsAppEnquiry} className="btn btn-whatsapp" style={{ width: '100%' }}>
+                  <FaWhatsapp /> Customize & Enquire via WhatsApp
+                </button>
+              </div>
             </div>
           </div>
         </div>
