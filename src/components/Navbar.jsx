@@ -6,6 +6,7 @@ import WhatsAppModal from './WhatsAppModal';
 const Navbar = ({ cartCount = 0, onOpenCart }) => {
   const [scrolled, setScrolled] = useState(false);
   const [waModalOpen, setWaModalOpen] = useState(false);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const mobileNavRef = React.useRef(null);
@@ -21,6 +22,11 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Close mobile drawer when navigating
+  useEffect(() => {
+    setMobileDrawerOpen(false);
+  }, [location.pathname]);
 
   // Smoothly center the active page link in the mobile scrollable navigation bar
   useEffect(() => {
@@ -68,6 +74,7 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
 
       {/* Main Sticky Header */}
       <header className={`navbar-header ${scrolled ? 'scrolled' : ''}`}>
+        {/* Tier 1: Logo & Header Action Icons */}
         <div className="nav-container">
           {/* Left: Logo */}
           <Link to="/" className="nav-logo">
@@ -77,19 +84,6 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
               <span className="logo-tagline">MADE WITH LOVE, MADE FOR YOU</span>
             </div>
           </Link>
-
-          {/* Center: Desktop Navigation */}
-          <nav className="desktop-nav">
-            {navLinks.map((link) => (
-              <NavLink 
-                key={link.name} 
-                to={link.path} 
-                className={({ isActive }) => `nav-item-link ${isActive ? 'active' : ''}`}
-              >
-                {link.name}
-              </NavLink>
-            ))}
-          </nav>
 
           {/* Right: Actions */}
           <div className="nav-actions">
@@ -138,10 +132,36 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
             >
               <FaWhatsapp />
             </button>
+
+            {/* Mobile Hamburger Drawer Toggle Button */}
+            <button
+              onClick={() => setMobileDrawerOpen((prev) => !prev)}
+              className="mobile-hamburger-btn"
+              title="Toggle Menu"
+              aria-label="Toggle Menu"
+              type="button"
+            >
+              {mobileDrawerOpen ? <FaTimes /> : <FaBars />}
+            </button>
           </div>
         </div>
 
-        {/* Mobile Horizontal Scrollable Navigation Bar (Always Visible Below Header) */}
+        {/* Tier 2: Full Width Dedicated Navigation Strip for Desktop */}
+        <nav className="desktop-nav-strip">
+          <div className="nav-strip-container">
+            {navLinks.map((link) => (
+              <NavLink 
+                key={link.name} 
+                to={link.path} 
+                className={({ isActive }) => `nav-strip-link ${isActive ? 'active' : ''}`}
+              >
+                {link.name}
+              </NavLink>
+            ))}
+          </div>
+        </nav>
+
+        {/* Mobile Horizontal Scrollable Subnav Bar */}
         <nav className="mobile-horizontal-subnav" ref={mobileNavRef}>
           {navLinks.map((link) => (
             <NavLink
@@ -154,6 +174,59 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
           ))}
         </nav>
       </header>
+
+      {/* Slide-Out Mobile Navigation Drawer */}
+      {mobileDrawerOpen && (
+        <div className="mobile-drawer-overlay" onClick={() => setMobileDrawerOpen(false)}>
+          <div className="mobile-drawer-content" onClick={(e) => e.stopPropagation()}>
+            <div className="drawer-header">
+              <div className="logo-text-wrap">
+                <span className="logo-brand">Divya Handcrafts</span>
+                <span className="logo-tagline">NAVIGATION MENU</span>
+              </div>
+              <button className="drawer-close-btn" onClick={() => setMobileDrawerOpen(false)}>
+                <FaTimes />
+              </button>
+            </div>
+
+            <nav className="drawer-nav-list">
+              {navLinks.map((link, idx) => (
+                <NavLink
+                  key={link.name}
+                  to={link.path}
+                  className={({ isActive }) => `drawer-nav-item ${isActive ? 'active' : ''}`}
+                >
+                  <span className="drawer-num">{idx + 1}.</span>
+                  <span>{link.name}</span>
+                </NavLink>
+              ))}
+            </nav>
+
+            <div className="drawer-footer-actions">
+              <button 
+                className="btn btn-gold-solid" 
+                style={{ width: '100%' }}
+                onClick={() => {
+                  setMobileDrawerOpen(false);
+                  navigate('/custom-order');
+                }}
+              >
+                <FaMagic /> Design Custom Order
+              </button>
+              <button 
+                className="btn btn-whatsapp-cta" 
+                style={{ width: '100%', marginTop: '0.6rem' }}
+                onClick={() => {
+                  setMobileDrawerOpen(false);
+                  setWaModalOpen(true);
+                }}
+              >
+                <FaWhatsapp /> Chat on WhatsApp
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <WhatsAppModal
         isOpen={waModalOpen}
@@ -245,42 +318,49 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
           margin-top: 0.08rem;
         }
 
-        .desktop-nav {
+        /* Tier 2: Desktop Navigation Strip */
+        .desktop-nav-strip {
+          background: #FAF8F5;
+          border-top: 1px solid rgba(199, 154, 43, 0.2);
+          border-bottom: 1px solid rgba(199, 154, 43, 0.25);
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+          padding: 0 1rem;
+        }
+
+        .nav-strip-container {
+          max-width: 1400px;
+          margin: 0 auto;
           display: flex;
           align-items: center;
-          gap: 0.85rem;
-          white-space: nowrap;
-          overflow-x: auto;
-          scrollbar-width: none;
+          justify-content: center;
+          gap: 1.25rem;
+          flex-wrap: wrap;
+          padding: 0.45rem 0;
         }
 
-        .desktop-nav::-webkit-scrollbar {
-          display: none;
-        }
-
-        .nav-item-link {
+        .nav-strip-link {
           text-decoration: none;
-          color: #3E2C1C;
-          font-size: 0.81rem;
+          color: #2D2523;
+          font-family: var(--font-sans, 'Montserrat', sans-serif);
+          font-size: 0.84rem;
           font-weight: 600;
-          letter-spacing: 0.01em;
-          transition: color 0.3s ease;
+          letter-spacing: 0.02em;
+          padding: 0.25rem 0.5rem;
           position: relative;
-          padding: 0.4rem 0;
+          transition: all 0.25s ease;
           white-space: nowrap;
-          flex-shrink: 0;
         }
 
-        .nav-item-link:hover {
+        .nav-strip-link:hover {
           color: #C79A2B;
         }
 
-        .nav-item-link.active {
+        .nav-strip-link.active {
           color: #C79A2B;
           font-weight: 700;
         }
 
-        .nav-item-link::after {
+        .nav-strip-link::after {
           content: '';
           position: absolute;
           bottom: 0;
@@ -290,199 +370,140 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
           height: 2.5px;
           background: linear-gradient(90deg, #C79A2B, #E8C86A);
           border-radius: 2px;
-          transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+          transition: width 0.3s ease;
         }
 
-        .nav-item-link:hover::after,
-        .nav-item-link.active::after {
+        .nav-strip-link:hover::after,
+        .nav-strip-link.active::after {
           width: 100%;
         }
 
-        .nav-actions {
+        .mobile-hamburger-btn {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: #FAF5EF;
+          border: 1px solid rgba(199, 154, 43, 0.3);
+          color: #1C3B2B;
+          font-size: 1.1rem;
+          display: none;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.25s ease;
+        }
+
+        .mobile-hamburger-btn:hover {
+          background: #C79A2B;
+          color: #FFFFFF;
+        }
+
+        /* Slide-out Mobile Navigation Drawer */
+        .mobile-drawer-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.55);
+          backdrop-filter: blur(4px);
+          z-index: 9999;
+          display: flex;
+          justify-content: flex-end;
+          animation: fadeIn 0.25s ease;
+        }
+
+        .mobile-drawer-content {
+          width: 320px;
+          max-width: 85vw;
+          height: 100%;
+          background: #FFFDF9;
+          display: flex;
+          flex-direction: column;
+          box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+          animation: slideInRight 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+          padding: 1.5rem;
+          box-sizing: border-box;
+          overflow-y: auto;
+        }
+
+        @keyframes slideInRight {
+          from { transform: translateX(100%); }
+          to { transform: translateX(0); }
+        }
+
+        .drawer-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-bottom: 1rem;
+          border-bottom: 1px solid rgba(199, 154, 43, 0.2);
+          margin-bottom: 1rem;
+        }
+
+        .drawer-close-btn {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: #FBF0F3;
+          border: none;
+          color: #1C3B2B;
+          font-size: 1.1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+        }
+
+        .drawer-nav-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+          flex-grow: 1;
+        }
+
+        .drawer-nav-item {
           display: flex;
           align-items: center;
           gap: 0.75rem;
-          flex-shrink: 0;
-        }
-
-        .icon-action-btn {
-          width: 38px;
-          height: 38px;
-          border-radius: 50%;
-          background: transparent;
-          border: none;
-          color: #3E2C1C;
-          font-size: 1.05rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          position: relative;
-        }
-
-        .icon-action-btn:hover {
-          color: #C79A2B;
-          transform: scale(1.12);
-          background: rgba(199, 154, 43, 0.08);
-        }
-
-        .cart-icon-btn {
-          position: relative;
-        }
-
-        .cart-badge-count {
-          position: absolute;
-          top: -2px;
-          right: -2px;
-          background: #C79A2B;
-          color: #FFFFFF;
-          font-size: 0.68rem;
-          font-weight: 700;
-          min-width: 18px;
-          height: 18px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 0 4px;
-          box-shadow: 0 2px 6px rgba(199, 154, 43, 0.4);
-        }
-
-        .custom-order-btn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.45rem;
-          background: transparent;
-          color: #3E2C1C;
-          border: 1.5px solid #C79A2B;
-          height: 42px;
-          padding: 0 1.35rem;
-          border-radius: 50px;
-          font-family: 'Montserrat', sans-serif;
-          font-size: 0.85rem;
-          font-weight: 700;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          white-space: nowrap;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-        }
-
-        .custom-order-btn:hover {
-          background: linear-gradient(135deg, #C79A2B 0%, #AA7C11 100%);
-          color: #FFFFFF;
-          border-color: transparent;
-          transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(199, 154, 43, 0.35);
-        }
-
-        .nav-whatsapp-btn {
-          width: 42px;
-          height: 42px;
-          border-radius: 50%;
-          background: #25D366;
-          color: #FFFFFF;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 1.25rem;
+          padding: 0.75rem 0.85rem;
+          border-radius: 10px;
           text-decoration: none;
-          transition: all 0.3s ease;
-          box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
-          border: none;
-          cursor: pointer;
-          flex-shrink: 0;
-        }
-
-        .nav-whatsapp-btn:hover {
-          transform: scale(1.08);
-          box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
-        }
-
-        /* Mobile Horizontal Scrollable Navigation Bar */
-        .mobile-horizontal-subnav {
-          display: none;
-          background: #FFFFFF;
-          border-top: 1px solid rgba(212, 175, 55, 0.18);
-          border-bottom: 1px solid rgba(212, 175, 55, 0.28);
-          overflow-x: auto;
-          white-space: nowrap;
-          padding: 0 1.25rem;
-          gap: 1.25rem;
-          align-items: center;
-          scroll-behavior: smooth;
-          -webkit-overflow-scrolling: touch;
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-        }
-
-        .mobile-horizontal-subnav::-webkit-scrollbar {
-          display: none;
-        }
-
-        .mobile-scroll-link {
-          text-decoration: none;
-          font-family: var(--font-sans, 'Montserrat', sans-serif);
-          font-size: 16px;
-          font-weight: 500;
-          color: #3E2C1C;
-          padding: 0.7rem 0.2rem;
-          display: inline-block;
-          white-space: nowrap;
-          letter-spacing: 0.03em;
-          transition: color 0.25s ease, border-color 0.25s ease;
-          position: relative;
-          border-bottom: 2.5px solid transparent;
-          flex-shrink: 0;
-        }
-
-        .mobile-scroll-link:hover {
-          color: #D4AF37;
-        }
-
-        .mobile-scroll-link.active {
-          color: #D4AF37;
+          color: #2D2523;
           font-weight: 600;
-          border-bottom-color: #D4AF37;
+          font-size: 0.92rem;
+          transition: all 0.2s ease;
         }
 
-        @media (max-width: 1250px) {
-          .desktop-nav {
-            gap: 1.1rem;
-          }
-          .nav-item-link {
-            font-size: 0.83rem;
-          }
+        .drawer-num {
+          color: #C79A2B;
+          font-size: 0.82rem;
+          font-weight: 700;
+          width: 20px;
         }
 
-        @media (max-width: 1100px) {
-          .desktop-nav {
+        .drawer-nav-item:hover,
+        .drawer-nav-item.active {
+          background: #FBF0F3;
+          color: #1C3B2B;
+          font-weight: 700;
+        }
+
+        .drawer-footer-actions {
+          margin-top: 1.5rem;
+          padding-top: 1rem;
+          border-top: 1px solid rgba(199, 154, 43, 0.2);
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+
+        @media (max-width: 991px) {
+          .desktop-nav-strip {
             display: none !important;
           }
-          .desktop-only-btn {
-            display: none !important;
-          }
-          .mobile-hamburger {
-            display: none !important;
+          .mobile-hamburger-btn {
+            display: flex !important;
           }
           .mobile-horizontal-subnav {
             display: flex !important;
-          }
-          .nav-container {
-            height: 64px !important;
-            padding: 0 1rem !important;
-          }
-          .navbar-logo-img {
-            width: 40px;
-            height: 40px;
-          }
-          .logo-brand {
-            font-size: 1.15rem;
-          }
-          .logo-tagline {
-            font-size: 0.48rem;
           }
         }
       `}</style>
