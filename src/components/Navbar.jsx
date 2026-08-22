@@ -564,17 +564,93 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
           }
           .nav-container {
             height: 64px !important;
-            padding: 0 1rem !important;
+            padding: 0 0.6rem !important;
+            max-width: 100% !important;
+            gap: 0.4rem !important;
+          }
+          .nav-logo {
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+          }
+          .logo-text-wrap {
+            flex-shrink: 1;
+            min-width: 0;
+            overflow: hidden;
           }
           .navbar-logo-img {
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
           }
           .logo-brand {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
           .logo-tagline {
-            font-size: 0.46rem;
+            font-size: 0.45rem;
+            letter-spacing: 0.12em;
+          }
+          .nav-actions {
+            flex-shrink: 0;
+            gap: 0.35rem !important;
+          }
+          .icon-action-btn,
+          .nav-whatsapp-btn,
+          .mobile-hamburger-btn {
+            width: 34px !important;
+            height: 34px !important;
+            font-size: 0.9rem !important;
+            flex-shrink: 0 !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .logo-tagline {
+            display: none !important;
+          }
+          .nav-container {
+            padding: 0 0.4rem !important;
+            gap: 0.25rem !important;
+          }
+          .nav-actions {
+            gap: 0.25rem !important;
+          }
+          .icon-action-btn,
+          .nav-whatsapp-btn,
+          .mobile-hamburger-btn {
+            width: 32px !important;
+            height: 32px !important;
+            font-size: 0.85rem !important;
+          }
+          .navbar-logo-img {
+            width: 32px;
+            height: 32px;
+          }
+          .logo-brand {
+            font-size: 0.95rem;
+          }
+        }
+
+        @media (max-width: 340px) {
+          .nav-container {
+            padding: 0 0.25rem !important;
+            gap: 0.2rem !important;
+          }
+          .nav-actions {
+            gap: 0.2rem !important;
+          }
+          .icon-action-btn,
+          .nav-whatsapp-btn,
+          .mobile-hamburger-btn {
+            width: 30px !important;
+            height: 30px !important;
+            font-size: 0.8rem !important;
+          }
+          .logo-brand {
+            font-size: 0.88rem;
           }
         }
       `}</style>
