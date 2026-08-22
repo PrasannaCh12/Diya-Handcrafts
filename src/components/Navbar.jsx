@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { FaShoppingBag, FaWhatsapp, FaBars, FaTimes, FaSearch, FaHeart, FaMagic } from 'react-icons/fa';
+import { FaShoppingBag, FaWhatsapp, FaBars, FaTimes, FaSearch, FaHeart, FaMagic, FaChevronDown } from 'react-icons/fa';
 import WhatsAppModal from './WhatsAppModal';
 
 const Navbar = ({ cartCount = 0, onOpenCart }) => {
   const [scrolled, setScrolled] = useState(false);
   const [waModalOpen, setWaModalOpen] = useState(false);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const mobileNavRef = React.useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,22 +23,34 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile drawer when navigating
+  // Close drawers and dropdowns on route change
   useEffect(() => {
     setMobileDrawerOpen(false);
+    setMoreDropdownOpen(false);
   }, [location.pathname]);
 
-  // Smoothly center the active page link in the mobile scrollable navigation bar
-  useEffect(() => {
-    if (mobileNavRef.current) {
-      const activeEl = mobileNavRef.current.querySelector('.mobile-scroll-link.active');
-      if (activeEl) {
-        activeEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-      }
-    }
-  }, [location.pathname]);
+  // Main Single-Row Desktop Navigation Items
+  const mainNavLinks = [
+    { name: 'Home Page', path: '/' },
+    { name: 'Shop & Gallery', path: '/shop' },
+    { name: 'Thread Work', path: '/threadwork' },
+    { name: 'Resin Art', path: '/resinart' },
+    { name: 'Wedding & Marriage Items', path: '/wedding-marriage-items' },
+    { name: 'Customized Chains', path: '/customized-chains' },
+    { name: 'Chocolates', path: '/chocolates' },
+    { name: 'Biscuits', path: '/biscuits' },
+    { name: 'Customized Gifts', path: '/customized-gifts' },
+  ];
 
-  const navLinks = [
+  // Dropdown Items under "More ▾"
+  const moreNavLinks = [
+    { name: 'Contact & Inquiry', path: '/contact' },
+    { name: 'About Divya', path: '/about' },
+    { name: 'Custom Order Studio', path: '/custom-order' },
+  ];
+
+  // Full 10 Navigation Items for Mobile Drawer
+  const allNavLinks = [
     { name: 'Home Page', path: '/' },
     { name: 'Shop & Gallery', path: '/shop' },
     { name: 'Thread Work', path: '/threadwork' },
@@ -72,9 +84,8 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
         <FaMagic style={{ fontSize: '0.8rem' }} />
       </div>
 
-      {/* Main Sticky Header */}
+      {/* Main Single-Row Sticky Header */}
       <header className={`navbar-header ${scrolled ? 'scrolled' : ''}`}>
-        {/* Tier 1: Logo & Header Action Icons */}
         <div className="nav-container">
           {/* Left: Logo */}
           <Link to="/" className="nav-logo">
@@ -84,6 +95,50 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
               <span className="logo-tagline">MADE WITH LOVE, MADE FOR YOU</span>
             </div>
           </Link>
+
+          {/* Center: Desktop Navigation Items (Single Line) */}
+          <nav className="desktop-single-nav">
+            {mainNavLinks.map((link) => (
+              <NavLink 
+                key={link.name} 
+                to={link.path} 
+                className={({ isActive }) => `nav-single-link ${isActive ? 'active' : ''}`}
+              >
+                {link.name}
+              </NavLink>
+            ))}
+
+            {/* Professional "More ▾" Dropdown */}
+            <div 
+              className="nav-dropdown-wrapper"
+              onMouseEnter={() => setMoreDropdownOpen(true)}
+              onMouseLeave={() => setMoreDropdownOpen(false)}
+            >
+              <button 
+                className={`nav-single-link dropdown-trigger ${moreDropdownOpen || location.pathname === '/contact' ? 'active' : ''}`}
+                onClick={() => setMoreDropdownOpen((prev) => !prev)}
+                type="button"
+              >
+                <span>More</span>
+                <FaChevronDown className={`dropdown-arrow ${moreDropdownOpen ? 'open' : ''}`} />
+              </button>
+
+              {moreDropdownOpen && (
+                <div className="nav-dropdown-menu glass-card">
+                  {moreNavLinks.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.path}
+                      className={`dropdown-menu-item ${location.pathname === item.path ? 'active' : ''}`}
+                      onClick={() => setMoreDropdownOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          </nav>
 
           {/* Right: Actions */}
           <div className="nav-actions">
@@ -145,34 +200,6 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
             </button>
           </div>
         </div>
-
-        {/* Tier 2: Full Width Dedicated Navigation Strip for Desktop */}
-        <nav className="desktop-nav-strip">
-          <div className="nav-strip-container">
-            {navLinks.map((link) => (
-              <NavLink 
-                key={link.name} 
-                to={link.path} 
-                className={({ isActive }) => `nav-strip-link ${isActive ? 'active' : ''}`}
-              >
-                {link.name}
-              </NavLink>
-            ))}
-          </div>
-        </nav>
-
-        {/* Mobile Horizontal Scrollable Subnav Bar */}
-        <nav className="mobile-horizontal-subnav" ref={mobileNavRef}>
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.name}
-              to={link.path}
-              className={({ isActive }) => `mobile-scroll-link ${isActive ? 'active' : ''}`}
-            >
-              {link.name}
-            </NavLink>
-          ))}
-        </nav>
       </header>
 
       {/* Slide-Out Mobile Navigation Drawer */}
@@ -190,7 +217,7 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
             </div>
 
             <nav className="drawer-nav-list">
-              {navLinks.map((link, idx) => (
+              {allNavLinks.map((link, idx) => (
                 <NavLink
                   key={link.name}
                   to={link.path}
@@ -244,48 +271,42 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
           background: #FFFDF8;
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
-          transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+          transition: all 0.3s ease;
           border-bottom: 1px solid #E8D8B5;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         .navbar-header.scrolled {
           background: rgba(255, 253, 248, 0.98);
           box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
-          border-bottom-color: #DFCDA3;
-        }
-
-        .navbar-header.scrolled .nav-container {
-          height: 70px;
         }
 
         .nav-container {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          height: 78px;
-          gap: 1.15rem;
-          max-width: 1400px;
+          height: 74px;
+          gap: 1rem;
+          max-width: 1440px;
           margin: 0 auto;
-          padding: 0 1.5rem 0 22px;
-          transition: height 0.3s ease;
+          padding: 0 1.5rem;
         }
 
         .nav-logo {
           display: flex;
           align-items: center;
-          gap: 0.4rem;
+          gap: 0.5rem;
           text-decoration: none;
           flex-shrink: 0;
         }
 
         .navbar-logo-img {
-          width: 47px;
-          height: 47px;
+          width: 44px;
+          height: 44px;
           border-radius: 50%;
           object-fit: cover;
           border: 2px solid #C79A2B;
-          box-shadow: 0 3px 12px rgba(199, 154, 43, 0.22);
+          box-shadow: 0 3px 10px rgba(199, 154, 43, 0.2);
           transition: transform 0.3s ease;
         }
 
@@ -300,7 +321,7 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
 
         .logo-brand {
           font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-          font-size: 1.35rem;
+          font-size: 1.3rem;
           font-weight: 700;
           color: #3E2C1C;
           line-height: 1.1;
@@ -310,82 +331,225 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
 
         .logo-tagline {
           font-family: 'Montserrat', sans-serif;
-          font-size: 0.54rem;
+          font-size: 0.52rem;
           color: #C79A2B;
-          letter-spacing: 0.2em;
+          letter-spacing: 0.18em;
           font-weight: 600;
           white-space: nowrap;
-          margin-top: 0.08rem;
+          margin-top: 0.06rem;
         }
 
-        /* Tier 2: Desktop Navigation Strip */
-        .desktop-nav-strip {
-          background: #FAF8F5;
-          border-top: 1px solid rgba(199, 154, 43, 0.2);
-          border-bottom: 1px solid rgba(199, 154, 43, 0.25);
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-          padding: 0 1rem;
-        }
-
-        .nav-strip-container {
-          max-width: 1400px;
-          margin: 0 auto;
+        /* Single-Row Desktop Navigation */
+        .desktop-single-nav {
           display: flex;
           align-items: center;
-          justify-content: center;
-          gap: 1.25rem;
-          flex-wrap: wrap;
-          padding: 0.45rem 0;
+          gap: 0.75rem;
+          white-space: nowrap;
         }
 
-        .nav-strip-link {
+        .nav-single-link {
           text-decoration: none;
           color: #2D2523;
           font-family: var(--font-sans, 'Montserrat', sans-serif);
-          font-size: 0.84rem;
+          font-size: 0.8rem;
           font-weight: 600;
-          letter-spacing: 0.02em;
-          padding: 0.25rem 0.5rem;
+          letter-spacing: 0.01em;
+          padding: 0.35rem 0.4rem;
           position: relative;
-          transition: all 0.25s ease;
+          transition: color 0.25s ease;
           white-space: nowrap;
+          background: transparent;
+          border: none;
+          cursor: pointer;
         }
 
-        .nav-strip-link:hover {
+        .nav-single-link:hover {
           color: #C79A2B;
         }
 
-        .nav-strip-link.active {
+        .nav-single-link.active {
           color: #C79A2B;
           font-weight: 700;
         }
 
-        .nav-strip-link::after {
+        .nav-single-link::after {
           content: '';
           position: absolute;
           bottom: 0;
           left: 50%;
           transform: translateX(-50%);
           width: 0%;
-          height: 2.5px;
-          background: linear-gradient(90deg, #C79A2B, #E8C86A);
+          height: 2px;
+          background: #C79A2B;
           border-radius: 2px;
-          transition: width 0.3s ease;
+          transition: width 0.25s ease;
         }
 
-        .nav-strip-link:hover::after,
-        .nav-strip-link.active::after {
+        .nav-single-link:hover::after,
+        .nav-single-link.active::after {
           width: 100%;
         }
 
+        /* More Dropdown Wrapper */
+        .nav-dropdown-wrapper {
+          position: relative;
+          display: inline-block;
+        }
+
+        .dropdown-trigger {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.3rem;
+        }
+
+        .dropdown-arrow {
+          font-size: 0.65rem;
+          transition: transform 0.25s ease;
+        }
+
+        .dropdown-arrow.open {
+          transform: rotate(180deg);
+        }
+
+        .nav-dropdown-menu {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          background: #FFFFFF;
+          border: 1px solid rgba(199, 154, 43, 0.3);
+          border-radius: 12px;
+          padding: 0.5rem;
+          min-width: 190px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+          z-index: 99;
+          display: flex;
+          flex-direction: column;
+          gap: 0.2rem;
+          animation: fadeIn 0.2s ease;
+        }
+
+        .dropdown-menu-item {
+          padding: 0.65rem 1rem;
+          color: #2D2523;
+          font-size: 0.85rem;
+          font-weight: 600;
+          text-decoration: none;
+          border-radius: 8px;
+          transition: all 0.2s ease;
+        }
+
+        .dropdown-menu-item:hover,
+        .dropdown-menu-item.active {
+          background: #FBF0F3;
+          color: #1C3B2B;
+        }
+
+        .nav-actions {
+          display: flex;
+          align-items: center;
+          gap: 0.55rem;
+          flex-shrink: 0;
+        }
+
+        .icon-action-btn {
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          background: #FAF5EF;
+          border: 1px solid rgba(199, 154, 43, 0.25);
+          color: #1C3B2B;
+          font-size: 0.95rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.25s ease;
+          position: relative;
+        }
+
+        .icon-action-btn:hover {
+          background: #1C3B2B;
+          color: #FFFFFF;
+          transform: scale(1.06);
+          border-color: #1C3B2B;
+        }
+
+        .cart-icon-btn {
+          position: relative;
+        }
+
+        .cart-badge-count {
+          position: absolute;
+          top: -3px;
+          right: -3px;
+          background: #C79A2B;
+          color: #FFFFFF;
+          font-size: 0.65rem;
+          font-weight: 700;
+          min-width: 17px;
+          height: 17px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0 4px;
+        }
+
+        .custom-order-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.4rem;
+          background: transparent;
+          color: #3E2C1C;
+          border: 1.5px solid #C79A2B;
+          height: 38px;
+          padding: 0 1.15rem;
+          border-radius: 50px;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.8rem;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.25s ease;
+          white-space: nowrap;
+        }
+
+        .custom-order-btn:hover {
+          background: linear-gradient(135deg, #C79A2B 0%, #AA7C11 100%);
+          color: #FFFFFF;
+          border-color: transparent;
+          transform: translateY(-1px);
+        }
+
+        .nav-whatsapp-btn {
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          background: #25D366;
+          color: #FFFFFF;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.15rem;
+          text-decoration: none;
+          transition: all 0.25s ease;
+          border: none;
+          cursor: pointer;
+          flex-shrink: 0;
+        }
+
+        .nav-whatsapp-btn:hover {
+          transform: scale(1.08);
+        }
+
         .mobile-hamburger-btn {
-          width: 40px;
-          height: 40px;
+          width: 38px;
+          height: 38px;
           border-radius: 50%;
           background: #FAF5EF;
           border: 1px solid rgba(199, 154, 43, 0.3);
           color: #1C3B2B;
-          font-size: 1.1rem;
+          font-size: 1rem;
           display: none;
           align-items: center;
           justify-content: center;
@@ -495,15 +659,29 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
           gap: 0.5rem;
         }
 
-        @media (max-width: 991px) {
-          .desktop-nav-strip {
+        @media (max-width: 1180px) {
+          .desktop-single-nav {
+            display: none !important;
+          }
+          .desktop-only-btn {
             display: none !important;
           }
           .mobile-hamburger-btn {
             display: flex !important;
           }
-          .mobile-horizontal-subnav {
-            display: flex !important;
+          .nav-container {
+            height: 64px !important;
+            padding: 0 1rem !important;
+          }
+          .navbar-logo-img {
+            width: 38px;
+            height: 38px;
+          }
+          .logo-brand {
+            font-size: 1.15rem;
+          }
+          .logo-tagline {
+            font-size: 0.46rem;
           }
         }
       `}</style>
