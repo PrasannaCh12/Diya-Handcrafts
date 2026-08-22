@@ -5,12 +5,20 @@ import { ProductDetailsModal } from './ThreadWorkCustomizer';
 import { ResinArtDetailsModal } from './ResinArtCustomizer';
 import { ChocolateDetailsModal } from './ChocolateCustomizer';
 import { BiscuitDetailsModal } from './BiscuitCustomizer';
+import { WeddingItemsDetailsModal } from './WeddingItemsCustomizer';
+import { ChainsDetailsModal } from './ChainsCustomizer';
+import { GiftsDetailsModal } from './GiftsCustomizer';
 
 const CATEGORY_FALLBACK_IMAGES = {
   'Thread Work': '/bridal_bangle_set.jpg',
   'Resin Art': '/resin_art_category.jpg',
+  'Wedding & Marriage Items': '/bridal_bangle_set.jpg',
+  'Customized Chains': '/threadwork_text_banner_1786369075234.jpg',
+  'Chocolates': '/kunafa_chocolate.png',
   'Homemade Chocolates': '/kunafa_chocolate.png',
-  'Homemade Biscuits': '/ragi_biscuits.jpg'
+  'Biscuits': '/ragi_biscuits.jpg',
+  'Homemade Biscuits': '/ragi_biscuits.jpg',
+  'Customized Gifts': '/resin_photo_frame.jpg'
 };
 
 const AnimatedProductCard = ({ product, index, fallbackImg, onOpenDetails, onAddToCart }) => {
@@ -158,7 +166,14 @@ const ShopSection = ({ activeCategory, onResetCategory, onAddToCart }) => {
 
   const filteredProducts = useMemo(() => {
     return allProducts.filter((product) => {
-      return selectedCategory === 'All' || product.category === selectedCategory;
+      if (selectedCategory === 'All') return true;
+      if (selectedCategory === 'Chocolates') {
+        return product.category === 'Chocolates' || product.category === 'Homemade Chocolates';
+      }
+      if (selectedCategory === 'Biscuits') {
+        return product.category === 'Biscuits' || product.category === 'Homemade Biscuits';
+      }
+      return product.category === selectedCategory;
     });
   }, [selectedCategory, allProducts]);
 
@@ -218,19 +233,37 @@ const ShopSection = ({ activeCategory, onResetCategory, onAddToCart }) => {
         )}
       </div>
 
-      {detailsModalProduct?.category === 'Resin Art' || detailsModalProduct?.id?.startsWith('ra-') ? (
+      {detailsModalProduct?.category === 'Wedding & Marriage Items' || detailsModalProduct?.id?.startsWith('wedding-') ? (
+        <WeddingItemsDetailsModal
+          product={detailsModalProduct}
+          isOpen={detailsModalProduct !== null}
+          onClose={() => setDetailsModalProduct(null)}
+        />
+      ) : detailsModalProduct?.category === 'Customized Chains' || detailsModalProduct?.id?.startsWith('chain-') ? (
+        <ChainsDetailsModal
+          product={detailsModalProduct}
+          isOpen={detailsModalProduct !== null}
+          onClose={() => setDetailsModalProduct(null)}
+        />
+      ) : detailsModalProduct?.category === 'Customized Gifts' || detailsModalProduct?.id?.startsWith('gift-') ? (
+        <GiftsDetailsModal
+          product={detailsModalProduct}
+          isOpen={detailsModalProduct !== null}
+          onClose={() => setDetailsModalProduct(null)}
+        />
+      ) : detailsModalProduct?.category === 'Resin Art' || detailsModalProduct?.id?.startsWith('ra-') || detailsModalProduct?.id?.startsWith('resin-') ? (
         <ResinArtDetailsModal
           product={detailsModalProduct}
           isOpen={detailsModalProduct !== null}
           onClose={() => setDetailsModalProduct(null)}
         />
-      ) : detailsModalProduct?.category === 'Homemade Chocolates' || detailsModalProduct?.id?.startsWith('flv-') || detailsModalProduct?.id?.startsWith('chk-') ? (
+      ) : detailsModalProduct?.category === 'Chocolates' || detailsModalProduct?.category === 'Homemade Chocolates' || detailsModalProduct?.id?.startsWith('flv-') || detailsModalProduct?.id?.startsWith('chk-') || detailsModalProduct?.id?.startsWith('choco-') ? (
         <ChocolateDetailsModal
           product={detailsModalProduct}
           isOpen={detailsModalProduct !== null}
           onClose={() => setDetailsModalProduct(null)}
         />
-      ) : detailsModalProduct?.category === 'Homemade Biscuits' || detailsModalProduct?.id?.startsWith('bsc-') ? (
+      ) : detailsModalProduct?.category === 'Biscuits' || detailsModalProduct?.category === 'Homemade Biscuits' || detailsModalProduct?.id?.startsWith('bsc-') || detailsModalProduct?.id?.startsWith('biscuit-') ? (
         <BiscuitDetailsModal
           product={detailsModalProduct}
           isOpen={detailsModalProduct !== null}

@@ -614,7 +614,7 @@ export const CATEGORIES = [
   'Resin Art',
   'Wedding & Marriage Items',
   'Customized Chains',
-  'Homemade Chocolates',
-  'Homemade Biscuits',
+  'Chocolates',
+  'Biscuits',
   'Customized Gifts'
 ];
