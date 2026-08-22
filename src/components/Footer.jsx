@@ -93,11 +93,13 @@ const Footer = () => {
           <div className="footer-nav-col">
             <h4 className="footer-col-title">Product Studios</h4>
             <ul>
-              <li><Link to="/threadwork">Customized Thread Work</Link></li>
-              <li><Link to="/resinart">Resin Art & Memory Clocks</Link></li>
-              <li><Link to="/chocolates">Belgian Dark Chocolates</Link></li>
-              <li><Link to="/biscuits">Gourmet Eggless Biscuits</Link></li>
-              <li><Link to="/custom-order">Royal Trousseau Hampers</Link></li>
+              <li><Link to="/threadwork">Thread Work Studio</Link></li>
+              <li><Link to="/resinart">Resin Art Studio</Link></li>
+              <li><Link to="/wedding-marriage-items">Wedding & Marriage Items</Link></li>
+              <li><Link to="/customized-chains">Customized Chains</Link></li>
+              <li><Link to="/chocolates">Handmade Chocolates</Link></li>
+              <li><Link to="/biscuits">Gourmet Biscuits</Link></li>
+              <li><Link to="/customized-gifts">Customized Gifts</Link></li>
             </ul>
           </div>
 

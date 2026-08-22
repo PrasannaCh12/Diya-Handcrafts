@@ -419,6 +419,192 @@ export const PRODUCTS = [
       colors: ['Creamy Cashew Gold']
     },
     specs: ['Whole Roasted Cashews', 'Green Cardamom', 'Desi Ghee Base']
+  },
+
+  // 💒 WEDDING & MARRIAGE ITEMS
+  {
+    id: 'wedding-01',
+    name: 'Royal Velvet Bridal Trousseau Hampers & Trays',
+    category: 'Wedding & Marriage Items',
+    price: 3499,
+    image: '/bridal_bangle_set.jpg',
+    images: ['/bridal_bangle_set.jpg'],
+    shortDesc: 'Handcrafted luxury velvet trousseau trays with gold zardosi borders and crystal lotus handles.',
+    description: 'Designed for royal wedding trousseaus and saree presentation. Each tray features hand-wrapped velvet, gold leaf borders, and pearl tassel embellishments customized to your wedding theme.',
+    materials: 'Heavy Velvet, Teak Wood Frame, 24k Gold Zardosi Trim, Pearl Latkan',
+    processingTime: '3 – 5 Business Days',
+    careInstructions: 'Store in protective cloth cover away from dust.',
+    customizations: {
+      sizes: ['Standard Tray (12x16 in)', 'Large Trousseau Trunk (18x24 in)', 'Set of 5 Wedding Trays'],
+      colors: ['Deep Royal Red', 'Blush Rose Gold', 'Emerald Green', 'Maroon & Gold']
+    },
+    specs: ['Handmade Velvet Finish', 'Custom Bride & Groom Initials', 'Ideal for Saree & Jewelry Presentation']
+  },
+  {
+    id: 'wedding-02',
+    name: 'Handcrafted Wedding Kankanam Sets (Bride & Groom)',
+    category: 'Wedding & Marriage Items',
+    price: 999,
+    image: '/kundan_stone_bangles.jpg',
+    images: ['/kundan_stone_bangles.jpg'],
+    shortDesc: 'Auspicious silk thread and Kundan marriage kankanam wrist bands with holy turmeric motif.',
+    description: 'Traditional handcrafted wedding kankanams woven with pure silk threads, gold zari wire, and Kundan stones for sacred marriage rituals.',
+    materials: 'Pure Silk Threads, Gold Zari Wire, Kundan Stone Flower, Holy Beads',
+    processingTime: '2 – 3 Business Days',
+    careInstructions: 'Keep in airtight box until wedding ceremony.',
+    customizations: {
+      sizes: ['Bride & Groom Couple Set', 'Family Bulk Pack (Set of 12)'],
+      colors: ['Holy Yellow & Red', 'Gold & Crimson', 'Green & Pearl']
+    },
+    specs: ['Handcrafted Silk & Zari', 'Custom Wrist Sizes', 'Sacred Wedding Tradition']
+  },
+  {
+    id: 'wedding-03',
+    name: 'Traditional Hand-Decorated Coconut (Kobbari Kinnam)',
+    category: 'Wedding & Marriage Items',
+    price: 1299,
+    image: '/resin_art_category.jpg',
+    images: ['/resin_art_category.jpg'],
+    shortDesc: 'Bespoke hand-carved and stone-studded bridal coconut for wedding & pelli kuturu rituals.',
+    description: 'Exquisite bridal coconut decorated with intricate Kundan stones, zardosi lace, and metallic gold polish for traditional South Indian and North Indian wedding ceremonies.',
+    materials: 'Natural Coconut Base, Kundan Crystals, Zardosi Lace, Pearl Latkan',
+    processingTime: '2 – 4 Business Days',
+    careInstructions: 'Store in dry place.',
+    customizations: {
+      sizes: ['Single Decorated Coconut', 'Matching Bride & Groom Pair'],
+      colors: ['Traditional Red & Gold', 'Pink & Silver', 'Yellow & Emerald']
+    },
+    specs: ['Intricate Kundan Stonework', 'Pearl Tassel Accent', 'Custom Color Theme']
+  },
+  {
+    id: 'wedding-04',
+    name: 'Varmala Flower Preserved Resin Memory Plaque',
+    category: 'Wedding & Marriage Items',
+    price: 2499,
+    image: '/resin_photo_frame.jpg',
+    images: ['/resin_photo_frame.jpg'],
+    shortDesc: 'Preserve your actual wedding varmala flowers forever inside crystal clear resin.',
+    description: 'Turn your sacred wedding varmala garlands into a lifetime keepsake. We carefully dehydrate your actual wedding flowers and encase them with gold leaf, led lights, and your wedding date.',
+    materials: 'Preserved Wedding Varmala Flowers, High-Clarity Epoxy Resin, 24k Gold Foil',
+    processingTime: '7 – 10 Business Days (Preservation & Cure Time)',
+    careInstructions: 'Keep away from direct heat above 60°C. Clean with micro-fiber cloth.',
+    customizations: {
+      sizes: ['8x10 inch Plaque', '12x12 inch Wall Clock', '10 inch Hexagon Frame'],
+      colors: ['Natural Varmala Gold', 'Rose Gold Shimmer']
+    },
+    specs: ['Preserves Real Wedding Flowers', 'Custom Date & Name Engraving', 'Lifetime Memory Keepsake']
+  },
+
+  // 📿 CUSTOMIZED CHAINS
+  {
+    id: 'chain-01',
+    name: 'Hand-Engraved Name & Initial Pendant Chain',
+    category: 'Customized Chains',
+    price: 1299,
+    image: '/threadwork_text_banner_1786369075234.jpg',
+    images: ['/threadwork_text_banner_1786369075234.jpg'],
+    shortDesc: 'Elegant 18k gold polish chain with customized cursive name or monogram initial pendant.',
+    description: 'Personalized name chain crafted with high-precision laser engraving and anti-tarnish gold polish. Custom font styles available.',
+    materials: 'Stainless Steel Core, 18k Gold Polish / Rose Gold / Sterling Silver',
+    processingTime: '3 – 4 Business Days',
+    careInstructions: 'Wipe clean after use. Store in anti-tarnish velvet pouch.',
+    customizations: {
+      sizes: ['16 inch Chain', '18 inch Chain', '20 inch Chain'],
+      colors: ['24k Gold Finish', 'Rose Gold Finish', 'Sterling Silver Finish']
+    },
+    specs: ['Custom Name / Initials Engraved', 'Anti-Tarnish Water Resistant Polish', 'Gift Box Included']
+  },
+  {
+    id: 'chain-02',
+    name: 'Bespoke Couple Name Interlocked Heart Chain',
+    category: 'Customized Chains',
+    price: 1499,
+    image: '/resin_art_category.jpg',
+    images: ['/resin_art_category.jpg'],
+    shortDesc: 'Interlocked twin heart pendant custom engraved with two names for couples.',
+    description: 'A romantic custom chain featuring two connected hearts engraved with your and your partner’s names, accented with zircon birthstones.',
+    materials: 'Hypoallergenic Metal Alloy, 18k Gold Polish, CZ Birthstone',
+    processingTime: '3 – 5 Business Days',
+    careInstructions: 'Avoid harsh perfumes and sprays directly on pendant.',
+    customizations: {
+      sizes: ['18 inch Couple Chain', '22 inch Heavy Chain'],
+      colors: ['Rose Gold & Silver Mix', '24k Classic Gold']
+    },
+    specs: ['Dual Name Engraving', 'CZ Accent Stone', 'Romantic Anniversary Gift']
+  },
+  {
+    id: 'chain-03',
+    name: 'Evil Eye Protection Gold Polish Custom Name Chain',
+    category: 'Customized Chains',
+    price: 1199,
+    image: '/purple_velvet_bangles.jpg',
+    images: ['/purple_velvet_bangles.jpg'],
+    shortDesc: 'Handcrafted protective blue evil eye charm chain with personalized name tag.',
+    description: 'Combines traditional protection with modern style. Features a vibrant glass evil eye charm paired with a custom name pendant.',
+    materials: 'Glass Evil Eye Bead, 18k Gold Polish Brass, Cubic Zirconia',
+    processingTime: '2 – 4 Business Days',
+    careInstructions: 'Keep in dry pouch away from moisture.',
+    customizations: {
+      sizes: ['16 inch Standard', '18 inch Adjustable'],
+      colors: ['Royal Blue & Gold', 'Turquoise & Rose Gold']
+    },
+    specs: ['Authentic Glass Evil Eye Charm', 'Personalized Name Charm', 'Anti-Tarnish Polish']
+  },
+
+  // 🎁 CUSTOMIZED GIFTS
+  {
+    id: 'gift-01',
+    name: 'Personalized 3D LED Acrylic Photo Keepsake Lamp',
+    category: 'Customized Gifts',
+    price: 1599,
+    image: '/resin_photo_frame.jpg',
+    images: ['/resin_photo_frame.jpg'],
+    shortDesc: 'Warm warm-white LED wooden base lamp with custom engraved acrylic photo line art.',
+    description: 'Transform your favorite couple or family photo into a glowing 3D acrylic illusion lamp engraved with custom names and anniversary date.',
+    materials: 'Solid Beech Wood Base, Optical Grade Acrylic Sheet, Warm LED Strip',
+    processingTime: '3 – 4 Business Days',
+    careInstructions: 'Clean acrylic gently with microfiber glass cloth.',
+    customizations: {
+      sizes: ['Medium 6x8 inch', 'Large 8x10 inch'],
+      colors: ['Warm Yellow Glow', 'Multicolor RGB LED']
+    },
+    specs: ['Custom Photo Line Art Engraving', 'USB Powered Wooden Base', 'Ideal for Birthdays & Anniversaries']
+  },
+  {
+    id: 'gift-02',
+    name: 'Bespoke Name & Memory Luxury Gift Box Hamper',
+    category: 'Customized Gifts',
+    price: 2999,
+    image: '/kunafa_chocolate.png',
+    images: ['/kunafa_chocolate.png'],
+    shortDesc: 'Customized hamper containing handmade chocolates, resin coaster, personalized chain & greeting card.',
+    description: 'The ultimate luxury gifting experience! Curated with artisanal chocolates, custom name chain, floral resin coaster, and handwritten gold foil card.',
+    materials: 'Rigid Gift Box, Satin Ribbon, Artisanal Sweets, Custom Jewelry',
+    processingTime: '3 – 5 Business Days',
+    careInstructions: 'Store in cool temperature.',
+    customizations: {
+      sizes: ['Standard Celebration Box', 'Royal Trousseau Hamper'],
+      colors: ['Blush Pink & Gold', 'Emerald Green & Gold']
+    },
+    specs: ['Curated 4-Item Custom Set', 'Personalized Card & Ribbon', 'Festive & Birthday Special']
+  },
+  {
+    id: 'gift-03',
+    name: 'Anniversary Floral Resin Wall Clock Keepsake',
+    category: 'Customized Gifts',
+    price: 2799,
+    image: '/resin_art_category.jpg',
+    images: ['/resin_art_category.jpg'],
+    shortDesc: '12-inch handcrafted resin wall clock with preserved flowers, gold Roman numerals & custom names.',
+    description: 'A timeless gift for weddings and milestone anniversaries. Hand-cast with real preserved botanicals, gold leaf foil, and smooth silent clock movement.',
+    materials: 'Epoxy Resin, Dried Flowers, Gold Leaf, Silent Quartz Clock Movement',
+    processingTime: '5 – 7 Business Days',
+    careInstructions: 'Wipe with damp cloth.',
+    customizations: {
+      sizes: ['10 inch Clock', '12 inch Clock', '14 inch Grand Clock'],
+      colors: ['Emerald & Gold Leaf', 'Blush Pink Floral', 'Royal Blue Ocean']
+    },
+    specs: ['Silent Quartz Clock Engine', 'Preserved Botanical Inlays', 'Personalized Couple Name Inlay']
   }
 ];
 
@@ -426,6 +612,9 @@ export const CATEGORIES = [
   'All',
   'Thread Work',
   'Resin Art',
+  'Wedding & Marriage Items',
+  'Customized Chains',
   'Homemade Chocolates',
-  'Homemade Biscuits'
+  'Homemade Biscuits',
+  'Customized Gifts'
 ];

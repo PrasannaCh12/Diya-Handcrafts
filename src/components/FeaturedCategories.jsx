@@ -22,22 +22,49 @@ const FeaturedCategories = ({ onSelectCategory }) => {
       img: '/resin_art_category.jpg'
     },
     {
+      id: 'Wedding & Marriage Items',
+      title: 'Wedding & Marriage Items',
+      tagline: 'Bridal Trays, Kankanams & Favors',
+      icon: <FaHeart />,
+      bg: 'linear-gradient(135deg, #FDE8E8 0%, #FFF5F5 100%)',
+      iconColor: '#C81E1E',
+      img: '/kundan_stone_bangles.jpg'
+    },
+    {
+      id: 'Customized Chains',
+      title: 'Customized Chains',
+      tagline: 'Name Engraved Chains & Pendants',
+      icon: <FaGem />,
+      bg: 'linear-gradient(135deg, #FEF08A 0%, #FEF9C3 100%)',
+      iconColor: '#A16207',
+      img: '/threadwork_text_banner_1786369075234.jpg'
+    },
+    {
       id: 'Homemade Chocolates',
       title: 'Homemade Chocolates',
-      tagline: 'Belgian Truffles & Almond Rochers',
+      tagline: 'Kunafa & Belgian Dark Chocolates',
       icon: <FaCookie />,
       bg: 'linear-gradient(135deg, #E8D8CE 0%, #F5EAE0 100%)',
       iconColor: '#5C3A21',
-      img: 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=600&q=80'
+      img: '/kunafa_chocolate.png'
     },
     {
       id: 'Homemade Biscuits',
       title: 'Homemade Biscuits',
-      tagline: 'Eggless Pure Ghee Nankhatai',
+      tagline: 'Eggless Pure Ghee & Ragi Cookies',
       icon: <FaBreadSlice />,
       bg: 'linear-gradient(135deg, #FFF0DB 0%, #FFF8EE 100%)',
       iconColor: '#D97706',
       img: '/ragi_biscuits.jpg'
+    },
+    {
+      id: 'Customized Gifts',
+      title: 'Customized Gifts',
+      tagline: 'LED Photo Lamps & Memory Hampers',
+      icon: <FaGift />,
+      bg: 'linear-gradient(135deg, #F3E8FF 0%, #FAF5FF 100%)',
+      iconColor: '#7E22CE',
+      img: '/resin_photo_frame.jpg'
     }
   ];
 

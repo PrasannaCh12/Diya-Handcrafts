@@ -33,15 +33,16 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
   }, [location.pathname]);
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Shop', path: '/shop' },
+    { name: 'Home Page', path: '/' },
+    { name: 'Shop & Gallery', path: '/shop' },
     { name: 'Thread Work', path: '/threadwork' },
     { name: 'Resin Art', path: '/resinart' },
+    { name: 'Wedding & Marriage Items', path: '/wedding-marriage-items' },
+    { name: 'Customized Chains', path: '/customized-chains' },
     { name: 'Chocolates', path: '/chocolates' },
     { name: 'Biscuits', path: '/biscuits' },
-    { name: 'Custom Orders', path: '/custom-order' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Customized Gifts', path: '/customized-gifts' },
+    { name: 'Contact & Inquiry', path: '/contact' },
   ];
 
   return (
@@ -247,20 +248,27 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
         .desktop-nav {
           display: flex;
           align-items: center;
-          gap: 1.5rem;
+          gap: 0.85rem;
           white-space: nowrap;
+          overflow-x: auto;
+          scrollbar-width: none;
+        }
+
+        .desktop-nav::-webkit-scrollbar {
+          display: none;
         }
 
         .nav-item-link {
           text-decoration: none;
           color: #3E2C1C;
-          font-size: 0.88rem;
-          font-weight: 500;
-          letter-spacing: 0.02em;
+          font-size: 0.81rem;
+          font-weight: 600;
+          letter-spacing: 0.01em;
           transition: color 0.3s ease;
           position: relative;
           padding: 0.4rem 0;
           white-space: nowrap;
+          flex-shrink: 0;
         }
 
         .nav-item-link:hover {

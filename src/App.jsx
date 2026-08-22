@@ -15,7 +15,9 @@ import ResinArtPage from './pages/ResinArtPage';
 import ChocolatePage from './pages/ChocolatePage';
 import BiscuitPage from './pages/BiscuitPage';
 import CustomOrderPage from './pages/CustomOrderPage';
-import ContactPage from './pages/ContactPage';
+import WeddingItemsPage from './pages/WeddingItemsPage';
+import CustomizedChainsPage from './pages/CustomizedChainsPage';
+import CustomizedGiftsPage from './pages/CustomizedGiftsPage';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -93,12 +95,24 @@ function App() {
             element={<ResinArtPage />} 
           />
           <Route 
+            path="/wedding-marriage-items" 
+            element={<WeddingItemsPage />} 
+          />
+          <Route 
+            path="/customized-chains" 
+            element={<CustomizedChainsPage />} 
+          />
+          <Route 
             path="/chocolates" 
             element={<ChocolatePage />} 
           />
           <Route 
             path="/biscuits" 
             element={<BiscuitPage />} 
+          />
+          <Route 
+            path="/customized-gifts" 
+            element={<CustomizedGiftsPage />} 
           />
           <Route path="/custom-order" element={<CustomOrderPage />} />
           <Route path="/contact" element={<ContactPage />} />
