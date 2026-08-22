@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaHeart, FaRegHeart, FaWhatsapp, FaTimes, FaGem, FaMagic } from 'react-icons/fa';
+import { FaHeart, FaRegHeart, FaWhatsapp, FaTimes, FaGem, FaMagic, FaCheck, FaGift, FaMapMarkerAlt, FaFileAlt, FaUser } from 'react-icons/fa';
 import { PRODUCTS } from '../data/products';
 import WhatsAppModal from './WhatsAppModal';
 
