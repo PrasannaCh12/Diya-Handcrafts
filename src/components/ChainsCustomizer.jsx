@@ -25,13 +25,13 @@ export const ChainsDetailsModal = ({ product, isOpen, onClose }) => {
   const category = product.category || '📿 CUSTOMIZED CHAINS COLLECTION';
   const name = product.name || 'Customized Chain';
   const shortDesc = product.shortDesc || 'Bespoke handcrafted customized chain designed to elevate your personal style.';
-  const detailedDesc = product.description || 'Artisanal customized chain crafted with high-precision laser engraving, anti-tarnish gold polish, and hypoallergenic materials.';
-  const materials = product.materials || 'Red Coral Beads / Black Crystal Beads / Pearl Strands / 24k Gold Polish Coins';
+  const detailedDesc = product.description || 'Artisanal customized chain crafted with high-precision laser engraving, anti-tarnish polish, and hypoallergenic materials.';
+  const materials = product.materials || 'Red Coral Beads / Black Crystal Beads / Pearl Strands / Coin Accents';
   const processingTime = product.processingTime || '2 – 4 Business Days';
   const careInstructions = product.careInstructions || 'Store flat in velvet pouch. Avoid direct contact with harsh sprays and moisture.';
   
   const sizes = product.customizations?.sizes || ['16 inch (Choker)', '18 inch (Standard)', '20 inch (Long)', '22 inch (Extra Long)'];
-  const colors = product.customizations?.colors || ['24k Yellow Gold', 'Antique Temple Gold', 'Blush Rose Gold', 'Sterling Silver'];
+  const colors = ['Rose Gold', 'Sterling Silver'];
   const specs = product.specs || ['Handcrafted Custom Jewelry', 'Anti-Tarnish Water Resistant Polish', 'Gift Box & Velvet Pouch Included'];
 
   const handleWhatsAppEnquiry = () => {
@@ -342,7 +342,7 @@ const ChainsCustomizer = () => {
                 <div className="opt-form-group">
                   <label className="opt-label">Metal / Finish:</label>
                   <div className="opt-pill-group">
-                    {['24k Gold Polish', 'Antique Temple Gold', 'Rose Gold', 'Sterling Silver'].map((fin) => (
+                    {['Rose Gold', 'Sterling Silver'].map((fin) => (
                       <button
                         key={fin}
                         type="button"
