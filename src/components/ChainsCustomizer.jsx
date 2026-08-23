@@ -238,7 +238,7 @@ const ChainsCustomizer = () => {
                         setDetailsModalProduct(product);
                       }}
                     >
-                      <span>View Details →</span>
+                      <span>View Details <span className="view-arrow">→</span></span>
                     </div>
                   </div>
                 );
@@ -685,6 +685,17 @@ const ChainsCustomizer = () => {
           align-items: start;
         }
 
+        @keyframes twCardFadeUp {
+          0% {
+            opacity: 0;
+            transform: translateY(22px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
         .flavor-card {
           background: #FFFFFF;
           border: 1.5px solid rgba(110, 58, 70, 0.12);
@@ -695,6 +706,8 @@ const ChainsCustomizer = () => {
           display: flex;
           flex-direction: column;
           position: relative;
+          opacity: 0;
+          animation: twCardFadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
         .flavor-card:hover {
@@ -778,10 +791,28 @@ const ChainsCustomizer = () => {
         }
 
         .card-view-details-link {
-          font-size: 0.8rem;
+          font-size: 0.85rem;
           color: #C89B3C;
           font-weight: 600;
           margin-top: 0.4rem;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.25rem;
+          transition: color 0.25s ease;
+          user-select: none;
+        }
+
+        .card-view-details-link .view-arrow {
+          display: inline-block;
+          transition: transform 0.25s ease;
+        }
+
+        .flavor-card:hover .card-view-details-link {
+          color: #B8860B;
+        }
+
+        .flavor-card:hover .card-view-details-link .view-arrow {
+          transform: translateX(4px);
         }
 
         .addons-section-box,
@@ -1353,6 +1384,20 @@ const ChainsCustomizer = () => {
             padding: 20px 18px !important;
             overflow-y: visible !important;
             max-height: none !important;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .flavors-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 0.85rem !important;
+          }
+          .flavor-card {
+            padding: 0.85rem !important;
+            border-radius: 14px !important;
+          }
+          .flavor-title {
+            font-size: 0.9rem !important;
           }
         }
       `}</style>
