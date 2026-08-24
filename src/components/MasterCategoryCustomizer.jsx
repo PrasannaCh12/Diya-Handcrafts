@@ -350,6 +350,17 @@ const MasterCategoryCustomizer = ({
       />
 
       <style>{`
+        @keyframes heroFadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(24px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
         .customizer-section {
           background: #FAF8F5;
           padding: 3rem 0 5rem 0;
@@ -369,6 +380,8 @@ const MasterCategoryCustomizer = ({
           color: #C89B3C;
           text-transform: uppercase;
           margin-bottom: 28px;
+          opacity: 0;
+          animation: heroFadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
         }
 
         .tw-hero-title {
@@ -379,6 +392,8 @@ const MasterCategoryCustomizer = ({
           line-height: 1.2;
           letter-spacing: 0.02em;
           margin: 0 0 35px 0;
+          opacity: 0;
+          animation: heroFadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
         }
 
         @media (max-width: 768px) {
@@ -394,6 +409,8 @@ const MasterCategoryCustomizer = ({
           color: rgba(45, 37, 35, 0.88);
           max-width: 750px;
           margin: 0 auto 50px auto;
+          opacity: 0;
+          animation: heroFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
         }
 
         .tw-hero-divider {
@@ -402,6 +419,8 @@ const MasterCategoryCustomizer = ({
           justify-content: center;
           gap: 16px;
           margin: 50px auto 50px auto;
+          opacity: 0;
+          animation: heroFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
         }
 
         .divider-line {
@@ -432,6 +451,8 @@ const MasterCategoryCustomizer = ({
           text-align: center;
           margin-top: 50px;
           margin-bottom: 55px;
+          opacity: 0.92;
+          animation: heroFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
         }
 
         .tw-brand-tagline .quote-mark {
