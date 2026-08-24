@@ -1490,20 +1490,12 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
 
         .products-3col-grid {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(3, 1fr);
           column-gap: 24px;
           row-gap: 24px;
           max-width: 1400px;
           margin: 0 auto;
           align-items: stretch;
-        }
-
-        @media (max-width: 1199px) {
-          .products-3col-grid {
-            grid-template-columns: repeat(3, 1fr);
-            column-gap: 20px;
-            row-gap: 20px;
-          }
         }
 
         @media (max-width: 991px) {
@@ -1516,9 +1508,9 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
 
         @media (max-width: 576px) {
           .products-3col-grid {
-            grid-template-columns: repeat(1, 1fr);
-            column-gap: 16px;
-            row-gap: 16px;
+            grid-template-columns: repeat(2, 1fr) !important;
+            column-gap: 12px !important;
+            row-gap: 14px !important;
           }
         }
 

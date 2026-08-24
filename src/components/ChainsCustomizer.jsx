@@ -57,24 +57,6 @@ export const ChainsDetailsModal = ({ product, isOpen, onClose }) => {
                 <h4>📜 Product Description</h4>
                 <p className="modal-desc-text">{detailedDesc}</p>
               </div>
-
-              <div className="modal-section-block">
-                <h4>📏 Available Chain Lengths</h4>
-                <div className="modal-chips-flex">
-                  {sizes.map((sz, i) => (
-                    <span key={i} className="modal-chip-item">{sz}</span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="modal-section-block">
-                <h4>✨ Metal & Color Finishes</h4>
-                <div className="modal-chips-flex">
-                  {colors.map((c, i) => (
-                    <span key={i} className="modal-chip-item">{c}</span>
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -680,7 +662,7 @@ const ChainsCustomizer = () => {
 
         .flavors-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+          grid-template-columns: repeat(3, 1fr);
           gap: 1.25rem;
           align-items: start;
         }

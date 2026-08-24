@@ -363,10 +363,10 @@ const ShopSection = ({ activeCategory, onResetCategory, onAddToCart }) => {
           transform: translateY(-1px);
         }
 
-        /* Balanced Centered Gallery Grid: 4 cols Desktop, 2 cols Tablet, 1 col Mobile */
+        /* Balanced Centered Gallery Grid: 3 cols Desktop, 2 cols Tablet, 2 cols Mobile */
         .gallery-grid {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(3, 1fr);
           column-gap: 24px;
           row-gap: 24px;
           max-width: 1400px;
@@ -407,9 +407,9 @@ const ShopSection = ({ activeCategory, onResetCategory, onAddToCart }) => {
 
         @media (max-width: 576px) {
           .gallery-grid {
-            grid-template-columns: repeat(1, 1fr);
-            column-gap: 16px;
-            row-gap: 16px;
+            grid-template-columns: repeat(2, 1fr) !important;
+            column-gap: 12px !important;
+            row-gap: 14px !important;
           }
         }
 
