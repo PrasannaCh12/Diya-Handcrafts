@@ -4,56 +4,61 @@ import { PRODUCTS } from '../data/products';
 import WhatsAppModal from './WhatsAppModal';
 
 export const WeddingItemsDetailsModal = ({ product, isOpen, onClose }) => {
+  React.useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen || !product) return null;
 
-  const handleWhatsAppEnquiry = () => {
-    const message = `Hi Divya Handcrafts! I am interested in inquiring about *${product.name}* for my wedding event. Please share pricing, customization details, and lead time.`;
-    window.open(`https://wa.me/917981664314?text=${encodeURIComponent(message)}`, '_blank');
-  };
+  const category = '💒 WEDDING & MARRIAGE COLLECTION';
+  const name = product.name || 'Handcrafted Wedding Accessory';
+  const shortDesc = product.shortDesc || 'Intricately handcrafted wedding accessories designed to make your marriage ceremonies memorable.';
+  const detailedDesc = product.description || 'Intricately handcrafted wedding accessories designed to make your marriage ceremonies memorable.';
 
   return (
-    <div className="customizer-modal-overlay" onClick={onClose}>
-      <div className="customizer-modal-content glass-card" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close-btn" onClick={onClose} aria-label="Close modal">
+    <div className="modal-backdrop-overlay" onClick={onClose}>
+      <div className="product-details-modal-box resin-modal-box wedding-modal-box" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close-icon" onClick={onClose} title="Close Modal (ESC)">
           <FaTimes />
         </button>
 
-        <div className="modal-two-col">
-          {/* Left Column: Product Image */}
-          <div className="modal-img-col">
-            <img src={product.image || '/bridal_bangle_set.jpg'} alt={product.name} className="modal-product-img" />
-            <div className="modal-artisan-badge">✨ 100% Handcrafted Wedding Collection</div>
+        <div className="modal-two-col-grid">
+          <div className="modal-image-col">
+            <div className="modal-img-wrap">
+              <img src={product.image || '/bridal_bangle_set.jpg'} alt={name} className="modal-main-img" />
+              <div className="modal-img-badge">✨ Royal Bridal Collection</div>
+            </div>
           </div>
 
-          {/* Right Column: Details & Enquiry */}
           <div className="modal-details-col">
-            <span className="modal-category-tag">💒 Wedding & Marriage Collection</span>
-            <h2 className="modal-product-title">{product.name}</h2>
-            <p className="modal-product-short">{product.shortDesc}</p>
-
-            <div className="modal-section-box">
-              <h4>📜 Detailed Product Description</h4>
-              <p>{product.description || 'Intricately handcrafted wedding accessories designed to make your marriage ceremonies memorable.'}</p>
+            <div className="modal-header-block">
+              <span className="modal-category-tag">{category}</span>
+              <h2 className="modal-product-title">{name}</h2>
+              <p className="modal-short-desc-highlight">{shortDesc}</p>
             </div>
 
-            <div className="modal-section-box">
-              <h4>✨ Craftsmanship & Materials</h4>
-              <p>{product.materials || 'Handmade Velvet, Kundan Stones, Zardosi Trim, Pearl Accents'}</p>
-            </div>
+            <div className="modal-body-scroll">
+              <div className="modal-section-block">
+                <h4>📜 Detailed Description</h4>
+                <p className="modal-desc-text">{detailedDesc}</p>
+              </div>
 
-            <div className="modal-section-box">
-              <h4>📦 Customization & Event Options</h4>
-              <ul className="modal-specs-list">
-                <li>• Customized to match your wedding lehenga or saree theme</li>
-                <li>• Bride & Groom initials engraving available</li>
-                <li>• Express Pan-India dispatch for wedding dates</li>
-              </ul>
-            </div>
-
-            <div className="modal-actions-row" style={{ marginTop: '1.5rem' }}>
-              <button onClick={handleWhatsAppEnquiry} className="btn btn-whatsapp-cta" style={{ width: '100%' }}>
-                <FaWhatsapp /> Enquire Now via WhatsApp
-              </button>
+              <div className="modal-section-block">
+                <h4>✨ Craftsmanship & Materials</h4>
+                <p className="modal-info-p">Handmade Velvet, Kundan Stones, Zardosi Trim, Pearl Accents.</p>
+              </div>
             </div>
           </div>
         </div>
