@@ -22,6 +22,24 @@ const FeaturedCategories = ({ onSelectCategory }) => {
       img: '/resin_art_category.jpg'
     },
     {
+      id: 'Chocolates',
+      title: 'Chocolates',
+      tagline: 'Kunafa & Belgian Dark Chocolates',
+      icon: <FaCookie />,
+      bg: 'linear-gradient(135deg, #E8D8CE 0%, #F5EAE0 100%)',
+      iconColor: '#5C3A21',
+      img: '/kunafa_chocolate.png'
+    },
+    {
+      id: 'Biscuits',
+      title: 'Biscuits',
+      tagline: 'Eggless Pure Ghee & Ragi Cookies',
+      icon: <FaBreadSlice />,
+      bg: 'linear-gradient(135deg, #FFF0DB 0%, #FFF8EE 100%)',
+      iconColor: '#D97706',
+      img: '/ragi_biscuits.jpg'
+    },
+    {
       id: 'Wedding & Marriage Items',
       title: 'Wedding & Marriage Items',
       tagline: 'Bridal Trays, Kankanams & Favors',
@@ -40,24 +58,6 @@ const FeaturedCategories = ({ onSelectCategory }) => {
       img: '/threadwork_text_banner_1786369075234.jpg'
     },
     {
-      id: 'Homemade Chocolates',
-      title: 'Homemade Chocolates',
-      tagline: 'Kunafa & Belgian Dark Chocolates',
-      icon: <FaCookie />,
-      bg: 'linear-gradient(135deg, #E8D8CE 0%, #F5EAE0 100%)',
-      iconColor: '#5C3A21',
-      img: '/kunafa_chocolate.png'
-    },
-    {
-      id: 'Homemade Biscuits',
-      title: 'Homemade Biscuits',
-      tagline: 'Eggless Pure Ghee & Ragi Cookies',
-      icon: <FaBreadSlice />,
-      bg: 'linear-gradient(135deg, #FFF0DB 0%, #FFF8EE 100%)',
-      iconColor: '#D97706',
-      img: '/ragi_biscuits.jpg'
-    },
-    {
       id: 'Customized Gifts',
       title: 'Customized Gifts',
       tagline: 'LED Photo Lamps & Memory Hampers',
@@ -65,6 +65,15 @@ const FeaturedCategories = ({ onSelectCategory }) => {
       bg: 'linear-gradient(135deg, #F3E8FF 0%, #FAF5FF 100%)',
       iconColor: '#7E22CE',
       img: '/resin_photo_frame.jpg'
+    },
+    {
+      id: 'Customized Dolls',
+      title: 'CUSTOMIZED DOLLS',
+      tagline: 'Handcrafted Theme Dolls & Keepsakes',
+      icon: <FaHeart />,
+      bg: 'linear-gradient(135deg, #FCE7F3 0%, #FDF2F8 100%)',
+      iconColor: '#DB2777',
+      img: '/bridal_bangle_set.jpg'
     }
   ];
 

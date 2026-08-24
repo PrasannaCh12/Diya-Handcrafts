@@ -19,6 +19,7 @@ import ContactPage from './pages/ContactPage';
 import WeddingItemsPage from './pages/WeddingItemsPage';
 import CustomizedChainsPage from './pages/CustomizedChainsPage';
 import CustomizedGiftsPage from './pages/CustomizedGiftsPage';
+import CustomizedDollsPage from './pages/CustomizedDollsPage';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -114,6 +115,10 @@ function App() {
           <Route 
             path="/customized-gifts" 
             element={<CustomizedGiftsPage />} 
+          />
+          <Route 
+            path="/customized-dolls" 
+            element={<CustomizedDollsPage />} 
           />
           <Route path="/custom-order" element={<CustomOrderPage />} />
           <Route path="/contact" element={<ContactPage />} />
