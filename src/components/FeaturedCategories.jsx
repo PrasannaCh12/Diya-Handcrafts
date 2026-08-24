@@ -68,7 +68,7 @@ const FeaturedCategories = ({ onSelectCategory }) => {
     },
     {
       id: 'Customized Dolls',
-      title: 'CUSTOMIZED DOLLS',
+      title: 'Customized Dolls',
       tagline: 'Handcrafted Theme Dolls & Keepsakes',
       icon: <FaHeart />,
       bg: 'linear-gradient(135deg, #FCE7F3 0%, #FDF2F8 100%)',
