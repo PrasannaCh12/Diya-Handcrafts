@@ -146,7 +146,7 @@ export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = true
                     <input
                       type="text"
                       className="m-text-input"
-                      placeholder="e.g. Happy Birthday Akhil / Custom Name"
+                      placeholder={product.customNamePlaceholder || "e.g. Shamanth & Vani / Custom Name"}
                       value={customName}
                       onChange={(e) => setCustomName(e.target.value)}
                     />

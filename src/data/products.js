@@ -100,6 +100,32 @@ export const PRODUCTS = [
     specs: ['Personalized Name & Photo Print', 'Decorative Butterflies & Embellishments', 'Includes Solid Wood Display Stand']
   },
   {
+    id: 'resin-001',
+    name: 'Personalized Resin Anniversary Photo Plaque',
+    category: 'Resin Art',
+    subCategory: 'Personalized Gifts',
+    price: 1899,
+    availability: 'In Stock (Made to Order)',
+    rating: 5.0,
+    reviewsCount: 46,
+    image: '/personalized_resin_anniversary_plaque.jpg',
+    images: ['/personalized_resin_anniversary_plaque.jpg'],
+    shortDesc: 'A beautifully handcrafted resin art plaque designed to celebrate special anniversaries and meaningful relationships featuring personalized photo, names, anniversary date, dried flowers, gold & silver flakes, and wooden easel stand.',
+    description: 'A beautifully handcrafted resin art plaque designed to celebrate special anniversaries and meaningful relationships. This elegant piece features a scalloped white resin base with a delicate gold border, personalized names and anniversary date, a custom couple photograph in the center, and a beautiful combination of dried flowers, decorative flakes, crystals, and gold and silver embellishments. It comes with a wooden easel stand, making it a beautiful keepsake and a thoughtful personalized gift.\n\nCreate a beautiful and meaningful memory with this personalized handmade resin anniversary plaque. The plaque is carefully handcrafted with a white resin base, elegant gold edging, decorative dried flowers, colorful embellishments, crystals, and gold and silver flakes.\n\nThe center of the plaque can be customized with a personal couple photograph, while names, initials, and important dates can be added to make the piece completely unique.\n\nThe plaque comes with a wooden easel stand, making it ready to display on a table, shelf, bedroom, living room, or special memory corner.\n\nPerfect for celebrating anniversaries, weddings, relationships, birthdays, and other meaningful occasions.',
+    perfectFor: ['✨ Anniversary Gifts', '✨ Couple Gifts', '✨ Wedding Gifts', '✨ Personalized Gifts', '✨ Relationship Memories', '✨ Special Occasions'],
+    customizationDetails: ['Custom Name / Title Inlay', 'Upload Personal Photographs', 'Custom Date'],
+    customNamePlaceholder: 'e.g. Shamanth & Vani / Custom Name',
+    features: ['Handmade Resin Art', 'Personalized with Photo and Names', 'Custom Anniversary Date', 'Decorative Dried Flowers', 'Gold & Silver Flakes', 'Unique Handmade Design', 'Wooden Easel Stand', 'Perfect for Gifting', 'Made to Order'],
+    materials: 'High-clarity epoxy resin, personalized photo print, dried flowers, decorative flakes, crystals, gold and silver embellishments, and wooden easel stand.',
+    processingTime: '3 – 5 Business Days (Made to Order)',
+    careInstructions: 'Wipe clean with a soft dry cloth. Avoid direct high heat and direct sunlight exposure.',
+    customizations: {
+      sizes: ['Standard Anniversary Plaque (8x8")', 'Grand Display Plaque (10x10")'],
+      colors: ['White & Gold (As Shown)', 'Blush Pink', 'Emerald Swirl']
+    },
+    specs: ['Personalized Photo & Calligraphy Names', 'Decorative Dried Flowers & Crystals', 'Includes Solid Wood Display Stand']
+  },
+  {
     id: 'resin-01',
     name: 'Preserved Floral Resin Photo Frame Magnets',
     category: 'Resin Art',
