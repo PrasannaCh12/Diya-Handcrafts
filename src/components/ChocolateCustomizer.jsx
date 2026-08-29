@@ -354,49 +354,21 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
       return;
     }
 
-    let text = `✨ *Custom Handmade Chocolate Order - Divya Handcrafts* ✨\n`;
-    text += `----------------------------------------\n`;
-    text += `👤 *Customer Details:*\n`;
-    text += `- Name: ${customerName}\n`;
-    text += `- Phone: ${customerPhone}\n`;
-    text += `- WhatsApp: ${customerWhatsApp}\n`;
-    if (customerEmail) text += `- Email: ${customerEmail}\n`;
+    const randomDigits = Math.floor(100000 + Math.random() * 900000);
+    const orderId = `DH-${randomDigits}`;
 
-    if (recipientName || recipientPhone) {
-      text += `\n🎁 *Recipient Details (Gift):*\n`;
-      if (recipientName) text += `- Recipient Name: ${recipientName}\n`;
-      if (recipientPhone) text += `- Recipient Phone: ${recipientPhone}\n`;
-    }
-
-    if (deliveryDate || deliveryTime || deliveryAddress) {
-      text += `\n🚚 *Delivery Details:*\n`;
-      if (deliveryDate) text += `- Delivery Date: ${deliveryDate}\n`;
-      if (deliveryTime) text += `- Delivery Time: ${deliveryTime}\n`;
-      if (deliveryAddress) text += `- Delivery Address: ${deliveryAddress}\n`;
-    }
-
-    text += `\n🍫 *Chocolate Customization Choices:*\n`;
-    text += `- Box Size: ${boxSize}\n`;
-    text += `- Flavors: ${selectedFlavors.join(', ')}\n`;
-    text += `- Add-ons: ${selectedAddons.length > 0 ? selectedAddons.join(', ') : 'None'}\n`;
-    text += `- Shape: ${shape}\n`;
-    text += `- Packaging Style: ${packagingStyle}\n`;
-    if (ribbonColor && ribbonColor !== 'None') {
-      text += `- Ribbon Color: ${ribbonColor}\n`;
-    }
-    if (occasion && occasion !== 'None') {
-      text += `- Occasion: ${occasion}\n`;
-    }
-
-    if (customMessage) {
-      text += `\n💌 *Personalized Gift Message:*\n"${customMessage}"\n`;
-    }
-
-    if (orderNotes) {
-      text += `\n📝 *Special Instructions:*\n"${orderNotes}"\n`;
-    }
-
-    text += `\nHi Divya Handcrafts! I customized this order on your website and would love to place my order!`;
+    let text = `NEW ORDER – DIYA HANDCRAFTS\n\n`;
+    text += `Product:\n`;
+    text += `Custom Chocolates (${selectedFlavors.join(', ')})\n\n`;
+    text += `Quantity:\n1 Box (${boxSize || 'Standard'})\n\n`;
+    text += `Custom Name / Title:\n${customerName}\n\n`;
+    let customOpts = [];
+    if (shape) customOpts.push(`Shape: ${shape}`);
+    if (selectedAddons.length > 0) customOpts.push(`Addons: ${selectedAddons.join(', ')}`);
+    if (packagingStyle) customOpts.push(`Packaging: ${packagingStyle}`);
+    if (customMessage) customOpts.push(`Message: ${customMessage}`);
+    text += `Customization:\n${customOpts.length > 0 ? customOpts.join(', ') : 'Handmade Gourmet Chocolates'}\n\n`;
+    text += `Order ID:\n${orderId}`;
 
     setWaOrderText(text);
     setWaModalOpen(true);

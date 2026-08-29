@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaWhatsapp, FaCheck, FaHeart, FaRegHeart, FaStar, FaMagic, FaGift, FaEdit, FaRibbon, FaCalendarAlt, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaFileAlt, FaTimes } from 'react-icons/fa';
 import WhatsAppModal from './WhatsAppModal';
 
-export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = false, hideWhatsApp = false, hideExtraOptions = false, onAddToCart }) => {
+export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = true, hideWhatsApp = false, hideExtraOptions = false, onAddToCart }) => {
   const [customName, setCustomName] = useState('');
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -33,16 +33,22 @@ export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = fals
   const ingredients = product.ingredients || product.materials;
   const rating = product.rating || 5.0;
   const reviewsCount = product.reviewsCount || 58;
-  const price = product.price;
   const availability = product.availability || 'In Stock (Made to Order)';
 
   const handleWhatsAppClick = () => {
-    let msg = `Hi Divya Handcrafts! I want to order *${name}*`;
-    if (price) msg += ` (₹${price})`;
-    if (customName) msg += `\n- Custom Name: ${customName}`;
-    if (selectedPhoto) msg += `\n- Photo Attached: ${selectedPhoto.name}`;
-    msg += `\n- Quantity: ${quantity}`;
-    msg += `\nPlease guide me on customization and ordering!`;
+    const randomDigits = Math.floor(100000 + Math.random() * 900000);
+    const orderId = `DH-${randomDigits}`;
+
+    let msg = `NEW ORDER – DIYA HANDCRAFTS\n\n`;
+    msg += `Product:\n${name}\n\n`;
+    msg += `Quantity:\n${quantity}\n\n`;
+    msg += `Custom Name / Title:\n${customName || 'Birthday Gifts'}\n\n`;
+    msg += `Customization:\n${shortDesc || 'Personalized handcrafted order'}\n\n`;
+    if (selectedPhoto) {
+      msg += `CUSTOMER CUSTOMIZATION PHOTO:\n[${selectedPhoto.name}]\n\n`;
+    }
+    msg += `Order ID:\n${orderId}`;
+
     window.open(`https://wa.me/917981664314?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
@@ -284,36 +290,23 @@ const MasterCategoryCustomizer = ({
       return;
     }
 
-    let text = `✨ *Custom Order - ${title} - Divya Handcrafts* ✨\n`;
-    text += `----------------------------------------\n`;
-    text += `🛍️ *Selected Products (${selectedItems.length}):*\n`;
+    const randomDigits = Math.floor(100000 + Math.random() * 900000);
+    const orderId = `DH-${randomDigits}`;
+
+    let text = `NEW ORDER – DIYA HANDCRAFTS\n\n`;
+    text += `Product:\n`;
     selectedItems.forEach((item, idx) => {
-      text += `${idx + 1}. ${item.name}\n`;
+      text += `${item.name}${idx < selectedItems.length - 1 ? ', ' : ''}`;
     });
-    if (boxSize) text += `- Size / Pack: ${boxSize}\n`;
-    if (packagingStyle) text += `- Packaging Style: ${packagingStyle}\n`;
-    if (ribbonColor && ribbonColor !== 'None') text += `- Ribbon Color: ${ribbonColor}\n`;
-    if (occasion && occasion !== 'None') text += `- Occasion: ${occasion}\n`;
-
-    if (customerName) {
-      text += `\n👤 *Customer Contact:*\n`;
-      text += `- Name: ${customerName}\n`;
-      if (customerPhone) text += `- Phone: ${customerPhone}\n`;
-      if (customerWhatsApp) text += `- WhatsApp: ${customerWhatsApp}\n`;
-    }
-
-    if (deliveryDate || deliveryAddress) {
-      text += `\n📍 *Delivery Details:*\n`;
-      if (deliveryDate) text += `- Preferred Date: ${deliveryDate}\n`;
-      if (deliveryAddress) text += `- Address: ${deliveryAddress}\n`;
-    }
-
-    if (orderNotes) {
-      text += `\n📝 *Instructions:* "${orderNotes}"\n`;
-    }
-
-    text += `----------------------------------------\n`;
-    text += `*Made With Love, Made For You - Divya Handcrafts*`;
+    text += `\n\nQuantity:\n${selectedItems.length}\n\n`;
+    text += `Custom Name / Title:\n${customerName || title}\n\n`;
+    let customDesc = [];
+    if (boxSize) customDesc.push(`Size: ${boxSize}`);
+    if (packagingStyle) customDesc.push(`Packaging: ${packagingStyle}`);
+    if (occasion && occasion !== 'None') customDesc.push(`Occasion: ${occasion}`);
+    if (orderNotes) customDesc.push(`Notes: ${orderNotes}`);
+    text += `Customization:\n${customDesc.length > 0 ? customDesc.join(', ') : 'Custom Handcrafted Order'}\n\n`;
+    text += `Order ID:\n${orderId}`;
 
     setWaOrderText(text);
     setWaModalOpen(true);

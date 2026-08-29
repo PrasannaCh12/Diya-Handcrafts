@@ -8,18 +8,26 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onUpdateQty, onRemoveItem }) =
 
   if (!isOpen) return null;
 
-  const subtotal = cartItems.reduce((acc, item) => acc + (item.price || 0) * item.quantity, 0);
+  const totalQuantity = cartItems.reduce((acc, item) => acc + (item.quantity || 1), 0);
 
   const handleCheckoutClick = () => {
-    let text = `✨ *New Shopping Bag Order - Divya Handcrafts* ✨\n\n`;
+    const randomDigits = Math.floor(100000 + Math.random() * 900000);
+    const orderId = `DH-${randomDigits}`;
+
+    let text = `NEW ORDER – DIYA HANDCRAFTS\n\n`;
+    text += `Product:\n`;
     cartItems.forEach((item, idx) => {
-      text += `${idx + 1}. *${item.name || item.title}*\n`;
-      if (item.selectedSize) text += `   - Size: ${item.selectedSize}\n`;
-      if (item.selectedColor) text += `   - Theme: ${item.selectedColor}\n`;
-      text += `   - Qty: ${item.quantity} x ₹${(item.price || 0).toLocaleString()} = ₹${((item.price || 0) * item.quantity).toLocaleString()}\n\n`;
+      text += `${item.name || item.title}${idx < cartItems.length - 1 ? ', ' : ''}`;
     });
-    text += `*Total Order Value:* ₹${subtotal.toLocaleString()}\n\n`;
-    text += `Hi Divya Handcrafts! I would like to place this order. Please send payment & dispatch details.`;
+    text += `\n\nQuantity:\n${totalQuantity}\n\n`;
+    text += `Custom Name / Title:\nHandcrafted Selection\n\n`;
+    let opts = [];
+    cartItems.forEach((item) => {
+      if (item.selectedSize) opts.push(`${item.name || item.title}: Size ${item.selectedSize}`);
+      if (item.customName) opts.push(`${item.name || item.title}: Custom Name ${item.customName}`);
+    });
+    text += `Customization:\n${opts.length > 0 ? opts.join(', ') : 'Shopping Bag Order'}\n\n`;
+    text += `Order ID:\n${orderId}`;
 
     setWaOrderText(text);
     setWaModalOpen(true);
@@ -77,16 +85,15 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onUpdateQty, onRemoveItem }) =
                     </button>
                   </div>
 
-                  {(item.selectedSize || item.selectedColor) && (
+                  {(item.selectedSize || item.selectedColor || item.customName) && (
                     <div className="cart-item-opts">
                       {item.selectedSize && <span className="meta-pill">Size: {item.selectedSize}</span>}
                       {item.selectedColor && <span className="meta-pill">Theme: {item.selectedColor}</span>}
+                      {item.customName && <span className="meta-pill">Name: {item.customName}</span>}
                     </div>
                   )}
 
                   <div className="cart-item-footer-row">
-                    <div className="cart-item-price">₹{((item.price || 0) * item.quantity).toLocaleString()}</div>
-
                     <div className="mini-qty-counter">
                       <button 
                         type="button" 
@@ -110,12 +117,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onUpdateQty, onRemoveItem }) =
         {/* Drawer Fixed Footer */}
         {cartItems.length > 0 && (
           <div className="cart-drawer-footer">
-            <div className="cart-subtotal-row">
-              <span className="subtotal-label">Subtotal Amount:</span>
-              <span className="subtotal-val">₹{subtotal.toLocaleString()}</span>
-            </div>
-            
-            <p className="shipping-note">✨ Taxes included. Express dispatch pan-India & global.</p>
+            <p className="shipping-note">✨ Made to Order. Express dispatch pan-India & global.</p>
 
             <button
               onClick={handleCheckoutClick}
@@ -123,7 +125,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onUpdateQty, onRemoveItem }) =
               style={{ width: '100%', marginTop: '0.85rem', padding: '0.9rem' }}
               type="button"
             >
-              <FaWhatsapp /> Checkout via WhatsApp <FaArrowRight />
+              <FaWhatsapp /> Order via WhatsApp <FaArrowRight />
             </button>
           </div>
         )}
