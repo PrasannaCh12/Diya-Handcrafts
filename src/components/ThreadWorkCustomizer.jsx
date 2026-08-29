@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { FaWhatsapp, FaCheck, FaHeart, FaStar, FaMagic, FaGift, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCalendarAlt, FaClock, FaGem, FaChevronDown, FaChevronUp, FaTimes, FaChevronLeft, FaChevronRight, FaSearchPlus, FaArrowRight } from 'react-icons/fa';
 import WhatsAppModal from './WhatsAppModal';
+import { getStoredProducts, subscribeToDataStore } from '../services/adminDataStore';
+import { getImageUrl } from '../utils/imageUtils';
 
 export const THREADWORK_DESIGNS = [
   {
@@ -295,8 +297,8 @@ export const ProductDetailsModal = ({ product, isOpen, onClose }) => {
           {/* Left Column: Large Product Image Gallery */}
           <div className="modal-image-col">
             <div className="modal-img-wrap">
-              <img src={currentImage} alt={title} className="modal-main-img" />
-              <div className="modal-img-badge">✨ Handmade Studio Piece</div>
+              <img src={getImageUrl(currentImage)} alt={title} className="modal-main-img" />
+              <div className="modal-img-badge">✨ Handmade Studio Piece ({imageList.length} Photos)</div>
             </div>
 
             {/* Thumbnail Row if multiple images */}
@@ -309,7 +311,7 @@ export const ProductDetailsModal = ({ product, isOpen, onClose }) => {
                     className={`modal-thumb-btn ${idx === activeImgIndex ? 'active' : ''}`}
                     onClick={() => setActiveImgIndex(idx)}
                   >
-                    <img src={img} alt={`Thumb ${idx + 1}`} />
+                    <img src={getImageUrl(img)} alt={`Thumb ${idx + 1}`} />
                   </button>
                 ))}
               </div>
@@ -435,7 +437,7 @@ const ThreadWorkCard = ({ tw, idx, isSelected, onSelect, onOpenDetailsModal }) =
       <div className="flavor-img-wrap">
         {!imgLoaded && <div className="skeleton-img-placeholder skeleton-shimmer" />}
         <img 
-          src={tw.image} 
+          src={getImageUrl(tw.image || (tw.images && tw.images[0]))} 
           alt={tw.name} 
           className={`flavor-thumb-img ${imgLoaded ? 'loaded' : 'loading'}`}
           loading="lazy"
@@ -443,6 +445,11 @@ const ThreadWorkCard = ({ tw, idx, isSelected, onSelect, onOpenDetailsModal }) =
           onLoad={() => setImgLoaded(true)}
           onError={() => setImgLoaded(true)}
         />
+        {Array.isArray(tw.images) && tw.images.length > 1 && (
+          <span style={{ position: 'absolute', bottom: '8px', right: '8px', background: 'rgba(0,0,0,0.72)', color: '#FFF', fontSize: '0.72rem', fontWeight: 700, padding: '2px 8px', borderRadius: '50px', backdropFilter: 'blur(4px)' }}>
+            🖼️ {tw.images.length} Photos
+          </span>
+        )}
       </div>
 
       <div className="flavor-content">
@@ -472,7 +479,34 @@ const ThreadWorkCard = ({ tw, idx, isSelected, onSelect, onOpenDetailsModal }) =
   );
 };
 
+export const getThreadWorkDesigns = () => {
+  const stored = getStoredProducts();
+  const threadWorkFromStore = stored.filter(
+    (p) => (p.category === 'Thread Work' || p.category === 'Thread Work Style' || p.category === 'Wedding & Marriage Items') && p.status !== 'INACTIVE'
+  );
+
+  if (threadWorkFromStore.length > 0) {
+    return threadWorkFromStore.map((p) => ({
+      ...p,
+      icon: p.icon || '🧵',
+      desc: p.shortDesc || p.desc || p.description || 'Luxurious handcrafted silk thread bangle set.',
+      images: Array.isArray(p.images) && p.images.length > 0 ? p.images : (p.image ? [p.image] : ['/blue_peacock_bangles.jpg'])
+    }));
+  }
+
+  return THREADWORK_DESIGNS;
+};
+
 const ThreadWorkCustomizer = ({ onSelectProduct }) => {
+  const [designsList, setDesignsList] = useState(() => getThreadWorkDesigns());
+
+  useEffect(() => {
+    const unsub = subscribeToDataStore(() => {
+      setDesignsList(getThreadWorkDesigns());
+    });
+    return unsub;
+  }, []);
+
   // Customization Choice State (Single radio selection by default)
   const [selectedDesign, setSelectedDesign] = useState('');
   const [wristSize, setWristSize] = useState('None');
@@ -651,7 +685,7 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
               </div>
 
               <div className="tw-5col-grid">
-                {THREADWORK_DESIGNS.map((tw, idx) => {
+                {designsList.map((tw, idx) => {
                   const isSelected = selectedDesign === tw.name;
                   return (
                     <ThreadWorkCard

@@ -248,7 +248,12 @@ const AdminProducts = () => {
                         />
                         <div>
                           <div style={{ fontWeight: 700, color: '#2D2523' }}>{p.name}</div>
-                          {p.rating && <span style={{ fontSize: '0.75rem', color: '#D97706' }}>★ {p.rating}</span>}
+                          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '2px' }}>
+                            {p.rating && <span style={{ fontSize: '0.75rem', color: '#D97706' }}>★ {p.rating}</span>}
+                            <span style={{ fontSize: '0.72rem', background: '#FFFDF5', border: '1px solid #C89B3C', color: '#C89B3C', padding: '1px 6px', borderRadius: '4px', fontWeight: 600 }}>
+                              🖼️ {Array.isArray(p.images) && p.images.length > 0 ? p.images.length : (p.image ? 1 : 0)} Images
+                            </span>
+                          </div>
                         </div>
                       </td>
 

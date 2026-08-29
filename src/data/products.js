@@ -1,22 +1,52 @@
 export const PRODUCTS = [
-  // 💍 BRIDAL BANGLES
+  // 💍 BRIDAL BANGLES & THREAD WORK STYLES
   {
-    id: 'bangle-01',
-    name: 'Royal Zardosi & Velvet Bridal Bangle Set',
-    category: 'Thread Work',
+    id: 'tw-bridal-red',
+    name: 'Royal Peacock Silk Thread Bridal Bangle Set',
+    category: 'Thread Work Style',
     price: 1899,
-    image: '/bridal_bangle_set.jpg',
-    images: ['/bridal_bangle_set.jpg'],
-    shortDesc: 'Bespoke royal red velvet bangles handcrafted with intricate zardosi, pearl cluster latkans, and 24k gold leaf foil accents.',
-    description: 'Designed exclusively for the modern bride, this full bridal set features 44 meticulously handcrafted silk velvet bangles, antique gold beaded Kada bangles, and pearl drop tassels. Customized to match your wedding lehenga or saree colors.',
-    materials: 'Silk Thread & Velvet Base, 24k Gold Polish Beads, Glass Kundan Stones, Pearl Cluster Tassels',
+    image: '/blue_peacock_bangles.jpg',
+    images: [
+      '/blue_peacock_bangles.jpg',
+      '/bridal_bangle_set.jpg',
+      '/emerald_peacock_bangles.png',
+      '/royal_emerald_peacock_set.jpg',
+      '/multicolor_bangles_collection.jpg',
+      '/lotus_kundan_bangles.png',
+      '/purple_velvet_bangles.jpg',
+      '/silk_thread_kundan_bangles.jpg'
+    ],
+    shortDesc: 'Luxurious handcrafted royal blue silk thread bridal bangles featuring antique peacock motifs, premium kundan stones, sparkling crystals, and traditional temple-inspired detailing.',
+    description: 'Designed exclusively for festive celebrations and bridal wear, featuring meticulously handcrafted silk thread wrapping, authentic Kundan stone borders, and rich gold accents.',
+    materials: 'Royal Blue Silk Thread, Antique Gold Peacock Motifs, Hand-set Kundan Stones & Crystals',
     processingTime: '3 – 5 Business Days (Handcrafted to Order)',
-    careInstructions: 'Keep in a dry velvet pouch or airtight box. Avoid moisture, hairsprays, and harsh perfumes.',
+    careInstructions: 'Keep in an airtight box or velvet pouch. Avoid moisture, hairsprays, and harsh perfumes.',
     customizations: {
       sizes: ['2.2', '2.4', '2.6', '2.8', 'Custom Wrist Measure'],
-      colors: ['Deep Royal Red', 'Blush Rose', 'Emerald Green', 'Maroon & Gold']
+      colors: ['Royal Peacock Blue', 'Emerald Green', 'Ruby Red', 'Gold & Pearl']
     },
-    specs: ['Silk Thread & Velvet Base', '24k Gold Polish Beads', 'Pearl Cluster Latkan Included', 'Hypoallergenic & Comfortable']
+    specs: [
+      '100% Hand-embroidered Peacock Motifs & Silk Threadwork',
+      'Hand-set Kundan Stones & Sparkling Crystals',
+      'Custom Bridal Set of 24 to 44 Bangles'
+    ]
+  },
+  {
+    id: 'tw-purple-velvet',
+    name: 'Royal Emerald Coin Silk Thread Bridal Bangle Set',
+    category: 'Thread Work Style',
+    price: 1699,
+    image: '/emerald_coin_bangles.jpg',
+    images: [
+      '/emerald_coin_bangles.jpg',
+      '/emerald_peacock_bangles.png',
+      '/royal_emerald_peacock_set.jpg',
+      '/purple_velvet_bangles.jpg'
+    ],
+    shortDesc: 'Handcrafted emerald green silk thread bridal bangles featuring antique gold coin motifs and ruby-red stones.',
+    description: 'Handcrafted emerald green silk thread bridal bangles featuring antique gold coin motifs, ruby-red stones, crystal embellishments, and traditional South Indian temple-inspired detailing.',
+    materials: 'Emerald Green Silk Thread, Antique Temple Coins, Ruby Kundan Crystals',
+    specs: ['Authentic Temple Coin Motifs', 'Premium Emerald Green Resham Thread Wrapping']
   },
   {
     id: 'bangle-02',

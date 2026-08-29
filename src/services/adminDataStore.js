@@ -88,13 +88,15 @@ export const getStoredProducts = () => {
   } catch (e) {
     console.error('Error reading products data:', e);
   }
-  // Fallback to initial PRODUCTS array with default status
+  // Fallback to initial PRODUCTS array with default status and normalized images
   const normalized = PRODUCTS.map((p) => ({
     ...p,
     status: p.status || 'ACTIVE',
     stockQuantity: p.stockQuantity ?? (p.availability === 'Out of Stock' ? 0 : 25),
     stockStatus: p.stockStatus || (p.availability === 'Out of Stock' ? 'Out of Stock' : 'In Stock'),
     sku: p.sku || `SKU-${p.id.toUpperCase()}`,
+    image: p.image || (Array.isArray(p.images) && p.images[0]) || '',
+    images: Array.isArray(p.images) && p.images.length > 0 ? p.images : (p.image ? [p.image] : []),
     customFields: p.customFields || [],
     createdAt: p.createdAt || '2026-01-01'
   }));

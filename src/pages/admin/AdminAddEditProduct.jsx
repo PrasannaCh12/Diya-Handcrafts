@@ -88,46 +88,101 @@ const AdminAddEditProduct = () => {
     }
   }, [id, isEdit]);
 
-  // Persistent Image File Upload Handler
+  // Persistent Multi-Image File Upload Handler
   const [isUploadingImage, setIsUploadingImage] = useState(false);
 
-  const handleImageFileSelect = (e) => {
-    const file = e.target.files && e.target.files[0];
-    if (!file) return;
+  const handleMultipleImagesSelect = (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
 
-    // Validate file type
     const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
-    if (!validTypes.includes(file.type.toLowerCase())) {
-      alert('Unsupported file type. Please upload a JPG, PNG, or WEBP image.');
-      return;
+    const validFiles = files.filter(f => validTypes.includes(f.type.toLowerCase()) && f.size <= 5 * 1024 * 1024);
+
+    if (validFiles.length < files.length) {
+      alert('Some files were skipped because they are invalid format or exceed 5MB size limit.');
     }
 
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      alert('File size exceeds 5MB limit. Please select a smaller image.');
-      return;
-    }
+    if (!validFiles.length) return;
 
     setIsUploadingImage(true);
+    let readCount = 0;
+    const newUrls = [];
+
+    validFiles.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        newUrls.push(event.target.result);
+        readCount++;
+        if (readCount === validFiles.length) {
+          setFormData((prev) => {
+            const currentList = Array.isArray(prev.images) && prev.images.length > 0 ? prev.images : (prev.image ? [prev.image] : []);
+            const updatedImages = [...currentList, ...newUrls];
+            const mainImg = prev.image || updatedImages[0] || '';
+            setImagePreviewUrl(mainImg);
+            return {
+              ...prev,
+              image: mainImg,
+              images: updatedImages
+            };
+          });
+          setIsUploadingImage(false);
+        }
+      };
+      reader.onerror = () => {
+        readCount++;
+        if (readCount === validFiles.length) setIsUploadingImage(false);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Reset input value so same files can be re-selected if needed
+    e.target.value = '';
+  };
+
+  // Replace specific image by index
+  const handleReplaceSingleImage = (index, file) => {
+    if (!file) return;
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
+    if (!validTypes.includes(file.type.toLowerCase())) {
+      alert('Unsupported file format.');
+      return;
+    }
     const reader = new FileReader();
-
     reader.onload = (event) => {
-      const permanentDataUrl = event.target.result;
-      setImagePreviewUrl(permanentDataUrl);
-      setFormData((prev) => ({
-        ...prev,
-        image: permanentDataUrl,
-        images: [permanentDataUrl, ...(prev.images || [])]
-      }));
-      setIsUploadingImage(false);
+      const newUrl = event.target.result;
+      setFormData((prev) => {
+        const copy = [...(prev.images || [])];
+        copy[index] = newUrl;
+        const main = (index === 0 || prev.image === prev.images[index]) ? newUrl : prev.image;
+        setImagePreviewUrl(main);
+        return { ...prev, image: main, images: copy };
+      });
     };
-
-    reader.onerror = () => {
-      alert('Failed to read image file. Please try again.');
-      setIsUploadingImage(false);
-    };
-
     reader.readAsDataURL(file);
+  };
+
+  // Delete specific image by index
+  const handleDeleteImage = (index) => {
+    setFormData((prev) => {
+      const currentList = prev.images || [];
+      if (currentList.length <= 1) {
+        if (!confirm('This product must have at least 1 image. Are you sure you want to delete it?')) return prev;
+      }
+      const copy = currentList.filter((_, idx) => idx !== index);
+      const newMain = copy[0] || '';
+      setImagePreviewUrl(newMain);
+      return { ...prev, image: newMain, images: copy };
+    });
+  };
+
+  // Set specific image as Main Image
+  const handleSetMainImage = (index) => {
+    setFormData((prev) => {
+      const targetImg = prev.images[index];
+      if (!targetImg) return prev;
+      setImagePreviewUrl(targetImg);
+      return { ...prev, image: targetImg };
+    });
   };
 
   // Add Custom Field Handler
@@ -273,34 +328,109 @@ const AdminAddEditProduct = () => {
           </div>
         </div>
 
-        {/* SECTION 2: Image Upload */}
+        {/* SECTION 2: Image Upload & Unlimited Multi-Image Gallery */}
         <div style={{ background: '#FFFFFF', padding: '1.8rem', borderRadius: '20px', border: '1px solid rgba(212, 175, 55, 0.2)' }}>
-          <h3 style={{ fontSize: '1.1rem', fontWeight: 700, margin: '0 0 1.2rem 0', color: '#2D2523' }}>🖼️ Product Images</h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.2rem' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, margin: 0, color: '#2D2523' }}>
+              🖼️ Product / Label Images ({formData.images?.length || 0} Images)
+            </h3>
+            <span style={{ fontSize: '0.8rem', fontWeight: 700, background: 'rgba(200,155,60,0.12)', color: '#C89B3C', padding: '4px 12px', borderRadius: '50px' }}>
+              Unlimited Support
+            </span>
+          </div>
 
-          <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {/* Image Upload Drop Zone */}
-            <div style={{ flex: '1 1 260px', border: '2px dashed #C89B3C', background: '#FFFDF9', borderRadius: '16px', padding: '2rem 1.5rem', textAlign: 'center', position: 'relative' }}>
+            <div style={{ border: '2px dashed #C89B3C', background: '#FFFDF9', borderRadius: '16px', padding: '2rem 1.5rem', textAlign: 'center', position: 'relative' }}>
               <FaCloudUploadAlt style={{ fontSize: '2.5rem', color: '#C89B3C', marginBottom: '0.5rem' }} />
-              <div style={{ fontWeight: 700, color: '#2D2523', fontSize: '0.9rem' }}>
-                {isUploadingImage ? '⏳ Processing & Converting Image...' : 'Drag & drop image file or click to select'}
+              <div style={{ fontWeight: 700, color: '#2D2523', fontSize: '0.95rem' }}>
+                {isUploadingImage ? '⏳ Processing & Converting Images...' : 'Drag & drop image files or click to select multiple'}
               </div>
-              <span style={{ fontSize: '0.75rem', color: '#7A6965' }}>Supports JPG, PNG, WEBP files (Max 5MB)</span>
+              <span style={{ fontSize: '0.78rem', color: '#7A6965' }}>Select 1, 4, 8, 10, 20+ JPG, PNG, WEBP files (Max 5MB each)</span>
               <input
                 type="file"
                 accept="image/*"
-                onChange={handleImageFileSelect}
+                multiple
+                onChange={handleMultipleImagesSelect}
                 disabled={isUploadingImage}
                 style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0, cursor: 'pointer' }}
               />
             </div>
 
-            {/* Image Preview Box */}
-            {imagePreviewUrl && (
-              <div style={{ position: 'relative', width: '130px', height: '130px', borderRadius: '16px', overflow: 'hidden', border: '2px solid #C89B3C' }}>
-                <img src={imagePreviewUrl} alt="Main Product Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                <span style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(200,155,60,0.9)', color: '#FFF', fontSize: '0.68rem', fontWeight: 700, textAlign: 'center', padding: '3px 0' }}>
-                  Main Image
-                </span>
+            {/* Unlimited Multi-Image Cards Grid */}
+            {Array.isArray(formData.images) && formData.images.length > 0 && (
+              <div>
+                <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#5A4A42', marginBottom: '10px' }}>
+                  Uploaded Gallery ({formData.images.length} item{formData.images.length > 1 ? 's' : ''}):
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: '14px' }}>
+                  {formData.images.map((img, idx) => {
+                    const isMain = formData.image === img || (idx === 0 && !formData.image);
+                    return (
+                      <div
+                        key={idx}
+                        style={{
+                          position: 'relative',
+                          borderRadius: '12px',
+                          overflow: 'hidden',
+                          border: isMain ? '2.5px solid #C89B3C' : '1px solid #E5DFD5',
+                          background: '#FFF',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+                        }}
+                      >
+                        <div style={{ height: '110px', overflow: 'hidden', background: '#F8F6F2' }}>
+                          <img src={getImageUrl(img)} alt={`Gallery Image ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        </div>
+
+                        {/* Top Badge */}
+                        <div style={{ position: 'absolute', top: '6px', left: '6px' }}>
+                          {isMain ? (
+                            <span style={{ background: '#C89B3C', color: '#FFF', fontSize: '0.65rem', fontWeight: 700, padding: '2px 6px', borderRadius: '4px' }}>
+                              ★ Main
+                            </span>
+                          ) : (
+                            <span style={{ background: 'rgba(0,0,0,0.5)', color: '#FFF', fontSize: '0.65rem', fontWeight: 600, padding: '2px 6px', borderRadius: '4px' }}>
+                              #{idx + 1}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Action Controls */}
+                        <div style={{ padding: '6px', display: 'flex', flexDirection: 'column', gap: '4px', background: '#FFF' }}>
+                          {!isMain && (
+                            <button
+                              type="button"
+                              onClick={() => handleSetMainImage(idx)}
+                              style={{ background: '#FFFDF5', border: '1px solid #C89B3C', color: '#C89B3C', fontSize: '0.68rem', fontWeight: 700, borderRadius: '4px', padding: '3px 0', cursor: 'pointer' }}
+                            >
+                              Set Main
+                            </button>
+                          )}
+
+                          <div style={{ display: 'flex', gap: '4px' }}>
+                            <label style={{ flex: 1, background: '#F3EFEA', color: '#2D2523', fontSize: '0.68rem', fontWeight: 600, borderRadius: '4px', padding: '3px 0', textAlign: 'center', cursor: 'pointer' }}>
+                              Replace
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleReplaceSingleImage(idx, e.target.files && e.target.files[0])}
+                                style={{ display: 'none' }}
+                              />
+                            </label>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteImage(idx)}
+                              style={{ flex: 1, background: '#FEE2E2', border: 'none', color: '#DC2626', fontSize: '0.68rem', fontWeight: 700, borderRadius: '4px', padding: '3px 0', cursor: 'pointer' }}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>
