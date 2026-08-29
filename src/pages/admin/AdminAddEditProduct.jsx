@@ -88,18 +88,46 @@ const AdminAddEditProduct = () => {
     }
   }, [id, isEdit]);
 
-  // Image File Upload Handler
+  // Persistent Image File Upload Handler
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+
   const handleImageFileSelect = (e) => {
     const file = e.target.files && e.target.files[0];
-    if (file) {
-      const blobUrl = URL.createObjectURL(file);
-      setImagePreviewUrl(blobUrl);
+    if (!file) return;
+
+    // Validate file type
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
+    if (!validTypes.includes(file.type.toLowerCase())) {
+      alert('Unsupported file type. Please upload a JPG, PNG, or WEBP image.');
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File size exceeds 5MB limit. Please select a smaller image.');
+      return;
+    }
+
+    setIsUploadingImage(true);
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      const permanentDataUrl = event.target.result;
+      setImagePreviewUrl(permanentDataUrl);
       setFormData((prev) => ({
         ...prev,
-        image: blobUrl,
-        images: [blobUrl, ...prev.images]
+        image: permanentDataUrl,
+        images: [permanentDataUrl, ...(prev.images || [])]
       }));
-    }
+      setIsUploadingImage(false);
+    };
+
+    reader.onerror = () => {
+      alert('Failed to read image file. Please try again.');
+      setIsUploadingImage(false);
+    };
+
+    reader.readAsDataURL(file);
   };
 
   // Add Custom Field Handler
@@ -253,12 +281,15 @@ const AdminAddEditProduct = () => {
             {/* Image Upload Drop Zone */}
             <div style={{ flex: '1 1 260px', border: '2px dashed #C89B3C', background: '#FFFDF9', borderRadius: '16px', padding: '2rem 1.5rem', textAlign: 'center', position: 'relative' }}>
               <FaCloudUploadAlt style={{ fontSize: '2.5rem', color: '#C89B3C', marginBottom: '0.5rem' }} />
-              <div style={{ fontWeight: 700, color: '#2D2523', fontSize: '0.9rem' }}>Drag & drop image file or click to select</div>
-              <span style={{ fontSize: '0.75rem', color: '#7A6965' }}>Supports JPG, PNG, WEBP files</span>
+              <div style={{ fontWeight: 700, color: '#2D2523', fontSize: '0.9rem' }}>
+                {isUploadingImage ? '⏳ Processing & Converting Image...' : 'Drag & drop image file or click to select'}
+              </div>
+              <span style={{ fontSize: '0.75rem', color: '#7A6965' }}>Supports JPG, PNG, WEBP files (Max 5MB)</span>
               <input
                 type="file"
                 accept="image/*"
                 onChange={handleImageFileSelect}
+                disabled={isUploadingImage}
                 style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0, cursor: 'pointer' }}
               />
             </div>

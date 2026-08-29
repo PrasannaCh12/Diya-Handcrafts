@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaWhatsapp, FaCheck, FaHeart, FaRegHeart, FaStar, FaMagic, FaGift, FaEdit, FaRibbon, FaCalendarAlt, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaFileAlt, FaTimes } from 'react-icons/fa';
 import WhatsAppModal from './WhatsAppModal';
+import { getImageUrl } from '../utils/imageUtils';
 
 export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = true, hideWhatsApp = false, hideExtraOptions = false, onAddToCart }) => {
   const [customName, setCustomName] = useState('');
@@ -48,7 +49,10 @@ export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = true
   const handleWhatsAppClick = () => {
     const randomDigits = Math.floor(100000 + Math.random() * 900000);
     const orderId = `DH-${randomDigits}`;
-    const productImgUrl = window.location.origin + (product?.image || '');
+    const resolvedImg = getImageUrl(product?.image);
+    const productImgUrl = (resolvedImg.startsWith('http://') || resolvedImg.startsWith('https://') || resolvedImg.startsWith('data:'))
+      ? resolvedImg
+      : window.location.origin + resolvedImg;
 
     let msg = `NEW ORDER – DIYA HANDCRAFTS\n\n`;
     msg += `Product:\n${name}\n\n`;
@@ -85,7 +89,7 @@ export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = true
         <div className="modal-two-col-grid">
           {/* Left Column: Single Full-Bleed Product Image Panel */}
           <div className="modal-image-col product-image-panel">
-            <img src={product.image} alt={name} className="modal-main-img" />
+            <img src={getImageUrl(product.image)} alt={name} className="modal-main-img" />
             <div className="modal-img-badge">✨ 100% Handmade Atelier</div>
           </div>
 
@@ -396,7 +400,7 @@ const MasterCategoryCustomizer = ({
                     </div>
 
                     <div className="flavor-img-wrap">
-                      <img src={product.image} alt={`Handcrafted ${product.name} - Diya Handcrafts`} className="flavor-thumb-img" loading="lazy" />
+                      <img src={getImageUrl(product.image)} alt={`Handcrafted ${product.name} - Diya Handcrafts`} className="flavor-thumb-img" loading="lazy" />
                     </div>
 
                     <h4 className="flavor-title">{product.name}</h4>

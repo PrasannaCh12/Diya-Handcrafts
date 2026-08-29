@@ -8,6 +8,7 @@ import {
   restoreProduct,
   subscribeToDataStore
 } from '../../services/adminDataStore';
+import { getImageUrl } from '../../utils/imageUtils';
 import {
   FaPlus,
   FaSearch,
@@ -241,7 +242,7 @@ const AdminProducts = () => {
                       {/* Product Name & Image */}
                       <td style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
                         <img
-                          src={p.image || '/logo192.png'}
+                          src={getImageUrl(p.image)}
                           alt={p.name}
                           style={{ width: '48px', height: '48px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #E5DFD5' }}
                         />

@@ -1,6 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { FaHeart, FaRegHeart, FaShoppingBag, FaStar, FaBolt } from 'react-icons/fa';
 import { PRODUCTS, CATEGORIES } from '../data/products';
+import { getStoredProducts, subscribeToDataStore } from '../services/adminDataStore';
+import { getImageUrl } from '../utils/imageUtils';
 import { ProductDetailsModal } from './ThreadWorkCustomizer';
 import { ResinArtDetailsModal } from './ResinArtCustomizer';
 import { ChocolateDetailsModal } from './ChocolateCustomizer';
@@ -73,7 +75,7 @@ const AnimatedProductCard = ({ product, index, fallbackImg, onOpenDetails, onAdd
       <div className="gallery-img-wrap" onClick={() => onOpenDetails && onOpenDetails(product)}>
         {!imgLoaded && <div className="skeleton-img-placeholder skeleton-shimmer" />}
         <img 
-          src={product.image || fallbackImg} 
+          src={getImageUrl(product.image || fallbackImg)} 
           alt={`Handcrafted ${product.name || 'Artisan Product'} - Diya Handcrafts`} 
           className={`gallery-img ${imgLoaded ? 'loaded' : 'loading'}`}
           loading="lazy"
@@ -161,7 +163,15 @@ const ShopSection = ({ activeCategory, onResetCategory, onAddToCart }) => {
     }, 220);
   };
 
-  const allProducts = Array.isArray(PRODUCTS) ? PRODUCTS : [];
+  const [allProducts, setAllProducts] = useState(() => getStoredProducts());
+
+  useEffect(() => {
+    const unsub = subscribeToDataStore(() => {
+      setAllProducts(getStoredProducts());
+    });
+    return unsub;
+  }, []);
+
   const allCategories = Array.isArray(CATEGORIES) ? CATEGORIES : ['All'];
 
   const filteredProducts = useMemo(() => {

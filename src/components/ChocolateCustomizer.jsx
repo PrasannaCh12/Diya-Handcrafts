@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaWhatsapp, FaCheck, FaHeart, FaStar, FaMagic, FaGift, FaEdit, FaRibbon, FaCalendarAlt, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaFileAlt, FaTimes } from 'react-icons/fa';
 import WhatsAppModal from './WhatsAppModal';
+import { getImageUrl } from '../utils/imageUtils';
 
 export const CHOCOLATE_FLAVORS = [
   {
@@ -162,7 +163,7 @@ export const ChocolateDetailsModal = ({ product, isOpen, onClose }) => {
         <div className="modal-two-col-grid">
           {/* Left Column: Single Full-Bleed Product Image Panel */}
           <div className="modal-image-col product-image-panel">
-            <img src={product.image} alt={name} className="modal-main-img" />
+            <img src={getImageUrl(product.image)} alt={name} className="modal-main-img" />
             <div className="modal-img-badge">✨ Handmade Confectionery</div>
           </div>
 

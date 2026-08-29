@@ -126,6 +126,28 @@ export const PRODUCTS = [
     specs: ['Personalized Photo & Calligraphy Names', 'Decorative Dried Flowers & Crystals', 'Includes Solid Wood Display Stand']
   },
   {
+    id: 'resin-002',
+    name: 'Personalized Resin Valentine’s Day Couple Plaque',
+    category: 'Resin Art',
+    subCategory: 'Personalized Gifts',
+    price: 1999,
+    availability: 'In Stock (Made to Order)',
+    rating: 5.0,
+    reviewsCount: 39,
+    sku: 'SKU-DIY-VAL-001',
+    stockQuantity: 25,
+    status: 'ACTIVE',
+    image: '/personalized_resin_anniversary_plaque.jpg',
+    images: ['/personalized_resin_anniversary_plaque.jpg'],
+    shortDesc: 'A romantic handcrafted resin plaque featuring personalized photo, couple names, and metallic gold leaf embellishments for Valentine’s Day & anniversaries.',
+    description: 'Celebrate your unique love story with this personalized handcrafted resin couple plaque. Featuring a high-clarity crystal resin base embedded with preserved botanicals, custom calligraphy names, and a central photo cutout.',
+    perfectFor: ['✨ Valentine’s Day Gifts', '✨ Couple Gifts', '✨ Anniversary Keepsakes', '✨ Personalized Gifts'],
+    customizationDetails: ['Couple Names', 'Upload Photo', 'Anniversary Date'],
+    customNamePlaceholder: 'e.g. Rahul & Priya / Couple Names',
+    features: ['Handmade Resin Art', 'Personalized Photo & Calligraphy', 'Preserved Botanicals & Gold Leaf', 'Includes Wooden Display Easel'],
+    materials: 'High-clarity epoxy resin, photo print, dried flowers, gold leaf foil, wooden easel stand.'
+  },
+  {
     id: 'resin-01',
     name: 'Preserved Floral Resin Photo Frame Magnets',
     category: 'Resin Art',

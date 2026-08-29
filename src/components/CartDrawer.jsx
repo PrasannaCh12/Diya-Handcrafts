@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaTimes, FaShoppingBag, FaTrash, FaWhatsapp, FaArrowRight } from 'react-icons/fa';
 import WhatsAppModal from './WhatsAppModal';
+import { getImageUrl } from '../utils/imageUtils';
 
 const CartDrawer = ({ isOpen, onClose, cartItems, onUpdateQty, onRemoveItem }) => {
   const [waModalOpen, setWaModalOpen] = useState(false);
@@ -64,7 +65,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onUpdateQty, onRemoveItem }) =
                 {/* Product Thumbnail Box */}
                 <div className="cart-thumb-wrap">
                   <img 
-                    src={item.image} 
+                    src={getImageUrl(item.image)} 
                     alt={item.name || item.title} 
                     className="cart-thumb-img"
                     loading="lazy"
