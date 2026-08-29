@@ -83,14 +83,9 @@ export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = true
         </button>
 
         <div className="modal-two-col-grid">
-          {/* Left Column: Two-Layer Product Image Panel */}
+          {/* Left Column: Single Full-Bleed Product Image Panel */}
           <div className="modal-image-col product-image-panel">
-            <div className="product-image-background">
-              <img src={product.image} alt="" />
-            </div>
-            <div className="product-image-main">
-              <img src={product.image} alt={name} className="modal-main-img" />
-            </div>
+            <img src={product.image} alt={name} className="modal-main-img" />
             <div className="modal-img-badge">✨ 100% Handmade Atelier</div>
           </div>
 
@@ -1086,62 +1081,35 @@ const MasterCategoryCustomizer = ({
           position: relative;
           width: 50%;
           height: 100%;
-          min-height: 0;
+          min-height: 100%;
           background: #FAF8F5;
           border-right: 1px solid rgba(212, 175, 55, 0.2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
           overflow: hidden;
           padding: 0 !important;
           margin: 0 !important;
           box-sizing: border-box;
         }
 
-        .product-image-background {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
-          z-index: 1;
-        }
-
-        .product-image-background img {
+        .modal-main-img,
+        .product-image-panel img {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          filter: blur(14px);
-          transform: scale(1.06);
-          opacity: 0.35;
-          display: block;
-        }
-
-        .product-image-main {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 8px;
-          box-sizing: border-box;
-          z-index: 2;
-        }
-
-        .modal-main-img,
-        .product-image-main img {
-          width: 100%;
-          height: 100%;
-          max-width: 100%;
-          max-height: 100%;
-          object-fit: contain;
           object-position: center;
           display: block;
-          filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.12));
+          padding: 0 !important;
+          margin: 0 !important;
+          border: none !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
           transition: transform 0.4s ease;
         }
 
         .modal-main-img:hover,
-        .product-image-main img:hover {
+        .product-image-panel img:hover {
           transform: scale(1.02);
         }
 
@@ -1158,7 +1126,7 @@ const MasterCategoryCustomizer = ({
           border-radius: 50px;
           border: 1px solid rgba(212, 175, 55, 0.3);
           box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-          z-index: 5;
+          z-index: 10;
         }
 
         .modal-details-col {
