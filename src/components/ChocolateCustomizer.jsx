@@ -160,8 +160,8 @@ export const ChocolateDetailsModal = ({ product, isOpen, onClose }) => {
         </button>
 
         <div className="modal-two-col-grid">
-          {/* Left Column: Full Product Image Section */}
-          <div className="modal-image-col">
+          {/* Left Column: Direct Full-Height Image Panel */}
+          <div className="modal-image-col product-image-panel">
             <img src={product.image} alt={name} className="modal-main-img" />
             <div className="modal-img-badge">✨ Handmade Confectionery</div>
           </div>
@@ -1588,40 +1588,47 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           overflow: hidden;
         }
 
-        .modal-image-col {
+        .modal-image-col,
+        .product-image-panel {
           position: relative;
-          width: 100%;
+          width: 50%;
           height: 100%;
-          background: #FCFAF7;
+          min-height: 100%;
+          background: #FAF8F5;
           border-right: 1px solid rgba(212, 175, 55, 0.2);
           display: flex;
           align-items: center;
           justify-content: center;
           overflow: hidden;
-          padding: 0;
-          margin: 0;
+          padding: 0 !important;
+          margin: 0 !important;
           box-sizing: border-box;
         }
 
-        .modal-main-img {
+        .modal-main-img,
+        .product-image-panel img {
           width: 100%;
           height: 100%;
           object-fit: contain;
           object-position: center;
           display: block;
-          padding: 12px;
-          box-sizing: border-box;
+          padding: 0 !important;
+          margin: 0 !important;
+          border: none !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
           transition: transform 0.4s ease;
         }
 
-        .modal-main-img:hover {
+        .modal-main-img:hover,
+        .product-image-panel img:hover {
           transform: scale(1.02);
         }
 
         .modal-img-badge {
           position: absolute;
-          bottom: 16px;
-          left: 16px;
+          bottom: 20px;
+          left: 20px;
           background: rgba(255, 255, 255, 0.94);
           backdrop-filter: blur(4px);
           color: #2D2523;
