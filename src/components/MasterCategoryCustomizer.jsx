@@ -1023,10 +1023,10 @@ const MasterCategoryCustomizer = ({
           border-radius: 24px;
           border: 1px solid rgba(212, 175, 55, 0.25);
           box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
-          width: 100%;
-          max-width: 1020px;
-          height: 92vh;
-          max-height: 92vh;
+          width: min(1200px, 95vw);
+          max-width: 1200px;
+          height: 95vh;
+          max-height: 95vh;
           position: relative;
           overflow: hidden;
           animation: modalFadeScale 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -1071,7 +1071,8 @@ const MasterCategoryCustomizer = ({
 
         .modal-two-col-grid {
           display: grid;
-          grid-template-columns: 50% 50%;
+          grid-template-columns: 1fr 1fr;
+          width: 100%;
           height: 100%;
           overflow: hidden;
         }
@@ -1079,9 +1080,10 @@ const MasterCategoryCustomizer = ({
         .modal-image-col,
         .product-image-panel {
           position: relative;
-          width: 50%;
+          width: 100%;
           height: 100%;
-          min-height: 100%;
+          min-width: 0;
+          min-height: 0;
           background: #FAF8F5;
           border-right: 1px solid rgba(212, 175, 55, 0.2);
           display: flex;
@@ -1130,10 +1132,14 @@ const MasterCategoryCustomizer = ({
         }
 
         .modal-details-col {
+          width: 100%;
+          height: 100%;
+          min-width: 0;
           padding: 28px 24px;
           display: flex;
           flex-direction: column;
           overflow-y: auto;
+          box-sizing: border-box;
         }
 
         .modal-category-tag {
