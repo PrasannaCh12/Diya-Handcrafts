@@ -1024,9 +1024,9 @@ const MasterCategoryCustomizer = ({
           border: 1px solid rgba(212, 175, 55, 0.25);
           box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
           width: 100%;
-          max-width: 1000px;
-          height: 95vh;
-          max-height: 95vh;
+          max-width: 980px;
+          height: 90vh;
+          max-height: 850px;
           position: relative;
           overflow: hidden;
           animation: modalFadeScale 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -1081,14 +1081,14 @@ const MasterCategoryCustomizer = ({
           position: relative;
           width: 50%;
           height: 100%;
-          min-height: 100%;
+          min-height: 0;
           background: #FAF8F5;
           border-right: 1px solid rgba(212, 175, 55, 0.2);
           display: flex;
           align-items: center;
           justify-content: center;
           overflow: hidden;
-          padding: 0 !important;
+          padding: 16px !important;
           margin: 0 !important;
           box-sizing: border-box;
         }
@@ -1097,7 +1097,9 @@ const MasterCategoryCustomizer = ({
         .product-image-panel img {
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
           object-position: center;
           display: block;
           padding: 0 !important;

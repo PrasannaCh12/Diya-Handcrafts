@@ -1593,14 +1593,14 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           position: relative;
           width: 50%;
           height: 100%;
-          min-height: 100%;
+          min-height: 0;
           background: #FAF8F5;
           border-right: 1px solid rgba(212, 175, 55, 0.2);
           display: flex;
           align-items: center;
           justify-content: center;
           overflow: hidden;
-          padding: 0 !important;
+          padding: 16px !important;
           margin: 0 !important;
           box-sizing: border-box;
         }
@@ -1609,7 +1609,9 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
         .product-image-panel img {
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
           object-position: center;
           display: block;
           padding: 0 !important;
