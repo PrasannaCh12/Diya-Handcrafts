@@ -1609,7 +1609,7 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
         .product-image-panel img {
           width: 100%;
           height: 100%;
-          object-fit: contain;
+          object-fit: cover;
           object-position: center;
           display: block;
           padding: 0 !important;
