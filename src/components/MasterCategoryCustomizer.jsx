@@ -1029,9 +1029,9 @@ const MasterCategoryCustomizer = ({
           border: 1px solid rgba(212, 175, 55, 0.25);
           box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
           width: 100%;
-          max-width: 980px;
-          height: 90vh;
-          max-height: 850px;
+          max-width: 1020px;
+          height: 92vh;
+          max-height: 92vh;
           position: relative;
           overflow: hidden;
           animation: modalFadeScale 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -1108,9 +1108,9 @@ const MasterCategoryCustomizer = ({
           width: 100%;
           height: 100%;
           object-fit: cover;
-          filter: blur(18px);
-          transform: scale(1.08);
-          opacity: 0.45;
+          filter: blur(14px);
+          transform: scale(1.06);
+          opacity: 0.35;
           display: block;
         }
 
@@ -1122,7 +1122,7 @@ const MasterCategoryCustomizer = ({
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 24px;
+          padding: 8px;
           box-sizing: border-box;
           z-index: 2;
         }
@@ -1136,7 +1136,7 @@ const MasterCategoryCustomizer = ({
           object-fit: contain;
           object-position: center;
           display: block;
-          filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
+          filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.12));
           transition: transform 0.4s ease;
         }
 

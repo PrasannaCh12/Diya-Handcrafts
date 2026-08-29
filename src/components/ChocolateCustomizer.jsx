@@ -1620,9 +1620,9 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          filter: blur(18px);
-          transform: scale(1.08);
-          opacity: 0.45;
+          filter: blur(14px);
+          transform: scale(1.06);
+          opacity: 0.35;
           display: block;
         }
 
@@ -1634,7 +1634,7 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 24px;
+          padding: 8px;
           box-sizing: border-box;
           z-index: 2;
         }
