@@ -5,6 +5,7 @@ import WhatsAppModal from './WhatsAppModal';
 export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = true, hideWhatsApp = false, hideExtraOptions = false, onAddToCart }) => {
   const [customName, setCustomName] = useState('');
   const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [photoPreviewUrl, setPhotoPreviewUrl] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [isWishlisted, setIsWishlisted] = useState(false);
 
@@ -26,26 +27,39 @@ export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = true
 
   if (!isOpen || !product) return null;
 
-  const category = product.category || 'HANDMADE COLLECTION';
-  const name = product.name || 'Handcrafted Product';
-  const shortDesc = product.shortDesc || product.desc || 'Luxury handcrafted product made with high quality materials.';
-  const detailedDesc = product.detailedDesc || product.description || 'Artisanal product crafted with attention to detail and traditional heritage skills.';
-  const ingredients = product.ingredients || product.materials;
-  const rating = product.rating || 5.0;
-  const reviewsCount = product.reviewsCount || 58;
-  const availability = product.availability || 'In Stock (Made to Order)';
+  const category = product?.category || 'HANDMADE COLLECTION';
+  const name = product?.name || 'Handcrafted Product';
+  const shortDesc = product?.shortDesc || product?.desc || 'Luxury handcrafted product made with high quality materials.';
+  const detailedDesc = product?.detailedDesc || product?.description || 'Artisanal product crafted with attention to detail and traditional heritage skills.';
+  const ingredients = product?.ingredients || product?.materials;
+  const rating = product?.rating || 5.0;
+  const reviewsCount = product?.reviewsCount || 58;
+  const price = product?.price;
+  const availability = product?.availability || 'In Stock (Made to Order)';
+
+  const handlePhotoSelect = (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      setSelectedPhoto(file);
+      setPhotoPreviewUrl(URL.createObjectURL(file));
+    }
+  };
 
   const handleWhatsAppClick = () => {
     const randomDigits = Math.floor(100000 + Math.random() * 900000);
     const orderId = `DH-${randomDigits}`;
+    const productImgUrl = window.location.origin + (product?.image || '');
 
     let msg = `NEW ORDER – DIYA HANDCRAFTS\n\n`;
     msg += `Product:\n${name}\n\n`;
     msg += `Quantity:\n${quantity}\n\n`;
-    msg += `Custom Name / Title:\n${customName || 'Birthday Gifts'}\n\n`;
-    msg += `Customization:\n${shortDesc || 'Personalized handcrafted order'}\n\n`;
+    msg += `Custom Name / Title:\n${customName || 'Handcrafted Order'}\n\n`;
+    msg += `Customization:\n${shortDesc || 'Personalized order'}\n\n`;
+    if (product?.image) {
+      msg += `PRODUCT IMAGE:\n${productImgUrl}\n\n`;
+    }
     if (selectedPhoto) {
-      msg += `CUSTOMER CUSTOMIZATION PHOTO:\n[${selectedPhoto.name}]\n\n`;
+      msg += `CUSTOMER CUSTOMIZATION PHOTO:\n[Attached: ${selectedPhoto.name}]\n\n`;
     }
     msg += `Order ID:\n${orderId}`;
 
@@ -146,10 +160,16 @@ export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = true
                       type="file"
                       accept="image/*"
                       className="m-file-input"
-                      onChange={(e) => setSelectedPhoto(e.target.files[0])}
+                      onChange={handlePhotoSelect}
                     />
-                    {selectedPhoto && (
-                      <span className="file-selected-name">✓ Selected: {selectedPhoto.name}</span>
+                    {photoPreviewUrl && (
+                      <div className="photo-preview-thumbnail-box" style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '12px', background: '#FFF', padding: '8px', borderRadius: '10px', border: '1px solid #E8C86A' }}>
+                        <img src={photoPreviewUrl} alt="Customer Upload Preview" style={{ width: '54px', height: '54px', objectFit: 'cover', borderRadius: '8px' }} />
+                        <div>
+                          <span className="file-selected-name" style={{ margin: 0, fontWeight: 700 }}>✓ Photo Selected</span>
+                          <span style={{ fontSize: '0.75rem', color: '#7A6965', display: 'block' }}>{selectedPhoto?.name}</span>
+                        </div>
+                      </div>
                     )}
                   </div>
                 </div>
