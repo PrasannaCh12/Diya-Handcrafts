@@ -75,6 +75,31 @@ export const PRODUCTS = [
 
   // 🎨 RESIN ART
   {
+    id: 'resin-00',
+    name: 'Personalized Resin Photo Frame – Happy Birthday',
+    category: 'Resin Art',
+    subCategory: 'Personalized Gifts',
+    price: 1299,
+    availability: 'In Stock (Made to Order)',
+    rating: 5.0,
+    reviewsCount: 58,
+    image: '/personalized_yellow_birthday_resin_frame.jpg',
+    images: ['/personalized_yellow_birthday_resin_frame.jpg'],
+    shortDesc: 'Create beautiful memories with this personalized handmade resin photo frame customized with your favorite photos and name, making it a perfect birthday gift.',
+    description: 'Create beautiful memories with this personalized handmade resin photo frame. This unique photo frame is customized with your favorite photos and name, making it a perfect gift for birthdays and other special occasions.\n\nThe frame features a vibrant yellow resin finish with decorative butterflies, glitter, colorful embellishments, and personalized photographs. It is carefully handmade to create a special keepsake that can be treasured for years.',
+    perfectFor: ['Birthday Gifts', 'Personalized Gifts', 'Friends & Family', "Children's Birthday", 'Anniversary Gifts', 'Special Occasions'],
+    customizationDetails: ['Name', 'Personal Photos', 'Preferred Theme', 'Preferred Colors'],
+    features: ['Handmade Resin Art', 'Personalized with Photos and Name', 'Decorative Glitter & Embellishments', 'Unique Handmade Design', 'Perfect for Gifting', 'Made to Order'],
+    materials: 'High-Clarity Epoxy Resin, High-Definition Photo Prints, Gold Foil, Embellishments, Wooden Easel Stand',
+    processingTime: '3 – 5 Business Days (Made to Order)',
+    careInstructions: 'Wipe clean with a soft dry cloth. Avoid direct high heat.',
+    customizations: {
+      sizes: ['Standard Birthday Frame (8x8")', 'Grand Birthday Display (10x10")'],
+      colors: ['Vibrant Yellow (As Shown)', 'Blush Pink', 'Sky Blue', 'Custom Color']
+    },
+    specs: ['Personalized Name & Photo Print', 'Decorative Butterflies & Embellishments', 'Includes Solid Wood Display Stand']
+  },
+  {
     id: 'resin-01',
     name: 'Preserved Floral Resin Photo Frame Magnets',
     category: 'Resin Art',

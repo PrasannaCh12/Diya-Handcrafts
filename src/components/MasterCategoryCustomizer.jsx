@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { FaWhatsapp, FaCheck, FaHeart, FaRegHeart, FaStar, FaMagic, FaGift, FaEdit, FaRibbon, FaCalendarAlt, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaFileAlt, FaTimes } from 'react-icons/fa';
 import WhatsAppModal from './WhatsAppModal';
 
-export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = false, hideWhatsApp = false, hideExtraOptions = false }) => {
+export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = false, hideWhatsApp = false, hideExtraOptions = false, onAddToCart }) => {
+  const [customName, setCustomName] = useState('');
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const [isWishlisted, setIsWishlisted] = useState(false);
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -26,14 +31,28 @@ export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = fals
   const shortDesc = product.shortDesc || product.desc || 'Luxury handcrafted product made with high quality materials.';
   const detailedDesc = product.detailedDesc || product.description || 'Artisanal product crafted with attention to detail and traditional heritage skills.';
   const ingredients = product.ingredients || product.materials;
-  
+  const rating = product.rating || 5.0;
+  const reviewsCount = product.reviewsCount || 58;
+  const price = product.price;
+  const availability = product.availability || 'In Stock (Made to Order)';
+
+  const handleWhatsAppClick = () => {
+    let msg = `Hi Divya Handcrafts! I want to order *${name}*`;
+    if (price) msg += ` (₹${price})`;
+    if (customName) msg += `\n- Custom Name: ${customName}`;
+    if (selectedPhoto) msg += `\n- Photo Attached: ${selectedPhoto.name}`;
+    msg += `\n- Quantity: ${quantity}`;
+    msg += `\nPlease guide me on customization and ordering!`;
+    window.open(`https://wa.me/917981664314?text=${encodeURIComponent(msg)}`, '_blank');
+  };
+
+  const handleBuyNow = () => {
+    handleWhatsAppClick();
+  };
+
   const boxSizes = Array.isArray(product.boxSizes) 
     ? product.boxSizes 
-    : product.packSizes || ['Small', 'Medium', 'Large', 'Custom'];
-
-  const packagingOptions = Array.isArray(product.packagingOptions)
-    ? product.packagingOptions
-    : ['Luxury Box', 'Gift Box', 'Custom Packaging'];
+    : product.packSizes || ['Standard Size', 'Grand Display'];
 
   return (
     <div className="modal-backdrop-overlay" onClick={onClose}>
@@ -48,15 +67,35 @@ export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = fals
           <div className="modal-image-col">
             <div className="modal-img-wrap">
               <img src={product.image} alt={name} className="modal-main-img" />
-              <div className="modal-img-badge">✨ Handcrafted Atelier</div>
+              <div className="modal-img-badge">✨ 100% Handmade Atelier</div>
             </div>
           </div>
 
           {/* Right Column: Detailed Product Information */}
           <div className="modal-details-col">
             <div className="modal-header-block">
-              <span className="modal-category-tag">{category}</span>
+              <div className="modal-top-tags-row">
+                <span className="modal-category-tag">{category}</span>
+                <span className="modal-availability-badge">🟢 {availability}</span>
+              </div>
+
               <h2 className="modal-product-title">{name}</h2>
+
+              {/* Rating & Price Row */}
+              <div className="modal-rating-price-row">
+                <div className="modal-rating-badge">
+                  <FaStar color="#F59E0B" />
+                  <span className="m-rating-val">{rating}</span>
+                  <span className="m-reviews-val">({reviewsCount} Reviews)</span>
+                </div>
+
+                {!hidePrices && price && (
+                  <div className="modal-price-val">
+                    ₹{price}
+                  </div>
+                )}
+              </div>
+
               <p className="modal-short-desc-highlight">{shortDesc}</p>
             </div>
 
@@ -64,40 +103,113 @@ export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = fals
               {/* 📜 Detailed Description */}
               <div className="modal-section-block">
                 <h4>📜 Detailed Description</h4>
-                <p className="modal-desc-text">{detailedDesc}</p>
+                <p className="modal-desc-text" style={{ whiteSpace: 'pre-line' }}>{detailedDesc}</p>
               </div>
 
-              {/* Ingredients / Materials if present */}
+              {/* Perfect For if present */}
+              {product.perfectFor && (
+                <div className="modal-section-block">
+                  <h4>🎁 Perfect For</h4>
+                  <div className="modal-chips-flex">
+                    {product.perfectFor.map((item, i) => (
+                      <span key={i} className="modal-chip-item gold-chip">✨ {item}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Customization Details Input Fields */}
+              {!hideExtraOptions && (
+                <div className="modal-section-block custom-inputs-box">
+                  <h4>🎨 Product Customization Details</h4>
+
+                  <div className="modal-input-field">
+                    <label className="m-input-label">Custom Name / Title Inlay *</label>
+                    <input
+                      type="text"
+                      className="m-text-input"
+                      placeholder="e.g. Happy Birthday Akhil / Custom Name"
+                      value={customName}
+                      onChange={(e) => setCustomName(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="modal-input-field" style={{ marginTop: '0.85rem' }}>
+                    <label className="m-input-label">Upload Personal Photographs *</label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="m-file-input"
+                      onChange={(e) => setSelectedPhoto(e.target.files[0])}
+                    />
+                    {selectedPhoto && (
+                      <span className="file-selected-name">✓ Selected: {selectedPhoto.name}</span>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Product Features List */}
+              {product.features && (
+                <div className="modal-section-block">
+                  <h4>⭐ Product Features</h4>
+                  <ul className="modal-features-list">
+                    {product.features.map((feat, i) => (
+                      <li key={i}>• {feat}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Materials & Processing */}
               {!hideExtraOptions && ingredients && (
                 <div className="modal-section-block">
-                  <h4>✨ Craftsmanship & Details</h4>
+                  <h4>✨ Materials & Craftsmanship</h4>
                   <p className="modal-info-p">{ingredients}</p>
                 </div>
               )}
 
-              {/* Pack / Box Sizes if present */}
-              {!hideExtraOptions && (
-                <div className="modal-section-block">
-                  <h4>📦 Available Options & Sizes</h4>
-                  <div className="modal-chips-flex">
-                    {boxSizes.map((sz, i) => (
-                      <span key={i} className="modal-chip-item">{sz}</span>
-                    ))}
+              {/* Quantity & Interactive Action Buttons */}
+              <div className="modal-actions-wrapper">
+                <div className="qty-picker-row">
+                  <span className="qty-label">Quantity:</span>
+                  <div className="qty-stepper">
+                    <button type="button" onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
+                    <span className="qty-val">{quantity}</span>
+                    <button type="button" onClick={() => setQuantity(quantity + 1)}>+</button>
                   </div>
-                </div>
-              )}
 
-              {/* Packaging Options if present */}
-              {!hideExtraOptions && (
-                <div className="modal-section-block">
-                  <h4>🎁 Packaging Options</h4>
-                  <div className="modal-chips-flex">
-                    {packagingOptions.map((pkg, i) => (
-                      <span key={i} className="modal-chip-item">{pkg}</span>
-                    ))}
-                  </div>
+                  <button
+                    type="button"
+                    className={`modal-wishlist-btn ${isWishlisted ? 'active' : ''}`}
+                    onClick={() => setIsWishlisted(!isWishlisted)}
+                  >
+                    <FaHeart color={isWishlisted ? '#E63946' : '#A38087'} /> Wishlist
+                  </button>
                 </div>
-              )}
+
+                <div className="modal-buttons-grid">
+                  {onAddToCart && (
+                    <button
+                      type="button"
+                      className="btn-modal-cart"
+                      onClick={() => onAddToCart({ ...product, quantity, customName })}
+                    >
+                      🛒 Add to Cart
+                    </button>
+                  )}
+
+                  <button type="button" className="btn-modal-buynow" onClick={handleBuyNow}>
+                    ⚡ Buy Now
+                  </button>
+
+                  {!hideWhatsApp && (
+                    <button type="button" className="btn-modal-wa" onClick={handleWhatsAppClick}>
+                      <FaWhatsapp /> WhatsApp Enquiry
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1055,6 +1167,206 @@ const MasterCategoryCustomizer = ({
           font-weight: 600;
           padding: 4px 10px;
           border-radius: 50px;
+        }
+
+        .modal-top-tags-row {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 0.4rem;
+        }
+
+        .modal-availability-badge {
+          font-size: 0.75rem;
+          font-weight: 700;
+          color: #15803D;
+          background: #DCFCE7;
+          padding: 2px 10px;
+          border-radius: 50px;
+        }
+
+        .modal-rating-price-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 0.75rem;
+        }
+
+        .modal-rating-badge {
+          display: flex;
+          align-items: center;
+          gap: 0.35rem;
+          font-size: 0.85rem;
+        }
+
+        .m-rating-val {
+          font-weight: 700;
+          color: #2D2523;
+        }
+
+        .m-reviews-val {
+          color: #7A6965;
+        }
+
+        .modal-price-val {
+          font-family: var(--font-sans);
+          font-size: 1.4rem;
+          font-weight: 700;
+          color: #C89B3C;
+        }
+
+        .custom-inputs-box {
+          background: #FFFDF9;
+          border: 1.5px solid rgba(200, 155, 60, 0.25);
+          padding: 14px 16px;
+          border-radius: 14px;
+        }
+
+        .m-input-label {
+          display: block;
+          font-size: 0.82rem;
+          font-weight: 700;
+          color: #2D2523;
+          margin-bottom: 4px;
+        }
+
+        .m-text-input {
+          width: 100%;
+          padding: 8px 12px;
+          border: 1px solid #D4C5B9;
+          border-radius: 8px;
+          font-size: 0.88rem;
+          background: #FFFFFF;
+          box-sizing: border-box;
+        }
+
+        .m-file-input {
+          width: 100%;
+          font-size: 0.82rem;
+        }
+
+        .file-selected-name {
+          display: block;
+          font-size: 0.78rem;
+          color: #15803D;
+          font-weight: 600;
+          margin-top: 4px;
+        }
+
+        .modal-features-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          font-size: 0.86rem;
+          color: #5A4A42;
+          line-height: 1.6;
+        }
+
+        .gold-chip {
+          background: #FEF08A !important;
+          color: #854D0E !important;
+          border-color: #FDE047 !important;
+        }
+
+        .modal-actions-wrapper {
+          margin-top: 1.25rem;
+          border-top: 1px solid rgba(212, 175, 55, 0.2);
+          padding-top: 1rem;
+        }
+
+        .qty-picker-row {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 0.85rem;
+        }
+
+        .qty-label {
+          font-size: 0.85rem;
+          font-weight: 700;
+          color: #2D2523;
+        }
+
+        .qty-stepper {
+          display: inline-flex;
+          align-items: center;
+          border: 1px solid #C89B3C;
+          border-radius: 50px;
+          overflow: hidden;
+          background: #FFFFFF;
+        }
+
+        .qty-stepper button {
+          background: none;
+          border: none;
+          padding: 4px 12px;
+          font-weight: 700;
+          cursor: pointer;
+          color: #2D2523;
+        }
+
+        .qty-val {
+          padding: 0 8px;
+          font-size: 0.9rem;
+          font-weight: 700;
+        }
+
+        .modal-wishlist-btn {
+          background: #FFFDF9;
+          border: 1px solid #D4C5B9;
+          padding: 4px 14px;
+          border-radius: 50px;
+          font-size: 0.8rem;
+          font-weight: 600;
+          color: #7A6965;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+
+        .modal-buttons-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+          gap: 0.65rem;
+        }
+
+        .btn-modal-cart {
+          background: #FFFDF9;
+          border: 1.5px solid #C89B3C;
+          color: #7A5C1B;
+          font-weight: 700;
+          font-size: 0.88rem;
+          padding: 0.65rem 1rem;
+          border-radius: 50px;
+          cursor: pointer;
+        }
+
+        .btn-modal-buynow {
+          background: linear-gradient(135deg, #E8C86A 0%, #C89B3C 100%);
+          border: none;
+          color: #FFFFFF;
+          font-weight: 700;
+          font-size: 0.88rem;
+          padding: 0.65rem 1rem;
+          border-radius: 50px;
+          cursor: pointer;
+          box-shadow: 0 4px 12px rgba(200, 155, 60, 0.3);
+        }
+
+        .btn-modal-wa {
+          background: #25D366;
+          border: none;
+          color: #FFFFFF;
+          font-weight: 700;
+          font-size: 0.88rem;
+          padding: 0.65rem 1rem;
+          border-radius: 50px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
         }
 
         @media (max-width: 768px) {
