@@ -83,12 +83,10 @@ export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = true
         </button>
 
         <div className="modal-two-col-grid">
-          {/* Left Column: Large Product Image */}
+          {/* Left Column: Full Product Image Section */}
           <div className="modal-image-col">
-            <div className="modal-img-wrap">
-              <img src={product.image} alt={name} className="modal-main-img" />
-              <div className="modal-img-badge">✨ 100% Handmade Atelier</div>
-            </div>
+            <img src={product.image} alt={name} className="modal-main-img" />
+            <div className="modal-img-badge">✨ 100% Handmade Atelier</div>
           </div>
 
           {/* Right Column: Detailed Product Information */}
@@ -1026,8 +1024,9 @@ const MasterCategoryCustomizer = ({
           border: 1px solid rgba(212, 175, 55, 0.25);
           box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
           width: 100%;
-          max-width: 940px;
-          max-height: 90vh;
+          max-width: 1000px;
+          height: 95vh;
+          max-height: 95vh;
           position: relative;
           overflow: hidden;
           animation: modalFadeScale 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -1074,69 +1073,53 @@ const MasterCategoryCustomizer = ({
           display: grid;
           grid-template-columns: 50% 50%;
           height: 100%;
-          max-height: 90vh;
           overflow: hidden;
         }
 
         .modal-image-col {
-          background: #FCFAF7;
-          padding: 24px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 100%;
-          border-right: 1px solid rgba(212, 175, 55, 0.2);
-          box-sizing: border-box;
-          overflow: hidden;
-        }
-
-        .modal-img-wrap {
           position: relative;
           width: 100%;
           height: 100%;
-          min-height: 380px;
-          max-height: 560px;
+          background: #FCFAF7;
+          border-right: 1px solid rgba(212, 175, 55, 0.2);
           display: flex;
           align-items: center;
           justify-content: center;
-          border-radius: 18px;
           overflow: hidden;
-          background: #FFFFFF;
-          border: 1px solid rgba(212, 175, 55, 0.2);
-          box-shadow: 0 8px 24px rgba(45, 37, 35, 0.06);
+          padding: 0;
+          margin: 0;
           box-sizing: border-box;
         }
 
         .modal-main-img {
           width: 100%;
           height: 100%;
-          max-height: 520px;
           object-fit: contain;
           object-position: center;
           display: block;
-          padding: 10px;
+          padding: 12px;
           box-sizing: border-box;
           transition: transform 0.4s ease;
         }
 
         .modal-main-img:hover {
-          transform: scale(1.03);
+          transform: scale(1.02);
         }
 
         .modal-img-badge {
           position: absolute;
-          bottom: 12px;
-          left: 12px;
+          bottom: 16px;
+          left: 16px;
           background: rgba(255, 255, 255, 0.94);
           backdrop-filter: blur(4px);
           color: #2D2523;
-          font-size: 0.72rem;
+          font-size: 0.75rem;
           font-weight: 700;
-          padding: 4px 12px;
+          padding: 6px 14px;
           border-radius: 50px;
           border: 1px solid rgba(212, 175, 55, 0.3);
-          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          z-index: 10;
         }
 
         .modal-details-col {

@@ -160,12 +160,10 @@ export const ChocolateDetailsModal = ({ product, isOpen, onClose }) => {
         </button>
 
         <div className="modal-two-col-grid">
-          {/* Left Column: Large Product Image */}
+          {/* Left Column: Full Product Image Section */}
           <div className="modal-image-col">
-            <div className="modal-img-wrap">
-              <img src={product.image} alt={name} className="modal-main-img" />
-              <div className="modal-img-badge">✨ Handmade Confectionery</div>
-            </div>
+            <img src={product.image} alt={name} className="modal-main-img" />
+            <div className="modal-img-badge">✨ Handmade Confectionery</div>
           </div>
 
           {/* Right Column: Detailed Product Information */}
@@ -1587,60 +1585,44 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           display: grid;
           grid-template-columns: 50% 50%;
           height: 100%;
-          max-height: 90vh;
           overflow: hidden;
         }
 
         .modal-image-col {
-          padding: 28px;
+          position: relative;
+          width: 100%;
+          height: 100%;
           background: #FCFAF7;
           border-right: 1px solid rgba(212, 175, 55, 0.2);
           display: flex;
-          flex-direction: column;
           align-items: center;
           justify-content: center;
-          height: 100%;
+          overflow: hidden;
+          padding: 0;
+          margin: 0;
           box-sizing: border-box;
-          overflow: hidden;
-        }
-
-        .modal-img-wrap {
-          width: 100%;
-          height: 100%;
-          min-height: 380px;
-          max-height: 540px;
-          position: relative;
-          border-radius: 16px;
-          overflow: hidden;
-          background: #FFFFFF;
-          box-shadow: 0 8px 24px rgba(61, 43, 31, 0.08);
-          border: 1px solid rgba(212, 175, 55, 0.2);
-          display: flex;
-          align-items: center;
-          justify-content: center;
         }
 
         .modal-main-img {
           width: 100%;
           height: 100%;
-          max-height: 520px;
           object-fit: contain;
           object-position: center;
           display: block;
-          padding: 10px;
+          padding: 12px;
           box-sizing: border-box;
           transition: transform 0.4s ease;
         }
 
         .modal-main-img:hover {
-          transform: scale(1.03);
+          transform: scale(1.02);
         }
 
         .modal-img-badge {
           position: absolute;
-          bottom: 14px;
-          left: 14px;
-          background: rgba(255, 255, 255, 0.92);
+          bottom: 16px;
+          left: 16px;
+          background: rgba(255, 255, 255, 0.94);
           backdrop-filter: blur(4px);
           color: #2D2523;
           font-size: 12px;
@@ -1648,6 +1630,8 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
           padding: 6px 14px;
           border-radius: 50px;
           border: 1px solid rgba(212, 175, 55, 0.3);
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          z-index: 10;
         }
 
         .modal-details-col {
