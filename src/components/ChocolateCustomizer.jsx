@@ -1651,9 +1651,12 @@ const ChocolateCustomizer = ({ onSelectProduct }) => {
         .modal-main-img {
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          max-height: 520px;
+          object-fit: contain;
           object-position: center;
           display: block;
+          padding: 10px;
+          box-sizing: border-box;
           transition: transform 0.4s ease;
         }
 

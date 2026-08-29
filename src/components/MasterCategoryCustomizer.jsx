@@ -1059,49 +1059,71 @@ const MasterCategoryCustomizer = ({
 
         .modal-two-col-grid {
           display: grid;
-          grid-template-columns: 420px 1fr;
+          grid-template-columns: 50% 50%;
           height: 100%;
           max-height: 90vh;
+          overflow: hidden;
         }
 
         .modal-image-col {
-          background: #FFFDF8;
+          background: #FCFAF7;
           padding: 24px;
           display: flex;
+          flex-direction: column;
           align-items: center;
           justify-content: center;
+          height: 100%;
           border-right: 1px solid rgba(212, 175, 55, 0.2);
+          box-sizing: border-box;
+          overflow: hidden;
         }
 
         .modal-img-wrap {
           position: relative;
           width: 100%;
           height: 100%;
-          min-height: 340px;
+          min-height: 380px;
+          max-height: 560px;
           display: flex;
           align-items: center;
           justify-content: center;
+          border-radius: 18px;
+          overflow: hidden;
+          background: #FFFFFF;
+          border: 1px solid rgba(212, 175, 55, 0.2);
+          box-shadow: 0 8px 24px rgba(45, 37, 35, 0.06);
+          box-sizing: border-box;
         }
 
         .modal-main-img {
-          max-width: 100%;
-          max-height: 480px;
+          width: 100%;
+          height: 100%;
+          max-height: 520px;
           object-fit: contain;
-          border-radius: 16px;
+          object-position: center;
+          display: block;
+          padding: 10px;
+          box-sizing: border-box;
+          transition: transform 0.4s ease;
+        }
+
+        .modal-main-img:hover {
+          transform: scale(1.03);
         }
 
         .modal-img-badge {
           position: absolute;
           bottom: 12px;
           left: 12px;
-          background: rgba(255, 255, 255, 0.92);
+          background: rgba(255, 255, 255, 0.94);
           backdrop-filter: blur(4px);
           color: #2D2523;
           font-size: 0.72rem;
           font-weight: 700;
-          padding: 4px 10px;
+          padding: 4px 12px;
           border-radius: 50px;
           border: 1px solid rgba(212, 175, 55, 0.3);
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
         .modal-details-col {
