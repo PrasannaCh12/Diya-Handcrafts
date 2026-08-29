@@ -133,8 +133,10 @@ export const PRODUCTS = [
     name: 'Custom Personalized Resin Rakhi & Bracelet Keepsakes',
     category: 'Resin Art',
     price: 499,
+    rating: 4.9,
+    reviewsCount: 42,
     image: '/custom_resin_rakhi.jpg',
-    images: ['/custom_resin_rakhi.jpg'],
+    images: ['/custom_resin_rakhi.jpg', '/resin_bracelets_rakhi.jpg'],
     shortDesc: 'Handmade black & red resin personalized Rakhi bracelets with pearl beads and gold calligraphy names.',
     description: 'Unique custom resin Rakhi bracelets crafted with personalized gold lettering, real pearls, and gold-encrusted beads for your loved ones.',
     materials: 'Polished Resin Cabochon, Gold Foil Name Inlay, Real Fresh Water Pearls, Soft Silk Thread',
@@ -145,6 +147,326 @@ export const PRODUCTS = [
       colors: ['Royal Black & Gold', 'Regal Red & Pearl', 'Blush & Gold']
     },
     specs: ['Custom Gold Name Calligraphy', 'Real Pearl Beads', 'Durable Soft Threading']
+  },
+  {
+    id: 'resin-05',
+    name: 'Artisanal Floral Resin Bookmarks with Silk Tassels',
+    category: 'Resin Art',
+    price: 399,
+    rating: 5.0,
+    reviewsCount: 56,
+    image: '/resin_bookmark.jpg',
+    images: ['/resin_bookmark.jpg'],
+    shortDesc: 'Crystal clear resin bookmarks embedded with real pressed pansies, daisies & metallic gold leaf.',
+    description: 'Bespoke hand-cast resin bookmarks featuring vibrant pressed botanicals and silky pastel tassels. The perfect keepsake for book lovers.',
+    materials: 'UV Resistant Crystal Resin, Natural Dried Flowers, Metallic Gold Leaf, Silk Thread Tassel',
+    processingTime: '2 – 3 Business Days',
+    careInstructions: 'Avoid bending forcefully. Clean gently with a soft dry cloth.',
+    customizations: {
+      sizes: ['Standard Bookmark (14cm)', 'Set of 3 Floral Bookmarks'],
+      colors: ['Blue Pansy & Gold', 'Yellow Daisy', 'Blush Pink Rose']
+    },
+    specs: ['100% Real Dried Flowers', 'Ultra-Transparent Clarity', 'Silky Tassel Accent']
+  },
+  {
+    id: 'resin-06',
+    name: 'Hand-Poured Resin Serving Tray with Gold Brass Handles',
+    category: 'Resin Art',
+    price: 1899,
+    rating: 4.9,
+    reviewsCount: 29,
+    image: '/resin_serving_tray.jpg',
+    images: ['/resin_serving_tray.jpg', '/resin_coasters_set.jpg'],
+    shortDesc: 'Luxury hand-poured marble epoxy serving tray embellished with real metallic gold leaf inlays & brushed brass handles.',
+    description: 'Statement vanity and serving tray hand-cast with pearlescent white and gold resin swirls. Fitted with heavy brushed brass handles.',
+    materials: 'Food Grade Non-Toxic Epoxy Resin, Gold Leaf Swirls, Brushed Brass Handles',
+    processingTime: '4 – 6 Business Days',
+    careInstructions: 'Wipe clean with soft damp cloth. Not intended for hot microwave or oven dishware.',
+    customizations: {
+      sizes: ['Medium Tray (12x8")', 'Large Grand Tray (14x10")'],
+      colors: ['Pearl White & Gold Leaf', 'Emerald Ocean', 'Midnight Black Gold']
+    },
+    specs: ['Food Grade Surface', 'Sturdy Brushed Brass Handles', 'Felt Padded Bottom']
+  },
+  {
+    id: 'resin-07',
+    name: 'Bespoke Floral Resin Name Plate Plaque',
+    category: 'Resin Art',
+    price: 1499,
+    rating: 4.9,
+    reviewsCount: 48,
+    image: '/resin_name_plate.jpg',
+    images: ['/resin_name_plate.jpg', '/custom_resin_plaque_isolated.jpg'],
+    shortDesc: 'Custom handcrafted door name plate featuring preserved flowers, gold Roman numerals & custom lettering.',
+    description: 'Make a warm impression at your home entrance with this personalized resin name plate plaque filled with real preserved florals and acrylic mirror letters.',
+    materials: 'Heavy Cast Epoxy Resin, Real Dried Flowers, Gold Mirror Acrylic Letters',
+    processingTime: '5 – 7 Business Days',
+    careInstructions: 'Mount under covered entrance. Wipe with lint-free cloth.',
+    customizations: {
+      sizes: ['Rectangle (12x6")', 'Arch Shape (14x8")'],
+      colors: ['Golden Floral Blush', 'Ivory & Emerald', 'Royal Blue Swirl']
+    },
+    specs: ['Custom Family Name Inlay', 'Weather-Resistant UV Coating', 'Wall Mounting Hardware Included']
+  },
+  {
+    id: 'resin-08',
+    name: 'Handcrafted Resin Wall Clock with Preserved Botanicals',
+    category: 'Resin Art',
+    price: 2499,
+    rating: 5.0,
+    reviewsCount: 33,
+    image: '/resin_clock.jpg',
+    images: ['/resin_clock.jpg', '/resin_art_category.jpg'],
+    shortDesc: '12-inch luxury resin wall clock with embedded dried flowers, gold leaf, and silent quartz movement.',
+    description: 'A functional piece of wall art featuring hand-placed real dried botanicals, metallic gold numerals, and a whisper-silent clock engine.',
+    materials: 'Epoxy Resin, Natural Dried Flowers, Gold Leaf, Silent Quartz Engine',
+    processingTime: '5 – 7 Business Days',
+    careInstructions: 'Clean gently with a soft microfiber cloth.',
+    customizations: {
+      sizes: ['10 inch Clock', '12 inch Grand Clock'],
+      colors: ['Blush Floral Gold', 'Ocean Wave Blue', 'Emerald Pearl']
+    },
+    specs: ['Silent Quartz Engine', 'Real Botanical Inlays', 'Requires 1 AA Battery']
+  },
+  {
+    id: 'resin-09',
+    name: 'Pressed Hydrangea Resin Drop Earrings',
+    category: 'Resin Art',
+    price: 449,
+    rating: 4.8,
+    reviewsCount: 62,
+    image: '/resin_earrings.jpg',
+    images: ['/resin_earrings.jpg'],
+    shortDesc: 'Elegant teardrop resin earrings encasing real pink hydrangea petals and 24k gold leaf foil.',
+    description: 'Lightweight hypoallergenic dangle earrings made with crystal-clear resin and real dried flowers on gold-plated sterling silver hooks.',
+    materials: 'Hypoallergenic Gold Silver Hooks, Real Dried Hydrangea Petals, UV Resin',
+    processingTime: '2 – 3 Business Days',
+    careInstructions: 'Keep in velvet pouch when not in use.',
+    customizations: {
+      sizes: ['Standard Teardrop (2.5cm)'],
+      colors: ['Pink Hydrangea', 'Forget-Me-Not Blue', 'White Daisy']
+    },
+    specs: ['Ultra-Lightweight Comfort', 'Hypoallergenic Silver Hooks', 'Real Pressed Flowers']
+  },
+  {
+    id: 'resin-10',
+    name: 'Forget-Me-Not Floral Resin Oval Pendant Necklace',
+    category: 'Resin Art',
+    price: 499,
+    rating: 4.9,
+    reviewsCount: 51,
+    image: '/resin_pendant.jpg',
+    images: ['/resin_pendant.jpg'],
+    shortDesc: 'Delicate hand-cast oval pendant necklace filled with real blue forget-me-not blossoms and gold leaf.',
+    description: 'Wear nature close to your heart with this artisanal resin necklace featuring miniature blue flowers encapsulated in glass-like resin.',
+    materials: 'Gold Plated Brass Chain, Crystal Clear Epoxy, Real Forget-Me-Not Blossoms',
+    processingTime: '2 – 3 Business Days',
+    careInstructions: 'Remove before swimming or bathing.',
+    customizations: {
+      sizes: ['18-inch Gold Chain with Pendant'],
+      colors: ['Sky Blue Forget-Me-Not', 'Blush Rose Petals']
+    },
+    specs: ['18-inch Gold Plated Chain', 'Glass-Clarity Finish', 'Artisanal Hand-Poured']
+  },
+  {
+    id: 'resin-11',
+    name: '3D Monogram Resin Letter Art Keepsake',
+    category: 'Resin Art',
+    price: 699,
+    rating: 5.0,
+    reviewsCount: 44,
+    image: '/resin_photo_plaque.jpg',
+    images: ['/resin_photo_plaque.jpg', '/floral_resin_keychains.jpg'],
+    shortDesc: 'Freestanding 3D resin alphabet letter filled with preserved rose petals, baby breath, and LED lights option.',
+    description: 'A striking tabletop keepsake monogram letter cast in high-grade resin with preserved bridal flowers and gold foil.',
+    materials: 'Non-Yellowing Crystal Resin, Real Preserved Roses, Gold Flakes',
+    processingTime: '3 – 5 Business Days',
+    careInstructions: 'Wipe with soft cloth. Avoid direct flame or high heat.',
+    customizations: {
+      sizes: ['4-inch Desktop Letter', '6-inch Statement Letter'],
+      colors: ['Pink & Rose Gold', 'White & Gold', 'Lavender & Pearl']
+    },
+    specs: ['Freestanding Tabletop Design', 'Custom Initial (A-Z)', 'Optional Micro LED Warm Light Base']
+  },
+  {
+    id: 'resin-12',
+    name: 'Ocean Wave Coastal Resin Serving Board & Coaster Set',
+    category: 'Resin Art',
+    price: 1599,
+    rating: 4.9,
+    reviewsCount: 37,
+    image: '/resin_coasters_set.jpg',
+    images: ['/resin_coasters_set.jpg', '/resin_serving_tray.jpg'],
+    shortDesc: 'Natural acacia wood serving board hand-decorated with multi-layered ocean wave resin lacing.',
+    description: 'Bring beachy luxury to your home hosting with this handcrafted acacia cheese board featuring multi-layered sea foam ocean wave resin art.',
+    materials: 'Solid Natural Acacia Wood, Non-Toxic Food Safe Epoxy Resin',
+    processingTime: '4 – 5 Business Days',
+    careInstructions: 'Hand wash wood portion with warm soapy water. Apply food-safe mineral oil periodically.',
+    customizations: {
+      sizes: ['Medium Serving Board (12")', 'Board + 2 Matching Coasters'],
+      colors: ['Pacific Turquoise Blue', 'Deep Navy Ocean', 'Emerald Sea']
+    },
+    specs: ['100% Solid Acacia Wood', 'Multi-Layered Wave Lacing', 'Food Safe Resin Surface']
+  },
+  {
+    id: 'resin-13',
+    name: 'Geode Crystal Resin Wall Art Plaque',
+    category: 'Resin Art',
+    price: 2199,
+    rating: 4.9,
+    reviewsCount: 26,
+    image: '/divya_resin_art_focused_hero_bg.jpg',
+    images: ['/divya_resin_art_focused_hero_bg.jpg'],
+    shortDesc: 'Glittering geode wall plaque created with crushed quartz crystals, metallic gold leaf & deep resin pigments.',
+    description: 'Luxurious geode-inspired resin wall panel embellished with natural quartz crystals, metallic gold lines, and glass glitter.',
+    materials: 'Wood Panel, High-Gloss Epoxy Resin, Natural Quartz Crystals, Gold Leaf',
+    processingTime: '5 – 7 Business Days',
+    careInstructions: 'Dust with soft dry duster.',
+    customizations: {
+      sizes: ['12x12" Square Plaque', '16x16" Grand Geode'],
+      colors: ['Amethyst & Rose Gold', 'Emerald & Gold Leaf', 'White Quartz & Silver']
+    },
+    specs: ['Real Crushed Quartz Crystals', 'High-Gloss Glass Finish', 'Pre-Installed Wall Hanger']
+  },
+  {
+    id: 'resin-14',
+    name: 'Luxury Resin Jewelry & Ring Trinket Dish',
+    category: 'Resin Art',
+    price: 499,
+    rating: 4.8,
+    reviewsCount: 53,
+    image: '/resin_jewelry_tray.jpg',
+    images: ['/resin_jewelry_tray.jpg'],
+    shortDesc: 'Hand-poured scalloped trinket tray decorated with real pressed flowers and metallic gold gilded edges.',
+    description: 'Keep your favorite rings, earrings, and delicate jewelry organized on this elegant hand-poured floral resin trinket dish.',
+    materials: 'High-Clarity Resin, Dried Flowers, Gold Leaf Rim',
+    processingTime: '2 – 4 Business Days',
+    careInstructions: 'Wipe with soft damp cloth.',
+    customizations: {
+      sizes: ['4-inch Ring Dish', 'Set of 2 Vanity Trays'],
+      colors: ['Blush Pink Floral', 'Pearl White & Gold', 'Clear Lavender']
+    },
+    specs: ['Scalloped Decorative Edge', 'Real Pressed Botanicals', 'Perfect Nightstand Accent']
+  },
+  {
+    id: 'resin-15',
+    name: 'Preserved Varmala Marriage Flower Resin Plaque',
+    category: 'Resin Art',
+    price: 2999,
+    rating: 5.0,
+    reviewsCount: 40,
+    image: '/custom_resin_plaque_isolated.jpg',
+    images: ['/custom_resin_plaque_isolated.jpg', '/personalized_resin_photo_frame_keepsake_uploaded.jpg'],
+    shortDesc: 'Custom wedding garland flower preservation in heavy clear resin plaque with couple name & date calligraphy.',
+    description: 'Preserve your precious wedding varmala rose and marigold flowers forever inside a heirloom clear resin block engraved with couple names and marriage date.',
+    materials: 'Ultra-Clear Non-Yellowing Deep Pour Resin, Client Provided Dried Wedding Flowers',
+    processingTime: '10 – 14 Business Days (Drying & Deep Pour Curing)',
+    careInstructions: 'Keep away from direct sunlight & heaters.',
+    customizations: {
+      sizes: ['8x8" Square Plaque', '10x10" Grand Varmala Keepsake'],
+      colors: ['Clear Crystal with Gold Text', 'Rose Gold Calligraphy']
+    },
+    specs: ['Heirloom Varmala Preservation', 'Custom Couple Name Inlay', 'Solid Heavy Weight Base']
+  },
+  {
+    id: 'resin-16',
+    name: 'Dried Wildflower Resin Candle Holder Pillar',
+    category: 'Resin Art',
+    price: 649,
+    rating: 4.8,
+    reviewsCount: 31,
+    image: '/resin_candle_holder.jpg',
+    images: ['/resin_candle_holder.jpg'],
+    shortDesc: 'Cylindrical resin tealight candle holder filled with dried wildflowers, gold flakes & tealight candle.',
+    description: 'Cast in cylindrical form with real pressed botanicals, this resin tea-light holder creates a warm glowing ambiance when lit.',
+    materials: 'Heat-Resistant Epoxy Resin, Pressed Wildflowers, Gold Leaf, Glass Votive Insert',
+    processingTime: '3 – 5 Business Days',
+    careInstructions: 'Use standard tea-light candles. Clean glass insert as needed.',
+    customizations: {
+      sizes: ['Single Candle Holder', 'Pair of Candle Pillars'],
+      colors: ['Wildflower Meadow', 'Blush & Gold', 'Autumn Orange Petals']
+    },
+    specs: ['Glass Candle Insert Included', 'Heat Safe Construction', 'Romantic Glow Effect']
+  },
+  {
+    id: 'resin-17',
+    name: 'Personalized Anniversary Photo Resin Plaque',
+    category: 'Resin Art',
+    price: 1299,
+    rating: 4.9,
+    reviewsCount: 47,
+    image: '/personalized_resin_photo_frame.jpg',
+    images: ['/personalized_resin_photo_frame.jpg', '/resin_photo_frame.jpg'],
+    shortDesc: 'Custom arch photo resin plaque with couple portrait, dried rose petals & metallic gold stand.',
+    description: 'Celebrate milestone anniversaries with a custom high-definition photo sealed inside crystal clear floral resin with a wooden display stand.',
+    materials: 'UV Resin, HD Waterproof Photo Print, Real Rose Petals, Wooden Base',
+    processingTime: '4 – 5 Business Days',
+    careInstructions: 'Wipe with soft cotton cloth.',
+    customizations: {
+      sizes: ['6x8" Arch Plaque', '8x10" Statement Frame'],
+      colors: ['Red Rose & Gold', 'White Jasmine & Pearl']
+    },
+    specs: ['HD Photo Print Sealed Inside', 'Includes Solid Wood Display Stand', 'Personalized Anniversary Message']
+  },
+  {
+    id: 'resin-18',
+    name: 'Romantic Couple Memories Resin Globe Keepsake',
+    category: 'Resin Art',
+    price: 899,
+    rating: 4.9,
+    reviewsCount: 39,
+    image: '/resin_frame_keepsake.jpg',
+    images: ['/resin_frame_keepsake.jpg'],
+    shortDesc: 'Sphere resin paperweight embedded with miniature dried rosebuds, gold foil & couple initials.',
+    description: 'A charming dome keepsake encapsulating dried rosebuds and metallic gold flakes, perfect as a romantic desk weight or bedside accent.',
+    materials: 'High-Clarity Optical Resin, Dried Rosebuds, Gold Flakes',
+    processingTime: '3 – 4 Business Days',
+    careInstructions: 'Clean with damp cloth.',
+    customizations: {
+      sizes: ['3-inch Resin Sphere'],
+      colors: ['Crimson Red Rose', 'Blush Pink', 'White & Gold']
+    },
+    specs: ['Glass-Smooth Polish', 'Weighted Paperweight Base', 'Romantic Keepsake Gift']
+  },
+  {
+    id: 'resin-19',
+    name: 'Birthday Milestone Floral Resin Frame',
+    category: 'Resin Art',
+    price: 1199,
+    rating: 5.0,
+    reviewsCount: 35,
+    image: '/personalized_resin_photo_frame_keepsake_uploaded.jpg',
+    images: ['/personalized_resin_photo_frame_keepsake_uploaded.jpg'],
+    shortDesc: 'Vibrant custom birthday photo frame encased in clear resin with colorful dried blossoms and age number.',
+    description: 'Commemorate milestone birthdays with this cheerful resin photo frame decorated with colorful dried wildflowers, birthday date, and gold calligraphy.',
+    materials: 'Resin, Dried Wildflowers, Waterproof Photo Inlay',
+    processingTime: '4 – 5 Business Days',
+    careInstructions: 'Keep in room temperature away from direct flame.',
+    customizations: {
+      sizes: ['7x5" Desktop Frame', '8x10" Wall & Table Frame'],
+      colors: ['Vibrant Wildflower Mix', 'Pastel Pink & Gold']
+    },
+    specs: ['Custom Age & Name Inlay', 'Includes Stand & Hanger', 'Vibrant Floral Accents']
+  },
+  {
+    id: 'resin-20',
+    name: 'Gold Leaf Resin Coaster Set with Holder',
+    category: 'Resin Art',
+    price: 999,
+    rating: 4.9,
+    reviewsCount: 58,
+    image: '/resin_art_category.jpg',
+    images: ['/resin_art_category.jpg', '/resin_floral_coasters.jpg'],
+    shortDesc: 'Set of 4 luxury octagon resin coasters with 24k gold foil leaf inlays & matching holder.',
+    description: 'Handcrafted luxury octagon resin coaster set featuring dense metallic gold leaf flakes and a sleek matching resin holder box.',
+    materials: 'Food Safe Epoxy Resin, Metallic Gold Leaf, Acrylic Holder',
+    processingTime: '3 – 5 Business Days',
+    careInstructions: 'Wipe clean with soapy warm water.',
+    customizations: {
+      sizes: ['Set of 4 Coasters + Holder', 'Set of 6 Coasters + Holder'],
+      colors: ['Dense Gold Leaf', 'Rose Gold Leaf', 'Silver Metallic']
+    },
+    specs: ['Includes Matching Holder Box', 'Heat Resistant Up to 90°C', 'Rubber Anti-Slip Pads Below']
   },
 
   // 🍫 HOMEMADE CHOCOLATES

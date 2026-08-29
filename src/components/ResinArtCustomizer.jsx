@@ -12,7 +12,7 @@ export const RESIN_ART_PRODUCTS = PRODUCTS.filter((p) => p.category === 'Resin A
 
 export const ResinArtDetailsModal = MasterDetailsModal;
 
-const ResinArtCustomizer = ({ onSelectProduct }) => {
+const ResinArtCustomizer = ({ onSelectProduct, onAddToCart }) => {
   return (
     <MasterCategoryCustomizer
       subtitle="✨ RESIN ART ATELIER"
@@ -20,6 +20,7 @@ const ResinArtCustomizer = ({ onSelectProduct }) => {
       description="Preserve your cherished memories, wedding varmala flowers, baby milestone keepsakes, and personalized photos in crystal-clear epoxy resin with 24k gold leaf foil."
       products={RESIN_ART_PRODUCTS}
       onSelectProduct={onSelectProduct}
+      onAddToCart={onAddToCart}
     />
   );
 };

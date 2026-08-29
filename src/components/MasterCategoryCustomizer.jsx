@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaWhatsapp, FaCheck, FaHeart, FaStar, FaMagic, FaGift, FaEdit, FaRibbon, FaCalendarAlt, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaFileAlt, FaTimes } from 'react-icons/fa';
+import { FaWhatsapp, FaCheck, FaHeart, FaRegHeart, FaStar, FaMagic, FaGift, FaEdit, FaRibbon, FaCalendarAlt, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaFileAlt, FaTimes } from 'react-icons/fa';
 import WhatsAppModal from './WhatsAppModal';
 
 export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = false, hideWhatsApp = false, hideExtraOptions = false }) => {
@@ -114,9 +114,17 @@ const MasterCategoryCustomizer = ({
   hidePrices = false,
   hideWhatsAppInModal = false,
   hideOptionsInModal = false,
-  onSelectProduct
+  onSelectProduct,
+  onAddToCart
 }) => {
   const [selectedItems, setSelectedItems] = useState([]);
+  const [wishlistIds, setWishlistIds] = useState([]);
+
+  const toggleWishlist = (id) => {
+    setWishlistIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
   const [boxSize, setBoxSize] = useState('');
   const [packagingStyle, setPackagingStyle] = useState('');
   const [ribbonColor, setRibbonColor] = useState('');
@@ -233,6 +241,10 @@ const MasterCategoryCustomizer = ({
             <div className="flavors-grid">
               {products.map((product, idx) => {
                 const isSelected = selectedItems.some((item) => item.id === product.id);
+                const isWishlisted = wishlistIds.includes(product.id);
+                const rating = product.rating || 4.9;
+                const reviews = product.reviewsCount || 35 + (idx % 25);
+
                 return (
                   <div
                     key={product.id || idx}
@@ -242,8 +254,21 @@ const MasterCategoryCustomizer = ({
                   >
                     <div className="flavor-card-header">
                       <span className="flavor-icon">{product.icon || '✨'}</span>
-                      <div className={`check-badge ${isSelected ? 'checked' : ''}`}>
-                        <FaCheck />
+                      <div className="card-top-actions">
+                        <button
+                          type="button"
+                          className={`wishlist-heart-btn ${isWishlisted ? 'active' : ''}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleWishlist(product.id);
+                          }}
+                          title={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+                        >
+                          {isWishlisted ? <FaHeart color="#E63946" /> : <FaRegHeart />}
+                        </button>
+                        <div className={`check-badge ${isSelected ? 'checked' : ''}`}>
+                          <FaCheck />
+                        </div>
                       </div>
                     </div>
 
@@ -253,14 +278,44 @@ const MasterCategoryCustomizer = ({
 
                     <h4 className="flavor-title">{product.name}</h4>
 
-                    <div 
-                      className="card-view-details-link"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setDetailsModalProduct(product);
-                      }}
-                    >
-                      <span>View Details <span className="view-arrow">→</span></span>
+                    {/* Rating & Review count */}
+                    <div className="card-rating-row">
+                      <span className="star-icon"><FaStar /></span>
+                      <span className="rating-num">{rating}</span>
+                      <span className="reviews-count">({reviews})</span>
+                    </div>
+
+                    {/* Price if available */}
+                    {!hidePrices && product.price && (
+                      <div className="card-price-tag">
+                        ₹{product.price}
+                      </div>
+                    )}
+
+                    <div className="card-bottom-actions-flex">
+                      <div 
+                        className="card-view-details-link"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setDetailsModalProduct(product);
+                        }}
+                      >
+                        <span>View Details <span className="view-arrow">→</span></span>
+                      </div>
+
+                      {onAddToCart && (
+                        <button
+                          type="button"
+                          className="btn-card-add-cart"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onAddToCart(product);
+                          }}
+                          title="Add to Cart"
+                        >
+                          🛒 Add
+                        </button>
+                      )}
                     </div>
                   </div>
                 );
@@ -543,6 +598,33 @@ const MasterCategoryCustomizer = ({
           font-size: 1.5rem;
         }
 
+        .card-top-actions {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+        }
+
+        .wishlist-heart-btn {
+          background: #FFFDF9;
+          border: 1px solid rgba(110, 58, 70, 0.15);
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.8rem;
+          color: #A38087;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .wishlist-heart-btn:hover {
+          transform: scale(1.12);
+          border-color: #E63946;
+          color: #E63946;
+        }
+
         .check-badge {
           width: 22px;
           height: 22px;
@@ -590,6 +672,63 @@ const MasterCategoryCustomizer = ({
 
         .flavor-card:hover .flavor-thumb-img {
           transform: scale(1.06);
+        }
+
+        .card-rating-row {
+          display: flex;
+          align-items: center;
+          gap: 0.3rem;
+          font-size: 0.8rem;
+          margin-bottom: 0.25rem;
+        }
+
+        .star-icon {
+          color: #F59E0B;
+          display: flex;
+          align-items: center;
+        }
+
+        .rating-num {
+          font-weight: 700;
+          color: #2D2523;
+        }
+
+        .reviews-count {
+          color: #8C7A77;
+        }
+
+        .card-price-tag {
+          font-family: var(--font-sans);
+          font-weight: 700;
+          font-size: 1rem;
+          color: #C89B3C;
+          margin-bottom: 0.35rem;
+        }
+
+        .card-bottom-actions-flex {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: 0.4rem;
+          gap: 0.5rem;
+        }
+
+        .btn-card-add-cart {
+          background: #FFFDF9;
+          border: 1px solid #C89B3C;
+          color: #7A5C1B;
+          font-size: 0.75rem;
+          font-weight: 700;
+          padding: 0.25rem 0.65rem;
+          border-radius: 50px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .btn-card-add-cart:hover {
+          background: #C89B3C;
+          color: #FFFFFF;
+          box-shadow: 0 2px 8px rgba(200, 155, 60, 0.3);
         }
 
         .flavor-title {
