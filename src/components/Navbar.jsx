@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { FaShoppingBag, FaWhatsapp, FaBars, FaTimes, FaSearch, FaHeart, FaMagic } from 'react-icons/fa';
+import { FaShoppingBag, FaWhatsapp, FaBars, FaTimes, FaSearch, FaHeart, FaMagic, FaUserShield } from 'react-icons/fa';
 import WhatsAppModal from './WhatsAppModal';
 
 const Navbar = ({ cartCount = 0, onOpenCart }) => {
@@ -55,11 +55,32 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: '0.5rem'
+        gap: '0.5rem',
+        position: 'relative'
       }}>
         <FaMagic style={{ fontSize: '0.8rem' }} />
         <span>Handcrafted with Love in India • Worldwide Express Shipping Available</span>
         <FaMagic style={{ fontSize: '0.8rem' }} />
+        <Link
+          to="/admin"
+          style={{
+            position: 'absolute',
+            right: '1rem',
+            color: '#FFFFFF',
+            fontSize: '0.72rem',
+            fontWeight: '700',
+            textDecoration: 'none',
+            background: 'rgba(0,0,0,0.25)',
+            padding: '2px 9px',
+            borderRadius: '12px',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '4px'
+          }}
+          title="Admin Panel Control Portal"
+        >
+          <FaUserShield /> Admin Panel
+        </Link>
       </div>
 
       {/* Main Single-Row Sticky Header */}
@@ -134,6 +155,29 @@ const Navbar = ({ cartCount = 0, onOpenCart }) => {
             >
               <FaWhatsapp />
             </button>
+
+            <Link
+              to="/admin"
+              className="admin-portal-link-btn"
+              title="Admin Control Panel Portal"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                background: '#2D2523',
+                color: '#E8C86A',
+                border: '1px solid rgba(232, 200, 106, 0.4)',
+                padding: '6px 14px',
+                borderRadius: '50px',
+                fontSize: '0.78rem',
+                fontWeight: '700',
+                textDecoration: 'none',
+                transition: 'all 0.25s ease'
+              }}
+            >
+              <FaUserShield style={{ color: '#E8C86A' }} />
+              <span className="admin-btn-text">Admin</span>
+            </Link>
 
             {/* Mobile Hamburger Drawer Toggle Button */}
             <button

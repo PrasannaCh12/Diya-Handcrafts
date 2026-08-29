@@ -242,8 +242,12 @@ const AdminProducts = () => {
                       {/* Product Name & Image */}
                       <td style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
                         <img
-                          src={getImageUrl(p.image)}
+                          src={getImageUrl(p.image || (Array.isArray(p.images) && p.images[0]))}
                           alt={p.name}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = '/logo192.png';
+                          }}
                           style={{ width: '48px', height: '48px', objectFit: 'cover', borderRadius: '10px', border: '1px solid #E5DFD5' }}
                         />
                         <div>
@@ -369,7 +373,15 @@ const AdminProducts = () => {
               <FaTimes />
             </button>
             <div style={{ display: 'flex', gap: '16px', marginBottom: '1rem' }}>
-              <img src={previewProduct.image} alt={previewProduct.name} style={{ width: '120px', height: '120px', objectFit: 'cover', borderRadius: '12px' }} />
+              <img
+                src={getImageUrl(previewProduct.image || (Array.isArray(previewProduct.images) && previewProduct.images[0]))}
+                alt={previewProduct.name}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = '/logo192.png';
+                }}
+                style={{ width: '120px', height: '120px', objectFit: 'cover', borderRadius: '12px' }}
+              />
               <div>
                 <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#C89B3C' }}>{previewProduct.category}</span>
                 <h3 style={{ margin: '4px 0 8px 0', fontSize: '1.2rem' }}>{previewProduct.name}</h3>
