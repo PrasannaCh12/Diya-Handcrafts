@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaWhatsapp, FaCheck, FaHeart, FaRegHeart, FaStar, FaMagic, FaGift, FaEdit, FaRibbon, FaCalendarAlt, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaFileAlt, FaTimes } from 'react-icons/fa';
 import WhatsAppModal from './WhatsAppModal';
 import { getImageUrl } from '../utils/imageUtils';
+import { recordCustomerOrder } from '../services/adminDataStore';
 
 export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = true, hideWhatsApp = false, hideExtraOptions = false, onAddToCart }) => {
   const [customName, setCustomName] = useState('');
@@ -65,7 +66,13 @@ export const MasterDetailsModal = ({ product, isOpen, onClose, hidePrices = true
     if (selectedPhoto) {
       msg += `CUSTOMER CUSTOMIZATION PHOTO:\n[Attached: ${selectedPhoto.name}]\n\n`;
     }
-    msg += `Order ID:\n${orderId}`;
+    recordCustomerOrder({
+      customerName: customName || 'Valued Customer',
+      items: [{ id: product?.id, name, quantity, price: product?.price || 0, customName }],
+      totalAmount: (product?.price || 0) * quantity,
+      orderId,
+      customNotes: shortDesc || ''
+    });
 
     window.open(`https://wa.me/917981664314?text=${encodeURIComponent(msg)}`, '_blank');
   };

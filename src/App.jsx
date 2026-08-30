@@ -17,15 +17,20 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminProducts from './pages/admin/AdminProducts';
 import AdminAddEditProduct from './pages/admin/AdminAddEditProduct';
 import AdminCategories from './pages/admin/AdminCategories';
+import AdminGallery from './pages/admin/AdminGallery';
+import AdminReviews from './pages/admin/AdminReviews';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminCustomers from './pages/admin/AdminCustomers';
 import AdminInventory from './pages/admin/AdminInventory';
+import AdminUserManagement from './pages/admin/AdminUserManagement';
 import AdminSettings from './pages/admin/AdminSettings';
 
 // Customer Pages
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ShopPage from './pages/ShopPage';
+import GalleryPage from './pages/GalleryPage';
+import ReviewsPage from './pages/ReviewsPage';
 import ThreadWorkPage from './pages/ThreadWorkPage';
 import ResinArtPage from './pages/ResinArtPage';
 import ChocolatePage from './pages/ChocolatePage';
@@ -151,6 +156,28 @@ function AppContent() {
           />
 
           <Route
+            path="/admin/gallery"
+            element={
+              <ProtectedRoute>
+                <AdminLayout>
+                  <AdminGallery />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/reviews"
+            element={
+              <ProtectedRoute>
+                <AdminLayout>
+                  <AdminReviews />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path="/admin/orders"
             element={
               <ProtectedRoute requiredPermission="canManageOrders">
@@ -184,6 +211,17 @@ function AppContent() {
           />
 
           <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute requiredPermission="canManageAdmins">
+                <AdminLayout>
+                  <AdminUserManagement />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path="/admin/settings"
             element={
               <ProtectedRoute requiredPermission="canChangeSettings">
@@ -197,7 +235,9 @@ function AppContent() {
           {/* ------------------- CUSTOMER WEBSITE ROUTES ------------------- */}
           <Route path="/" element={<HomePage onAddToCart={handleAddToCart} />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/shop" element={<ShopPage onAddToCart={handleAddToCart} />} />
+          <Route path="/reviews" element={<ReviewsPage />} />
           <Route path="/threadwork" element={<ThreadWorkPage />} />
           <Route path="/resinart" element={<ResinArtPage />} />
           <Route path="/wedding-marriage-items" element={<WeddingItemsPage />} />

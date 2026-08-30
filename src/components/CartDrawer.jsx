@@ -1,34 +1,75 @@
 import React, { useState } from 'react';
-import { FaTimes, FaShoppingBag, FaTrash, FaWhatsapp, FaArrowRight } from 'react-icons/fa';
+import { FaTimes, FaShoppingBag, FaTrash, FaWhatsapp, FaArrowRight, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCheckCircle } from 'react-icons/fa';
 import WhatsAppModal from './WhatsAppModal';
 import { getImageUrl } from '../utils/imageUtils';
+import { recordCustomerOrder } from '../services/adminDataStore';
 
 const CartDrawer = ({ isOpen, onClose, cartItems, onUpdateQty, onRemoveItem }) => {
   const [waModalOpen, setWaModalOpen] = useState(false);
   const [waOrderText, setWaOrderText] = useState('');
+  const [showCustomerForm, setShowCustomerForm] = useState(false);
+  const [customerInfo, setCustomerInfo] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    address: ''
+  });
+  const [formError, setFormError] = useState('');
 
   if (!isOpen) return null;
 
   const totalQuantity = cartItems.reduce((acc, item) => acc + (item.quantity || 1), 0);
+  const totalPrice = cartItems.reduce((sum, item) => sum + (Number(item.price || 0) * (item.quantity || 1)), 0);
 
   const handleCheckoutClick = () => {
+    // If customer form is not yet shown, show it to capture name/phone/email
+    if (!showCustomerForm) {
+      setShowCustomerForm(true);
+      return;
+    }
+
+    if (!customerInfo.name.trim() || !customerInfo.phone.trim()) {
+      setFormError('Please enter your Name and WhatsApp Mobile Number.');
+      return;
+    }
+    setFormError('');
+
     const randomDigits = Math.floor(100000 + Math.random() * 900000);
     const orderId = `DH-${randomDigits}`;
 
-    let text = `NEW ORDER – DIYA HANDCRAFTS\n\n`;
-    text += `Product:\n`;
+    // 1. Automatically record Order & Customer into Admin Panel Data Store
+    recordCustomerOrder({
+      customerName: customerInfo.name.trim(),
+      phone: customerInfo.phone.trim(),
+      email: customerInfo.email.trim(),
+      shippingAddress: customerInfo.address.trim() || 'Direct WhatsApp Dispatch',
+      items: cartItems,
+      totalAmount: totalPrice,
+      orderId
+    });
+
+    // 2. Build WhatsApp Message
+    let text = `👑 *NEW ORDER – DIYA HANDCRAFTS*\n\n`;
+    text += `👤 *Customer Name:* ${customerInfo.name.trim()}\n`;
+    text += `📱 *Phone:* ${customerInfo.phone.trim()}\n`;
+    if (customerInfo.email.trim()) text += `✉️ *Email:* ${customerInfo.email.trim()}\n`;
+    if (customerInfo.address.trim()) text += `📍 *Delivery Address:* ${customerInfo.address.trim()}\n`;
+    text += `\n📦 *Order ID:* ${orderId}\n`;
+    text += `──────────────\n`;
+    text += `🛍️ *Items Ordered (${totalQuantity} items):*\n`;
+
     cartItems.forEach((item, idx) => {
-      text += `${item.name || item.title}${idx < cartItems.length - 1 ? ', ' : ''}`;
+      text += `\n${idx + 1}. *${item.name || item.title}* (Qty: ${item.quantity || 1})`;
+      if (item.price) text += ` - ₹${Number(item.price) * (item.quantity || 1)}`;
+      if (item.selectedSize) text += `\n   • Size: ${item.selectedSize}`;
+      if (item.selectedColor) text += `\n   • Theme: ${item.selectedColor}`;
+      if (item.customName) text += `\n   • Custom Name: "${item.customName}"`;
     });
-    text += `\n\nQuantity:\n${totalQuantity}\n\n`;
-    text += `Custom Name / Title:\nHandcrafted Selection\n\n`;
-    let opts = [];
-    cartItems.forEach((item) => {
-      if (item.selectedSize) opts.push(`${item.name || item.title}: Size ${item.selectedSize}`);
-      if (item.customName) opts.push(`${item.name || item.title}: Custom Name ${item.customName}`);
-    });
-    text += `Customization:\n${opts.length > 0 ? opts.join(', ') : 'Shopping Bag Order'}\n\n`;
-    text += `Order ID:\n${orderId}`;
+
+    if (totalPrice > 0) {
+      text += `\n\n💰 *Total Amount:* ₹${totalPrice.toLocaleString()}`;
+    }
+    text += `\n\n✨ _Please confirm my handcrafted order details & payment link._`;
 
     setWaOrderText(text);
     setWaModalOpen(true);
@@ -60,73 +101,144 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onUpdateQty, onRemoveItem }) =
               </button>
             </div>
           ) : (
-            cartItems.map((item, idx) => (
-              <div key={`${item.id}-${idx}`} className="cart-item-card">
-                {/* Product Thumbnail Box */}
-                <div className="cart-thumb-wrap">
-                  <img 
-                    src={getImageUrl(item.image)} 
-                    alt={item.name || item.title} 
-                    className="cart-thumb-img"
-                    loading="lazy"
-                  />
-                </div>
-
-                {/* Product Details Column */}
-                <div className="cart-item-details">
-                  <div className="cart-item-header-row">
-                    <h4 className="cart-item-name">{item.name || item.title}</h4>
-                    <button 
-                      className="remove-item-btn"
-                      onClick={() => onRemoveItem(item.id)}
-                      title="Remove item"
-                      type="button"
-                    >
-                      <FaTrash />
-                    </button>
+            <>
+              {cartItems.map((item, idx) => (
+                <div key={`${item.id}-${idx}`} className="cart-item-card">
+                  {/* Product Thumbnail Box */}
+                  <div className="cart-thumb-wrap">
+                    <img 
+                      src={getImageUrl(item.image)} 
+                      alt={item.name || item.title} 
+                      className="cart-thumb-img"
+                      loading="lazy"
+                    />
                   </div>
 
-                  {(item.selectedSize || item.selectedColor || item.customName) && (
-                    <div className="cart-item-opts">
-                      {item.selectedSize && <span className="meta-pill">Size: {item.selectedSize}</span>}
-                      {item.selectedColor && <span className="meta-pill">Theme: {item.selectedColor}</span>}
-                      {item.customName && <span className="meta-pill">Name: {item.customName}</span>}
+                  {/* Product Details Column */}
+                  <div className="cart-item-details">
+                    <div className="cart-item-header-row">
+                      <h4 className="cart-item-name">{item.name || item.title}</h4>
+                      <button 
+                        className="remove-item-btn"
+                        onClick={() => onRemoveItem(item.id)}
+                        title="Remove item"
+                        type="button"
+                      >
+                        <FaTrash />
+                      </button>
                     </div>
+
+                    {(item.selectedSize || item.selectedColor || item.customName) && (
+                      <div className="cart-item-opts">
+                        {item.selectedSize && <span className="meta-pill">Size: {item.selectedSize}</span>}
+                        {item.selectedColor && <span className="meta-pill">Theme: {item.selectedColor}</span>}
+                        {item.customName && <span className="meta-pill">Name: {item.customName}</span>}
+                      </div>
+                    )}
+
+                    <div className="cart-item-footer-row">
+                      <div className="mini-qty-counter">
+                        <button 
+                          type="button" 
+                          onClick={() => onUpdateQty(item.id, Math.max(1, item.quantity - 1))}
+                          aria-label="Decrease quantity"
+                        >-</button>
+                        <span className="qty-val">{item.quantity}</span>
+                        <button 
+                          type="button" 
+                          onClick={() => onUpdateQty(item.id, item.quantity + 1)}
+                          aria-label="Increase quantity"
+                        >+</button>
+                      </div>
+
+                      {item.price > 0 && (
+                        <span className="item-price-tag">₹{(Number(item.price) * item.quantity).toLocaleString()}</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {/* Customer Contact Details Section (Auto-saved to Admin Customers & Orders) */}
+              {showCustomerForm && (
+                <div className="customer-info-box">
+                  <h4 className="customer-box-title">
+                    <FaUser style={{ color: '#C79A2B' }} /> Enter Contact Information
+                  </h4>
+                  <p className="customer-box-desc">
+                    Your details will be registered for order tracking and sent directly to our atelier on WhatsApp.
+                  </p>
+
+                  {formError && (
+                    <div className="form-error-msg">{formError}</div>
                   )}
 
-                  <div className="cart-item-footer-row">
-                    <div className="mini-qty-counter">
-                      <button 
-                        type="button" 
-                        onClick={() => onUpdateQty(item.id, Math.max(1, item.quantity - 1))}
-                        aria-label="Decrease quantity"
-                      >-</button>
-                      <span className="qty-val">{item.quantity}</span>
-                      <button 
-                        type="button" 
-                        onClick={() => onUpdateQty(item.id, item.quantity + 1)}
-                        aria-label="Increase quantity"
-                      >+</button>
-                    </div>
+                  <div className="cart-input-group">
+                    <label>Full Name *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Priya Sundaram"
+                      value={customerInfo.name}
+                      onChange={(e) => setCustomerInfo({ ...customerInfo, name: e.target.value })}
+                    />
+                  </div>
+
+                  <div className="cart-input-group">
+                    <label>WhatsApp Phone Number *</label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="e.g. +91 98765 43210"
+                      value={customerInfo.phone}
+                      onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
+                    />
+                  </div>
+
+                  <div className="cart-input-group">
+                    <label>Email Address</label>
+                    <input
+                      type="email"
+                      placeholder="e.g. priya@gmail.com"
+                      value={customerInfo.email}
+                      onChange={(e) => setCustomerInfo({ ...customerInfo, email: e.target.value })}
+                    />
+                  </div>
+
+                  <div className="cart-input-group">
+                    <label>Delivery City / Address</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Banjara Hills, Hyderabad"
+                      value={customerInfo.address}
+                      onChange={(e) => setCustomerInfo({ ...customerInfo, address: e.target.value })}
+                    />
                   </div>
                 </div>
-              </div>
-            ))
+              )}
+            </>
           )}
         </div>
 
         {/* Drawer Fixed Footer */}
         {cartItems.length > 0 && (
           <div className="cart-drawer-footer">
+            {totalPrice > 0 && (
+              <div className="cart-total-row">
+                <span>Total Amount:</span>
+                <span className="total-gold-price">₹{totalPrice.toLocaleString()}</span>
+              </div>
+            )}
+
             <p className="shipping-note">✨ Made to Order. Express dispatch pan-India & global.</p>
 
             <button
               onClick={handleCheckoutClick}
               className="btn btn-whatsapp w-full"
-              style={{ width: '100%', marginTop: '0.85rem', padding: '0.9rem' }}
+              style={{ width: '100%', marginTop: '0.65rem', padding: '0.9rem' }}
               type="button"
             >
-              <FaWhatsapp /> Order via WhatsApp <FaArrowRight />
+              <FaWhatsapp /> {showCustomerForm ? 'Confirm & Order on WhatsApp' : 'Proceed to WhatsApp Checkout'} <FaArrowRight />
             </button>
           </div>
         )}
@@ -169,209 +281,149 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onUpdateQty, onRemoveItem }) =
           border-bottom-left-radius: 20px;
         }
 
-        @keyframes slideInRight {
-          from { transform: translateX(100%); }
-          to { transform: translateX(0); }
-        }
-
         .cart-drawer-header {
           display: flex;
           align-items: center;
           justify-content: space-between;
           padding: 1.25rem 1.5rem;
-          border-bottom: 1px solid var(--gold-border);
+          border-bottom: 1px solid rgba(212, 175, 55, 0.2);
           background: #FFFDF9;
-          flex-shrink: 0;
         }
 
         .header-title-flex {
           display: flex;
           align-items: center;
-          gap: 0.6rem;
+          gap: 0.65rem;
         }
 
         .header-bag-icon {
-          color: var(--gold-dark);
-          font-size: 1.35rem;
+          color: #C79A2B;
+          font-size: 1.25rem;
         }
 
         .cart-drawer-header h3 {
-          font-family: var(--font-serif);
-          font-size: 1.35rem;
-          color: var(--text-dark);
-          font-weight: 700;
           margin: 0;
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-size: 1.35rem;
+          color: #2D2523;
+          font-weight: 700;
         }
 
         .close-drawer-btn {
-          background: rgba(212, 175, 55, 0.12);
-          border: none;
-          width: 34px;
-          height: 34px;
+          width: 32px;
+          height: 32px;
           border-radius: 50%;
+          background: #F8F3EC;
+          border: none;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 1rem;
-          color: var(--text-dark);
+          color: #2D2523;
           cursor: pointer;
-          transition: all 0.2s ease;
+          transition: background 0.2s;
         }
 
         .close-drawer-btn:hover {
-          background: var(--rose-primary);
-          color: #FFFFFF;
+          background: #E8D8B5;
         }
 
-
-
         .cart-items-body {
-          flex: 0 1 auto;
-          max-height: calc(100vh - 240px);
-          overflow-y: auto;
           padding: 1.25rem;
+          overflow-y: auto;
+          flex: 1;
           display: flex;
           flex-direction: column;
           gap: 1rem;
-          background: #FFFFFF;
+          max-height: calc(100vh - 200px);
         }
 
         .empty-cart-state {
           text-align: center;
-          padding: 3.5rem 1.5rem;
-          margin: 0 auto;
+          padding: 3rem 1rem;
+          color: #7A6B5E;
         }
 
         .empty-icon {
-          font-size: 3.5rem;
-          color: var(--gold-primary);
-          opacity: 0.5;
+          font-size: 3rem;
+          color: #D4AF37;
+          opacity: 0.4;
           margin-bottom: 1rem;
-        }
-
-        .empty-cart-state h4 {
-          font-size: 1.3rem;
-          color: var(--text-dark);
-          margin-bottom: 0.5rem;
-        }
-
-        .empty-cart-state p {
-          font-size: 0.88rem;
-          color: var(--text-muted);
         }
 
         .cart-item-card {
           display: flex;
-          align-items: center;
-          gap: 0.95rem;
-          padding: 0.95rem;
-          background: #FFFDF9;
-          border: 1.5px solid rgba(212, 175, 55, 0.35);
-          border-radius: 16px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-          transition: all 0.2s ease;
-          width: 100%;
-          box-sizing: border-box;
-          margin: 0;
-        }
-
-        .cart-item-card:hover {
-          border-color: var(--gold-primary);
-          box-shadow: 0 6px 16px rgba(212, 175, 55, 0.15);
+          gap: 0.85rem;
+          padding: 0.85rem;
+          background: #FAF7F2;
+          border: 1px solid #E8D8B5;
+          border-radius: 12px;
         }
 
         .cart-thumb-wrap {
-          width: 80px;
-          height: 80px;
-          min-width: 80px;
-          min-height: 80px;
-          max-width: 80px;
-          max-height: 80px;
-          border-radius: 12px;
+          width: 65px;
+          height: 65px;
+          border-radius: 8px;
           overflow: hidden;
-          background: #FFFFFF;
-          border: 1px solid rgba(212, 175, 55, 0.3);
+          border: 1px solid #E8D8B5;
           flex-shrink: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-sizing: border-box;
-          margin: 0;
-          padding: 0;
         }
 
         .cart-thumb-img {
-          width: 100% !important;
-          height: 100% !important;
-          max-width: 100% !important;
-          max-height: 100% !important;
-          object-fit: cover !important;
-          object-position: center !important;
-          display: block !important;
-          margin: 0 !important;
-          padding: 0 !important;
-          border: none !important;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
 
         .cart-item-details {
-          flex: 1 1 auto;
-          min-width: 0;
+          flex: 1;
           display: flex;
           flex-direction: column;
-          gap: 0.3rem;
+          justify-content: space-between;
         }
 
         .cart-item-header-row {
           display: flex;
-          align-items: flex-start;
           justify-content: space-between;
+          align-items: flex-start;
           gap: 0.5rem;
-          width: 100%;
         }
 
         .cart-item-name {
-          font-family: var(--font-serif);
-          font-size: 0.98rem;
+          font-size: 0.92rem;
           font-weight: 700;
-          color: var(--text-dark);
-          line-height: 1.25;
+          color: #2D2523;
           margin: 0;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
+          line-height: 1.25;
         }
 
         .remove-item-btn {
           background: transparent;
           border: none;
-          color: #E63946;
-          font-size: 0.9rem;
+          color: #A89F91;
           cursor: pointer;
-          padding: 0.15rem;
-          flex-shrink: 0;
-          transition: transform 0.2s ease;
+          font-size: 0.82rem;
+          padding: 2px;
         }
 
         .remove-item-btn:hover {
-          transform: scale(1.18);
+          color: #C62828;
         }
 
         .cart-item-opts {
           display: flex;
+          gap: 0.35rem;
           flex-wrap: wrap;
-          gap: 0.3rem;
-          margin-top: 0.1rem;
+          margin: 0.3rem 0;
         }
 
         .meta-pill {
-          background: rgba(194, 24, 91, 0.08);
-          color: var(--rose-primary);
-          font-size: 0.73rem;
-          font-weight: 600;
-          padding: 0.15rem 0.45rem;
+          font-size: 0.68rem;
+          background: #FFFDF9;
+          border: 1px solid #E8D8B5;
+          color: #C79A2B;
+          padding: 1px 6px;
           border-radius: 4px;
-          border: 1px solid rgba(194, 24, 91, 0.18);
+          font-weight: 600;
         }
 
         .cart-item-footer-row {
@@ -379,87 +431,153 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onUpdateQty, onRemoveItem }) =
           align-items: center;
           justify-content: space-between;
           margin-top: 0.4rem;
-          gap: 0.5rem;
-          width: 100%;
-        }
-
-        .cart-item-price {
-          font-family: var(--font-serif);
-          font-size: 1.1rem;
-          font-weight: 700;
-          color: var(--rose-dark);
         }
 
         .mini-qty-counter {
-          display: inline-flex;
+          display: flex;
           align-items: center;
-          border: 1px solid rgba(212, 175, 55, 0.4);
-          border-radius: 20px;
+          border: 1px solid #E8D8B5;
+          border-radius: 6px;
           background: #FFFFFF;
-          overflow: hidden;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
         }
 
         .mini-qty-counter button {
+          background: transparent;
           border: none;
-          background: #FFFDF9;
-          width: 26px;
-          height: 26px;
+          width: 24px;
+          height: 24px;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 0.85rem;
-          font-weight: 700;
-          color: var(--text-dark);
           cursor: pointer;
-          transition: background 0.2s ease;
-        }
-
-        .mini-qty-counter button:hover {
-          background: var(--rose-light);
-          color: var(--rose-primary);
+          font-weight: 700;
         }
 
         .qty-val {
-          padding: 0 0.45rem;
-          font-size: 0.82rem;
+          font-size: 0.8rem;
           font-weight: 700;
-          color: var(--text-dark);
-          min-width: 20px;
-          text-align: center;
+          padding: 0 6px;
+        }
+
+        .item-price-tag {
+          font-size: 0.88rem;
+          font-weight: 700;
+          color: #C79A2B;
+        }
+
+        /* Customer Contact Info Box */
+        .customer-info-box {
+          background: #FFFDF9;
+          border: 1.5px solid #C79A2B;
+          border-radius: 12px;
+          padding: 1.15rem;
+          margin-top: 0.5rem;
+          animation: fadeIn 0.25s ease;
+        }
+
+        .customer-box-title {
+          font-size: 0.95rem;
+          font-weight: 700;
+          color: #2D2523;
+          margin: 0 0 0.25rem 0;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+
+        .customer-box-desc {
+          font-size: 0.78rem;
+          color: #7A6B5E;
+          margin: 0 0 0.85rem 0;
+          line-height: 1.4;
+        }
+
+        .form-error-msg {
+          background: #FFEBEE;
+          color: #C62828;
+          padding: 0.4rem 0.65rem;
+          border-radius: 6px;
+          font-size: 0.75rem;
+          font-weight: 600;
+          margin-bottom: 0.75rem;
+        }
+
+        .cart-input-group {
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+          margin-bottom: 0.65rem;
+        }
+
+        .cart-input-group label {
+          font-size: 0.75rem;
+          font-weight: 700;
+          color: #2D2523;
+        }
+
+        .cart-input-group input {
+          padding: 0.5rem 0.75rem;
+          border-radius: 6px;
+          border: 1px solid #E8D8B5;
+          font-size: 0.82rem;
+          outline: none;
+        }
+
+        .cart-input-group input:focus {
+          border-color: #C79A2B;
         }
 
         .cart-drawer-footer {
-          padding: 1.25rem 1.5rem;
+          padding: 1.25rem;
+          border-top: 1px solid #E8D8B5;
           background: #FFFDF9;
-          border-top: 1px solid var(--gold-border);
-          flex-shrink: 0;
-          box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.03);
         }
 
-        .cart-subtotal-row {
+        .cart-total-row {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin-bottom: 0.25rem;
-        }
-
-        .subtotal-label {
-          font-size: 0.95rem;
-          font-weight: 600;
-          color: var(--text-dark);
-        }
-
-        .subtotal-val {
-          font-family: var(--font-serif);
-          font-size: 1.5rem;
-          color: var(--rose-dark);
+          font-size: 1rem;
           font-weight: 700;
+          color: #2D2523;
+          margin-bottom: 0.5rem;
+        }
+
+        .total-gold-price {
+          color: #C79A2B;
+          font-size: 1.2rem;
         }
 
         .shipping-note {
-          font-size: 0.76rem;
-          color: var(--text-muted);
+          font-size: 0.75rem;
+          color: #7A6B5E;
+          margin: 0;
+          text-align: center;
+        }
+
+        .btn-whatsapp {
+          background: #25D366;
+          color: #FFFFFF;
+          border: none;
+          border-radius: 50px;
+          font-weight: 700;
+          font-size: 0.92rem;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          transition: background 0.2s, transform 0.2s;
+        }
+
+        .btn-whatsapp:hover {
+          background: #1EBE5D;
+          transform: translateY(-1px);
+        }
+
+        @keyframes slideInRight {
+          from { transform: translateX(100%); }
+          to { transform: translateX(0); }
         }
       `}</style>
     </div>

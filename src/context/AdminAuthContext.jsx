@@ -3,7 +3,8 @@ import {
   getActiveAdminSession,
   authenticateAdmin,
   logoutAdminSession,
-  updateAdminPassword
+  updateAdminPassword,
+  updateAdminAvatar
 } from '../services/adminAuthService';
 
 const AdminAuthContext = createContext(null);
@@ -61,10 +62,15 @@ export const AdminAuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const session = getActiveAdminSession();
-    if (session) {
-      setAdminUser(session);
-    }
+    const syncSession = () => {
+      const session = getActiveAdminSession();
+      if (session) {
+        setAdminUser(session);
+      }
+    };
+    syncSession();
+    window.addEventListener('admin-session-updated', syncSession);
+    return () => window.removeEventListener('admin-session-updated', syncSession);
   }, []);
 
   const login = async (emailOrUsername, password) => {
@@ -90,8 +96,19 @@ export const AdminAuthProvider = ({ children }) => {
     return await updateAdminPassword(adminUser.id, oldPassword, newPassword);
   };
 
+  const updateAvatar = (newAvatarUrl) => {
+    if (!adminUser) return { success: false, message: 'Not authenticated' };
+    const res = updateAdminAvatar(adminUser.id, newAvatarUrl);
+    setAdminUser((prev) => ({ ...prev, avatar: newAvatarUrl }));
+    return res;
+  };
+
   const hasPermission = (permissionKey) => {
-    if (!adminUser || !adminUser.role) return false;
+    if (!adminUser) return false;
+    if (adminUser.role === 'SUPER_ADMIN') return true;
+    if (adminUser.permissions && adminUser.permissions[permissionKey] !== undefined) {
+      return Boolean(adminUser.permissions[permissionKey]);
+    }
     const roleConfig = ROLE_PERMISSIONS[adminUser.role];
     return roleConfig ? Boolean(roleConfig[permissionKey]) : false;
   };
@@ -105,6 +122,7 @@ export const AdminAuthProvider = ({ children }) => {
         login,
         logout,
         changePassword,
+        updateAvatar,
         hasPermission
       }}
     >

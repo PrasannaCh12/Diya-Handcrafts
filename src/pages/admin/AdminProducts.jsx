@@ -221,6 +221,7 @@ const AdminProducts = () => {
                 <th style={{ padding: '14px 16px' }}>Product</th>
                 <th style={{ padding: '14px 16px' }}>Category</th>
                 <th style={{ padding: '14px 16px' }}>SKU</th>
+                <th style={{ padding: '14px 16px' }}>Added By / Author</th>
                 <th style={{ padding: '14px 16px' }}>Stock</th>
                 <th style={{ padding: '14px 16px' }}>Status</th>
                 <th style={{ padding: '14px 16px', textAlign: 'right' }}>Actions</th>
@@ -229,7 +230,7 @@ const AdminProducts = () => {
             <tbody>
               {sortedProducts.length === 0 ? (
                 <tr>
-                  <td colSpan="6" style={{ padding: '3rem', textAlign: 'center', color: '#7A6965' }}>
+                  <td colSpan="7" style={{ padding: '3rem', textAlign: 'center', color: '#7A6965' }}>
                     <FaBoxOpen style={{ fontSize: '2.5rem', color: '#D4C5B9', marginBottom: '0.5rem' }} />
                     <p style={{ margin: 0, fontWeight: 700 }}>No products found matching criteria</p>
                   </td>
@@ -267,6 +268,32 @@ const AdminProducts = () => {
                       {/* SKU */}
                       <td style={{ padding: '14px 16px', color: '#7A6965', fontFamily: 'monospace', fontSize: '0.82rem' }}>
                         {p.sku || `SKU-${p.id}`}
+                      </td>
+
+                      {/* Added By / Creator Attribution */}
+                      <td style={{ padding: '14px 16px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                          <span
+                            style={{
+                              fontSize: '0.75rem',
+                              fontWeight: 700,
+                              color: p.addedByRole === 'SUPER_ADMIN' ? '#B45309' : p.addedByRole === 'ADMIN' ? '#0369A1' : '#15803D',
+                              background: p.addedByRole === 'SUPER_ADMIN' ? '#FFF8E1' : p.addedByRole === 'ADMIN' ? '#E0F2FE' : '#DCFCE7',
+                              padding: '2px 8px',
+                              borderRadius: '12px',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                              width: 'fit-content'
+                            }}
+                          >
+                            {p.addedByRole === 'SUPER_ADMIN' ? '👑' : p.addedByRole === 'ADMIN' ? '🛡️' : '👤'}
+                            {p.addedBy || 'Divya Yelchuri (Super Admin)'}
+                          </span>
+                          <span style={{ fontSize: '0.68rem', color: '#A89F91' }}>
+                            {p.createdAt ? new Date(p.createdAt).toLocaleDateString() : 'Initial Catalog'}
+                          </span>
+                        </div>
                       </td>
 
                       {/* Stock */}
@@ -385,7 +412,10 @@ const AdminProducts = () => {
               <div>
                 <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#C89B3C' }}>{previewProduct.category}</span>
                 <h3 style={{ margin: '4px 0 8px 0', fontSize: '1.2rem' }}>{previewProduct.name}</h3>
-                <div style={{ fontWeight: 700, color: '#2D2523' }}>Stock: {previewProduct.stockQuantity ?? 20}</div>
+                <div style={{ fontWeight: 700, color: '#2D2523', marginBottom: '4px' }}>Stock: {previewProduct.stockQuantity ?? 20}</div>
+                <div style={{ fontSize: '0.78rem', color: '#7A6965' }}>
+                  Added by: <strong>{previewProduct.addedBy || 'Divya Yelchuri (Super Admin)'}</strong>
+                </div>
               </div>
             </div>
             <p style={{ fontSize: '0.88rem', color: '#5A4A42', lineHeight: '1.5' }}>{previewProduct.description || previewProduct.shortDesc}</p>

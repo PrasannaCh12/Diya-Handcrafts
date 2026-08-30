@@ -98,6 +98,8 @@ export const getStoredProducts = () => {
     image: p.image || (Array.isArray(p.images) && p.images[0]) || '',
     images: Array.isArray(p.images) && p.images.length > 0 ? p.images : (p.image ? [p.image] : []),
     customFields: p.customFields || [],
+    addedBy: p.addedBy || 'Divya Yelchuri (Super Admin)',
+    addedByRole: p.addedByRole || 'SUPER_ADMIN',
     createdAt: p.createdAt || '2026-01-01'
   }));
   localStorage.setItem(PRODUCTS_KEY, JSON.stringify(normalized));
@@ -116,8 +118,11 @@ export const getStoredArchivedProducts = () => {
   return [];
 };
 
-export const addProduct = (productData) => {
+export const addProduct = (productData, creator = null) => {
   const products = getStoredProducts();
+  const addedBy = productData.addedBy || (creator ? `${creator.name} (${creator.role === 'SUPER_ADMIN' ? 'Super Admin' : creator.role === 'ADMIN' ? 'Admin' : 'Staff'})` : 'Divya Yelchuri (Super Admin)');
+  const addedByRole = productData.addedByRole || creator?.role || 'SUPER_ADMIN';
+
   const newProduct = {
     ...productData,
     id: productData.id || `prod-${Date.now()}`,
@@ -126,6 +131,8 @@ export const addProduct = (productData) => {
     stockQuantity: Number(productData.stockQuantity || 20),
     stockStatus: Number(productData.stockQuantity || 20) > 0 ? 'In Stock' : 'Out of Stock',
     customFields: productData.customFields || [],
+    addedBy,
+    addedByRole,
     createdAt: new Date().toISOString()
   };
 
@@ -273,4 +280,103 @@ export const getStoredCustomers = () => {
   }
   localStorage.setItem(CUSTOMERS_KEY, JSON.stringify(INITIAL_CUSTOMERS));
   return INITIAL_CUSTOMERS;
+};
+
+// --- CUSTOMER & ORDER RECORDING (Triggered on WhatsApp Checkout & Inquiries) ---
+export const recordCustomerOrder = ({
+  customerName,
+  email = '',
+  phone = '',
+  shippingAddress = '',
+  items = [],
+  totalAmount = 0,
+  orderId = null,
+  customNotes = ''
+}) => {
+  const finalOrderId = orderId || `DH-${Math.floor(100000 + Math.random() * 900000)}`;
+  const todayDate = new Date().toISOString().split('T')[0];
+  const timestamp = new Date().toISOString();
+
+  // 1. Record Order
+  const orders = getStoredOrders();
+  const calculatedTotal = Number(totalAmount) || items.reduce((sum, i) => sum + (Number(i.price || 0) * Number(i.quantity || 1)), 0);
+
+  const newOrder = {
+    id: finalOrderId,
+    customerName: customerName || 'Valued Customer',
+    email: email || 'N/A',
+    phone: phone || 'N/A',
+    date: timestamp,
+    items: items.map((it) => ({
+      id: it.id || 'custom',
+      name: it.name || it.title || 'Handmade Item',
+      quantity: it.quantity || 1,
+      price: it.price || 0,
+      customName: it.customName || it.selectedSize || ''
+    })),
+    totalAmount: calculatedTotal,
+    paymentStatus: 'WHATSAPP ENQUIRY',
+    orderStatus: 'Pending',
+    shippingAddress: shippingAddress || 'Pending Confirmation via WhatsApp',
+    notes: customNotes
+  };
+  const updatedOrders = [newOrder, ...orders];
+  localStorage.setItem(ORDERS_KEY, JSON.stringify(updatedOrders));
+
+  // 2. Record / Update Customer in Directory
+  const customers = getStoredCustomers();
+  const cleanPhone = (phone || '').replace(/\D/g, '');
+  const existingIdx = customers.findIndex((c) => 
+    (cleanPhone && cleanPhone.length >= 10 && c.phone && c.phone.replace(/\D/g, '').includes(cleanPhone.slice(-10))) ||
+    (email && email !== 'N/A' && c.email && c.email.toLowerCase() === email.toLowerCase())
+  );
+
+  let updatedCustomers;
+  if (existingIdx !== -1) {
+    const existing = customers[existingIdx];
+    customers[existingIdx] = {
+      ...existing,
+      name: customerName || existing.name,
+      email: (email && email !== 'N/A') ? email : existing.email,
+      phone: phone || existing.phone,
+      ordersCount: (existing.ordersCount || 0) + 1,
+      totalSpent: (existing.totalSpent || 0) + calculatedTotal,
+      lastOrder: todayDate
+    };
+    updatedCustomers = [...customers];
+  } else {
+    const newCustomer = {
+      id: `cust-${Date.now()}`,
+      name: customerName || 'Valued Customer',
+      email: email || 'N/A',
+      phone: phone || 'N/A',
+      ordersCount: 1,
+      totalSpent: calculatedTotal,
+      lastOrder: todayDate
+    };
+    updatedCustomers = [newCustomer, ...customers];
+  }
+
+  localStorage.setItem(CUSTOMERS_KEY, JSON.stringify(updatedCustomers));
+  notifyListeners();
+  return { order: newOrder, orderId: finalOrderId };
+};
+
+export const recordCustomerInquiry = ({
+  name,
+  phone = '',
+  email = '',
+  category = '',
+  message = '',
+  eventDate = ''
+}) => {
+  return recordCustomerOrder({
+    customerName: name,
+    email: email || 'N/A',
+    phone: phone || 'N/A',
+    shippingAddress: eventDate ? `Event Date: ${eventDate}` : 'Inquiry via Contact Form',
+    items: [{ id: 'inquiry', name: `${category} Inquiry`, quantity: 1, price: 0, customName: message }],
+    totalAmount: 0,
+    customNotes: message
+  });
 };

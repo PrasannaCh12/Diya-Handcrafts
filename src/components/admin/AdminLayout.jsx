@@ -14,7 +14,11 @@ import {
   FaSearch,
   FaBars,
   FaTimes,
-  FaHome
+  FaHome,
+  FaImages,
+  FaStar,
+  FaUserShield,
+  FaCrown
 } from 'react-icons/fa';
 import './AdminLayout.css';
 
@@ -91,6 +95,22 @@ const AdminLayout = ({ children }) => {
             </NavLink>
           )}
 
+          <NavLink
+            to="/admin/gallery"
+            className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
+            onClick={() => setMobileOpen(false)}
+          >
+            <FaImages /> Gallery Photos
+          </NavLink>
+
+          <NavLink
+            to="/admin/reviews"
+            className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
+            onClick={() => setMobileOpen(false)}
+          >
+            <FaStar /> Customer Reviews
+          </NavLink>
+
           {hasPermission('canManageOrders') && (
             <NavLink
               to="/admin/orders"
@@ -118,6 +138,17 @@ const AdminLayout = ({ children }) => {
               onClick={() => setMobileOpen(false)}
             >
               <FaWarehouse /> Inventory
+            </NavLink>
+          )}
+
+          {(adminUser?.role === 'SUPER_ADMIN' || hasPermission('canManageAdmins')) && (
+            <NavLink
+              to="/admin/users"
+              className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
+              style={{ borderLeft: '3px solid #D4AF37' }}
+              onClick={() => setMobileOpen(false)}
+            >
+              <FaUserShield style={{ color: '#D4AF37' }} /> Admin & Staff Profiles
             </NavLink>
           )}
 

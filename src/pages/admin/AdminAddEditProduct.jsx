@@ -6,6 +6,7 @@ import {
   updateProduct,
   getStoredCategories
 } from '../../services/adminDataStore';
+import { useAdminAuth } from '../../context/AdminAuthContext';
 import {
   FaCloudUploadAlt,
   FaTrash,
@@ -32,6 +33,7 @@ const FIELD_TYPES = [
 const AdminAddEditProduct = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const { adminUser } = useAdminAuth();
   const isEdit = Boolean(id);
 
   const categories = getStoredCategories();
@@ -227,7 +229,7 @@ const AdminAddEditProduct = () => {
       updateProduct(id, payload);
       setToastMessage('Product updated successfully!');
     } else {
-      addProduct(payload);
+      addProduct(payload, adminUser);
       setToastMessage('Product added successfully!');
     }
 

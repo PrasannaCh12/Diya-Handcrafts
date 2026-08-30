@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaWhatsapp, FaPaperPlane, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
+import { recordCustomerInquiry } from '../services/adminDataStore';
 
 const ContactSection = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -26,6 +27,15 @@ const ContactSection = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
+    recordCustomerInquiry({
+      name: formData.name,
+      phone: formData.phone,
+      email: formData.email,
+      category: formData.category,
+      message: formData.message,
+      eventDate: formData.eventDate
+    });
+
     setFormSubmitted(true);
     setTimeout(() => {
       setFormSubmitted(false);
@@ -42,6 +52,15 @@ const ContactSection = () => {
 
   const handleWhatsAppSubmit = () => {
     if (!validateForm()) return;
+
+    recordCustomerInquiry({
+      name: formData.name,
+      phone: formData.phone,
+      email: formData.email,
+      category: formData.category,
+      message: formData.message,
+      eventDate: formData.eventDate
+    });
 
     const formattedMessage = 
       `*New Atelier Inquiry*\n` +

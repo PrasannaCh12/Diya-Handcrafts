@@ -64,11 +64,10 @@ const Footer = () => {
               Handcrafting timeless royal memories. Specializing in customized bridal bangles, preserved wedding flower resin clocks, homemade Belgian chocolates, eggless cookies, and luxury trousseau hampers.
             </p>
             <div className="footer-social-icons">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebookF /></a>
-              <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer"><FaPinterestP /></a>
-              <a href="https://wa.me/917981664314" target="_blank" rel="noopener noreferrer" title="WhatsApp: +91 79816 64314"><FaWhatsapp /></a>
-              <a href="https://wa.me/919603551889" target="_blank" rel="noopener noreferrer" title="WhatsApp: +91 96035 51889"><FaWhatsapp /></a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" title="Instagram"><FaInstagram /></a>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook"><FaFacebookF /></a>
+              <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" title="Pinterest"><FaPinterestP /></a>
+              <a href="https://wa.me/917981664314" target="_blank" rel="noopener noreferrer" title="WhatsApp"><FaWhatsapp /></a>
             </div>
             <div style={{ marginTop: '0.75rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
               💬 <strong>WhatsApp Contact:</strong><br />
@@ -86,6 +85,7 @@ const Footer = () => {
               <li><Link to="/shop">Boutique Shop</Link></li>
               <li><Link to="/custom-order">Custom Order Studio</Link></li>
               <li><Link to="/contact">Contact Us</Link></li>
+              <li><Link to="/admin">Admin Panel</Link></li>
             </ul>
           </div>
 
@@ -107,7 +107,7 @@ const Footer = () => {
           <div className="footer-nav-col">
             <h4 className="footer-col-title">Artisan Atelier</h4>
             <p className="footer-contact-item">Banjara Hills, Phase 2, Hyderabad, TS, India</p>
-            <p className="footer-contact-item">WhatsApp: +91 99999 99999</p>
+            <p className="footer-contact-item">WhatsApp: +91 79816 64314</p>
             <p className="footer-contact-item">Email: hello@divyayelchuri.com</p>
             <span className="shipping-badge">✈️ Express Pan-India & Global Dispatch</span>
           </div>
