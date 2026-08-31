@@ -1,19 +1,6 @@
 import { PRODUCTS } from '../../src/data/products.js';
 
-let productsStore = PRODUCTS.map((p) => ({
-  ...p,
-  status: p.status || 'ACTIVE',
-  stockQuantity: p.stockQuantity ?? (p.availability === 'Out of Stock' ? 0 : 25),
-  stockStatus: p.stockStatus || (p.availability === 'Out of Stock' ? 'Out of Stock' : 'In Stock'),
-  sku: p.sku || `SKU-${p.id.toUpperCase()}`,
-  image: p.image || (Array.isArray(p.images) && p.images[0]) || '',
-  images: Array.isArray(p.images) && p.images.length > 0 ? p.images : (p.image ? [p.image] : []),
-  customFields: p.customFields || [],
-  addedBy: p.addedBy || 'Divya Yelchuri (Super Admin)',
-  addedByRole: p.addedByRole || 'SUPER_ADMIN',
-  createdAt: p.createdAt || '2026-01-01'
-}));
-
+let productsStore = [...PRODUCTS];
 let archivedProductsStore = [];
 
 export const getProducts = (req, res) => {
@@ -57,21 +44,21 @@ export const updateProduct = (req, res) => {
   const updatedFields = req.body;
 
   const idx = productsStore.findIndex((p) => p.id === id);
-  if (idx === -1) {
-    return res.status(404).json({ success: false, message: 'Product not found' });
+  if (idx !== -1) {
+    productsStore[idx] = {
+      ...productsStore[idx],
+      ...updatedFields,
+      stockQuantity: updatedFields.stockQuantity !== undefined ? Number(updatedFields.stockQuantity) : productsStore[idx].stockQuantity,
+      stockStatus: updatedFields.stockQuantity !== undefined 
+        ? (Number(updatedFields.stockQuantity) > 0 ? 'In Stock' : 'Out of Stock')
+        : productsStore[idx].stockStatus,
+      updatedAt: new Date().toISOString()
+    };
+
+    res.json({ success: true, product: productsStore[idx] });
+  } else {
+    res.status(404).json({ success: false, message: 'Product not found' });
   }
-
-  productsStore[idx] = {
-    ...productsStore[idx],
-    ...updatedFields,
-    stockQuantity: updatedFields.stockQuantity !== undefined ? Number(updatedFields.stockQuantity) : productsStore[idx].stockQuantity,
-    stockStatus: updatedFields.stockQuantity !== undefined 
-      ? (Number(updatedFields.stockQuantity) > 0 ? 'In Stock' : 'Out of Stock')
-      : productsStore[idx].stockStatus,
-    updatedAt: new Date().toISOString()
-  };
-
-  res.json({ success: true, product: productsStore[idx] });
 };
 
 export const archiveProduct = (req, res) => {

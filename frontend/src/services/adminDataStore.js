@@ -85,46 +85,20 @@ export const getStoredProducts = () => {
     const data = localStorage.getItem(PRODUCTS_KEY);
     if (data) {
       const parsed = JSON.parse(data);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed.map((p) => {
-          const initialMatch = PRODUCTS.find((item) => item.id === p.id);
-          return {
-            ...p,
-            price: (p.price !== undefined && p.price !== null && p.price !== '')
-              ? Number(p.price)
-              : (initialMatch?.price ? Number(initialMatch.price) : 0)
-          };
-        });
+      if (Array.isArray(parsed)) {
+        const filtered = parsed.filter(p => !['tw-bridal-red', 'tw-purple-velvet', 'bangle-02', 'ra-photo-frame', 'gift-03', 'bangle-01', 'resin-001', 'resin-00'].includes(p.id));
+        if (filtered.length !== parsed.length) {
+          localStorage.setItem(PRODUCTS_KEY, JSON.stringify(filtered));
+        }
+        return filtered;
       }
     }
   } catch (e) {
     console.error('Error reading products data:', e);
   }
 
-  const normalized = PRODUCTS.map((p) => ({
-    ...p,
-    status: p.status || 'ACTIVE',
-    stockQuantity: p.stockQuantity ?? (p.availability === 'Out of Stock' ? 0 : 25),
-    stockStatus: p.stockStatus || (p.availability === 'Out of Stock' ? 'Out of Stock' : 'In Stock'),
-    sku: p.sku || `SKU-${p.id.toUpperCase()}`,
-    image: p.image || (Array.isArray(p.images) && p.images[0]) || '',
-    images: Array.isArray(p.images) && p.images.length > 0 ? p.images : (p.image ? [p.image] : []),
-    customFields: p.customFields || [],
-    addedBy: p.addedBy || 'Divya Yelchuri (Super Admin)',
-    addedByRole: p.addedByRole || 'SUPER_ADMIN',
-    createdAt: p.createdAt || '2026-01-01'
-  }));
-  localStorage.setItem(PRODUCTS_KEY, JSON.stringify(normalized));
-
-  // Async API sync in background
-  apiFetch(API_ENDPOINTS.PRODUCTS).then((res) => {
-    if (res.success && Array.isArray(res.products)) {
-      localStorage.setItem(PRODUCTS_KEY, JSON.stringify(res.products));
-      notifyListeners();
-    }
-  });
-
-  return normalized;
+  localStorage.setItem(PRODUCTS_KEY, JSON.stringify([]));
+  return [];
 };
 
 export const getStoredArchivedProducts = () => {
