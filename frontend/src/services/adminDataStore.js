@@ -84,7 +84,18 @@ export const getStoredProducts = () => {
   try {
     const data = localStorage.getItem(PRODUCTS_KEY);
     if (data) {
-      return JSON.parse(data);
+      const parsed = JSON.parse(data);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed.map((p) => {
+          const initialMatch = PRODUCTS.find((item) => item.id === p.id);
+          return {
+            ...p,
+            price: (p.price !== undefined && p.price !== null && p.price !== '')
+              ? Number(p.price)
+              : (initialMatch?.price ? Number(initialMatch.price) : 0)
+          };
+        });
+      }
     }
   } catch (e) {
     console.error('Error reading products data:', e);
