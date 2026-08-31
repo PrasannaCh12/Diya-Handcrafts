@@ -102,9 +102,16 @@ const AnimatedProductCard = ({ product, index, fallbackImg, onOpenDetails, onAdd
 
       {/* Product Name & Dual Action Buttons ONLY */}
       <div className="gallery-card-info">
-        <h4 className="card-item-title" onClick={() => onOpenDetails && onOpenDetails(product)}>
-          {product.name}
-        </h4>
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px' }}>
+          <h4 className="card-item-title" onClick={() => onOpenDetails && onOpenDetails(product)}>
+            {product.name}
+          </h4>
+          {Number(product.price) > 0 && (
+            <div className="card-item-price" style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, color: '#C89B3C', fontSize: '1rem', whiteSpace: 'nowrap' }}>
+              ₹{Number(product.price).toLocaleString('en-IN')}
+            </div>
+          )}
+        </div>
 
         {/* Dual Actions: Add to Cart & Buy Now */}
         <div className="card-actions-dual">
