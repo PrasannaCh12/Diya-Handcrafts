@@ -252,13 +252,13 @@ const ContactSection = () => {
                   <FaWhatsapp /> 💬 +91 85550 87143 (Order & Customization)
                 </a>
                 <a
-                  href="https://wa.me/919154607582?text=Hi!%20I%20need%20assistance."
+                  href="https://wa.me/919154607582?text=Hi!%20I%20would%20like%20to%20inquire%20about%20Resin%20Art."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-secondary"
                   style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
                 >
-                  <FaWhatsapp /> 💬 +91 91546 07582 (Customer Support)
+                  <FaWhatsapp /> 🎨 +91 91546 07582 (DM For Resin Art)
                 </a>
                 <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.85)', textAlign: 'center', marginTop: '0.2rem' }}>
                   Available Mon-Sat: 10:00 AM - 7:30 PM IST

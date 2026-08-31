@@ -17,8 +17,8 @@ const WHATSAPP_NUMBERS = [
   {
     display: '+91 91546 07582',
     raw: '919154607582',
-    label: 'Customer Care',
-    icon: '📱'
+    label: 'DM For Resin Art',
+    icon: '🎨'
   }
 ];
 
