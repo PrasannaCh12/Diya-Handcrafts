@@ -18,7 +18,8 @@ import {
   FaImages,
   FaStar,
   FaUserShield,
-  FaCrown
+  FaCrown,
+  FaLayerGroup
 } from 'react-icons/fa';
 import './AdminLayout.css';
 
@@ -94,6 +95,14 @@ const AdminLayout = ({ children }) => {
               <FaTags /> Categories
             </NavLink>
           )}
+
+          <NavLink
+            to="/admin/collections"
+            className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
+            onClick={() => setMobileOpen(false)}
+          >
+            <FaLayerGroup /> Explore Collections
+          </NavLink>
 
           <NavLink
             to="/admin/gallery"

@@ -17,6 +17,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminProducts from './pages/admin/AdminProducts';
 import AdminAddEditProduct from './pages/admin/AdminAddEditProduct';
 import AdminCategories from './pages/admin/AdminCategories';
+import AdminCollections from './pages/admin/AdminCollections';
 import AdminGallery from './pages/admin/AdminGallery';
 import AdminReviews from './pages/admin/AdminReviews';
 import AdminOrders from './pages/admin/AdminOrders';
@@ -150,6 +151,17 @@ function AppContent() {
               <ProtectedRoute requiredPermission="canManageCategories">
                 <AdminLayout>
                   <AdminCategories />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/collections"
+            element={
+              <ProtectedRoute>
+                <AdminLayout>
+                  <AdminCollections />
                 </AdminLayout>
               </ProtectedRoute>
             }
