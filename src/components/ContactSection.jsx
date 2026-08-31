@@ -240,16 +240,25 @@ const ContactSection = () => {
                   className="btn btn-secondary"
                   style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
                 >
-                  <FaWhatsapp /> 💬 +91 79816 64314 (Divya Yelchuri)
+                  <FaWhatsapp /> 💬 +91 79816 64314 (Divya Yelchuri Studio)
                 </a>
                 <a
-                  href="https://wa.me/919603551889?text=Hi!%20I%20would%20like%20to%20place%20an%20order."
+                  href="https://wa.me/918555087143?text=Hi!%20I%20would%20like%20to%20place%20an%20order."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-secondary"
                   style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
                 >
-                  <FaWhatsapp /> 💬 +91 96035 51889 (Orders & Support)
+                  <FaWhatsapp /> 💬 +91 85550 87143 (Order & Customization)
+                </a>
+                <a
+                  href="https://wa.me/919154607582?text=Hi!%20I%20need%20assistance."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-secondary"
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                >
+                  <FaWhatsapp /> 💬 +91 91546 07582 (Customer Support)
                 </a>
                 <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.85)', textAlign: 'center', marginTop: '0.2rem' }}>
                   Available Mon-Sat: 10:00 AM - 7:30 PM IST

@@ -72,7 +72,8 @@ const Footer = () => {
             <div style={{ marginTop: '0.75rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
               💬 <strong>WhatsApp Contact:</strong><br />
               • <a href="https://wa.me/917981664314" style={{ color: 'var(--gold-dark)', fontWeight: '600' }}>+91 79816 64314</a><br />
-              • <a href="https://wa.me/919603551889" style={{ color: 'var(--gold-dark)', fontWeight: '600' }}>+91 96035 51889</a>
+              • <a href="https://wa.me/918555087143" style={{ color: 'var(--gold-dark)', fontWeight: '600' }}>+91 85550 87143</a><br />
+              • <a href="https://wa.me/919154607582" style={{ color: 'var(--gold-dark)', fontWeight: '600' }}>+91 91546 07582</a>
             </div>
           </div>
 

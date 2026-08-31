@@ -5,13 +5,19 @@ const WHATSAPP_NUMBERS = [
   {
     display: '+91 79816 64314',
     raw: '917981664314',
-    label: 'Primary Support',
+    label: 'Divya Yelchuri Studio',
     icon: '📱'
   },
   {
-    display: '+91 96035 51889',
-    raw: '919603551889',
-    label: 'Order Support',
+    display: '+91 85550 87143',
+    raw: '918555087143',
+    label: 'Order & Customization',
+    icon: '📱'
+  },
+  {
+    display: '+91 91546 07582',
+    raw: '919154607582',
+    label: 'Customer Care',
     icon: '📱'
   }
 ];
