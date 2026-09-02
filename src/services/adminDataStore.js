@@ -6,15 +6,23 @@ const CATEGORIES_KEY = 'diya_admin_categories_v2';
 const ORDERS_KEY = 'diya_admin_orders_v2';
 const CUSTOMERS_KEY = 'diya_admin_customers_v2';
 
+const generateSlug = (name) => {
+  return (name || '')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '') || 'collection';
+};
+
 const INITIAL_CATEGORIES = [
-  { id: 'cat-1', name: 'Thread Work', description: 'Handcrafted bridal bangles, silk thread cuffs & Kundan stone jewelry.', icon: '🧵', status: 'ACTIVE', createdAt: '2026-01-01' },
-  { id: 'cat-2', name: 'Resin Art', description: 'Custom preserved floral frames, anniversary plaques, coasters & keychains.', icon: '🎨', status: 'ACTIVE', createdAt: '2026-01-01' },
-  { id: 'cat-3', name: 'Chocolates', description: 'Artisanal handmade luxury chocolates, truffles & customized gift boxes.', icon: '🍫', status: 'ACTIVE', createdAt: '2026-01-01' },
-  { id: 'cat-4', name: 'Biscuits', description: 'Freshly baked artisanal gourmet butter biscuits & cookies.', icon: '🍪', status: 'ACTIVE', createdAt: '2026-01-01' },
-  { id: 'cat-5', name: 'Wedding & Marriage Items', description: 'Bespoke bridal thali plates, wedding favors & ceremonial keepsakes.', icon: '💍', status: 'ACTIVE', createdAt: '2026-01-01' },
-  { id: 'cat-6', name: 'Customized Chains', description: 'Handcrafted personalized name chains, pendants & charms.', icon: '📿', status: 'ACTIVE', createdAt: '2026-01-01' },
-  { id: 'cat-7', name: 'Customized Gifts', description: 'Personalized gift hampers, photo frames & bespoke keepsakes.', icon: '🎁', status: 'ACTIVE', createdAt: '2026-01-01' },
-  { id: 'cat-8', name: 'Customized Dolls', description: 'Handcrafted custom miniature dolls & couple figurines.', icon: '🧸', status: 'ACTIVE', createdAt: '2026-01-01' }
+  { id: 'cat-1', name: 'Thread Work', slug: 'thread-work', description: 'Handcrafted bridal bangles, silk thread cuffs & Kundan stone jewelry.', icon: '🧵', status: 'ACTIVE', displayOrder: 1, createdAt: '2026-01-01' },
+  { id: 'cat-2', name: 'Resin Art', slug: 'resin-art', description: 'Custom preserved floral frames, anniversary plaques, coasters & keychains.', icon: '🎨', status: 'ACTIVE', displayOrder: 2, createdAt: '2026-01-01' },
+  { id: 'cat-3', name: 'Chocolates', slug: 'chocolates', description: 'Artisanal handmade luxury chocolates, truffles & customized gift boxes.', icon: '🍫', status: 'ACTIVE', displayOrder: 3, createdAt: '2026-01-01' },
+  { id: 'cat-4', name: 'Biscuits', slug: 'biscuits', description: 'Freshly baked artisanal gourmet butter biscuits & cookies.', icon: '🍪', status: 'ACTIVE', displayOrder: 4, createdAt: '2026-01-01' },
+  { id: 'cat-5', name: 'Wedding & Marriage Items', slug: 'wedding-marriage-items', description: 'Bespoke bridal thali plates, wedding favors & ceremonial keepsakes.', icon: '💍', status: 'ACTIVE', displayOrder: 5, createdAt: '2026-01-01' },
+  { id: 'cat-6', name: 'Customized Chains', slug: 'customized-chains', description: 'Handcrafted personalized name chains, pendants & charms.', icon: '📿', status: 'ACTIVE', displayOrder: 6, createdAt: '2026-01-01' },
+  { id: 'cat-7', name: 'Customized Gifts', slug: 'customized-gifts', description: 'Personalized gift hampers, photo frames & bespoke keepsakes.', icon: '🎁', status: 'ACTIVE', displayOrder: 7, createdAt: '2026-01-01' },
+  { id: 'cat-8', name: 'Customized Dolls', slug: 'customized-dolls', description: 'Handcrafted custom miniature dolls & couple figurines.', icon: '🧸', status: 'ACTIVE', displayOrder: 8, createdAt: '2026-01-01' }
 ];
 
 const INITIAL_ORDERS = [
@@ -204,15 +212,24 @@ export const getStoredCategories = () => {
 
 export const addCategory = (categoryData) => {
   const categories = getStoredCategories();
+  const name = categoryData.name || 'New Collection';
   const newCat = {
-    ...categoryData,
     id: `cat-${Date.now()}`,
-    status: categoryData.status || 'ACTIVE',
-    createdAt: new Date().toISOString()
+    name,
+    slug: categoryData.slug || generateSlug(name),
+    description: categoryData.description || '',
+    icon: categoryData.icon || '✨',
+    image: categoryData.image || '',
+    status: categoryData.status === 'INACTIVE' ? 'INACTIVE' : 'ACTIVE',
+    displayOrder: Number(categoryData.displayOrder) || categories.length + 1,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   };
   const updated = [newCat, ...categories];
   localStorage.setItem(CATEGORIES_KEY, JSON.stringify(updated));
   notifyListeners();
+
+  apiFetch(API_ENDPOINTS.CATEGORIES, { method: 'POST', body: JSON.stringify(newCat) });
   return newCat;
 };
 
@@ -220,9 +237,19 @@ export const updateCategory = (id, fields) => {
   const categories = getStoredCategories();
   const idx = categories.findIndex((c) => c.id === id);
   if (idx !== -1) {
-    categories[idx] = { ...categories[idx], ...fields, updatedAt: new Date().toISOString() };
+    const updatedName = fields.name !== undefined ? fields.name : categories[idx].name;
+    categories[idx] = {
+      ...categories[idx],
+      ...fields,
+      name: updatedName,
+      slug: fields.slug || generateSlug(updatedName),
+      displayOrder: fields.displayOrder !== undefined ? Number(fields.displayOrder) : categories[idx].displayOrder,
+      updatedAt: new Date().toISOString()
+    };
     localStorage.setItem(CATEGORIES_KEY, JSON.stringify(categories));
     notifyListeners();
+
+    apiFetch(`${API_ENDPOINTS.CATEGORIES}/${id}`, { method: 'PUT', body: JSON.stringify(fields) });
     return categories[idx];
   }
   return null;
@@ -230,9 +257,43 @@ export const updateCategory = (id, fields) => {
 
 export const deleteCategory = (id) => {
   const categories = getStoredCategories();
+  const target = categories.find((c) => c.id === id);
+  if (!target) return { success: false, message: 'Collection not found.' };
+
+  const products = getStoredProducts();
+  const matchingProducts = products.filter(p => p.category === target.name || p.category?.includes(target.name));
+
+  if (matchingProducts.length > 0) {
+    return {
+      success: false,
+      message: 'This collection contains products. Please move or remove the products before deleting this collection.',
+      count: matchingProducts.length
+    };
+  }
+
   const filtered = categories.filter((c) => c.id !== id);
   localStorage.setItem(CATEGORIES_KEY, JSON.stringify(filtered));
   notifyListeners();
+
+  apiFetch(`${API_ENDPOINTS.CATEGORIES}/${id}`, { method: 'DELETE' });
+  return { success: true, message: 'Collection deleted successfully.' };
+};
+
+export const updateCollectionProducts = (categoryName, selectedProductIds) => {
+  const products = getStoredProducts();
+  const updatedProducts = products.map((p) => {
+    const isSelected = selectedProductIds.includes(p.id);
+    if (isSelected) {
+      return { ...p, category: categoryName, updatedAt: new Date().toISOString() };
+    } else if (p.category === categoryName) {
+      return { ...p, category: 'General', updatedAt: new Date().toISOString() };
+    }
+    return p;
+  });
+
+  localStorage.setItem(PRODUCTS_KEY, JSON.stringify(updatedProducts));
+  notifyListeners();
+  return true;
 };
 
 // --- ORDERS ---

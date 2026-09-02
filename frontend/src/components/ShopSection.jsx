@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { FaHeart, FaRegHeart, FaShoppingBag, FaStar, FaBolt } from 'react-icons/fa';
 import { PRODUCTS, CATEGORIES } from '../data/products';
-import { getStoredProducts, subscribeToDataStore } from '../services/adminDataStore';
+import { getStoredProducts, getStoredCategories, subscribeToDataStore } from '../services/adminDataStore';
 import { getImageUrl } from '../utils/imageUtils';
 import { ProductDetailsModal } from './ThreadWorkCustomizer';
 import { ResinArtDetailsModal } from './ResinArtCustomizer';
@@ -171,15 +171,25 @@ const ShopSection = ({ activeCategory, onResetCategory, onAddToCart }) => {
   };
 
   const [allProducts, setAllProducts] = useState(() => getStoredProducts());
+  const [storedCategories, setStoredCategories] = useState(() => getStoredCategories());
 
   useEffect(() => {
     const unsub = subscribeToDataStore(() => {
       setAllProducts(getStoredProducts());
+      setStoredCategories(getStoredCategories());
     });
     return unsub;
   }, []);
 
-  const allCategories = Array.isArray(CATEGORIES) ? CATEGORIES : ['All'];
+  const allCategories = useMemo(() => {
+    if (Array.isArray(storedCategories) && storedCategories.length > 0) {
+      const activeCats = storedCategories
+        .filter((c) => (c.status || 'ACTIVE') === 'ACTIVE')
+        .map((c) => c.name);
+      return ['All', ...activeCats];
+    }
+    return Array.isArray(CATEGORIES) ? CATEGORIES : ['All'];
+  }, [storedCategories]);
 
   const filteredProducts = useMemo(() => {
     return allProducts.filter((product) => {
