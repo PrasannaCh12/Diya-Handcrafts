@@ -277,27 +277,49 @@ const AdminCollections = () => {
           </p>
         </div>
 
-        <button
-          onClick={handleOpenAddModal}
-          type="button"
-          style={{
-            background: 'linear-gradient(135deg, #E8C86A 0%, #C89B3C 100%)',
-            color: '#FFFFFF',
-            border: 'none',
-            padding: '10px 24px',
-            borderRadius: '50px',
-            fontWeight: 700,
-            fontSize: '0.88rem',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            boxShadow: '0 4px 16px rgba(200,155,60,0.35)',
-            transition: 'transform 0.2s ease'
-          }}
-        >
-          <FaPlus /> + Add Collection
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+          <button
+            onClick={() => navigate('/admin/products/add')}
+            type="button"
+            style={{
+              background: '#FAF8F5',
+              color: '#2D2523',
+              border: '1.5px solid #C89B3C',
+              padding: '10px 20px',
+              borderRadius: '50px',
+              fontWeight: 700,
+              fontSize: '0.85rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}
+          >
+            <FaPlus /> + Add Product To Collection
+          </button>
+
+          <button
+            onClick={handleOpenAddModal}
+            type="button"
+            style={{
+              background: 'linear-gradient(135deg, #E8C86A 0%, #C89B3C 100%)',
+              color: '#FFFFFF',
+              border: 'none',
+              padding: '10px 24px',
+              borderRadius: '50px',
+              fontWeight: 700,
+              fontSize: '0.88rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              boxShadow: '0 4px 16px rgba(200,155,60,0.35)',
+              transition: 'transform 0.2s ease'
+            }}
+          >
+            <FaPlus /> + Add Collection
+          </button>
+        </div>
       </div>
 
       {/* Dynamic Search Bar */}
