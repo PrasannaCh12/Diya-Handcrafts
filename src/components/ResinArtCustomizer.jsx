@@ -35,6 +35,8 @@ const ResinArtCustomizer = ({ onSelectProduct, onAddToCart }) => {
       products={resinProducts}
       onSelectProduct={onSelectProduct}
       onAddToCart={onAddToCart}
+      hideHeaderStepRow={true}
+      hideOrderSummary={true}
     />
   );
 };

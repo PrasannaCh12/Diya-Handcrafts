@@ -485,16 +485,12 @@ export const getThreadWorkDesigns = () => {
     (p) => (p.category === 'Thread Work' || p.category === 'Thread Work Style' || p.category === 'Wedding & Marriage Items') && p.status !== 'INACTIVE'
   );
 
-  if (threadWorkFromStore.length > 0) {
-    return threadWorkFromStore.map((p) => ({
-      ...p,
-      icon: p.icon || '🧵',
-      desc: p.shortDesc || p.desc || p.description || 'Luxurious handcrafted silk thread bangle set.',
-      images: Array.isArray(p.images) && p.images.length > 0 ? p.images : (p.image ? [p.image] : ['/blue_peacock_bangles.jpg'])
-    }));
-  }
-
-  return THREADWORK_DESIGNS;
+  return threadWorkFromStore.map((p) => ({
+    ...p,
+    icon: p.icon || '🧵',
+    desc: p.shortDesc || p.desc || p.description || 'Luxurious handcrafted silk thread bangle set.',
+    images: Array.isArray(p.images) && p.images.length > 0 ? p.images : (p.image ? [p.image] : [])
+  }));
 };
 
 const ThreadWorkCustomizer = ({ onSelectProduct }) => {
@@ -671,19 +667,40 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
 
         {/* Thread Work Product Grid */}
         <div className="tw-5col-grid" style={{ marginTop: '2.5rem' }}>
-          {designsList.map((tw, idx) => {
-            const isSelected = selectedDesign === tw.name;
-            return (
-              <ThreadWorkCard
-                key={tw.id}
-                tw={tw}
-                idx={idx}
-                isSelected={isSelected}
-                onSelect={(name) => selectDesign(name)}
-                onOpenDetailsModal={(item) => setDetailsModalProduct(item)}
-              />
-            );
-          })}
+          {designsList.length === 0 ? (
+            <div style={{
+              gridColumn: '1 / -1',
+              textAlign: 'center',
+              padding: '3.5rem 1.5rem',
+              background: '#FFFFFF',
+              borderRadius: '20px',
+              border: '1.5px dashed rgba(200, 155, 60, 0.35)',
+              color: '#7A6965',
+              boxShadow: '0 4px 18px rgba(0,0,0,0.03)'
+            }}>
+              <div style={{ fontSize: '2.8rem', marginBottom: '0.6rem' }}>🧵</div>
+              <h3 style={{ fontFamily: 'var(--font-serif)', color: '#2D2523', margin: '0 0 0.5rem 0', fontSize: '1.35rem', fontWeight: 700 }}>
+                No Thread Work Products Listed
+              </h3>
+              <p style={{ margin: 0, fontSize: '0.92rem', color: '#7A6965', maxWidth: '460px', margin: '0 auto' }}>
+                All previous sample product cards have been cleared. You can add new handcrafted Thread Work products anytime from the Admin Panel.
+              </p>
+            </div>
+          ) : (
+            designsList.map((tw, idx) => {
+              const isSelected = selectedDesign === tw.name;
+              return (
+                <ThreadWorkCard
+                  key={tw.id}
+                  tw={tw}
+                  idx={idx}
+                  isSelected={isSelected}
+                  onSelect={(name) => selectDesign(name)}
+                  onOpenDetailsModal={(item) => setDetailsModalProduct(item)}
+                />
+              );
+            })
+          )}
         </div>
       </div>
 

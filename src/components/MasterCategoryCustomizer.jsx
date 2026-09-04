@@ -261,6 +261,8 @@ const MasterCategoryCustomizer = ({
   hidePrices = false,
   hideWhatsAppInModal = false,
   hideOptionsInModal = false,
+  hideHeaderStepRow = false,
+  hideOrderSummary = false,
   onSelectProduct,
   onAddToCart
 }) => {
@@ -356,21 +358,25 @@ const MasterCategoryCustomizer = ({
             <span className="divider-line right-line"></span>
           </div>
 
-          <div className="tw-brand-tagline">
-            <span className="quote-mark">“</span>Made With Love, Made For You.<span className="quote-mark">”</span>
-          </div>
+          {!hideOrderSummary && (
+            <div className="tw-brand-tagline">
+              <span className="quote-mark">“</span>Made With Love, Made For You.<span className="quote-mark">”</span>
+            </div>
+          )}
         </div>
 
         {/* Main 2-Column Grid */}
-        <div className="customizer-main-grid">
+        <div className={hideOrderSummary ? "customizer-full-grid" : "customizer-main-grid"}>
           {/* Left Column: Product Cards */}
-          <div className="customizer-left-panel">
-            <div className="flavor-header-row">
-              <h3>🛍️ Step 1: Select Your Handcrafted Items</h3>
-              <span className="selected-count-badge">
-                {selectedItems.length} Selected
-              </span>
-            </div>
+          <div className={hideOrderSummary ? "customizer-full-panel" : "customizer-left-panel"}>
+            {!hideHeaderStepRow && !hideOrderSummary && (
+              <div className="flavor-header-row">
+                <h3>🛍️ Step 1: Select Your Handcrafted Items</h3>
+                <span className="selected-count-badge">
+                  {selectedItems.length} Selected
+                </span>
+              </div>
+            )}
 
             <div className="flavors-grid">
               {products.map((product, idx) => {
@@ -458,68 +464,70 @@ const MasterCategoryCustomizer = ({
           </div>
 
           {/* Right Column: Sticky Order Summary */}
-          <div className="customizer-right-panel">
-            <div className="summary-sticky-card glass-card">
-              <h3 className="summary-title">📋 Order Summary</h3>
+          {!hideOrderSummary && (
+            <div className="customizer-right-panel">
+              <div className="summary-sticky-card glass-card">
+                <h3 className="summary-title">📋 Order Summary</h3>
 
-              <div className="summary-box-block">
-                <div className="summary-block-title">Selected Items:</div>
-                {selectedItems.length === 0 ? (
-                  <div className="empty-selection-msg">No items selected (Click a card above)</div>
-                ) : (
-                  <div className="selected-flavors-chips">
-                    {selectedItems.map((item) => (
-                      <span key={item.id} className="selected-flavor-chip">
-                        {item.name}
-                        <button
-                          type="button"
-                          className="remove-chip-btn"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleSelect(item);
-                          }}
-                        >
-                          ×
-                        </button>
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
+                <div className="summary-box-block">
+                  <div className="summary-block-title">Selected Items:</div>
+                  {selectedItems.length === 0 ? (
+                    <div className="empty-selection-msg">No items selected (Click a card above)</div>
+                  ) : (
+                    <div className="selected-flavors-chips">
+                      {selectedItems.map((item) => (
+                        <span key={item.id} className="selected-flavor-chip">
+                          {item.name}
+                          <button
+                            type="button"
+                            className="remove-chip-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleSelect(item);
+                            }}
+                          >
+                            ×
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
 
-              {/* Customer Contact Box */}
-              <div className="summary-box-block" style={{ marginTop: '1.25rem' }}>
-                <div className="summary-block-title">Customer Contact:</div>
-                {customerName || customerPhone ? (
-                  <div className="summary-user-text">
-                    {customerName && <div><strong>Name:</strong> {customerName}</div>}
-                    {customerPhone && <div><strong>Phone:</strong> {customerPhone}</div>}
-                  </div>
-                ) : (
-                  <div className="empty-selection-msg">Name & Phone (Enter details in step 4)</div>
-                )}
-              </div>
+                {/* Customer Contact Box */}
+                <div className="summary-box-block" style={{ marginTop: '1.25rem' }}>
+                  <div className="summary-block-title">Customer Contact:</div>
+                  {customerName || customerPhone ? (
+                    <div className="summary-user-text">
+                      {customerName && <div><strong>Name:</strong> {customerName}</div>}
+                      {customerPhone && <div><strong>Phone:</strong> {customerPhone}</div>}
+                    </div>
+                  ) : (
+                    <div className="empty-selection-msg">Name & Phone (Enter details in step 4)</div>
+                  )}
+                </div>
 
-              {/* WhatsApp Checkout Button */}
-              <button
-                type="button"
-                className="btn-whatsapp-checkout"
-                onClick={handleWhatsAppSend}
-                disabled={selectedItems.length === 0}
-                style={{
-                  opacity: selectedItems.length === 0 ? 0.6 : 1,
-                  cursor: selectedItems.length === 0 ? 'not-allowed' : 'pointer',
-                  marginTop: '1.5rem'
-                }}
-              >
-                <FaWhatsapp className="wa-icon" /> Order via WhatsApp
-              </button>
+                {/* WhatsApp Checkout Button */}
+                <button
+                  type="button"
+                  className="btn-whatsapp-checkout"
+                  onClick={handleWhatsAppSend}
+                  disabled={selectedItems.length === 0}
+                  style={{
+                    opacity: selectedItems.length === 0 ? 0.6 : 1,
+                    cursor: selectedItems.length === 0 ? 'not-allowed' : 'pointer',
+                    marginTop: '1.5rem'
+                  }}
+                >
+                  <FaWhatsapp className="wa-icon" /> Order via WhatsApp
+                </button>
 
-              <div className="tagline-footer">
-                ✨ Made With Love, Made For You
+                <div className="tagline-footer">
+                  ✨ Made With Love, Made For You
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -653,6 +661,37 @@ const MasterCategoryCustomizer = ({
           grid-template-columns: 1.35fr 0.65fr;
           gap: 2.5rem;
           align-items: start;
+        }
+
+        .customizer-full-grid {
+          display: block;
+          width: 100%;
+        }
+
+        .customizer-full-panel {
+          width: 100%;
+        }
+
+        .customizer-full-panel .flavors-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+
+        @media (max-width: 1200px) {
+          .customizer-full-panel .flavors-grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .customizer-full-panel .flavors-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 480px) {
+          .customizer-full-panel .flavors-grid {
+            grid-template-columns: repeat(1, 1fr);
+          }
         }
 
         .flavor-header-row {
