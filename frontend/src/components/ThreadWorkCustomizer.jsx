@@ -656,10 +656,6 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
             <span className="divider-motif">🪷</span>
             <span className="divider-line right-line"></span>
           </div>
-
-          <div className="tw-brand-tagline">
-            <span className="quote-mark">“</span>Made With Love, Made For You.<span className="quote-mark">”</span>
-          </div>
         </div>
 
         {/* Highlights Bar */}
@@ -673,34 +669,21 @@ const ThreadWorkCustomizer = ({ onSelectProduct }) => {
           </div>
         </div>
 
-        <div className="customizer-grid">
-          {/* Left Column: Interactive Form Steps */}
-          <div className="customizer-form-col">
-            
-            {/* Choose Thread Work Designs */}
-            <div className="options-card glass-card">
-              <div className="card-step-header">
-                <h3>🧵 Choose Your Thread Work Style</h3>
-                <p className="step-hint">Click cards to select your favorite thread work styles.</p>
-              </div>
-
-              <div className="tw-5col-grid">
-                {designsList.map((tw, idx) => {
-                  const isSelected = selectedDesign === tw.name;
-                  return (
-                    <ThreadWorkCard
-                      key={tw.id}
-                      tw={tw}
-                      idx={idx}
-                      isSelected={isSelected}
-                      onSelect={(name) => selectDesign(name)}
-                      onOpenDetailsModal={(item) => setDetailsModalProduct(item)}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+        {/* Thread Work Product Grid */}
+        <div className="tw-5col-grid" style={{ marginTop: '2.5rem' }}>
+          {designsList.map((tw, idx) => {
+            const isSelected = selectedDesign === tw.name;
+            return (
+              <ThreadWorkCard
+                key={tw.id}
+                tw={tw}
+                idx={idx}
+                isSelected={isSelected}
+                onSelect={(name) => selectDesign(name)}
+                onOpenDetailsModal={(item) => setDetailsModalProduct(item)}
+              />
+            );
+          })}
         </div>
       </div>
 
