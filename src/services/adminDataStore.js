@@ -14,16 +14,7 @@ const generateSlug = (name) => {
     .replace(/(^-|-$)/g, '') || 'collection';
 };
 
-const INITIAL_CATEGORIES = [
-  { id: 'cat-1', name: 'Thread Work', slug: 'thread-work', description: 'Handcrafted bridal bangles, silk thread cuffs & Kundan stone jewelry.', icon: '🧵', status: 'ACTIVE', displayOrder: 1, createdAt: '2026-01-01' },
-  { id: 'cat-2', name: 'Resin Art', slug: 'resin-art', description: 'Custom preserved floral frames, anniversary plaques, coasters & keychains.', icon: '🎨', status: 'ACTIVE', displayOrder: 2, createdAt: '2026-01-01' },
-  { id: 'cat-3', name: 'Chocolates', slug: 'chocolates', description: 'Artisanal handmade luxury chocolates, truffles & customized gift boxes.', icon: '🍫', status: 'ACTIVE', displayOrder: 3, createdAt: '2026-01-01' },
-  { id: 'cat-4', name: 'Biscuits', slug: 'biscuits', description: 'Freshly baked artisanal gourmet butter biscuits & cookies.', icon: '🍪', status: 'ACTIVE', displayOrder: 4, createdAt: '2026-01-01' },
-  { id: 'cat-5', name: 'Wedding & Marriage Items', slug: 'wedding-marriage-items', description: 'Bespoke bridal thali plates, wedding favors & ceremonial keepsakes.', icon: '💍', status: 'ACTIVE', displayOrder: 5, createdAt: '2026-01-01' },
-  { id: 'cat-6', name: 'Customized Chains', slug: 'customized-chains', description: 'Handcrafted personalized name chains, pendants & charms.', icon: '📿', status: 'ACTIVE', displayOrder: 6, createdAt: '2026-01-01' },
-  { id: 'cat-7', name: 'Customized Gifts', slug: 'customized-gifts', description: 'Personalized gift hampers, photo frames & bespoke keepsakes.', icon: '🎁', status: 'ACTIVE', displayOrder: 7, createdAt: '2026-01-01' },
-  { id: 'cat-8', name: 'Customized Dolls', slug: 'customized-dolls', description: 'Handcrafted custom miniature dolls & couple figurines.', icon: '🧸', status: 'ACTIVE', displayOrder: 8, createdAt: '2026-01-01' }
-];
+const INITIAL_CATEGORIES = [];
 
 const INITIAL_ORDERS = [
   {
@@ -201,7 +192,14 @@ export const getStoredCategories = () => {
   try {
     const data = localStorage.getItem(CATEGORIES_KEY);
     if (data) {
-      return JSON.parse(data);
+      const parsed = JSON.parse(data);
+      if (Array.isArray(parsed)) {
+        const filtered = parsed.filter(c => !['cat-1', 'cat-2', 'cat-3', 'cat-4', 'cat-5', 'cat-6', 'cat-7', 'cat-8'].includes(c.id));
+        if (filtered.length !== parsed.length) {
+          localStorage.setItem(CATEGORIES_KEY, JSON.stringify(filtered));
+        }
+        return filtered;
+      }
     }
   } catch (e) {
     console.error('Error reading categories:', e);

@@ -342,170 +342,198 @@ const AdminCollections = () => {
 
       {/* Collections Cards Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))', gap: '1.35rem' }}>
-        {filteredCategories.map((col) => {
-          const count = getProductCount(col.name);
-          const icon = col.icon || DEFAULT_ICONS[col.name] || '✨';
-          const path = COLLECTION_PATHS[col.name] || '/shop';
-          const isMenuActive = activeMenuId === col.id;
-
-          return (
-            <div
-              key={col.id}
+        {filteredCategories.length === 0 ? (
+          <div style={{ gridColumn: '1 / -1', background: '#FFFFFF', padding: '3.5rem 1.5rem', borderRadius: '18px', border: '1px solid rgba(212, 175, 55, 0.2)', textAlign: 'center' }}>
+            <FaLayerGroup style={{ fontSize: '3rem', color: '#C89B3C', marginBottom: '1rem', opacity: 0.6 }} />
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#2D2523', margin: '0 0 8px 0' }}>Showing 0 Collections</h3>
+            <p style={{ fontSize: '0.88rem', color: '#7A6965', margin: '0 0 1.5rem 0' }}>All previous collections have been cleared. You can now create fresh custom collections from scratch.</p>
+            <button
+              onClick={handleOpenAddModal}
+              type="button"
               style={{
-                background: '#FFFFFF',
-                borderRadius: '18px',
-                border: '1px solid rgba(212, 175, 55, 0.25)',
-                padding: '1.5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                justify: 'space-between',
-                boxShadow: '0 4px 18px rgba(0,0,0,0.04)',
-                position: 'relative',
-                transition: 'transform 0.25s ease, box-shadow 0.25s ease'
+                background: 'linear-gradient(135deg, #E8C86A 0%, #C89B3C 100%)',
+                color: '#FFFFFF',
+                border: 'none',
+                padding: '10px 24px',
+                borderRadius: '50px',
+                fontWeight: 700,
+                fontSize: '0.88rem',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                boxShadow: '0 4px 16px rgba(200,155,60,0.35)'
               }}
             >
-              <div>
-                {/* Header Badge, Status & Three-Dot Menu (⋮) */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                  <span style={{ fontSize: '2.2rem', background: '#FFFDF9', padding: '8px', borderRadius: '14px', border: '1px solid #F5E8C7' }}>
-                    {icon}
-                  </span>
+              <FaPlus /> + Add Collection
+            </button>
+          </div>
+        ) : (
+          filteredCategories.map((col) => {
+            const count = getProductCount(col.name);
+            const icon = col.icon || DEFAULT_ICONS[col.name] || '✨';
+            const path = COLLECTION_PATHS[col.name] || '/shop';
+            const isMenuActive = activeMenuId === col.id;
 
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', position: 'relative' }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 700, padding: '4px 12px', borderRadius: '50px', background: col.status === 'ACTIVE' ? '#DCFCE7' : '#FEE2E2', color: col.status === 'ACTIVE' ? '#15803D' : '#DC2626' }}>
-                      {col.status || 'ACTIVE'}
+            return (
+              <div
+                key={col.id}
+                style={{
+                  background: '#FFFFFF',
+                  borderRadius: '18px',
+                  border: '1px solid rgba(212, 175, 55, 0.25)',
+                  padding: '1.5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justify: 'space-between',
+                  boxShadow: '0 4px 18px rgba(0,0,0,0.04)',
+                  position: 'relative',
+                  transition: 'transform 0.25s ease, box-shadow 0.25s ease'
+                }}
+              >
+                <div>
+                  {/* Header Badge, Status & Three-Dot Menu (⋮) */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                    <span style={{ fontSize: '2.2rem', background: '#FFFDF9', padding: '8px', borderRadius: '14px', border: '1px solid #F5E8C7' }}>
+                      {icon}
                     </span>
 
-                    {/* Three-Dot Menu Trigger */}
-                    <button
-                      onClick={() => setActiveMenuId(isMenuActive ? null : col.id)}
-                      type="button"
-                      aria-label="Collection options"
-                      style={{
-                        background: 'transparent',
-                        border: 'none',
-                        cursor: 'pointer',
-                        color: '#7A6965',
-                        fontSize: '1.1rem',
-                        padding: '6px',
-                        borderRadius: '50%',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justify: 'center'
-                      }}
-                    >
-                      <FaEllipsisV />
-                    </button>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', position: 'relative' }}>
+                      <span style={{ fontSize: '0.75rem', fontWeight: 700, padding: '4px 12px', borderRadius: '50px', background: col.status === 'ACTIVE' ? '#DCFCE7' : '#FEE2E2', color: col.status === 'ACTIVE' ? '#15803D' : '#DC2626' }}>
+                        {col.status || 'ACTIVE'}
+                      </span>
 
-                    {/* Dropdown Options Popup */}
-                    {isMenuActive && (
-                      <div
+                      {/* Three-Dot Menu Trigger */}
+                      <button
+                        onClick={() => setActiveMenuId(isMenuActive ? null : col.id)}
+                        type="button"
+                        aria-label="Collection options"
                         style={{
-                          position: 'absolute',
-                          top: '100%',
-                          right: '0',
-                          marginTop: '6px',
-                          background: '#FFFFFF',
-                          borderRadius: '12px',
-                          border: '1px solid #E5DFD5',
-                          boxShadow: '0 10px 30px rgba(0,0,0,0.12)',
-                          width: '160px',
-                          zIndex: 100,
-                          overflow: 'hidden'
+                          background: 'transparent',
+                          border: 'none',
+                          cursor: 'pointer',
+                          color: '#7A6965',
+                          fontSize: '1.1rem',
+                          padding: '6px',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justify: 'center'
                         }}
                       >
-                        <button
-                          onClick={() => handleOpenEditModal(col)}
-                          type="button"
+                        <FaEllipsisV />
+                      </button>
+
+                      {/* Dropdown Options Popup */}
+                      {isMenuActive && (
+                        <div
                           style={{
-                            width: '100%',
-                            textAlign: 'left',
-                            background: 'none',
-                            border: 'none',
-                            padding: '10px 14px',
-                            fontSize: '0.85rem',
-                            fontWeight: 600,
-                            color: '#2D2523',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px'
+                            position: 'absolute',
+                            top: '100%',
+                            right: '0',
+                            marginTop: '6px',
+                            background: '#FFFFFF',
+                            borderRadius: '12px',
+                            border: '1px solid #E5DFD5',
+                            boxShadow: '0 10px 30px rgba(0,0,0,0.12)',
+                            width: '160px',
+                            zIndex: 100,
+                            overflow: 'hidden'
                           }}
                         >
-                          <FaEdit style={{ color: '#C89B3C' }} /> Edit Collection
-                        </button>
-                        <button
-                          onClick={() => handleOpenDeleteModal(col)}
-                          type="button"
-                          style={{
-                            width: '100%',
-                            textAlign: 'left',
-                            background: 'none',
-                            border: 'none',
-                            padding: '10px 14px',
-                            fontSize: '0.85rem',
-                            fontWeight: 600,
-                            color: '#DC2626',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            borderTop: '1px solid #F5E8C7'
-                          }}
-                        >
-                          <FaTrash /> Delete Collection
-                        </button>
-                      </div>
-                    )}
+                          <button
+                            onClick={() => handleOpenEditModal(col)}
+                            type="button"
+                            style={{
+                              width: '100%',
+                              textAlign: 'left',
+                              background: 'none',
+                              border: 'none',
+                              padding: '10px 14px',
+                              fontSize: '0.85rem',
+                              fontWeight: 600,
+                              color: '#2D2523',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px'
+                            }}
+                          >
+                            <FaEdit style={{ color: '#C89B3C' }} /> Edit Collection
+                          </button>
+                          <button
+                            onClick={() => handleOpenDeleteModal(col)}
+                            type="button"
+                            style={{
+                              width: '100%',
+                              textAlign: 'left',
+                              background: 'none',
+                              border: 'none',
+                              padding: '10px 14px',
+                              fontSize: '0.85rem',
+                              fontWeight: 600,
+                              color: '#DC2626',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px',
+                              borderTop: '1px solid #F5E8C7'
+                            }}
+                          >
+                            <FaTrash /> Delete Collection
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 700, color: '#2D2523', margin: '0 0 0.4rem 0' }}>
+                    {col.name}
+                  </h3>
+                  <p style={{ fontSize: '0.84rem', color: '#7A6965', lineHeight: 1.45, margin: '0 0 1rem 0' }}>
+                    {col.description || 'Exclusive handcrafted collection studio.'}
+                  </p>
+                </div>
+
+                {/* Footer Meta & Actions */}
+                <div style={{ borderTop: '1px solid #F5E8C7', paddingTop: '1rem', marginTop: '1rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem' }}>
+                    <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#5A4A42', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <FaBoxOpen style={{ color: '#C89B3C' }} /> <strong>{count}</strong> Product{count === 1 ? '' : 's'}
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                    <button
+                      onClick={() => navigate('/admin/products')}
+                      type="button"
+                      style={{ flex: 1, minWidth: '85px', background: '#FAF8F5', border: '1px solid #D4C5B9', padding: '8px 10px', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 700, color: '#2D2523', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
+                    >
+                      <FaEye /> View Catalog
+                    </button>
+
+                    <button
+                      onClick={() => handleOpenManageProductsModal(col)}
+                      type="button"
+                      style={{ flex: 1.2, minWidth: '105px', background: '#FFFDF9', border: '1px solid #C89B3C', padding: '8px 10px', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 700, color: '#C89B3C', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
+                    >
+                      <FaTasks /> Manage Products
+                    </button>
+
+                    <a
+                      href={path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ flex: 0.9, minWidth: '75px', background: 'rgba(200,155,60,0.12)', border: '1px solid #C89B3C', padding: '8px 10px', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 700, color: '#C89B3C', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
+                    >
+                      <FaExternalLinkAlt /> Preview ↗
+                    </a>
                   </div>
                 </div>
-
-                <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 700, color: '#2D2523', margin: '0 0 0.4rem 0' }}>
-                  {col.name}
-                </h3>
-                <p style={{ fontSize: '0.84rem', color: '#7A6965', lineHeight: 1.45, margin: '0 0 1rem 0' }}>
-                  {col.description || 'Exclusive handcrafted collection studio.'}
-                </p>
               </div>
-
-              {/* Footer Meta & Actions */}
-              <div style={{ borderTop: '1px solid #F5E8C7', paddingTop: '1rem', marginTop: '1rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem' }}>
-                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#5A4A42', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <FaBoxOpen style={{ color: '#C89B3C' }} /> <strong>{count}</strong> Product{count === 1 ? '' : 's'}
-                  </span>
-                </div>
-
-                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                  <button
-                    onClick={() => navigate('/admin/products')}
-                    type="button"
-                    style={{ flex: 1, minWidth: '85px', background: '#FAF8F5', border: '1px solid #D4C5B9', padding: '8px 10px', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 700, color: '#2D2523', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
-                  >
-                    <FaEye /> View Catalog
-                  </button>
-
-                  <button
-                    onClick={() => handleOpenManageProductsModal(col)}
-                    type="button"
-                    style={{ flex: 1.2, minWidth: '105px', background: '#FFFDF9', border: '1px solid #C89B3C', padding: '8px 10px', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 700, color: '#C89B3C', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
-                  >
-                    <FaTasks /> Manage Products
-                  </button>
-
-                  <a
-                    href={path}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ flex: 0.9, minWidth: '75px', background: 'rgba(200,155,60,0.12)', border: '1px solid #C89B3C', padding: '8px 10px', borderRadius: '8px', fontSize: '0.78rem', fontWeight: 700, color: '#C89B3C', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
-                  >
-                    <FaExternalLinkAlt /> Preview ↗
-                  </a>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
 
       {/* 1 & 2: ADD / EDIT COLLECTION MODAL */}

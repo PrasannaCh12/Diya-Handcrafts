@@ -342,7 +342,34 @@ const AdminCollections = () => {
 
       {/* Collections Cards Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))', gap: '1.35rem' }}>
-        {filteredCategories.map((col) => {
+        {filteredCategories.length === 0 ? (
+          <div style={{ gridColumn: '1 / -1', background: '#FFFFFF', padding: '3.5rem 1.5rem', borderRadius: '18px', border: '1px solid rgba(212, 175, 55, 0.2)', textAlign: 'center' }}>
+            <FaLayerGroup style={{ fontSize: '3rem', color: '#C89B3C', marginBottom: '1rem', opacity: 0.6 }} />
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#2D2523', margin: '0 0 8px 0' }}>Showing 0 Collections</h3>
+            <p style={{ fontSize: '0.88rem', color: '#7A6965', margin: '0 0 1.5rem 0' }}>All previous collections have been cleared. You can now create fresh custom collections from scratch.</p>
+            <button
+              onClick={handleOpenAddModal}
+              type="button"
+              style={{
+                background: 'linear-gradient(135deg, #E8C86A 0%, #C89B3C 100%)',
+                color: '#FFFFFF',
+                border: 'none',
+                padding: '10px 24px',
+                borderRadius: '50px',
+                fontWeight: 700,
+                fontSize: '0.88rem',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                boxShadow: '0 4px 16px rgba(200,155,60,0.35)'
+              }}
+            >
+              <FaPlus /> + Add Collection
+            </button>
+          </div>
+        ) : (
+          filteredCategories.map((col) => {
           const count = getProductCount(col.name);
           const icon = col.icon || DEFAULT_ICONS[col.name] || '✨';
           const path = COLLECTION_PATHS[col.name] || '/shop';
@@ -505,7 +532,8 @@ const AdminCollections = () => {
               </div>
             </div>
           );
-        })}
+        })
+      )}
       </div>
 
       {/* 1 & 2: ADD / EDIT COLLECTION MODAL */}

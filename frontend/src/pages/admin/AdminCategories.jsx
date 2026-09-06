@@ -66,7 +66,9 @@ const AdminCategories = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.85rem', fontWeight: 700, margin: 0 }}>Category Management</h1>
-          <p style={{ fontSize: '0.9rem', color: '#7A6965', margin: '4px 0 0 0' }}>Manage product categories displayed across store collections</p>
+          <p style={{ fontSize: '0.9rem', color: '#7A6965', margin: '4px 0 0 0' }}>
+            Showing <strong>{categories.length}</strong> Collection{categories.length === 1 ? '' : 's'}
+          </p>
         </div>
         <button
           onClick={handleOpenAdd}
@@ -78,29 +80,40 @@ const AdminCategories = () => {
 
       {/* Categories Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.2rem' }}>
-        {categories.map((cat) => (
-          <div key={cat.id} style={{ background: '#FFFFFF', padding: '1.5rem', borderRadius: '16px', border: '1px solid rgba(212, 175, 55, 0.2)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                <span style={{ fontSize: '1.8rem' }}>{cat.icon || '✨'}</span>
-                <span style={{ fontSize: '0.75rem', fontWeight: 700, padding: '4px 10px', borderRadius: '50px', background: cat.status === 'ACTIVE' ? '#DCFCE7' : '#FEE2E2', color: cat.status === 'ACTIVE' ? '#15803D' : '#DC2626' }}>
-                  {cat.status || 'ACTIVE'}
-                </span>
-              </div>
-              <h3 style={{ fontSize: '1.15rem', fontWeight: 700, margin: '0 0 6px 0', color: '#2D2523' }}>{cat.name}</h3>
-              <p style={{ fontSize: '0.85rem', color: '#5A4A42', lineHeight: '1.5', margin: 0 }}>{cat.description || 'No description provided.'}</p>
-            </div>
-
-            <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end', marginTop: '1.2rem', paddingTop: '0.85rem', borderTop: '1px solid #F3EFEA' }}>
-              <button onClick={() => handleOpenEdit(cat)} style={{ background: '#FEF3C7', border: '1px solid #FCD34D', color: '#B45309', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <FaEdit /> Edit
-              </button>
-              <button onClick={() => handleDelete(cat.id)} style={{ background: '#FEE2E2', border: '1px solid #FCA5A5', color: '#DC2626', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <FaTrash /> Delete
-              </button>
-            </div>
+        {categories.length === 0 ? (
+          <div style={{ gridColumn: '1 / -1', background: '#FFFFFF', padding: '3.5rem 1.5rem', borderRadius: '16px', border: '1px solid rgba(212, 175, 55, 0.2)', textAlign: 'center' }}>
+            <FaTags style={{ fontSize: '2.5rem', color: '#C89B3C', marginBottom: '1rem', opacity: 0.6 }} />
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#2D2523', margin: '0 0 6px 0' }}>Showing 0 Collections</h3>
+            <p style={{ fontSize: '0.85rem', color: '#7A6965', margin: '0 0 1.2rem 0' }}>All previous collections have been cleared. Click "+ Add Category" to create a new collection.</p>
+            <button onClick={handleOpenAdd} style={{ background: 'linear-gradient(135deg, #E8C86A 0%, #C89B3C 100%)', color: '#FFF', border: 'none', padding: '10px 22px', borderRadius: '50px', fontWeight: 700, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <FaPlus /> Add Category
+            </button>
           </div>
-        ))}
+        ) : (
+          categories.map((cat) => (
+            <div key={cat.id} style={{ background: '#FFFFFF', padding: '1.5rem', borderRadius: '16px', border: '1px solid rgba(212, 175, 55, 0.2)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                  <span style={{ fontSize: '1.8rem' }}>{cat.icon || '✨'}</span>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 700, padding: '4px 10px', borderRadius: '50px', background: cat.status === 'ACTIVE' ? '#DCFCE7' : '#FEE2E2', color: cat.status === 'ACTIVE' ? '#15803D' : '#DC2626' }}>
+                    {cat.status || 'ACTIVE'}
+                  </span>
+                </div>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 700, margin: '0 0 6px 0', color: '#2D2523' }}>{cat.name}</h3>
+                <p style={{ fontSize: '0.85rem', color: '#5A4A42', lineHeight: '1.5', margin: 0 }}>{cat.description || 'No description provided.'}</p>
+              </div>
+
+              <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end', marginTop: '1.2rem', paddingTop: '0.85rem', borderTop: '1px solid #F3EFEA' }}>
+                <button onClick={() => handleOpenEdit(cat)} style={{ background: '#FEF3C7', border: '1px solid #FCD34D', color: '#B45309', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <FaEdit /> Edit
+                </button>
+                <button onClick={() => handleDelete(cat.id)} style={{ background: '#FEE2E2', border: '1px solid #FCA5A5', color: '#DC2626', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <FaTrash /> Delete
+                </button>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {/* Add / Edit Category Modal */}
