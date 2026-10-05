@@ -7,6 +7,7 @@ import {
   getStoredCategories
 } from '../../services/adminDataStore';
 import { useAdminAuth } from '../../context/AdminAuthContext';
+import { getImageUrl } from '../../utils/imageUtils';
 import {
   FaCloudUploadAlt,
   FaTrash,
@@ -14,7 +15,8 @@ import {
   FaSave,
   FaArrowLeft,
   FaCheck,
-  FaTimes
+  FaTimes,
+  FaExclamationTriangle
 } from 'react-icons/fa';
 
 const FIELD_TYPES = [
@@ -36,7 +38,15 @@ const AdminAddEditProduct = () => {
   const { adminUser } = useAdminAuth();
   const isEdit = Boolean(id);
 
-  const [categories, setCategories] = useState(() => Array.isArray(getStoredCategories()) ? getStoredCategories() : []);
+  const [categories, setCategories] = useState(() => {
+    try {
+      const cats = getStoredCategories();
+      return Array.isArray(cats) ? cats : [];
+    } catch (e) {
+      console.error('Error initializing categories:', e);
+      return [];
+    }
+  });
 
   // Form State
   const [formData, setFormData] = useState({
@@ -59,116 +69,218 @@ const AdminAddEditProduct = () => {
   // Custom Fields Builder State
   const [customFields, setCustomFields] = useState([]);
 
-  // Image Upload State
+  // Image Upload State & Messages
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
   const [toastMessage, setToastMessage] = useState('');
+  const [imageError, setImageError] = useState('');
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
 
   useEffect(() => {
     if (isEdit) {
-      const products = getStoredProducts();
-      const target = products.find((p) => p.id === id);
-      if (target) {
-        setFormData({
-          name: target.name || '',
-          shortDesc: target.shortDesc || '',
-          description: target.description || '',
-          category: target.category || 'Resin Art',
-          subCategory: target.subCategory || 'Personalized Gifts',
-          price: target.price || '',
-          discountPrice: target.discountPrice || '',
-          sku: target.sku || `SKU-${target.id}`,
-          stockQuantity: String(target.stockQuantity ?? 25),
-          stockStatus: target.stockStatus || 'In Stock',
-          rating: String(target.rating || '5.0'),
-          status: target.status || 'ACTIVE',
-          image: target.image || '',
-          images: target.images || [target.image || '']
-        });
-        setImagePreviewUrl(target.image || '');
-        setCustomFields(target.customFields || []);
+      try {
+        const products = getStoredProducts();
+        if (Array.isArray(products)) {
+          const target = products.find((p) => String(p.id) === String(id));
+          if (target) {
+            const rawImages = Array.isArray(target.images) && target.images.length > 0
+              ? target.images
+              : (target.image ? [target.image] : []);
+
+            setFormData({
+              name: target.name || '',
+              shortDesc: target.shortDesc || '',
+              description: target.description || '',
+              category: target.category || 'Thread Work',
+              subCategory: target.subCategory || '',
+              price: target.price || '',
+              discountPrice: target.discountPrice || '',
+              sku: target.sku || `SKU-${target.id}`,
+              stockQuantity: String(target.stockQuantity ?? 25),
+              stockStatus: target.stockStatus || 'In Stock',
+              rating: String(target.rating || '5.0'),
+              status: target.status || 'ACTIVE',
+              image: target.image || rawImages[0] || '',
+              images: rawImages
+            });
+            setImagePreviewUrl(target.image || rawImages[0] || '');
+            setCustomFields(Array.isArray(target.customFields) ? target.customFields : []);
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching product details:', err);
       }
     }
   }, [id, isEdit]);
 
-  // Persistent Multi-Image File Upload Handler
-  const [isUploadingImage, setIsUploadingImage] = useState(false);
-
+  // Safe Multi-Image Upload Handler
   const handleMultipleImagesSelect = (e) => {
-    const files = Array.from(e.target.files || []);
-    if (!files.length) return;
+    setImageError('');
+    try {
+      const fileList = e?.target?.files;
+      if (!fileList || fileList.length === 0) return;
 
-    const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
-    const validFiles = files.filter(f => validTypes.includes(f.type.toLowerCase()) && f.size <= 5 * 1024 * 1024);
+      const files = Array.from(fileList);
+      const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
+      const validFiles = [];
+      let skippedCount = 0;
 
-    if (validFiles.length < files.length) {
-      alert('Some files were skipped because they are invalid format or exceed 5MB size limit.');
-    }
-
-    if (!validFiles.length) return;
-
-    setIsUploadingImage(true);
-    let readCount = 0;
-    const newUrls = [];
-
-    validFiles.forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        newUrls.push(event.target.result);
-        readCount++;
-        if (readCount === validFiles.length) {
-          setFormData((prev) => {
-            const currentList = Array.isArray(prev.images) && prev.images.length > 0 ? prev.images : (prev.image ? [prev.image] : []);
-            const updatedImages = [...currentList, ...newUrls];
-            const mainImg = prev.image || updatedImages[0] || '';
-            setImagePreviewUrl(mainImg);
-            return {
-              ...prev,
-              image: mainImg,
-              images: updatedImages
-            };
-          });
-          setIsUploadingImage(false);
+      for (const f of files) {
+        if (!f) {
+          skippedCount++;
+          continue;
         }
-      };
-      reader.onerror = () => {
-        readCount++;
-        if (readCount === validFiles.length) setIsUploadingImage(false);
-      };
-      reader.readAsDataURL(file);
-    });
+        const lowerType = (f.type || '').toLowerCase();
+        const fileName = (f.name || '').toLowerCase();
+        const isValidExtension = /\.(jpg|jpeg|png|webp)$/i.test(fileName);
+        const isValidType = validTypes.includes(lowerType) || isValidExtension;
 
-    // Reset input value so same files can be re-selected if needed
-    e.target.value = '';
+        if (isValidType) {
+          if (f.size <= 15 * 1024 * 1024) { // 15MB safe limit
+            validFiles.push(f);
+          } else {
+            skippedCount++;
+          }
+        } else {
+          skippedCount++;
+        }
+      }
+
+      if (skippedCount > 0 && validFiles.length === 0) {
+        setImageError('Unable to preview selected file(s). Please select valid JPG, JPEG, PNG, or WEBP images under 15MB.');
+        if (e.target) e.target.value = '';
+        return;
+      } else if (skippedCount > 0) {
+        setImageError('Some files were skipped because they exceed 15MB or are unsupported formats.');
+      }
+
+      if (!validFiles.length) {
+        if (e.target) e.target.value = '';
+        return;
+      }
+
+      setIsUploadingImage(true);
+      let readCount = 0;
+      const newUrls = [];
+
+      validFiles.forEach((file) => {
+        try {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            try {
+              const result = event?.target?.result;
+              if (result) {
+                newUrls.push(result);
+              }
+            } catch (err) {
+              console.error('Error reading image data:', err);
+              setImageError('Unable to preview this image. Please try another image.');
+            } finally {
+              readCount++;
+              if (readCount === validFiles.length) {
+                finalizeUpload(newUrls);
+              }
+            }
+          };
+
+          reader.onerror = (err) => {
+            console.error('FileReader onerror triggered:', err);
+            setImageError('Unable to preview this image. Please try another image.');
+            readCount++;
+            if (readCount === validFiles.length) {
+              finalizeUpload(newUrls);
+            }
+          };
+
+          reader.readAsDataURL(file);
+        } catch (fileErr) {
+          console.error('Error initiating file read:', fileErr);
+          setImageError('Unable to preview this image. Please try another image.');
+          readCount++;
+          if (readCount === validFiles.length) {
+            finalizeUpload(newUrls);
+          }
+        }
+      });
+    } catch (globalErr) {
+      console.error('Global image selection error:', globalErr);
+      setImageError('Unable to preview this image. Please try another image.');
+      setIsUploadingImage(false);
+    } finally {
+      if (e?.target) {
+        e.target.value = '';
+      }
+    }
   };
 
-  // Replace specific image by index
+  const finalizeUpload = (newUrls) => {
+    if (newUrls && newUrls.length > 0) {
+      setFormData((prev) => {
+        const currentList = Array.isArray(prev.images) ? prev.images : (prev.image ? [prev.image] : []);
+        const updatedImages = [...currentList, ...newUrls];
+        const mainImg = prev.image || updatedImages[0] || '';
+        setImagePreviewUrl(mainImg);
+        return {
+          ...prev,
+          image: mainImg,
+          images: updatedImages
+        };
+      });
+    }
+    setIsUploadingImage(false);
+  };
+
+  // Safe replace single image by index
   const handleReplaceSingleImage = (index, file) => {
-    if (!file) return;
+    setImageError('');
+    if (!file || !(file instanceof File)) return;
     const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
-    if (!validTypes.includes(file.type.toLowerCase())) {
-      alert('Unsupported file format.');
+    const lowerType = (file.type || '').toLowerCase();
+    const fileName = (file.name || '').toLowerCase();
+    const isValidExtension = /\.(jpg|jpeg|png|webp)$/i.test(fileName);
+
+    if (!validTypes.includes(lowerType) && !isValidExtension) {
+      setImageError('Unsupported file format. Please select JPG, PNG, or WEBP.');
       return;
     }
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const newUrl = event.target.result;
-      setFormData((prev) => {
-        const copy = [...(prev.images || [])];
-        copy[index] = newUrl;
-        const main = (index === 0 || prev.image === prev.images[index]) ? newUrl : prev.image;
-        setImagePreviewUrl(main);
-        return { ...prev, image: main, images: copy };
-      });
-    };
-    reader.readAsDataURL(file);
+
+    try {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const newUrl = event?.target?.result;
+          if (!newUrl) return;
+          setFormData((prev) => {
+            const copy = Array.isArray(prev.images) ? [...prev.images] : [];
+            copy[index] = newUrl;
+            const main = (index === 0 || prev.image === prev.images?.[index]) ? newUrl : prev.image;
+            setImagePreviewUrl(main);
+            return { ...prev, image: main, images: copy };
+          });
+        } catch (err) {
+          console.error('Error setting replaced image:', err);
+          setImageError('Unable to preview this image. Please try another image.');
+        }
+      };
+
+      reader.onerror = (err) => {
+        console.error('Replace image error:', err);
+        setImageError('Unable to preview this image. Please try another image.');
+      };
+
+      reader.readAsDataURL(file);
+    } catch (err) {
+      console.error('Error initiating file replace:', err);
+      setImageError('Unable to preview this image. Please try another image.');
+    }
   };
 
-  // Delete specific image by index
+  // Safe delete specific image by index
   const handleDeleteImage = (index) => {
+    setImageError('');
     setFormData((prev) => {
-      const currentList = prev.images || [];
+      const currentList = Array.isArray(prev.images) ? prev.images : [];
       if (currentList.length <= 1) {
-        if (!confirm('This product must have at least 1 image. Are you sure you want to delete it?')) return prev;
+        if (!confirm('This product will have no remaining images. Are you sure you want to delete it?')) return prev;
       }
       const copy = currentList.filter((_, idx) => idx !== index);
       const newMain = copy[0] || '';
@@ -177,17 +289,18 @@ const AdminAddEditProduct = () => {
     });
   };
 
-  // Set specific image as Main Image
+  // Safe set specific image as Main Image
   const handleSetMainImage = (index) => {
     setFormData((prev) => {
-      const targetImg = prev.images[index];
+      const imagesList = Array.isArray(prev.images) ? prev.images : [];
+      const targetImg = imagesList[index];
       if (!targetImg) return prev;
       setImagePreviewUrl(targetImg);
       return { ...prev, image: targetImg };
     });
   };
 
-  // Add Custom Field Handler
+  // Custom Fields Handlers
   const handleAddCustomField = () => {
     const newField = {
       id: `cf-${Date.now()}`,
@@ -201,15 +314,17 @@ const AdminAddEditProduct = () => {
 
   const handleCustomFieldChange = (fieldId, key, value) => {
     setCustomFields((prev) =>
-      prev.map((f) => (f.id === fieldId ? { ...f, [key]: value } : f))
+      Array.isArray(prev) ? prev.map((f) => (f.id === fieldId ? { ...f, [key]: value } : f)) : []
     );
   };
 
   const handleRemoveCustomField = (fieldId) => {
-    setCustomFields((prev) => prev.filter((f) => f.id !== fieldId));
+    setCustomFields((prev) =>
+      Array.isArray(prev) ? prev.filter((f) => f.id !== fieldId) : []
+    );
   };
 
-  // Save Form Handler
+  // Submit Handler
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -228,7 +343,7 @@ const AdminAddEditProduct = () => {
       ...formData,
       price: parsedPrice,
       stockQuantity: Number(formData.stockQuantity) || 0,
-      customFields: customFields.filter((f) => f.name.trim() !== '')
+      customFields: Array.isArray(customFields) ? customFields.filter((f) => f && f.name && f.name.trim() !== '') : []
     };
 
     if (isEdit) {
@@ -243,6 +358,8 @@ const AdminAddEditProduct = () => {
       navigate('/admin/products');
     }, 800);
   };
+
+  const safeImages = Array.isArray(formData.images) ? formData.images : [];
 
   return (
     <div className="admin-add-edit-page" style={{ maxWidth: '900px', margin: '0 auto' }}>
@@ -360,24 +477,33 @@ const AdminAddEditProduct = () => {
         <div style={{ background: '#FFFFFF', padding: '1.8rem', borderRadius: '20px', border: '1px solid rgba(212, 175, 55, 0.2)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.2rem' }}>
             <h3 style={{ fontSize: '1.1rem', fontWeight: 700, margin: 0, color: '#2D2523' }}>
-              🖼️ Product / Label Images ({formData.images?.length || 0} Images)
+              🖼️ Product / Label Images ({safeImages.length} Image{safeImages.length === 1 ? '' : 's'})
             </h3>
             <span style={{ fontSize: '0.8rem', fontWeight: 700, background: 'rgba(200,155,60,0.12)', color: '#C89B3C', padding: '4px 12px', borderRadius: '50px' }}>
               Unlimited Support
             </span>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {/* Inline Graceful Error Banner */}
+            {imageError && (
+              <div style={{ background: '#FEF2F2', border: '1px solid #FCA5A5', color: '#991B1B', padding: '10px 14px', borderRadius: '10px', fontSize: '0.85rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <FaExclamationTriangle style={{ color: '#DC2626', flexShrink: 0 }} />
+                <span>{imageError}</span>
+                <button type="button" onClick={() => setImageError('')} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: '#991B1B', cursor: 'pointer', fontWeight: 700 }}>✕</button>
+              </div>
+            )}
+
             {/* Image Upload Drop Zone */}
             <div style={{ border: '2px dashed #C89B3C', background: '#FFFDF9', borderRadius: '16px', padding: '2rem 1.5rem', textAlign: 'center', position: 'relative' }}>
               <FaCloudUploadAlt style={{ fontSize: '2.5rem', color: '#C89B3C', marginBottom: '0.5rem' }} />
               <div style={{ fontWeight: 700, color: '#2D2523', fontSize: '0.95rem' }}>
-                {isUploadingImage ? '⏳ Processing & Converting Images...' : 'Drag & drop image files or click to select multiple'}
+                {isUploadingImage ? '⏳ Processing & Loading Images...' : 'Drag & drop image files or click to select'}
               </div>
-              <span style={{ fontSize: '0.78rem', color: '#7A6965' }}>Select 1, 4, 8, 10, 20+ JPG, PNG, WEBP files (Max 5MB each)</span>
+              <span style={{ fontSize: '0.78rem', color: '#7A6965' }}>Supports JPG, JPEG, PNG, WEBP files</span>
               <input
                 type="file"
-                accept="image/*"
+                accept="image/jpeg,image/png,image/webp,image/jpg"
                 multiple
                 onChange={handleMultipleImagesSelect}
                 disabled={isUploadingImage}
@@ -385,16 +511,18 @@ const AdminAddEditProduct = () => {
               />
             </div>
 
-            {/* Unlimited Multi-Image Cards Grid */}
-            {Array.isArray(formData.images) && formData.images.length > 0 && (
+            {/* Unlimited Multi-Image Cards Grid with Full Aspect Ratio Preservation */}
+            {safeImages.length > 0 && (
               <div>
                 <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#5A4A42', marginBottom: '10px' }}>
-                  Uploaded Gallery ({formData.images.length} item{formData.images.length > 1 ? 's' : ''}):
+                  Uploaded Gallery ({safeImages.length} item{safeImages.length > 1 ? 's' : ''}):
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: '14px' }}>
-                  {formData.images.map((img, idx) => {
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '14px' }}>
+                  {safeImages.map((img, idx) => {
                     const isMain = formData.image === img || (idx === 0 && !formData.image);
+                    const resolvedSrc = getImageUrl(img);
+
                     return (
                       <div
                         key={idx}
@@ -407,14 +535,23 @@ const AdminAddEditProduct = () => {
                           boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
                         }}
                       >
-                        <div style={{ height: '110px', overflow: 'hidden', background: '#F8F6F2' }}>
-                          <img src={getImageUrl(img)} alt={`Gallery Image ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        {/* Aspect Ratio Preserving Preview Box */}
+                        <div style={{ height: '140px', overflow: 'hidden', background: '#FAF8F5', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px' }}>
+                          <img
+                            src={resolvedSrc}
+                            alt={`Gallery Image ${idx + 1}`}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = '/logo192.png';
+                            }}
+                            style={{ maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block', margin: 'auto' }}
+                          />
                         </div>
 
                         {/* Top Badge */}
                         <div style={{ position: 'absolute', top: '6px', left: '6px' }}>
                           {isMain ? (
-                            <span style={{ background: '#C89B3C', color: '#FFF', fontSize: '0.65rem', fontWeight: 700, padding: '2px 6px', borderRadius: '4px' }}>
+                            <span style={{ background: '#C89B3C', color: '#FFF', fontSize: '0.65rem', fontWeight: 700, padding: '2px 6px', borderRadius: '4px', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }}>
                               ★ Main
                             </span>
                           ) : (
@@ -441,7 +578,7 @@ const AdminAddEditProduct = () => {
                               Replace
                               <input
                                 type="file"
-                                accept="image/*"
+                                accept="image/jpeg,image/png,image/webp,image/jpg"
                                 onChange={(e) => handleReplaceSingleImage(idx, e.target.files && e.target.files[0])}
                                 style={{ display: 'none' }}
                               />
