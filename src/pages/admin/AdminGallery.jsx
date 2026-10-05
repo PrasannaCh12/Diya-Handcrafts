@@ -122,9 +122,9 @@ const AdminGallery = () => {
   };
 
   const handleResetDefaults = () => {
-    if (window.confirm('Reset gallery to default showcase items?')) {
-      setItems(initialGalleryItems);
-      saveStoredGalleryItems(initialGalleryItems);
+    if (window.confirm('Clear all gallery photos?')) {
+      setItems([]);
+      saveStoredGalleryItems([]);
     }
   };
 
@@ -224,8 +224,8 @@ const AdminGallery = () => {
         {filteredItems.length === 0 ? (
           <div className="no-items-placeholder">
             <FaExclamationTriangle style={{ fontSize: '2rem', color: '#D4AF37', marginBottom: '0.5rem' }} />
-            <h3>No gallery photos found</h3>
-            <p>Try adjusting your category filter or click "Add New Photo" above.</p>
+            <h3>No gallery photos yet</h3>
+            <p>Click "+ Add New Photo" above to upload new gallery photos.</p>
           </div>
         ) : (
           filteredItems.map((item) => (
