@@ -16,50 +16,7 @@ const generateSlug = (name) => {
 
 const INITIAL_CATEGORIES = [];
 
-const INITIAL_ORDERS = [
-  {
-    id: 'DH-892401',
-    customerName: 'Shamanth Kumar',
-    email: 'shamanth.k@gmail.com',
-    phone: '+91 98765 43210',
-    date: '2026-08-28T14:32:00Z',
-    items: [
-      { id: 'resin-001', name: 'Personalized Resin Anniversary Photo Plaque', quantity: 1, customName: 'Shamanth & Vani' }
-    ],
-    totalAmount: 1899,
-    paymentStatus: 'PAID',
-    orderStatus: 'Confirmed',
-    shippingAddress: 'Plot 42, Jubilee Hills, Hyderabad, Telangana'
-  },
-  {
-    id: 'DH-581923',
-    customerName: 'Ananya Sharma',
-    email: 'ananya.s@outlook.com',
-    phone: '+91 91234 56789',
-    date: '2026-08-29T09:15:00Z',
-    items: [
-      { id: 'resin-00', name: 'Personalized Resin Photo Frame – Happy Birthday', quantity: 1, customName: 'Akhil Birthday' }
-    ],
-    totalAmount: 1299,
-    paymentStatus: 'PAID',
-    orderStatus: 'Processing',
-    shippingAddress: 'Flat 301, Rosewood Apartments, Bangalore, Karnataka'
-  },
-  {
-    id: 'DH-391024',
-    customerName: 'Priya Reddy',
-    email: 'priya.reddy@yahoo.com',
-    phone: '+91 99887 76655',
-    date: '2026-08-29T10:45:00Z',
-    items: [
-      { id: 'bangle-01', name: 'Royal Zardosi & Velvet Bridal Bangle Set', quantity: 2, customName: 'Red Lehenga Set' }
-    ],
-    totalAmount: 3798,
-    paymentStatus: 'PAID',
-    orderStatus: 'Shipped',
-    shippingAddress: 'Door 12-4-5, Anna Nagar, Chennai, Tamil Nadu'
-  }
-];
+const INITIAL_ORDERS = [];
 
 const INITIAL_CUSTOMERS = [
   { id: 'cust-1', name: 'Shamanth Kumar', email: 'shamanth.k@gmail.com', phone: '+91 98765 43210', ordersCount: 1, totalSpent: 1899, lastOrder: '2026-08-28' },
@@ -299,7 +256,14 @@ export const getStoredOrders = () => {
   try {
     const data = localStorage.getItem(ORDERS_KEY);
     if (data) {
-      return JSON.parse(data);
+      const parsed = JSON.parse(data);
+      if (Array.isArray(parsed)) {
+        const filtered = parsed.filter(o => !['DH-892401', 'DH-581923', 'DH-391024'].includes(o.id));
+        if (filtered.length !== parsed.length) {
+          localStorage.setItem(ORDERS_KEY, JSON.stringify(filtered));
+        }
+        return filtered;
+      }
     }
   } catch (e) {
     console.error('Error reading orders:', e);

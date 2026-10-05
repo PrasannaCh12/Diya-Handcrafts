@@ -59,7 +59,7 @@ const AdminOrders = () => {
                 <tr>
                   <td colSpan="6" style={{ padding: '3rem', textAlign: 'center', color: '#7A6965' }}>
                     <FaShoppingCart style={{ fontSize: '2.5rem', color: '#D4C5B9', marginBottom: '0.5rem' }} />
-                    <p style={{ margin: 0, fontWeight: 700 }}>No orders found for selected status</p>
+                    <p style={{ margin: 0, fontWeight: 700 }}>{filterStatus === 'ALL' ? 'No orders yet' : 'No orders found for selected status'}</p>
                   </td>
                 </tr>
               ) : (
