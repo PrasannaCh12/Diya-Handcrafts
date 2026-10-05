@@ -295,9 +295,14 @@ const AdminAddEditProduct = () => {
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                 style={{ width: '100%', padding: '11px 14px', borderRadius: '10px', border: '1px solid #E5DFD5', outline: 'none', background: '#FFF', boxSizing: 'border-box' }}
               >
-                {categories.map((c) => (
-                  <option key={c.id} value={c.name}>{c.name}</option>
-                ))}
+                {categories.map((c) => {
+                  const catName = typeof c === 'string' ? c : (c.name || c.title || '');
+                  return (
+                    <option key={typeof c === 'string' ? c : (c.id || catName)} value={catName}>
+                      {catName}
+                    </option>
+                  );
+                })}
               </select>
             </div>
 

@@ -144,25 +144,39 @@ export const restoreProduct = (id) => {
   return false;
 };
 
+export const DEFAULT_PRODUCT_CATEGORIES = [
+  { id: 'cat-1', name: 'Thread Work', slug: 'thread-work', description: 'Handcrafted bridal bangles, silk thread cuffs & Kundan stone jewelry.', icon: '🧵', status: 'ACTIVE' },
+  { id: 'cat-2', name: 'Resin Art', slug: 'resin-art', description: 'Custom preserved floral frames, anniversary plaques, coasters & keychains.', icon: '🎨', status: 'ACTIVE' },
+  { id: 'cat-3', name: 'Wedding & Marriage Items', slug: 'wedding-marriage-items', description: 'Bespoke bridal thali plates, wedding favors & ceremonial keepsakes.', icon: '💍', status: 'ACTIVE' },
+  { id: 'cat-4', name: 'Customized Chains', slug: 'customized-chains', description: 'Handcrafted personalized name chains, pendants & charms.', icon: '📿', status: 'ACTIVE' },
+  { id: 'cat-5', name: 'Customized Gifts', slug: 'customized-gifts', description: 'Personalized gift hampers, photo frames & bespoke keepsakes.', icon: '🎁', status: 'ACTIVE' },
+  { id: 'cat-6', name: 'Customized Dolls', slug: 'customized-dolls', description: 'Handcrafted custom miniature dolls & couple figurines.', icon: '🧸', status: 'ACTIVE' },
+  { id: 'cat-7', name: 'Chocolates', slug: 'chocolates', description: 'Artisanal handmade luxury chocolates, truffles & customized gift boxes.', icon: '🍫', status: 'ACTIVE' },
+  { id: 'cat-8', name: 'Biscuits', slug: 'biscuits', description: 'Freshly baked artisanal gourmet butter biscuits & cookies.', icon: '🍪', status: 'ACTIVE' }
+];
+
 // --- CATEGORIES ---
 export const getStoredCategories = () => {
   try {
     const data = localStorage.getItem(CATEGORIES_KEY);
     if (data) {
       const parsed = JSON.parse(data);
-      if (Array.isArray(parsed)) {
-        const filtered = parsed.filter(c => !['cat-1', 'cat-2', 'cat-3', 'cat-4', 'cat-5', 'cat-6', 'cat-7', 'cat-8'].includes(c.id));
-        if (filtered.length !== parsed.length) {
-          localStorage.setItem(CATEGORIES_KEY, JSON.stringify(filtered));
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        const names = parsed.map(c => typeof c === 'string' ? c : c.name);
+        const missing = DEFAULT_PRODUCT_CATEGORIES.filter(d => !names.includes(d.name));
+        if (missing.length > 0) {
+          const merged = [...parsed, ...missing];
+          localStorage.setItem(CATEGORIES_KEY, JSON.stringify(merged));
+          return merged;
         }
-        return filtered;
+        return parsed;
       }
     }
   } catch (e) {
     console.error('Error reading categories:', e);
   }
-  localStorage.setItem(CATEGORIES_KEY, JSON.stringify(INITIAL_CATEGORIES));
-  return INITIAL_CATEGORIES;
+  localStorage.setItem(CATEGORIES_KEY, JSON.stringify(DEFAULT_PRODUCT_CATEGORIES));
+  return DEFAULT_PRODUCT_CATEGORIES;
 };
 
 export const addCategory = (categoryData) => {

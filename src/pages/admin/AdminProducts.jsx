@@ -178,14 +178,14 @@ const AdminProducts = () => {
           style={{ padding: '9px 14px', borderRadius: '50px', border: '1px solid #E5DFD5', fontSize: '0.85rem', outline: 'none', background: '#FFF' }}
         >
           <option value="ALL">All Categories</option>
-          <option value="Resin Art">Resin Art</option>
-          <option value="Thread Work">Thread Work</option>
-          <option value="Chocolates">Chocolates</option>
-          <option value="Biscuits">Biscuits</option>
-          <option value="Wedding & Marriage Items">Wedding Items</option>
-          <option value="Customized Chains">Customized Chains</option>
-          <option value="Customized Gifts">Customized Gifts</option>
-          <option value="Customized Dolls">Customized Dolls</option>
+          {getStoredCategories().map((c) => {
+            const name = typeof c === 'string' ? c : (c.name || c.title || '');
+            return (
+              <option key={typeof c === 'string' ? c : (c.id || name)} value={name}>
+                {name}
+              </option>
+            );
+          })}
         </select>
 
         {/* Stock Filter */}
