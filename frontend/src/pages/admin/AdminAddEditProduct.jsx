@@ -36,15 +36,15 @@ const AdminAddEditProduct = () => {
   const { adminUser } = useAdminAuth();
   const isEdit = Boolean(id);
 
-  const categories = getStoredCategories();
+  const [categories, setCategories] = useState(() => Array.isArray(getStoredCategories()) ? getStoredCategories() : []);
 
   // Form State
   const [formData, setFormData] = useState({
     name: '',
     shortDesc: '',
     description: '',
-    category: 'Resin Art',
-    subCategory: 'Personalized Gifts',
+    category: 'Thread Work',
+    subCategory: '',
     price: '',
     discountPrice: '',
     sku: '',
@@ -295,10 +295,11 @@ const AdminAddEditProduct = () => {
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                 style={{ width: '100%', padding: '11px 14px', borderRadius: '10px', border: '1px solid #E5DFD5', outline: 'none', background: '#FFF', boxSizing: 'border-box' }}
               >
-                {categories.map((c) => {
-                  const catName = typeof c === 'string' ? c : (c.name || c.title || '');
+                {(Array.isArray(categories) ? categories : []).map((c) => {
+                  const catName = typeof c === 'string' ? c : (c?.name || c?.title || '');
+                  if (!catName) return null;
                   return (
-                    <option key={typeof c === 'string' ? c : (c.id || catName)} value={catName}>
+                    <option key={typeof c === 'string' ? c : (c?.id || catName)} value={catName}>
                       {catName}
                     </option>
                   );

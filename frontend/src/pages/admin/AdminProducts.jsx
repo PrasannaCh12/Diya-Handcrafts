@@ -6,7 +6,8 @@ import {
   getStoredArchivedProducts,
   archiveProduct,
   restoreProduct,
-  subscribeToDataStore
+  subscribeToDataStore,
+  getStoredCategories
 } from '../../services/adminDataStore';
 import { getImageUrl } from '../../utils/imageUtils';
 import {
@@ -24,8 +25,9 @@ import {
 const AdminProducts = () => {
   const { hasPermission } = useAdminAuth();
   const [activeTab, setActiveTab] = useState('ACTIVE'); // 'ACTIVE' or 'ARCHIVED'
-  const [products, setProducts] = useState(getStoredProducts());
-  const [archivedProducts, setArchivedProducts] = useState(getStoredArchivedProducts());
+  const [products, setProducts] = useState(() => Array.isArray(getStoredProducts()) ? getStoredProducts() : []);
+  const [archivedProducts, setArchivedProducts] = useState(() => Array.isArray(getStoredArchivedProducts()) ? getStoredArchivedProducts() : []);
+  const [categories, setCategories] = useState(() => Array.isArray(getStoredCategories()) ? getStoredCategories() : []);
 
   // Search, Filter & Sort State
   const [searchQuery, setSearchQuery] = useState('');
@@ -39,8 +41,9 @@ const AdminProducts = () => {
 
   useEffect(() => {
     const unsub = subscribeToDataStore(() => {
-      setProducts(getStoredProducts());
-      setArchivedProducts(getStoredArchivedProducts());
+      setProducts(Array.isArray(getStoredProducts()) ? getStoredProducts() : []);
+      setArchivedProducts(Array.isArray(getStoredArchivedProducts()) ? getStoredArchivedProducts() : []);
+      setCategories(Array.isArray(getStoredCategories()) ? getStoredCategories() : []);
     });
     return unsub;
   }, []);
@@ -178,10 +181,11 @@ const AdminProducts = () => {
           style={{ padding: '9px 14px', borderRadius: '50px', border: '1px solid #E5DFD5', fontSize: '0.85rem', outline: 'none', background: '#FFF' }}
         >
           <option value="ALL">All Categories</option>
-          {getStoredCategories().map((c) => {
-            const name = typeof c === 'string' ? c : (c.name || c.title || '');
+          {(Array.isArray(categories) ? categories : []).map((c) => {
+            const name = typeof c === 'string' ? c : (c?.name || c?.title || '');
+            if (!name) return null;
             return (
-              <option key={typeof c === 'string' ? c : (c.id || name)} value={name}>
+              <option key={typeof c === 'string' ? c : (c?.id || name)} value={name}>
                 {name}
               </option>
             );
