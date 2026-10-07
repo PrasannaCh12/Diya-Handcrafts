@@ -59,12 +59,19 @@ export const getStoredProducts = () => {
 
 export const getStoredArchivedProducts = () => {
   try {
-    const data = localStorage.getItem(ARCHIVED_PRODUCTS_KEY);
-    if (data) {
-      return JSON.parse(data);
-    }
+    localStorage.setItem(ARCHIVED_PRODUCTS_KEY, JSON.stringify([]));
   } catch (e) {
     console.error('Error reading archived products:', e);
+  }
+  return [];
+};
+
+export const clearAllArchivedProducts = () => {
+  try {
+    localStorage.setItem(ARCHIVED_PRODUCTS_KEY, JSON.stringify([]));
+    notifyListeners();
+  } catch (e) {
+    console.error('Error clearing archived products:', e);
   }
   return [];
 };
