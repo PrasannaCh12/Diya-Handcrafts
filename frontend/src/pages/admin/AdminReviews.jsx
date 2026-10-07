@@ -127,9 +127,9 @@ const AdminReviews = () => {
   };
 
   const handleResetDefaults = () => {
-    if (window.confirm('Reset all reviews to default verified list?')) {
-      setReviews(initialReviewsData);
-      saveAllReviews(initialReviewsData);
+    if (window.confirm('Clear all customer reviews?')) {
+      setReviews([]);
+      saveAllReviews([]);
     }
   };
 
