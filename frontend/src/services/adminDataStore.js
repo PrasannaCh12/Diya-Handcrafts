@@ -1,5 +1,6 @@
 import { PRODUCTS } from '../data/products';
 import { apiFetch, API_ENDPOINTS } from './api';
+import { syncProductToGallery } from '../data/galleryData';
 
 const PRODUCTS_KEY = 'diya_admin_products_v2';
 const ARCHIVED_PRODUCTS_KEY = 'diya_admin_archived_products_v2';
@@ -89,6 +90,10 @@ export const addProduct = (productData, creator = null) => {
 
   const updated = [newProduct, ...products];
   localStorage.setItem(PRODUCTS_KEY, JSON.stringify(updated));
+
+  // Auto-sync product image and details to Gallery Showcase
+  syncProductToGallery(newProduct, 'CREATE_OR_UPDATE');
+
   notifyListeners();
 
   // Async API Push
@@ -102,7 +107,7 @@ export const addProduct = (productData, creator = null) => {
 
 export const updateProduct = (id, updatedFields) => {
   const products = getStoredProducts();
-  const idx = products.findIndex((p) => p.id === id);
+  const idx = products.findIndex((p) => String(p.id) === String(id));
   if (idx !== -1) {
     products[idx] = {
       ...products[idx],
@@ -114,6 +119,10 @@ export const updateProduct = (id, updatedFields) => {
       updatedAt: new Date().toISOString()
     };
     localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
+
+    // Auto-sync updated details to Gallery Showcase
+    syncProductToGallery(products[idx], 'CREATE_OR_UPDATE');
+
     notifyListeners();
 
     // Async API Update
@@ -130,13 +139,17 @@ export const updateProduct = (id, updatedFields) => {
 export const archiveProduct = (id) => {
   const products = getStoredProducts();
   const archived = getStoredArchivedProducts();
-  const target = products.find((p) => p.id === id);
+  const target = products.find((p) => String(p.id) === String(id));
 
   if (target) {
-    const remaining = products.filter((p) => p.id !== id);
+    const remaining = products.filter((p) => String(p.id) !== String(id));
     const updatedArchived = [{ ...target, archivedAt: new Date().toISOString() }, ...archived];
     localStorage.setItem(PRODUCTS_KEY, JSON.stringify(remaining));
     localStorage.setItem(ARCHIVED_PRODUCTS_KEY, JSON.stringify(updatedArchived));
+
+    // Auto-sync to Gallery: remove associated gallery entry
+    syncProductToGallery(target, 'DELETE');
+
     notifyListeners();
 
     apiFetch(`${API_ENDPOINTS.PRODUCTS}/${id}/archive`, { method: 'POST' });
@@ -148,19 +161,40 @@ export const archiveProduct = (id) => {
 export const restoreProduct = (id) => {
   const products = getStoredProducts();
   const archived = getStoredArchivedProducts();
-  const target = archived.find((p) => p.id === id);
+  const target = archived.find((p) => String(p.id) === String(id));
 
   if (target) {
-    const remainingArchived = archived.filter((p) => p.id !== id);
+    const remainingArchived = archived.filter((p) => String(p.id) !== String(id));
     const updatedProducts = [target, ...products];
     localStorage.setItem(PRODUCTS_KEY, JSON.stringify(updatedProducts));
     localStorage.setItem(ARCHIVED_PRODUCTS_KEY, JSON.stringify(remainingArchived));
-    notifyListeners();
 
-    apiFetch(`${API_ENDPOINTS.PRODUCTS}/${id}/restore`, { method: 'POST' });
+    // Auto-sync to Gallery: restore gallery entry
+    syncProductToGallery(target, 'CREATE_OR_UPDATE');
+
+    notifyListeners();
     return true;
   }
   return false;
+};
+
+export const deleteProduct = (id) => {
+  const products = getStoredProducts();
+  const archived = getStoredArchivedProducts();
+  const targetProduct = products.find((p) => String(p.id) === String(id)) || archived.find((p) => String(p.id) === String(id));
+
+  const remainingProducts = products.filter((p) => String(p.id) !== String(id));
+  const remainingArchived = archived.filter((p) => String(p.id) !== String(id));
+
+  localStorage.setItem(PRODUCTS_KEY, JSON.stringify(remainingProducts));
+  localStorage.setItem(ARCHIVED_PRODUCTS_KEY, JSON.stringify(remainingArchived));
+
+  if (targetProduct) {
+    syncProductToGallery(targetProduct, 'DELETE');
+  }
+
+  notifyListeners();
+  return true;
 };
 
 export const DEFAULT_PRODUCT_CATEGORIES = [

@@ -21,12 +21,12 @@ import {
 const categories = [
   'Thread Work',
   'Resin Art',
-  'Chocolates',
+  'Wedding & Marriage Items',
   'Customized Chains',
-  'Wedding Items',
-  'Biscuits',
   'Customized Gifts',
-  'Customized Dolls'
+  'Customized Dolls',
+  'Chocolates',
+  'Biscuits'
 ];
 
 const AdminGallery = () => {
@@ -47,7 +47,17 @@ const AdminGallery = () => {
   });
 
   useEffect(() => {
-    setItems(getStoredGalleryItems());
+    const loadItems = () => {
+      setItems(getStoredGalleryItems());
+    };
+    loadItems();
+
+    window.addEventListener('gallery-updated', loadItems);
+    window.addEventListener('storage', loadItems);
+    return () => {
+      window.removeEventListener('gallery-updated', loadItems);
+      window.removeEventListener('storage', loadItems);
+    };
   }, []);
 
   // Handle local image file upload with automatic 500x500 1:1 center crop/resize
@@ -230,15 +240,15 @@ const AdminGallery = () => {
         ) : (
           filteredItems.map((item) => (
             <div key={item.id} className="admin-gallery-card">
-              <div className="square-image-container">
+              <div className="square-image-container" style={{ background: '#FAF8F5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <img
                   src={item.image}
                   alt={item.title}
                   className="square-500-img"
+                  style={{ maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', objectFit: 'contain' }}
                   loading="lazy"
                 />
                 <span className="card-cat-badge">{item.category}</span>
-                <span className="dimension-badge">500×500 px (1:1)</span>
               </div>
 
               <div className="card-content-body">

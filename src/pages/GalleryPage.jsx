@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaHeart, FaSearchPlus, FaTimes, FaFilter, FaStar, FaWhatsapp } from 'react-icons/fa';
 import { getStoredGalleryItems } from '../data/galleryData';
 
-const baseCategories = ['All', 'Thread Work', 'Resin Art', 'Chocolates', 'Customized Chains', 'Wedding Items', 'Biscuits', 'Customized Gifts'];
+const baseCategories = ['All', 'Thread Work', 'Resin Art', 'Wedding & Marriage Items', 'Customized Chains', 'Customized Gifts', 'Customized Dolls', 'Chocolates', 'Biscuits'];
 
 const GalleryPage = () => {
   const [items, setItems] = useState([]);
@@ -25,7 +25,7 @@ const GalleryPage = () => {
 
   const filteredItems = activeCategory === 'All'
     ? items
-    : items.filter(item => item.category === activeCategory);
+    : items.filter(item => item.category === activeCategory || (activeCategory === 'Wedding & Marriage Items' && (item.category === 'Wedding Items' || item.category === 'Wedding & Marriage Items')));
 
   return (
     <div className="gallery-page">
